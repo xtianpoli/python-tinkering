@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules et paquets &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="Les fonctions" href="fonctions.html" />
+    <link rel="prev" title="Les éléments du langage" href="leselements.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="fonctions.html" title="Les fonctions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="leselements.html" title="Les éléments du langage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules-et-paquets">
+<h1>Modules et paquets<a class="headerlink" href="#modules-et-paquets" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Modules</li>
+<li>Paquets (ou packages)</li>
+</ul>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<p>Un module est un fichier contenant des instructions Python.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: &#39;simplemod&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;do something&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_do_something_else</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;do something else&quot;</span><span class="p">)</span>
+
+
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;runs as a script&quot;</span><span class="p">)</span>
+    <span class="n">do_something</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;module {} was imported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__name__</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Il peut être utilisé de deux manières:</p>
+<ul>
+<li><p class="first">en tant que script</p>
+<div class="highlight-python"><div class="highlight"><pre>python simplemod.py
+runs as a script
+do something
+</pre></div>
+</div>
+</li>
+<li><p class="first">chargé avec la directive <em>import</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplemod</span>
+<span class="go">module simplemod was imported</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__doc__</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">simplemod</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simplemod</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">&quot;\nModule: &#39;simplemod&#39;\n&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simplemod</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+<span class="go">do something</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simplemod</span><span class="o">.</span><span class="n">_do_something_else</span><span class="p">()</span>
+<span class="go">do something else</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>On notera la possibilité de documenter un module à l&#8217;aide d&#8217;une chaîne de caractères en début du fichier, appelée une <em>docstring</em> . La docstring ast accessible dans l&#8217;attribut <tt class="docutils literal"><span class="pre">__doc__</span></tt> .</p>
+<p><strong>NB:</strong> Les noms contenus dans le module importé (de cette façon) doivent être préfixés par le nom du module pour être référencés (dans le contexte de l&#8217;<em>import</em>).</p>
+<p><strong>Rappel:</strong> Pour rendre <em>simplemod.py</em> directement exécutable (en environnement <em>Linux</em> ou <em>Unix</em>) il faut:</p>
+<ul class="simple">
+<li>rajouter  <tt class="docutils literal"><span class="pre">#!/usr/bin/env</span> <span class="pre">python</span></tt> comme première ligne du fichier</li>
+<li>attribuer des droits d&#8217;exécution sur le fichier <tt class="docutils literal"><span class="pre">chmod</span> <span class="pre">u+x</span>&nbsp; <span class="pre">simplemod.py</span></tt></li>
+</ul>
+<p>Au chargement, un objet de type <em>module</em> est créé, les instructions contenues dans le fichier sont exécutées et les noms résultant de l&#8217;exécution (variables, classes, fonctions) sont placés dans un espace de noms défini par l&#8217;objet-module.</p>
+<p>Cet objet-module définit l&#8217;attribut <strong>__name__</strong> contenant:</p>
+<ol class="arabic simple">
+<li>&#8220;__main__&#8221; si le module est chargé en tant que script</li>
+<li>le nom du fichier (sans l&#8217;extension &#8221;.py&#8221;) s&#8217;il s&#8217;agit d&#8217;un import</li>
+</ol>
+<p>Si le corps du module commence avec une chaîne de caractères (entre quotes simples, doubles, triples etc.) celle-ci sera interprétée comme une &#8220;docstring&#8221;.</p>
+<p><strong>Remarques:</strong></p>
+<ul class="simple">
+<li>le nom du fichier doit satisfaire les règles imposés pour les noms des variables en Python. La <strong>PEP 8</strong> préconise l&#8217;utilisation de noms courts, les <strong>_</strong> étant &#8220;tolérés&#8221;.</li>
+<li>un même module peut être utilisé aussi bien en tant que script ou par importation. Par exemple, une bibliothèque ayant vocation à être importée peut contenir une suite de tests à exécuter un mode script. Dans ce cas, c&#8217;est une bonne idée de prévoir une exécution conditionnelle de la partie du code réservée au mode script:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="o">...</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>Au chargement, un module est cherché dans trois endroits:</p>
+<ol class="arabic simple">
+<li>dans le répertoire courant</li>
+<li>dans les endroits définis dans la variable d&#8217;environnement PYTHONPATH</li>
+<li>dans le répertoire d&#8217;installation de l&#8217;interpréteur</li>
+</ol>
+<p><strong>NB:</strong> Le contenu de la variable d&#8217;environnement <strong>PYTHONPATH</strong> est accessible à travers l&#8217;attribut <em>path</em> du module <em>sys</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="go">[&#39;&#39;, &#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/django_userena-1.1.2-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/django_guardian-1.0.4-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/easy_thumbnails-1.0.3-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/codenode-0.02-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/django_compress-1.0.1-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/Whoosh-2.4.1-py2.7.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/Twisted-12.3.0-py2.7-linux-x86_64.egg&#39;, &#39;/usr/local/lib/python2.7/dist-packages/django_passwords-0.2.0-py2.7.egg&#39;, &#39;/usr/lib/python2.7&#39;, &#39;/usr/lib/python2.7/plat-linux2&#39;, &#39;/usr/lib/python2.7/lib-tk&#39;, &#39;/usr/lib/python2.7/lib-old&#39;, &#39;/usr/lib/python2.7/lib-dynload&#39;, &#39;/usr/local/lib/python2.7/dist-packages&#39;, &#39;/usr/lib/python2.7/dist-packages&#39;, &#39;/usr/lib/python2.7/dist-packages/PIL&#39;, &#39;/usr/lib/python2.7/dist-packages/gst-0.10&#39;, &#39;/usr/lib/python2.7/dist-packages/gtk-2.0&#39;, &#39;/usr/lib/pymodules/python2.7&#39;, &#39;/usr/lib/python2.7/dist-packages/ubuntu-sso-client&#39;, &#39;/usr/lib/python2.7/dist-packages/wx-2.8-gtk2-unicode&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>La fonction <em>dir()</em> révèle d&#8217;autres attributs importants:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">simplemod</span><span class="p">)</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;_do_something_else&#39;, &#39;do_something&#39;]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>&#8216;__builtins__&#8217; est le dictionnaire des noms prédéfinis</li>
+<li>&#8216;__file__&#8217; est le nom du fichier du module</li>
+</ul>
+<div class="section" id="le-cache">
+<h3>Le cache<a class="headerlink" href="#le-cache" title="Permalink to this headline">¶</a></h3>
+<p>Lors du chargement d&#8217;un module, l&#8217;interpréteur vérifie la présence d&#8217;un fichier précompilé ayant l&#8217;extension &#8221;.pyc&#8221;:</p>
+<ul class="simple">
+<li>si le fichier existe et il est valide alors il est chargé directement en évitant une nouvelle compilation à partir du code source.</li>
+<li>si le fichier est absent, corrompu et obsolète, le code source est compilé et chargé en mémoire et le fichier correspondant &#8221;.pyc&#8221; est généré.</li>
+</ul>
+<p>L&#8217;emplacement du fichier &#8221;.pyc&#8221; est:</p>
+<ul class="simple">
+<li>dans le répertoire courant en Python 2.x</li>
+<li>dans le répertoire ./__pycache__ en Python 3.x</li>
+</ul>
+</div>
+<div class="section" id="importation-dans-le-contexte-courant">
+<h3>Importation dans le contexte courant<a class="headerlink" href="#importation-dans-le-contexte-courant" title="Permalink to this headline">¶</a></h3>
+<p>Avec l&#8217;instruction from...import... on peut importer sélectivement des objets d&#8217;un module dans le contexte courant en s&#8217;affranchissant de l&#8217;utilisation du préfixe à l&#8217;appel:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">simplemod</span> <span class="kn">import</span> <span class="n">do_something</span><span class="p">,</span> <span class="n">_do_something_else</span>
+<span class="go">module simplemod is imported</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="p">()</span>
+<span class="go">do something</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_do_something_else</span><span class="p">()</span>
+<span class="go">do something else</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>On peut aussi importer <strong>tous</strong> les noms (<strong>sauf</strong> ceux préfixés par un <strong>_</strong>) d&#8217;un module dans le contexte courant :</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; from simplemod import *
+module simplemod is imported
+&gt;&gt;&gt; do_something()
+do something
+&gt;&gt;&gt; _do_something_else()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name &#39;_do_something_else&#39; is not defined
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="first admonition-title">Attention</p>
+<p>La pratique consistant à importer tous les noms d&#8217;un module dans un autre contexte est <strong>déconseillée</strong> (sauf cas particuliers) car:</p>
+<ul class="last simple">
+<li>elle nuit à la lisibilité du code</li>
+<li>il y a risque d&#8217;écrasement de fonctions prédéfinies pas leurs homonymes éventuelles</li>
+</ul>
+</div>
+</div>
+<div class="section" id="recharger-un-module">
+<h3>Recharger un module<a class="headerlink" href="#recharger-un-module" title="Permalink to this headline">¶</a></h3>
+<p>En mode interactif on peut avoir besoin de recharger un module après l&#8217;avoir modifié, mais une ré-exécution de l&#8217;import ne va pas recharger le module. On peut avoir recours à la fonction <em>reload()</em>.
+Néanmoins cela peut s&#8217;avérer insatisfaisant dans certains cas, étant donné que les instances des classes rechargées déjà présentes dans le contexte d&#8217;exécution ne seront pas impactées.</p>
+</div>
+</div>
+<div class="section" id="paquets">
+<h2>Paquets<a class="headerlink" href="#paquets" title="Permalink to this headline">¶</a></h2>
+<p>Grâce au paquets (packages) on peut créer des hiérarchies de modules en organisant les fichiers correspondants dans des répertoires à plusieurs niveaux. Lors de l&#8217;importation, un module est identifié par son nom précédé par les noms successifs des répertoires le contenant, à partir de la racine du paquet, séparés par des points.</p>
+<p>Pour illustration, la structure &#8220;fichiers&#8221; d&#8217;un paquet (correspondant à un <em>framework</em> imaginaire):</p>
+<div class="highlight-python"><div class="highlight"><pre>framework
+|-- controller
+|   |-- admurls.py
+|   |-- appurls1.py
+|   |-- appurls2.py
+|   `-- __init__.py
+|-- __init__.py
+|-- model
+|   |-- admin.py
+|   |-- appmodel1.py
+|   |-- appmodel2.py
+|   `-- __init__.py
+`-- view
+    |-- admviews.py
+    |-- appviews1.py
+    |-- appviews2.py
+    `-- __init__.py
+</pre></div>
+</div>
+<p>Pour qu&#8217;un répertoire soit reconnu par l&#8217;interpréteur comme membre du paquet, il doit contenir un fichier <em>__init__.py</em>, éventuellement vide.</p>
+<p>Exemples d&#8217;importations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.controller.admurls</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.model.appmodel1</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> Le fichier <em>__init__.py</em>, quand il n&#8217;est pas vide, il peut contenir l&#8217;attribut spécial <em>__all__</em> et/ou tout autre code utile au processus d&#8217;initialisation (création de fonctions, constantes etc.)</p>
+<div class="section" id="importer-tous-les-modules-d-un-paquet">
+<h3>Importer tous les modules d&#8217;un paquet<a class="headerlink" href="#importer-tous-les-modules-d-un-paquet" title="Permalink to this headline">¶</a></h3>
+<p>La structure  <tt class="docutils literal"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">import</span> <span class="pre">*</span></tt> peut être utilisée pour importer &#8220;tous&#8221; les  modules d&#8217;un paquet. Seulement, par &#8220;tous&#8221; on entend <strong>seulement</strong> les noms listés par la variable <strong>__all__</strong> si elle est présente dans <em>__init__.py</em>. Les autres fichiers &#8221;.py&#8221; présents dans le répertoire seront ignorés. En absence de la variable <strong>__all__</strong> aucun module ne sera importé:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># framework/model/__init__.py</span>
+<span class="c">#</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;admin&#39;</span><span class="p">,</span><span class="s">&#39;appmodel1&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;__package__&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">framework.model</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;admin&#39;, &#39;appmodel1&#39;]</span>
+</pre></div>
+</div>
+<p>Dans l&#8217;exemple, on constate que <em>appmodel2</em>, module pourtant bien présent dans <em>model</em>, n&#8217;a pas été importé car absent de <em>__all__</em>.</p>
+<p>Néanmoins, il existe une situation où <tt class="docutils literal"><span class="pre">from</span> <span class="pre">...</span> <span class="pre">import</span> <span class="pre">*</span></tt> peut importer des modules non référencés dans <em>__all__</em>. C&#8217;est le cas ou les modules en question on fait préalablement l&#8217;objet d&#8217;importations individuelles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">framework.view</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;__package__&#39;] # normal, __init__.py étant vide</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.view.admviews</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.view.appviews1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.view.appviews2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;framework&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">framework.view</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">()</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;admviews&#39;, &#39;appviews1&#39;, &#39;appviews2&#39;, &#39;framework&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="references-intra-paquet">
+<h3>Références intra-paquet<a class="headerlink" href="#references-intra-paquet" title="Permalink to this headline">¶</a></h3>
+<p>A l&#8217;intérieur d&#8217;un paquet on peut utiliser la notation <strong>.</strong> pour référencer le répertoire courant et <strong>..</strong> pour le répertoire parent.</p>
+<p>Par exemple, <tt class="docutils literal"><span class="pre">framework.model.appmodel2</span></tt> peut importer les modules se situant au même niveau que lui en utilisant la notation <strong>&#8221;.&#8221;</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># framework.model.appmodel2</span>
+<span class="c">#</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="o">*</span> <span class="c"># i.e. &#39;admin&#39;, &#39;appmodel1&#39;</span>
+</pre></div>
+</div>
+<p>Le résultat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.model.appmodel2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">framework</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">appmodel2</span><span class="p">)</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;admin&#39;, &#39;appmodel1&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Un autre exemple, <tt class="docutils literal"><span class="pre">framework.controller.appurls1</span></tt> importe les modules se situant dans le répertoire <em>model</em> en utilisant <strong>..</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># framework.controller.appurls2</span>
+<span class="c">#</span>
+
+<span class="kn">from</span> <span class="nn">..model</span> <span class="kn">import</span> <span class="o">*</span> <span class="c"># i.e. </span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">framework.controller.appurls1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">framework</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">appurls1</span><span class="p">)</span>
+<span class="go">[&#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;admin&#39;, &#39;appmodel1&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conventions-de-nommage">
+<h2>Conventions de nommage<a class="headerlink" href="#conventions-de-nommage" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>pour les modules: noms courts, en minuscules. Les underscores sont tolérés pour une meilleure lisibilité.</li>
+<li>pour les packages: noms courts, en minuscules, mais l&#8217;utilisation des underscores est déconseillée.</li>
+</ul>
+<p><strong>NB:</strong> Garder à l&#8217;esprit que les nom de modules et de packages correspondent à des noms de fichiers et répertoires qui peuvent être soummis à des contraintes spécifiques de certains OS.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules et paquets</a><ul>
+<li><a class="reference internal" href="#modules">Modules</a><ul>
+<li><a class="reference internal" href="#le-cache">Le cache</a></li>
+<li><a class="reference internal" href="#importation-dans-le-contexte-courant">Importation dans le contexte courant</a></li>
+<li><a class="reference internal" href="#recharger-un-module">Recharger un module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#paquets">Paquets</a><ul>
+<li><a class="reference internal" href="#importer-tous-les-modules-d-un-paquet">Importer tous les modules d&#8217;un paquet</a></li>
+<li><a class="reference internal" href="#references-intra-paquet">Références intra-paquet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conventions-de-nommage">Conventions de nommage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="leselements.html"
+                        title="previous chapter">Les éléments du langage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="fonctions.html"
+                        title="next chapter">Les fonctions</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="fonctions.html" title="Les fonctions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="leselements.html" title="Les éléments du langage"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

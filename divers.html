@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Outils divers &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="prev" title="Les tests" href="tests.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tests.html" title="Les tests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="outils-divers">
+<h1>Outils divers<a class="headerlink" href="#outils-divers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="l-installeur-pip">
+<h2>L&#8217;installeur Pip<a class="headerlink" href="#l-installeur-pip" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;installation de nouveaux paquets peut se faire de plusieurs manières, entre autres:</p>
+<ol class="arabic simple">
+<li>en utilisant les paquets de sa distribution de système d&#8217;exploitation (Linux, par exemple)</li>
+<li>en utilisant les paquets du PyPi (Python Package Index) <a class="reference external" href="https://pypi.python.org/pypi">https://pypi.python.org/pypi</a> et l&#8217;installeur <strong>pip</strong></li>
+</ol>
+<p>Les deux approches présentent des avantages et des inconvénients et il ne s&#8217;agit pas ici de proposer un choix dans le cas d&#8217;une utilisation <em>standard</em> car ce choix peut dépendre de plusieurs facteurs (culture de l&#8217;équipe, contraintes de déploiement etc.).</p>
+<p>Par contre dans la perspective de l&#8217;utilisation de <strong>virtualenv</strong>  pour créer des environnements d&#8217;expérimentation (section suivante), la connaissance des fonctionnalités de <em>pip</em> est utile.</p>
+<div class="section" id="installer-pip">
+<h3>Installer pip<a class="headerlink" href="#installer-pip" title="Permalink to this headline">¶</a></h3>
+<p>On a le choix entre:</p>
+<ul>
+<li><p class="first">installer le paquet de la distribution (selon le système d&#8217;exploitation)</p>
+</li>
+<li><p class="first">L&#8217;archive source  <a class="reference external" href="http://pypi.python.org/packages/source/p/pip/">http://pypi.python.org/packages/source/p/pip/</a></p>
+<ul class="simple">
+<li>télécharger le bonne version</li>
+<li>décompresser, désarchiver</li>
+<li>dans le répertoire pip-xxx (désarchivé) exécuter <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt></li>
+</ul>
+</li>
+<li><p class="first">utiliser <em>easy_install</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>easy_install pip
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="installer-un-paquet-avec-pip">
+<h3>Installer un paquet avec <em>pip</em> :<a class="headerlink" href="#installer-un-paquet-avec-pip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install MonPaquet
+</pre></div>
+</div>
+</div>
+<div class="section" id="lister-les-paquets-installes">
+<h3>Lister les paquets installés<a class="headerlink" href="#lister-les-paquets-installes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>$ pip freeze
+Cheetah==2.4.4
+CherryPy==3.2.2
+Django==1.5.4
+Fabric==1.3.2
+.....
+</pre></div>
+</div>
+</div>
+<div class="section" id="installer-une-version-avec-contraintes">
+<h3>Installer une version avec contraintes<a class="headerlink" href="#installer-une-version-avec-contraintes" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install &#39;MonPaquet&lt;2.1&#39;
+</pre></div>
+</div>
+<p>On peut combiner plusieurs contraintes parmi <strong>==, &gt;=, &gt;, &lt;, &lt;=</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install &#39;MonPaquet&gt;2.0,&lt;2.1&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="mise-a-jour-d-un-paquet">
+<h3>Mise à jour d&#8217;un paquet<a class="headerlink" href="#mise-a-jour-d-un-paquet" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install -U MonPaquet
+</pre></div>
+</div>
+</div>
+<div class="section" id="suppression-d-un-paquet">
+<h3>Suppression d&#8217;un paquet<a class="headerlink" href="#suppression-d-un-paquet" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>$ pip uninstall MonPaquet
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="les-environnements-virtuels">
+<h2>Les environnements virtuels<a class="headerlink" href="#les-environnements-virtuels" title="Permalink to this headline">¶</a></h2>
+<p>Nous avons parfois besoin d&#8217;expérimenter des logiciels qui ont des dépendances particulières (par exemple, des versions très récentes et pas encore stables de certaines bibliothèques).</p>
+<p>Plusieurs projets gérés en parallèle peuvent utiliser des  bibliothèques incompatibles entre elles. Faire ces installations dans l&#8217;environnement standard peut être dangereux (risque de rendre le système instable) voire impossible.</p>
+<p>Pour faire face à ce problème, une des solutions passe par la création des environnements virtuels. Même si Python3.3 possède une solution integrée (<strong>venv</strong>) la solution la plus répandue reste, pour l&#8217;instant (début 2014), <strong>virtualenv</strong> .</p>
+<div class="section" id="installer-virtualenv">
+<h3>Installer <strong>virtualenv</strong><a class="headerlink" href="#installer-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p>On peut installer <em>virtualenv</em> à partir de la distribution système, par exemple, pour ubuntu:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo apt-get install python-virtualenv
+</pre></div>
+</div>
+<p>ou avec pip:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo pip install virtualenv
+</pre></div>
+</div>
+<p>ou, pour une installation dans son espace personnel:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install --user virtualenv
+</pre></div>
+</div>
+<p>Ensuite, on peut créer des environnements virtuels (par exemple, dans un sous-répertoire dédié dans son répertoire $HOME):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pwd
+/home/poli/virtual_envs
+$ virtualenv virt_env_1
+New python executable in virt_env_1/bin/python
+Installing distribute.............................................................................................................................................................................................done.
+Installing pip...............done.
+</pre></div>
+</div>
+<p>La commande précédente crée un environnement Python à part entière (ici, une vue partielle de l&#8217;arborescence de fichiers créée):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tree --charset ascii  -L 2 virt_env_1
+virt_env_1
+|-- bin
+|   |-- activate
+|   |-- activate.csh
+|   |-- activate.fish
+|   |-- activate_this.py
+|   |-- easy_install
+|   |-- easy_install-2.7
+|   |-- pip
+|   |-- pip-2.7
+|   `-- python
+|-- include
+|   `-- python2.7 -&gt; /usr/include/python2.7
+|-- lib
+|   `-- python2.7
+`-- local
+    |-- bin -&gt; /home/poli/virtual_envs/virt_env_1/bin
+    |-- include -&gt; /home/poli/virtual_envs/virt_env_1/include
+    `-- lib -&gt; /home/poli/virtual_envs/virt_env_1/lib
+</pre></div>
+</div>
+<p>Une fois créé, il faut activer l&#8217;environnement pour l&#8217;utiliser:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd virt_env_1/
+$ source bin/activate
+(virt_env_1) $
+</pre></div>
+</div>
+<p><strong>NB:</strong> Le prompt modifié <tt class="docutils literal"><span class="pre">(virt_env_1)</span> <span class="pre">$</span></tt> indique l&#8217;environnement courant</p>
+<p>Toute installation faite avec <strong>pip</strong> dans un environnement activé sera locale à cet environnement, sans interférence avec l&#8217;environnement standard.</p>
+<p>L&#8217;interpréteur lancé dans cet environnement aura accès aux modules installés localement.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="go">[&#39;&#39;, &#39;/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages/distribute-0.6.24-py2.7.egg&#39;, &#39;/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages/pip-1.1-py2.7.egg&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages/distribute-0.6.24-py2.7.egg&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages/pip-1.1-py2.7.egg&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/plat-linux2&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-tk&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-old&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-dynload&#39;, &#39;/usr/lib/python2.7&#39;, &#39;/usr/lib/python2.7/plat-linux2&#39;, &#39;/usr/lib/python2.7/lib-tk&#39;, &#39;/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages&#39;, &#39;/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Installation d&#8217;un module :</p>
+<div class="highlight-python"><div class="highlight"><pre>(virt_env_1) $ pip install web.py
+Downloading/unpacking web.py
+Downloading web.py-0.37.tar.gz (90Kb): 90Kb downloaded
+Running setup.py egg_info for package web.py
+
+Installing collected packages: web.py
+Running setup.py install for web.py
+
+Successfully installed web.py
+Cleaning up...
+</pre></div>
+</div>
+<p>Desactivation de l&#8217;environnement (pour revenir à l&#8217;environnement de départ):</p>
+<div class="highlight-python"><div class="highlight"><pre>(virt_env_1) $ deactivate
+</pre></div>
+</div>
+</div>
+<div class="section" id="options-interessantes-de-virtualenv">
+<h3>Options intéressantes <em>de virtualenv</em><a class="headerlink" href="#options-interessantes-de-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p>Niveau d&#8217;isolation par rapport au système:</p>
+<ul class="simple">
+<li><em>&#8211;no-site-packages</em> : pas d&#8217;héritage des modules installés sur le système, sauf les modules standard (os,sys,...)</li>
+<li><em>&#8211;system-site-packages</em> : tout module python installé sur le système sera disponible en local (y compris les installations ultérieures à la création de l&#8217;environnement virtuel). Bien sûr, tout module installé localement sera prioritaire par rapport à  son homonyme présent sur le système, le cas échéant.</li>
+</ul>
+<p>Choix de la version de Python:</p>
+<p>Si plusieurs versions de Python sont disponibles sur le système on peut opter pour une des versions à la création de l&#8217;environnement:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ virtualenv virt_env_2 -p /usr/bin/python3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="le-debogueur-pdb">
+<h2>Le débogueur <strong>pdb</strong><a class="headerlink" href="#le-debogueur-pdb" title="Permalink to this headline">¶</a></h2>
+<p>Est un environnement interactif proposant les fonctionnalités classiques, utiles dans la mise au point du logiciel:</p>
+<ul class="simple">
+<li>mise en pause du programme</li>
+<li>inspection des variables et de la pile d&#8217;exécution</li>
+<li>exécution &#8220;pas à pas&#8221;</li>
+<li>définition de points d&#8217;arrêt</li>
+<li>...</li>
+</ul>
+<p>Dans la suite on utilisera le script suivant pour illustrer l&#8217;utilisation de pdb :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span> <span class="o">=</span> <span class="n">val</span>
+        
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span><span class="p">;</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="n">alpha_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">))</span>
+        <span class="n">alpha_zip</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alpha_range</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tpl</span> <span class="ow">in</span> <span class="n">alpha_zip</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">DummyClass</span><span class="p">(</span><span class="mi">514</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Il y a trois manières pour lancer <em>pdb</em>:</p>
+<ul class="simple">
+<li>à partir de la ligne de commande</li>
+<li>dans une session interactive de l&#8217;interpréteur</li>
+<li>à partir du programme</li>
+</ul>
+<div class="section" id="pdb-en-ligne-de-commande">
+<h3>pdb en ligne de commande<a class="headerlink" href="#pdb-en-ligne-de-commande" title="Permalink to this headline">¶</a></h3>
+<p>Il s&#8217;agit d&#8217;exécuter <strong>pdb</strong> en lui passant en argument le script à déboguer.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python -m pdb ./pdb_sample.py
+&gt; /home/poli/mypython-course/source/includes/pdb_sample.py(1)&lt;module&gt;()
+-&gt; class DummyClass(object):
+(Pdb)
+</pre></div>
+</div>
+<p>L&#8217;exécution de pdb aura comme effet le chargement du code source. L&#8217;exécution s&#8217;arrête sur la première instruction présente dans le fichier et <em>pdb</em> se met en attente des commandes utilisateur.</p>
+</div>
+<div class="section" id="pdb-lance-dans-une-session-interactive">
+<h3>pdb lancé dans une session interactive<a class="headerlink" href="#pdb-lance-dans-une-session-interactive" title="Permalink to this headline">¶</a></h3>
+<p>Il s&#8217;agit d&#8217;importer le module à déboguer ainsi que le module pdb ensuite exécuter <tt class="docutils literal"><span class="pre">pdb.run()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb_sample</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;pdb_sample.DummyClass(514).do_something()&#39;</span><span class="p">)</span>
+<span class="go">&gt; &lt;string&gt;(1)&lt;module&gt;()</span>
+<span class="go">(Pdb)</span>
+</pre></div>
+</div>
+<p>Parmi les commandes les plus utilisées:</p>
+<ul class="simple">
+<li>h(elp) [cmd] : aide en ligne</li>
+<li>w(here) : affiche la pile d&#8217;exécution, de haut en bas. Une flèche indique le contexte courant (dans lequel on peut visualiser l&#8217;état des variables etc.)</li>
+<li>d(own) [cnt]/u(p) [cnt] : déplacements dans la pile</li>
+<li>b(reak) [([fich:]ligne | fonction) [, condition]] : point d&#8217;arrêt (retourne un numéro)</li>
+<li>tbreak  [([fich:]ligne | fonction) [, condition]] : point d&#8217;arrêt temporaire (disparaît après avoir été déclenché une fois)</li>
+<li>cl(ear) [fich:ligne | num [num ...]] : effacer 1..n points d&#8217;arrêt</li>
+<li>enable/disable [num [num ...]] : activer désactiver point d&#8217;arrêt.</li>
+<li>...</li>
+</ul>
+</div>
+<div class="section" id="pdb-lance-a-partir-du-programme">
+<h3>pdb lancé à partir du programme<a class="headerlink" href="#pdb-lance-a-partir-du-programme" title="Permalink to this headline">¶</a></h3>
+<p>Cette possibilité est utile quand on souhaite déclencher <em>pdb</em> le plus tard possible, par exemple en cas d&#8217;exécution longue avant l&#8217;apparition du problème à déboguer.</p>
+<p>La mise en oeuvre se fait en appelant la fonction <em>pdb.set_trace()</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pdb</span>
+<span class="k">class</span> <span class="nc">DummyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span> <span class="o">=</span> <span class="n">val</span>
+        
+    <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
+        <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span><span class="p">;</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="n">alpha_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">))</span>
+        <span class="n">alpha_zip</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alpha_range</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tpl</span> <span class="ow">in</span> <span class="n">alpha_zip</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
+            <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">DummyClass</span><span class="p">(</span><span class="mi">514</span><span class="p">)</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Il suffit d&#8217;exécuter le script par un appel normal:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python pdb_sample_set_trace.py
+a:514
+&gt; /home/poli/mypython-course/source/includes/pdb_sample_set_trace.py(12)do_something()
+-&gt; for tpl in alpha_zip:
+(Pdb)
+</pre></div>
+</div>
+</div>
+<div class="section" id="debogue-post-mortem">
+<h3>débogue  &#8220;post mortem&#8221;<a class="headerlink" href="#debogue-post-mortem" title="Permalink to this headline">¶</a></h3>
+<p>Il s&#8217;agit de déboguer en programme qui s&#8217;est déjà terminé par une exception. Dans l&#8217;exemple initial, appelant le constructeur <em>DummyClass()</em> avec une chaîne en argument l&#8217;exécution se terminera avec une exception <em>TypeError</em>. On peut ensuite, en utilisant la fonction <tt class="docutils literal"><span class="pre">pdb.pm()</span></tt> ou <tt class="docutils literal"><span class="pre">pdb.post_mortem()</span></tt> retrouver le contexte d&#8217;exécution au moment où l&#8217;erreur s&#8217;est produite:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; import pdb_sample
+&gt;&gt;&gt; import pdb
+&gt;&gt;&gt; pdb_sample.DummyClass(&quot;abc&quot;).do_something()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;pdb_sample.py&quot;, line 8, in do_something
+  last = first + len(alphabet)
+TypeError: cannot concatenate &#39;str&#39; and &#39;int&#39; objects
+&gt;&gt;&gt; pdb.pm()
+&gt; /home/poli/mypython-course/source/includes/pdb_sample.py(8)do_something()
+-&gt; last = first + len(alphabet)
+(Pdb)
+</pre></div>
+</div>
+<p><strong>NB:</strong> Plusieurs outils de débogage basés sur <strong>pdb</strong> existent. Ils ont le mérite de proposer une ergonomie améliorée. Parmi eux on peut citer:</p>
+<ul class="simple">
+<li><strong>pudb</strong> : <a class="reference external" href="https://pypi.python.org/pypi/pudb">https://pypi.python.org/pypi/pudb</a> proposant une interface un mode caractère.</li>
+<li><strong>spyder</strong> : <a class="reference external" href="https://pypi.python.org/pypi/spyder">https://pypi.python.org/pypi/spyder</a> Environnement intégré (IDE) proposant une interface graphique.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="le-module-future">
+<h2>Le module <strong>__future__</strong><a class="headerlink" href="#le-module-future" title="Permalink to this headline">¶</a></h2>
+<p>Les fonctionnalités Python 3 incompatibles avec la version 2 peuvent être testées et utilisées &#8220;par anticipation&#8221; dans l&#8217;ancienne version. C&#8217;est une stratégie possible pour préparer le passage à la nouvelle version mais sa pertinence est à évaluer au cas par cas.</p>
+<p>Les propriétés importantes par rapport à la version 3 sont:</p>
+<ul class="simple">
+<li>division</li>
+<li>absolute_import</li>
+<li>print_function</li>
+<li>unicode_literals</li>
+</ul>
+<p>Illustration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span><span class="o">/</span><span class="mi">6</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span><span class="o">/</span><span class="mi">6</span>
+<span class="go">0.8333333333333334</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+<span class="go">2.7.3 (default, Feb 27 2014, 19:58:35)</span>
+<span class="go">[GCC 4.6.3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>
+    <span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span>
+            <span class="o">^</span>
+<span class="gr">SyntaxError</span>: <span class="n">invalid syntax</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+<span class="go">2.7.3 (default, Feb 27 2014, 19:58:35)</span>
+<span class="go">[GCC 4.6.3]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Outils divers</a><ul>
+<li><a class="reference internal" href="#l-installeur-pip">L&#8217;installeur Pip</a><ul>
+<li><a class="reference internal" href="#installer-pip">Installer pip</a></li>
+<li><a class="reference internal" href="#installer-un-paquet-avec-pip">Installer un paquet avec <em>pip</em> :</a></li>
+<li><a class="reference internal" href="#lister-les-paquets-installes">Lister les paquets installés</a></li>
+<li><a class="reference internal" href="#installer-une-version-avec-contraintes">Installer une version avec contraintes</a></li>
+<li><a class="reference internal" href="#mise-a-jour-d-un-paquet">Mise à jour d&#8217;un paquet</a></li>
+<li><a class="reference internal" href="#suppression-d-un-paquet">Suppression d&#8217;un paquet</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#les-environnements-virtuels">Les environnements virtuels</a><ul>
+<li><a class="reference internal" href="#installer-virtualenv">Installer <strong>virtualenv</strong></a></li>
+<li><a class="reference internal" href="#options-interessantes-de-virtualenv">Options intéressantes <em>de virtualenv</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#le-debogueur-pdb">Le débogueur <strong>pdb</strong></a><ul>
+<li><a class="reference internal" href="#pdb-en-ligne-de-commande">pdb en ligne de commande</a></li>
+<li><a class="reference internal" href="#pdb-lance-dans-une-session-interactive">pdb lancé dans une session interactive</a></li>
+<li><a class="reference internal" href="#pdb-lance-a-partir-du-programme">pdb lancé à partir du programme</a></li>
+<li><a class="reference internal" href="#debogue-post-mortem">débogue  &#8220;post mortem&#8221;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#le-module-future">Le module <strong>__future__</strong></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tests.html"
+                        title="previous chapter">Les tests</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tests.html" title="Les tests"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

@@ -1,0 +1,868 @@
+################################
+La bibliothèque standard en bref
+################################
+
+.. slide_mark_b :La bibliothèque standard en bref
+
+Il s'agit d'un simple aperçu, partiel et partial, de quelques fonctions avec les paramètres les plus courants dans le but de donner un avant goût des possibilités de cette bibliothèque, très riche. Il est donc fortement conseillé de consulter constamment la documentation de référence pour une utilisation correcte de la bibliothèque standard dans le processus de développement.
+
+.. slide_mark_e
+
+****************************
+La manipulation des fichiers
+****************************
+
+.. slide_mark_b :La manipulation des fichiers
+
+Le type **file** est un des types prédéfinis en Python, déjà évoqué précédemment pour illustrer la structure **with**. Pour ouvrir un fichier, on utilise le plus souvent la fonction prédéfinie *open()*  à la place du constructeur *file()*. Il y a des différences notables entre les versions 2 et 3 au niveau de la signature de *open()*.
+
+En Python 2.7.x:
+
+::
+
+   open(name[, mode[, buffering]])
+
+
+* name : nom du fichier (absolut ou relatif au répertoire courant)
+* mode :
+
+  * **r** : lecture (par défaut)
+  * **w** : écriture (en début du fichier). **Avertissement:** Si le fichier existe le contenu courant sera perdu.
+  * **a** : ajout (append) L'écriture se fera à la fin du fichier, s'il existe, sinon il sera créé.
+  * **r+**, **w+**, **a+** : ouverture en mise à jour(lecture/écriture). **Avertissement:** tout comme le *w*, le *w+* tronque le fichier, le contenu existant sera perdu.
+  * **b** : il s'additionne à un des flags précédents (ex: *rb*) et il signifie *binary* pour les systèmes qui en font la distinction par rapport au mode text.
+
+* buffering : gestion de la zone mémoire "tampon":
+
+  * 0 : pas de mémoire tampon
+  * 1 : mode "ligne"
+  * > 1 : taille du tampon (en octets)
+  * < 0 : taille par défaut prévue par le système (et comportement par défaut de la fonction)
+
+.. slide_mark_e
+.. slide_mark_b :La manipulation des fichiers *[2]*
+
+En Python 3.x:
+
+::
+
+    open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+
+* file : peut être un chemin (comme précédemment) ou un descripteur de fichier. Si *file* est un descripteur, le fichier correspondant sera fermé par *close()*, sauf si *closefd=False*
+* mode :
+
+  * **r**, **w**, **a**, **+** : avec les significations décrites précédemment 
+  * **x** création uniquement, erreur si le fichier existe déjà.  *(nouveauté Python 3.3)*
+  * **b** : signification nouvelle car il implique que le résultat rendu sera de type **bytes** alors que par défaut (mode "texte") le résultat est de type **str** ce qui signifie **unicode** en Python 3.x. En mode "texte", l'encodage sera:
+
+    * celui prévu par *encoding* s'il est défini
+    * celui fourni par ``locale.getpreferredencoding(False)`` dans le cas contraire
+  * **t** mode "texte" (par défaut)
+* encoding : encodage
+* errors : peut contenir une des chaînes:
+
+  * 'strict' provoque une *ValueError* en cas de caractère non supportée (valeur par défaut)
+  * 'ignore' ignore les erreurs d'encodage avec le risque de perte de données
+  * 'replace' remplace les caractères en erreur par un marqueur ('?')
+  * 'surrogateescape' représente les octets non reconnus par un point code dans la plage U+DC80 - U+DCFF
+  * 'xmlcharrefreplace' remplace les caractères non supportés  par l'encodage avec l'entité XML *&#nn;* (en écriture seulement)
+  * 'backslashreplace'  remplace les caractères non supportés  par l'encodage avec les séquence d'échapement \nnn
+
+* newline : valeurs possibles None, '', '\\n', '\\r', et '\\r\\n'
+* closefd : déjà évoqué pour "file". Si "file" est un nom il est sans effet et il doit contenir la valeur par défaut.
+* opener : fonction utilisateur destiné à l'ouverture du fichier *(nouveauté Python 3.3)*
+
+.. slide_mark_e
+.. slide_mark_b :La manipulation des fichiers *[3]*
+
+**Rappel:**
+
+
+::
+
+   >>> with open("/tmp/fich.txt","w") as fd:
+   ...     fd.write("some text")
+
+Est l'équivalent de:
+
+::
+
+   >>> fd = open("/tmp/fich.txt","w")
+   >>> try:
+   ...     fd.write("some text")
+   ... finally:
+   ...     fd.close()
+
+.. slide_mark_e
+
+Les autres méthodes sur les fichiers
+====================================
+
+.. slide_mark_b :Les autres méthodes sur les fichiers
+
+* read(size) : *size* exprime la quantité de données à lire : s'il est négatif ou absent tout le fichier sera lu
+* seek(offset,from_what) positionnement dans le fichier. *from_what* représente l'origine par rapport à laquelle l'offset est exprimé et peut prendre trois valeurs:
+
+  * 0 : début du fichier
+  * 1 : la position courante dans le fichier
+  * 2 : fin du fichier
+* tell() fournit la position courante dans le fichier
+
+Exemple:
+
+::
+
+   >>> f=open("/tmp/testfile.txt","r+")
+   >>> f.read()
+   '01234567890123456789\n'
+   >>> f.seek(3)
+   >>> f.read()
+   '34567890123456789\n'
+   >>> f.seek(-3,2)
+   >>> f.read()
+   '89\n'
+   >>> f.tell()
+   21
+   >>> f.read()
+   ''
+   >>> f.seek(-3,2)
+   >>> f.write("xy")
+   >>> f.seek(5)
+   >>> f.write("ab")
+   >>> f.seek(0)
+   >>> f.read()
+   '01234ab78901234567xy\n'
+   >>> 
+
+.. slide_mark_e
+
+*****************
+Le module **sys**
+*****************
+
+.. slide_mark_b :Le module **sys**
+
+C'est le module, déjà évoqué dans les chapitres précédents, joue principalement deux rôles:
+
+* il fournit au programme les moyens de base d'interagir avec son environnement d'exécution (entrées/sorties, arguments de la ligne de commande)
+* il donne au programme l'accès aux paramètres de l'interpréteur 
+
+Le script suivant affiche les arguments de la ligne de commande:
+
+.. literalinclude:: includes/print_argv.py
+
+::
+
+   $ ./print_argv.py 66 abc
+   0: ./print_argv.py
+   1: 66
+   2: abc
+
+.. slide_mark_e
+.. slide_mark_b :Le module **sys** *[2]*
+
+Quelques autres attributs et fonctions de ce module, illustrés par des exemples:
+
+::
+
+   >>> import sys
+   >>> sys.executable
+   '/usr/bin/python'
+   >>> sys.platform
+   'linux2'
+   >>> sys.version
+   '2.7.3 (default, Sep 26 2013, 20:03:06) \n[GCC 4.6.3]'
+   >>> sys.getdefaultencoding()
+   'ascii'
+   >>> sys.modules # les modules chargés par l'interpréteur
+   {'copy_reg': <module 'copy_reg' from '/usr/lib/python2.7/copy_reg.pyc'>, ....}
+   >>> sys.path
+   ['', '/usr/lib/python2.7', '/usr/lib/python2.7/plat-linux2', '/usr/lib/python2.7/lib-tk', '/usr/lib/python2.7/lib-old', '/usr/lib/python2.7/lib-dynload', '/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages']
+   >>> sys.stdout.write("Un message")
+   Un message>>> sys.stdout.write("Un autre message \n")
+   Un autre message 
+   >>> sys.stderr.write("Une erreur\n")
+   Une erreur
+   >>> sys.exit(0) # fin de l'exécution
+
+.. slide_mark_e
+
+******************************************
+L'interface avec le système d'exploitation
+******************************************
+
+.. slide_mark_b :L'interface avec le système d'exploitation
+
+
+Il s'agit des fonctionnalités souvent équivalentes aux commandes système usuelles. Elles se retrouvent dans plusieurs modules dont **os**, **shutil** et **glob**
+
+.. slide_mark_e
+
+Le module **os**
+================
+
+.. slide_mark_b :Le module **os**
+
+Ce module contient un grand nombre de fonctions permettant l'interaction avec le système d'exploitation.
+
+.. admonition:: Avertissement
+   :class: warning
+
+   Il est vivement déconseillé d'importer ce module par ``from os import *`` car la fonction *os.open()* va se substituer à la primitive *open()*, avec un comportement différent. L'utilisation de l'importation simple ``import os`` évite ce problème.
+
+
+Pour illustrer quelques unes des fonctionnalités de ce module, une mise en perspective  d'opérations équivalentes réalisés en *shell* (bash) et en Python:
+
+Accès à l'environnement (variable *PATH*) en *bash*:
+
+::
+
+   $ echo $PATH
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games
+
+En Python:
+
+::
+
+   >>> os.environ['PATH']
+   '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games'
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[2]*
+
+Manipulation de répertoires en bash:
+
+::
+
+   poli@host:~$ cd /tmp
+   poli@host:/tmp$ mkdir testpy
+   poli@host:/tmp$ cd testpy/
+   poli@host:/tmp/testpy$ pwd
+   /tmp/testpy
+   poli@host:/tmp/testpy$ cd ..
+   poli@host:/tmp$ pwd
+   /tmp
+   poli@host:/tmp$ rmdir testpy
+   poli@host:/tmp$
+
+
+
+
+L'équivalent en Python:
+
+::
+
+   >>> import os
+   >>> os.chdir('/tmp/') # 'cd /tmp'
+   >>> os.mkdir('testpy') # 'mkdir testpy'
+   >>> os.chdir('testpy') # 'cd testpy'
+   >>> os.getcwd()        # 'pwd'
+   '/tmp/testpy'          
+   >>> os.chdir('..')     # 'cd ..'
+   >>> os.getcwd()        # 'pwd'
+   '/tmp'
+   >>> os.rmdir('testpy') # 'rmdir testpy'
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[3]*
+
+Autres manipulations simples sur des fichiers en bash :
+
+::
+
+   $ ls /tmp/
+   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy.txt
+   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
+   $ mv /tmp/testpy.txt /tmp/testpy2.txt
+   $ ls /tmp/
+   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy2.txt
+   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
+   $ rm /tmp/testpy2.txt 
+   $ ls /tmp/
+   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log
+   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
+
+Et leur équivalent en Python:
+
+::
+
+   >>> os.listdir("/tmp/") # 'ls /tmp/' ('ls' -A plus précisément)
+   ['RewriteLog.log', 'testpy.txt', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'pulse-2L9K88eMlGn7']
+   >>> os.rename("/tmp/testpy.txt", "/tmp/testpy2.txt") # 'mv /tmp/testpy.txt /tmp/testpy2.txt'
+   >>> os.listdir("/tmp/") # 'ls /tmp/'
+   ['RewriteLog.log', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'testpy2.txt', 'pulse-2L9K88eMlGn7']
+   >>> os.remove("/tmp/testpy2.txt") # 'rm /tmp/testpy2.txt'
+   >>> os.listdir("/tmp/")
+   ['RewriteLog.log', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'pulse-2L9K88eMlGn7']
+
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[4]*
+
+Autres fonctions utiles:
+
+::
+
+   os.makedirs("dir1/dir2/.../cible")
+
+L'effet de cette fonction est équivalent à celui de la commande (Linux/Unix) ``mkdir -p ...`` : elle crée le répertoire cible ainsi que tous les répertoires intermédiaires s'ils n'existent pas:
+
+::
+
+   >>> os.path.exists("/tmp/")
+   True
+   >>> os.path.exists("/tmp/dir1")
+   False
+   >>> os.makedirs("/tmp/dir1/dir2/cible")
+   >>> os.path.exists("/tmp/dir1")
+   True
+   >>> os.path.exists("/tmp/dir1/dir2")
+   True
+   >>> os.path.exists("/tmp/dir1/dir2/cible")
+   True
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[5]*
+
+::
+
+    os.walk(top, topdown=True, onerror=None, followlinks=False)
+
+Cette fonction permet de parcourir une arborescence de fichiers ayant pour racine le répertoire *top*. Elle retourne un générateur qui fournit à chaque itération un triplet de valeurs contenant:
+
+* le nom du répertoire courant
+* la liste des sous-répertoires directs
+* la liste des fichiers membres
+
+Les options:
+
+* topdown : 
+  
+  * True : l'itération se fait à partir de la racine (valeur par défaut)
+  * False: l'itération se fait à partir des "feuilles"
+
+* onerror : None (par défaut) ou une fonction utilisateur qui sera appelée en cas d'erreur.
+
+* followlinks : suivi des liens symboliques (si *True*). Peut provoquer une récursion infinie en cas de liens cycliques
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[6]*
+
+Exemples:
+
+* top-down :
+
+  ::
+
+     >>> import os
+     >>> g=os.walk("/usr/local/lib/python2.7/dist-packages/")
+     >>> type(g)
+     <type 'generator'>
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/', ['django_http_proxy-0.3.2-py2.7.egg', 'django_guardian-1.0.4-py2.7.egg', 'Whoosh-2.4.1-py2.7.egg', 'vnc2flv', 'codenode-0.02-py2.7.egg', 'django', 'easy_thumbnails-1.0.3-py2.7.egg', 'Twisted-12.3.0-py2.7-linux-x86_64.egg', 'django_userena-1.1.2-py2.7.egg', 'django_compress-1.0.1-py2.7.egg', 'django_passwords-0.2.0-py2.7.egg'], ['vnc2flv-20100207.egg-info', 'flvscreen.so', 'Django-1.5.4.egg-info', 'easy-install.pth'])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg', ['EGG-INFO', 'httpproxy'], [])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO', [], ['zip-safe', 'SOURCES.txt', 'PKG-INFO', 'dependency_links.txt', 'top_level.txt'])
+     >>> # etc...
+
+* bottom-up :
+
+  ::
+
+     >>> g=os.walk("/usr/local/lib/python2.7/dist-packages/",topdown=False)
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO', [], ['zip-safe', 'SOURCES.txt', 'PKG-INFO', 'dependency_links.txt', 'top_level.txt'])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/httpproxy', [], ['views.pyc', 'settings.pyc', 'recorder.py', '__init__.py', 'exceptions.pyc', 'views.py', 'settings.py', 'decorators.py', 'models.pyc', 'recorder.pyc', 'models.py', 'admin.py', '__init__.pyc', 'admin.pyc', 'decorators.pyc', 'exceptions.py'])
+     >>> 
+
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os** *[7]*
+
+
+.. admonition:: A manipuler avec précaution
+   :class: warning
+
+	   * remove(path) supprime le fichier
+	   * rmdir(path) supprime le répertoire s'il est vide
+
+.. slide_mark_e
+
+Le module **os.path**
+=====================
+
+.. slide_mark_b :Le module **os.path**
+
+Ce module est dédié à la manipulation des chemins dans le système de fichiers.
+
+::
+
+   >>> import os
+   >>> os.getcwd()
+   '/usr/lib/python2.7'
+   >>> import os.path
+   >>> os.path.abspath("code.py") # construit le chemin absolue en fonction de l'emplacement courant
+   '/usr/lib/python2.7/code.py'
+   >>> os.path.basename('/usr/lib/python2.7/code.py') # ~ basename cmd
+   'code.py'
+   >>> os.path.dirname('/usr/lib/python2.7/code.py') # ~ dirname cmd
+   '/usr/lib/python2.7'
+   >>> os.path.split('/usr/lib/python2.7/code.py') # (dirname, basename)
+   ('/usr/lib/python2.7', 'code.py')
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os.path** *[2]*
+
+Les fonction suivantes permettent de tester le type d'objet (répertoire, fichier, lien etc.) désigné par un chemin:
+
+::
+
+   >>> os.path.exists('/usr/lib/python2.7/code.py')
+   True
+   >>> os.path.exists('/usr/lib/python2.7/foobar.py')
+   False
+   >>> os.path.isfile('/usr/lib/python2.7/code.py')
+   True
+   >>> os.path.isdir('/usr/lib/python2.7/code.py')
+   False
+   >>> os.path.isdir('/usr/lib/python2.7')
+   True
+   >>> os.path.islink('/usr/lib/python2.7/code.py')
+   False
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os.path** *[3]*
+
+Pour la portabilité, il est préférable d'utiliser *os.path.join(...)* pour construire des chemins:
+
+::
+
+   >>> os.path.join('/tmp','foo','bar')
+   '/tmp/foo/bar'
+
+.. admonition:: Attention
+   :class: warning
+
+   Si un chemin absolu est fourni, tous les éléments qui le précédent sont ignorés silencieusement:
+
+
+::
+
+   >>> os.path.join('tmp','/foo','bar')
+   '/foo/bar'
+   >>> os.path.join('/tmp','/foo','bar')
+   '/foo/bar'
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le module **os.path** *[4]*
+
+La fonction ``os.path.normpath()`` élimine les redondances pour ramener le chemin au format "canonique":
+
+::
+
+   >>> os.path.normpath('/usr/../usr/lib//python2.7/./code.py')
+   '/usr/lib/python2.7/code.py'
+   >>>
+
+**NB:** Sous Windows cette fonction transforme les **/** en **\\**. Pour les OS "case insesitive" la fonction *os.path.normcase()* permet de passer les noms en minuscules.
+
+.. slide_mark_e
+ 
+Utilisation du caractère "joker"
+================================
+
+.. slide_mark_b :Utilisation du caractère "joker"
+
+La fonction *glob.glob()* permet de lister le contenu d'un répertoire avec un filtre:
+
+::
+
+   >>> import glob
+   >>> glob.glob("/usr/lib/python2.7/b*py")
+   ['/usr/lib/python2.7/binhex.py', '/usr/lib/python2.7/bdb.py', '/usr/lib/python2.7/base64.py', '/usr/lib/python2.7/bisect.py']
+
+.. slide_mark_e
+
+Des fonctions de plus haut niveau
+=================================
+
+.. slide_mark_b :Des fonctions de plus haut niveau
+
+Le module *shutil* fournit des fonctions de manipulation de fichiers (copie, suppression) d'un niveau d'abstraction plus proche des commandes système.
+
++------------------------------+------------------------------------------------------------------------+
+| Fonction                     |Description                                                             |
++==============================+========================================================================+
+| shutil.copy(src, dst)        | Copie un fichier avec les permissions. *dst* peut être un répertoire   |
++------------------------------+------------------------------------------------------------------------+
+| shutil.copymode(src, dst)    | Copie les permissions **seules** entre *src* et *dst*                  |
++------------------------------+------------------------------------------------------------------------+
+| shutil.copystat(src, dst)    | Copie les permissions+infos temps(dernier accès/modification)+flags    |
++------------------------------+------------------------------------------------------------------------+
+| shutil.copy2(src, dst)       | Équivalent copy() + copystat()                                         |
++------------------------------+------------------------------------------------------------------------+
+
+**NB:** shutil contient d'autres fonctions puissantes, permettant la copie et la suppression d'arborescences de fichiers, à manipuler avec précaution.
+
+.. slide_mark_e
+
+*******************
+Les (sous)processus
+*******************
+
+.. slide_mark_b :Les (sous)processus
+
+Les situations les plus courantes nécessitant le lancement des nouveaux processus sont traitées par quelques fonctions du module **subprocess** :
+
+::
+
+   subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None) # timeout existe seulement en version 3.x
+
+
+C'est une signature abrégée, le deuxième paramètre ``*`` symbolise des paramètres moins utilisés qui ne seront pas discutés ici.
+
+* args : représente la commande à exécuter. Peut être une liste ou une chaîne de caractères
+* stdin, stdout, stderr : redirection possible des entrées/sorties standard
+* shell : si ``shell=True`` la commande sera exécutée par le *shell*
+
+
+.. admonition:: Avertissement
+   :class: warning
+
+   L'argument shell=True représente un risque important en terme de sécurité en particulier en présence d'entrées non fiables. Son utilisation est *vivement déconseillée*.
+
+
+Cette fonction:
+
+* exécute la commande exprimée par args
+* attend la fin de l'exécution
+* renvoie le code de retour système
+
+.. slide_mark_e
+.. slide_mark_b :Les (sous)processus *[2]*
+
+::
+
+   >>> subprocess.call("ls")
+   controller  __init__.py  __init__.pyc  model  view
+   0
+   >>> subprocess.call(["ls", "view"])
+   admviews.py   appviews1.py   appviews1.pyc  appviews2.pyc  __init__.pyc
+   admviews.pyc  appviews1.py~  appviews2.py   __init__.py
+   0
+   >>> subprocess.call(["ls","-l", "/tmp/locked.txt"])
+   ---------- 1 poli poli 0 mars  11 15:44 /tmp/locked.txt
+   0
+   >>> subprocess.call(["cat", "/tmp/locked.txt"])
+   cat: /tmp/locked.txt: Permission non accordée
+   1
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les (sous)processus *[3]*
+
+::
+
+   subprocess.check_call(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None) # timeout existe seulement en version 3.x
+
+Effectue le même traitement que *subprocess.call()* mais lève une exception si le code de retour est *!=0*
+
+::
+
+   >>> subprocess.check_call(["cat", "/tmp/locked.txt"])
+   cat: /tmp/locked.txt: Permission non accordée
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "/usr/lib/python2.7/subprocess.py", line 511, in check_call
+   raise CalledProcessError(retcode, cmd)
+   subprocess.CalledProcessError: Command '['cat', '/tmp/locked.txt']' returned non-zero exit status 1
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les (sous)processus *[4]*
+
+::
+
+   subprocess.check_output(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None) # timeout existe seulement en version 3.x
+
+Effectue le même traitement que ``subprocess.check_call()`` mais retourne la sortie standard:
+
+::
+
+   >>> result = subprocess.check_output(["echo", "Hello"])
+   >>> result
+   'Hello\n'
+   >>>
+
+.. note:: Des utilisation avancées de ce module, qui dépassent le cadre de cette introduction, passent par l'utilisation directe de la classe **subprocess.Popen**
+
+.. slide_mark_e
+
+**********************
+Le module **platform**
+**********************
+
+.. slide_mark_b :Le module **platform**
+
+Comme son nom l'indique ce module fournit des informations sur la plateforme :
+
+
+* Architecture : platform.architecture(executable='/usr/bin/...')
+* Type de matériel : platform.machine()
+* Nom réseau de l’hôte : platform.node()
+* Chaîne de caractère contenant système, release, type de machine etc. : platform.platform()
+* Nom du processeur : platform.processor()
+* Infos système (nom,version,release) du système : platform.system(), platform.version(), platform.release()
+* Infos sur l’interpréteur : python_build(), python_compiler(), python_version()
+
+.. slide_mark_e
+
+**************************
+L'accès à Internet en http
+**************************
+
+.. slide_mark_b :L'accès à Internet en http
+
+Un module simple permettant de faire des requêtes *http* est *urllib2*. Pour une utilisation basique il suffit de passer une *url* en argument à la fonction *urlopen()* qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:
+
+::
+
+   >>> import urllib2
+   >>> i = urllib2.urlopen("http://example.org")
+   >>> next(i)
+   '<!doctype html>\n'
+   >>> next(i)
+   '<html>\n'
+   >>> next(i)
+   '<head>\n'
+   >>> # ...
+
+On peut également récupérer le résultat d'un coup:
+
+::
+
+   >>> urllib2.urlopen("http://example.org").read()
+   '<!doctype html>\n<html>\n<head>\n ...
+
+.. slide_mark_e
+
+***********************
+Compression des données
+***********************
+
+.. slide_mark_b :Compression des données
+
+Les formats courants sont supportés:
+
+
+* zlib
+* gzip
+* bz2
+* zipfile 
+* tarfile
+
+Illustration, avec une belle citation de *Boby Lapointe* :
+
+::
+
+   >>> import zlib
+   >>> citation = "Davantage d'avantages avantagent davantage."
+   >>> len(citation)
+   43
+   >>> zipped = zlib.compress(citation)
+   >>> len(zipped)
+   32
+   >>> zlib.decompress(zipped)
+   "Davantage d'avantages avantagent davantage."
+   >>> 
+
+.. slide_mark_e
+
+****************************
+**ConfigParser** et **json**
+****************************
+
+.. slide_mark_b :**ConfigParser**
+
+*Configparser*, renommé *configparser* en version 3, permet de créer et parser des fichiers de configuration de type **.ini**, **.cfg** etc., assez répandus dans tous les environnements.
+
+Création d'un fichier de configuration (pour un logiciel imaginaire):
+
+::
+
+   >>> import ConfigParser
+   >>> conf = ConfigParser.RawConfigParser()
+   >>> conf.add_section("ClientSide")
+   >>> conf.set("ClientSide","buffer",1000)
+   >>> conf.set("ClientSide","timeout",10)
+   >>> conf.add_section("ServerSide")
+   >>> conf.set("ServerSide","db","mysql")
+   >>> conf.set("ServerSide","logs","/var/log/mysrv")
+   >>> with open("myconf.cfg","w") as fd:
+   ...     conf.write(fd)
+
+Résultat :
+
+::
+
+   $ cat myconf.cfg 
+   [ClientSide]
+   buffer = 1000
+   timeout = 10
+
+   [ServerSide]
+   db = mysql
+   logs = /var/log/mysrv
+
+.. slide_mark_e
+.. slide_mark_b :**ConfigParser** *[2]*
+
+Pour parser le fichier de configuration précédent:
+
+::
+
+   >>> conf = ConfigParser.RawConfigParser()
+   >>> conf.read("myconf.cfg")
+   ['myconf.cfg']
+   >>> conf.getint("ClientSide","buffer")
+   1000
+   >>> conf.get("ServerSide","db")
+   'mysql'
+
+.. slide_mark_e
+.. slide_mark_b :*JSON*
+
+*JSON*, acronyme de *JavaScript Object Notation*, est un format d'échange très utilisé. Les structures de données *JavaScript* étant assez proches de celles de Python (listes, dictionnaires), l'utilisation de *JSON* est très intuitive;
+
+::
+
+   >>> import json
+   >>> some_data = {'a':3, 'b':[5,'xyz']}
+   >>> json.dumps(some_data)
+   '{"a": 3, "b": [5, "xyz"]}'
+   >>> txt = json.dumps(some_data)
+   >>> type(txt)
+   <type 'str'>
+   >>> json.loads(txt)
+   {u'a': 3, u'b': [5, u'xyz']}
+   >>> data = json.loads(txt)
+   >>> type(data)
+
+.. slide_mark_e
+
+***********************
+Mesure des performances
+***********************
+
+.. slide_mark_b :Mesure des performances
+
+Le module *timeit* offre un moyen simple pour comparer des performances entre plusieurs implémentations d'une fonctionnalités, plusieurs approches d'un même problème etc.
+
+Par exemple, on peut comparer le temps nécessaire pour la construction d'une liste de 100 éléments avec le temps pour construire un générateur équivalent:
+
+::
+
+   >>> from timeit import Timer
+   >>> Timer('[e**2 for e in xrange(1,100)]').timeit()
+   9.104944229125977
+   >>> Timer('(e**2 for e in xrange(1,100))').timeit()
+   0.6118359565734863
+
+...et le temps pour fabriquer la liste indirectement, en passant par la fabrication du dit générateur:
+
+::
+
+   >>> Timer('list((e**2 for e in xrange(1,100)))').timeit()
+   10.48848009109497
+
+.. slide_mark_e
+
+*******************
+Le module **math**
+*******************
+
+.. slide_mark_b :Le module **math**
+
+Fournit des fonctions de base en théorie des nombres, logarithmes, trigonométrie, conversions d'angles etc:
+
+
+::
+
+   >>> import math
+   >>> math.tan(math.pi/4)
+   0.9999999999999999
+   >>> math.pi
+   3.141592653589793
+   >>> math.e
+   2.718281828459045
+   >>> math.log(math.e**3) # logarithme naturel (appel à 1 seul argument)
+   3.0
+   >>> math.log(1000,10) # 2 args, équivalent  log(x)/log(10)
+   2.9999999999999996
+   >>> math.log10(1000) # log décimal, plus précis que log(x,10)
+   3.0
+   >>> math.radians(90) # pi/2
+   1.5707963267948966
+   >>> math.degrees(math.pi/2)
+   90.0
+   >>> # etc.
+   ... 
+
+.. slide_mark_e
+
+********************
+Le module **random**
+********************
+
+.. slide_mark_b :Le module **random**
+
+Fournit des générateurs de nombres pseudo-aléatoires.
+
+::
+
+   >>> import random
+   >>> random.random()
+   0.28578533604922873
+   >>> random.randrange(16)
+   15
+   >>> random.randrange(16)
+   10
+   >>> random.choice("abc")
+   'c'
+   >>> random.choice("abc")
+   'a'
+   >>> 
+
+.. slide_mark_e
+
+********************************************
+Les expressions rationnelles (ou régulières)
+********************************************
+
+.. slide_mark_b :Les expressions rationnelles (ou régulières)
+
+::
+
+   >>> re.findall(r'\bon[a-z]*', 'There should be one-- and preferably only one --obvious way to do it.')
+   ['one', 'only', 'one']
+   >>> prog= re.compile(r'\bon[a-z]*') # avec un motif compilé
+   >>> prog.findall('There should be one-- and preferably only one --obvious way to do it. (Tim Peters)')
+   ['one', 'only', 'one']
+
+.. slide_mark_e
+
+
+
+
+
+
+
+
+
+
+

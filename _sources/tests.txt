@@ -1,0 +1,126 @@
+#########
+Les tests
+#########
+
+Plusieurs méthodes dites *agiles* préconisent une démarche de développement dirigée par les tests ("Test Driven Development" ou TDD) qui suppose l'écriture des scripts de test parallèlement à l'écriture du logiciel cible. 
+
+D'autres approches méthodologiques préconisent l'utilisation de tests unitaires au cours du processus de développement.
+
+La mise en place de tout processus de développement intégrant les tests dans sa stratégie nécessite des outils d'automatisation des *tests unitaires*. La bibliothèque standard de Python dispose de deux modules dédiés à cette tache: 
+
+* *doctest* qui est destiné plus à maintenir une documentation de qualité qu'à écrire des vrais tests unitaires
+
+* *unittest* outil beaucoup plus complet que le précédent, bien adapté pour la mise en place d'une politique de test.
+
+
+
+*****************
+Le module doctest
+*****************
+
+Est un outil qui va scanner un module et va exécuter les tests incorporés dans les docstrings des fonctions. Même s'il n'est pas complet en tant qu'outil de test, il a au moins trois mérites:
+
+* permet d'enrichir la documentation
+* permet de détecter des éventuelles divergences entre la documentation et le code
+* il est très simple à mettre en place. Il suffit d'exécuter la fonction à tester dans l'interpréteur interactif et de copier/coller les lignes contenant l'appel ainsi que le résultat dans la docstring de la dite fonction.
+
+.. literalinclude:: includes/area_doctest.py
+
+Si on injecte une erreur dans le code (par exemple, on remplace par inadvertance l'opérateur **/** par **//**):
+
+.. literalinclude:: includes/area_doctest_err.py
+
+l'exécution va lever une exception:
+
+::
+
+   $ python area_doctest_err.py
+   **********************************************************************
+   File "area_doctest_err.py", line 3, in __main__.triangle_area
+   Failed example:
+   triangle_area(5,7)
+   Expected:
+        17.5
+   Got:
+        17.0
+   **********************************************************************
+   1 items had failures:
+   1 of   1 in __main__.triangle_area
+   ***Test Failed*** 1 failures.
+
+
+
+
+
+******************
+Le module unittest
+******************
+
+Est un outil plus complet, permettant de définir des jeux de test ayant une structure propre et maintenus dans des fichiers séparés du module testé. Il met en oeuvre quatre concepts:
+
+* "test fixture" (banc de test) qui met en place l'environnement d'exécution. Cette action précède le  test (création d'objets, connexions DB, répertoires etc).
+* "test case" c'est une unité individuelle de test. Concrètement, c'est une sous-classe de la classe *TestCase* fournie par le module.
+* "test suite" une collection composite de  "test cases" et/ou  "test suites"
+* "test runner" dispositif pour organiser l'exécution des tests et la collecte/rendu des résultats. Il peut prendre plusieurs formes: interface graphique, ligne de commande etc.
+
+Les sous-classes de *TestCase* héritent de plusieurs méthodes intéressantes: 
+
+* setUp() : appelée avant l'exécution de chaque méthode de test:
+
+  * met en place l'environnement d'exécution préalable au test ("test fixture")
+  * elle a vocation à être surchargée (par défaut elle ne fait rien)
+* run() : lance les test de la classe (les méthodes dont le nom commence par **test_**
+* TearDown() : fait le ménage après chaque test (réussi ou pas)
+
+Les tests, (les méthodes **test_**) ont la possibilité d'utiliser dans leur implémentation plusieurs méthodes héritées utiles, au nom évocateur (liste non exhaustive):
+
+* *assertEqual(first, second, msg=None)*
+* *assertRaises(exceptionClass, callableObj, *args, **kwargs)*
+* *assertTrue(expr, msg=None)*
+
+Par exemple, si on se propose de tester le module *modpoint* :
+
+.. literalinclude:: includes/modpoint.py
+
+Un *test case* très simple peut se présenter ainsi :
+
+.. literalinclude:: includes/test_modpoint.py
+
+On peut faire exécuter les tests avec:
+
+::
+
+   if __name__ == '__main__':
+       unittest.main()
+
+::
+
+   ..
+   ----------------------------------------------------------------------
+   Ran 2 tests in 0.000s
+   
+   OK
+
+Sinon, avec un "runner" plus évolué:
+
+::
+
+   if __name__ == '__main__':
+      suite = unittest.TestLoader().loadTestsFromTestCase(TestPoint)
+      unittest.TextTestRunner(verbosity=2).run(suite)
+
+::
+
+   $ python test_modpoint.py
+   test_equal (__main__.TestPoint) ... ok
+   test_move (__main__.TestPoint) ... ok
+   
+   ----------------------------------------------------------------------
+   Ran 2 tests in 0.000s
+   
+   OK
+
+
+
+**NB:** Par convention, les tests relatifs à un module (par exemple *foobar*) sont regroupé dans un fichier séparé appelé test_foobar.py
+

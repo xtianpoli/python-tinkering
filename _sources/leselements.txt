@@ -1,0 +1,3273 @@
+#######################
+Les éléments du langage
+#######################
+
+******************
+Une vue d'ensemble
+******************
+
+.. slide_mark_b :Les éléments du langage
+
+L'objectif de cette section est d'introduire de manière succincte et parfois intuitive certaines notions qui seront précisées dans les chapitres suivants.
+
+
+.. s_lide_mark_e
+
+Les objets
+==========
+
+.. s_lide_mark_b :Les objets
+
+A ce stade on va se contenter de décrire les objets  *Python* d'une manière très simplifiée et souvent partielle, description sur laquelle on va revenir ultérieurement pour la parfaire.
+
+On va considérer pour l'instant l'objet comme une entité ayant une structure composé de:
+
+* données accessibles par des noms appelés **attributs** (Notation: *objet.attribut* )
+* comportements propres qui sont des fonctions attachées à l'objet appelés **méthodes** (exemple d'appel d'une méthode: ``"abc".upper()``)
+* un identifiant unique
+* un type (ou une classe)
+
+
+.. slide_mark_e
+
+Quelques objets...
+------------------
+
+.. slide_mark_b : Quelques objets...
+
+Pour illustration, un aperçu rapide et très partiel de quelques types de base (qui seront expliqués plus en détail dans un chapitre dédié).
+
+**Un entier:**
+
+::
+
+   >>> id(1) # possède un id
+   9357408
+   >>> type(1) # possède un type
+   <class 'int'>
+   >>> dir(1) # la primitive dir() fournit la liste des attributs et de méthodes
+   ['__abs__', '__add__', '__and__', '__class__', '__cmp__', '__coerce__', '__delattr__', '__div__', '__divmod__', '__doc__', '__float__', '__floordiv__', '__format__', '__getattribute__', '__getnewargs__', '__hash__', '__hex__', '__index__', '__init__', '__int__', '__invert__', '__long__', '__lshift__', '__mod__', '__mul__', '__neg__', '__new__', '__nonzero__', '__oct__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdiv__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', '__rmul__', '__ror__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__', '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'bit_length', 'conjugate', 'denominator', 'imag', 'numerator', 'real']
+
+.. slide_mark_e
+.. slide_mark_b : Quelques objets...[2]
+
+**Une chaîne de caractères:**
+
+::
+
+   >>> id('abc') # possède un id
+   140219035744176
+   >>> type('abc') # possède un type
+   <type 'str'>
+   >>> dir('abc') # attributs, méthodes
+   ['__add__', '__class__', '__contains__', '__delattr__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getslice__', '__gt__', '__hash__', '__init__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '_formatter_field_name_split', '_formatter_parser', 'capitalize', 'center', 'count', 'decode', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'index', 'isalnum', 'isalpha', 'isdigit', 'islower', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+
+.. slide_mark_e
+.. slide_mark_b : Quelques objets...[3]
+
+**Une liste:**
+
+Pour l'instant, on va se contenter d'envisager la liste comme un tableau d'objets (pas forcément tous du même type).
+
+**NB:** Les listes font partie d'une "famille" de types de base appelées **séquences** et qui seront détaillées plus loin.
+
+::
+
+   >>> id([1,'abc']) # possède un id
+   30386656
+   >>> type([1,'abc']) # possède un type
+   <type 'list'>
+   >>> dir([1,'abc']) # attributs, méthodes
+   ['__add__', '__class__', '__contains__', '__delattr__', '__delitem__', '__delslice__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getslice__', '__gt__', '__hash__', '__iadd__', '__imul__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__reversed__', '__rmul__', '__setattr__', '__setitem__', '__setslice__', '__sizeof__', '__str__', '__subclasshook__', 'append', 'count', 'extend', 'index', 'insert', 'pop', 'remove', 'reverse', 'sort']
+
+.. slide_mark_e
+.. slide_mark_b : Quelques objets...[4]
+
+**Une fonction est aussi un objet:**
+
+::
+
+
+   >>> def say_hello():
+   ...     print("Hello!")
+   ... 
+   >>> id(say_hello)
+   30495040
+   >>> type(say_hello)
+   <type 'function'>
+   >>> dir(say_hello)
+   ['__call__', '__class__', '__closure__', '__code__', '__defaults__', '__delattr__', '__dict__', '__doc__', '__format__', '__get__', '__getattribute__', '__globals__', '__hash__', '__init__', '__module__', '__name__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'func_closure', 'func_code', 'func_defaults', 'func_dict', 'func_doc', 'func_globals', 'func_name']
+
+.. slide_mark_e
+
+
+   
+La référence uniforme en Python
+===============================
+
+.. slide_mark_b :La référence uniforme en Python
+
+En Python, tout est objet de "première classe", du simple entier jusqu'à la fonction.
+
+
+.. note::
+
+  Un objet de première classe ("first class object") est un objet qui peut être affecté à une variable, passé en paramètre à une fonction ou retourné par une fonction (cf. Raphael Finkel)
+
+Les langages de programmation peuvent manipuler les données de deux manières:
+
+* par valeur (par exemple, les entiers dans le langage **C**)
+* par référence (Java, C++). 
+
+.. sl_ide_mark_e
+.. sl_ide_mark_b :La référence uniforme en Python[2]
+
+..  Dans les langages de très haut niveau, disposant de ramasse miettes, l'identité *pointeur<=>référence* ne fonctionne plus si on envisage le pointeur comme une adresse de mémoire mais la référence peut être vue comme un pointeur "abstrait".
+
+En Python, toute donnée, même très simple, étant représentée sous forme d'objet, sa manipulation se fait toujours par référence, jamais par valeur, ce qui correspond à la sémantique de **référence uniforme**.
+
+.. slide_mark_e
+
+Les variables
+=============
+
+.. slide_mark_b :Les variables
+
+
+En Python, une variable n'a pas de correspondant physique (comme les variables en *C*, qui sont des locations mémoire). Les variables *Python* sont juste des **noms**, des **identifiants** attribués à des objets. Ainsi, une variable: 
+
+* Ne fait pas l'objet d'une déclaration
+* Ne désigne pas une adresse mémoire comme en *C/C++*
+* N'est pas un objet (mais juste un nom attribué à un objet)
+* N'a pas de type (mais l'objet qu'elle désigne en a un, **toujours** !)
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[2]
+
+**Illustration:**
+
+A la suite des opérations suivantes, l'objet (chaîne de caractères) 'python' sera référencé 3 fois:
+
+::
+
+   >>> a='python'
+   >>> id(a)
+   140219035541248
+   >>> id('python')
+   140219035541248
+   >>> b=a
+   >>> id(b)
+   140219035541248
+   >>> lst=[b,2]
+   >>> id(lst)
+   30386656
+   >>> id(2)
+   25253792
+   >>> id(lst[0])
+   140219035541248   
+   >>> id(lst[1])
+   25253792
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[3]
+
+.. image:: images/var_refs_cut.jpg
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[4]
+
+Par la suite, l'objet va "perdre" une référence:
+
+::
+
+   >>> lst[0]=1
+
+.. image:: images/var_refs2_cut.jpg
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[5]
+
+Et encore une:
+
+::
+
+   >>> b=lst
+
+.. image:: images/var_refs3_cut.jpg
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[6]
+
+Avec la perte de la dernière référence, l'objet sera purgé par le "garbage collector" (ramassage des miettes):
+
+::
+
+   >>> a=lst
+
+.. image:: images/var_refs4_cut.jpg
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[7]
+
+Lexicalement, les noms des variables en Python sont des identifiants soumis, globalement, aux mêmes règles qu'en *C*, *C++* ou *Java*:
+
+identifiant := (lettre|_)(lettre|chiffre|_)*
+
+.. admonition:: Avertissement
+   :class: warning
+
+   A partir de la version 3 de *Python*, toutes les lettres Unicode peuvent entrer dans la composition d'un identifiant, par exemple les lettres accentuées. Utiliser des caractères non-ASCII dans les identifiants est une pratique à éviter, car elle est source confusion...
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[8]
+
+**Python 2.x:**
+
+::
+
+   $ python
+   Python 2.7.10 (default, Sep 24 2015, 17:50:09) 
+   [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux2
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> à_éviter=0
+   File "<stdin>", line 1
+   à_éviter=0
+   ^
+   SyntaxError: invalid syntax
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[9]
+
+**Python 3.x:**
+
+::
+
+   $ python3
+   Python 3Python 3.4.3 |Anaconda 2.3.0 (64-bit)| (default, Oct 19 2015, 21:52:17) 
+   [GCC 4.4.7 20120313 (Red Hat 4.4.7-1)] on linux
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>>  à_éviter=0
+    >>> id(à_éviter)
+    140544516702304
+    >>> à_éviter
+    0
+
+.. slide_mark_e
+.. slide_mark_b :Les variables[6]
+
+Pour qu'un identifiant soit un nom correct de variable il ne doit pas faire partie de la liste de mots clés du langage:
+
+::
+
+   >>> and=4
+       File "<stdin>", line 1
+         and=4
+           ^
+    SyntaxError: invalid syntax
+    >>> True=0
+    File "<stdin>", line 1
+    SyntaxError: assignment to keyword
+
+**NB:** La portée des variables sera discutée dans la section sur les fonctions.
+
+.. slide_mark_e
+
+
+Les opérateurs
+==============
+
+.. slide_mark_b :Les opérateurs
+
+Il s'agit ici d'une vue d'ensemble des opérateurs comme entités syntaxiques permettant de construire des expressions. Leur sémantique dépend du type des opérandes et elle sera développée par la suite, au cas par cas, en même temps que les types prédéfinis. La possibilité de redéfinir les opérateurs sera présentée en même temps que le modèle objet.
+
+Opérateurs de base (+,-,*,**,/,//,%)
+------------------------------------
+
+On les associe spontanément aux opérations mathématiques, mais certains d'entre eux peuvent être associés, avec des sémantiques adaptées, à des types non numériques. En plus, comme on le verra plus tard, ils sont redéfinissables  par des types applicatifs (classes).
+
+.. slide_mark_e
+.. slide_mark_b :Opérateurs de base[2]
+
+::
+
+   >>> 1+2
+   3
+   >>> "abc"+"xyz"
+   'abcxyz'
+   >>> "abc"*3
+   'abcabcabc'
+   >>> 2-1
+   1
+   >>> 2*2
+   4
+   >>> 3/4
+   0
+   >>> 5/3
+   1
+   >>> 5.0/3
+   1.6666666666666667
+   >>> 
+
+**NB:** Ces opérateurs peuvent apparaître dans des "affectations augmentées" sous la forme *variable operateur= expression* (Ex: *x += 5*, *x -= 7*, etc.)
+
+.. slide_mark_e
+.. slide_mark_b :Opérateurs de base(3)
+
+::
+
+   >>> x=1
+   >>> x+=5
+   >>> x
+   6
+
+.. slide_mark_e
+
+
+Opérateurs relationnels
+-----------------------
+
+.. slide_mark_b :Opérateurs relationnels
+
+Il sont les mêmes que dans la plupart des langages, avec une syntaxe proche de celle du langage *C*:
+
+======= =====================================================
+Symbole Opération
+======= =====================================================
+<       inférieur
+<=      inférieur ou égal
+>       supérieur
+>=      supérieur ou égal
+==, is  égal (par convention *is* est à utiliser avec *None*)
+!=      différent
+======= =====================================================
+
+**NB:** L'opérateur **<>** (l'équivalent de **!=**) n'est plus supporté en version 3 et son utilisation en version 2 est déconseillée.
+
+.. slide_mark_e
+
+Opérateurs logiques
+-------------------
+
+.. slide_mark_b :Opérateurs logiques
+
+En Python, les expressions suivante sont logiquement fausses: 0,'',"",[],(),{}, False
+
+Les opérateurs logiques sont: **and**, **or**, **not** 
+
+Les fonctions : any(c), all(c) appliquent **or** et **and**
+aux elements du conteneur **c** (par exemple, les éléments d'une liste):
+
+::
+
+   >>> any([0,"",5])
+   True
+   >>> any([0,"",{}])
+   False
+   >>> all([0,"",5])
+   False
+   >>> 
+
+En dehors des connecteurs logiques  **and**, **or**, **not** présentés ici il existe des opérateurs logiques "bit à bit" applicables aux entiers. Il seront présentés dans la section destinées aux types numériques.
+
+.. slide_mark_e
+
+Les expressions
+===============
+
+.. slide_mark_b :Les expressions
+
+Les expressions en Python ne diffèrent pas beaucoup de celles de la plupart des langages de programmation les plus courants. 
+
+De manière très informelle, il s'agit du combinaison cohérente d'objets, variables, appels de fonctions et méthodes et opérateurs. 
+
+Pour une définition formelle voir : http://docs.python.org/3/reference/expressions.html
+
+.. slide_mark_e
+
+Les instructions
+================
+
+.. slide_mark_b :Les instructions
+
+Comme dans d'autres langages on peut parler d'instructions simples et d'instructions composées.
+
+Les instructions simples
+------------------------
+
+Incluent :
+
+* les expressions (saisies en mode interactif, appel de fonction dont la valeur de retour n'est pas utilisée)
+* les affectations:
+
+  * simples (``=``)
+  * multiples  (``=``)
+  * augmentées (``+=``, ``-=``, ...)
+* opérations introduites par un mot clé : assert, pass, del, return, ...
+
+Le plus souvent une instruction simple s'écrit sur une seule ligne mais on peut écrire plusieurs instructions par ligne séparées par **;** (pratique généralement déconseillée, sauf quand son utilité est évidente).
+
+.. slide_mark_e
+
+**Affectations multiples:**
+
+.. slide_mark_b :Affectations multiples
+
+Python permet d'affecter en parallèle plusieurs variables. Cela est pratique si on veut intervertir les valeurs entre deux variables ou faire des permutations:
+
+::
+
+   >>> a = 1
+   >>> b = 2
+   >>> c = 3
+   >>> a, b, c = b, c, a
+   >>> a
+   2
+   >>> b
+   3
+   >>> c
+   1
+   >>> 
+
+**NB:** Cette écriture fait intervenir le type **tuple** qui sera évoqué plus loin.
+
+.. slide_mark_e
+.. slide_mark_b :Affectations multiples[2]
+
+Une autre écriture qu'on peut qualifier d'affectation multiple:
+
+::
+
+   >>> a = b = 3
+   >>> a
+   3
+   >>> b
+   3
+   >>> 
+
+Pour en savoir plus: http://docs.python.org/3/reference/simple_stmts.html
+
+.. slide_mark_e
+
+Les instructions composées
+--------------------------
+
+.. slide_mark_b :Les instructions composées
+
+Il s'agit des instructions contenant à leur tour d'autres instructions regroupées en blocs. 
+
+Elles contrôlent le flux de l'exécution des instructions qu'elles contiennent, c'est pourquoi on les appellent aussi **structures de contrôle**.
+
+En Python, comme dans d'autres langages, on va trouver:
+
+* des structures alternatives
+* des structures répétitives
+* des structures pour le traitement des exceptions
+
+avec quelques spécificités qui seront traitées dans une section dédiée.
+
+.. slide_mark_e
+
+****************************
+Les entrées/sorties standard
+****************************
+
+La sortie standard
+==================
+
+.. slide_mark_b :La sortie standard
+
+Python 2.x dispose d'une instruction **print** dédiée, avec une syntaxe rappelant vaguement celle des langages *shell* :
+
+    print expr :sub:`1`, expr :sub:`2`, ..., expr :sub:`n`
+
+
+::
+
+   $ python
+   Python 2.7.10 (default, Sep 24 2015, 17:50:09) 
+   [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux2
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> print "aaa", "bbb", "ccc"
+   aaa bbb ccc
+
+.. slide_mark_e
+.. slide_mark_b :La sortie standard[2]
+
+Cette instruction a été remplacée dans Python 3 avec une fonction portant le même nom. La nouvelle fonction est plus puissante que l'instruction qu'elle remplace:
+
+    def print(\*args, sep=' ', end='\\n', file=None)
+
+Les paramètres nommés:
+
+*  **sep** représente le séparateur entre arguments 
+*   **end** représente le caractère de fin de ligne. Si on ne souhaite pas de retour à la ligne il suffit de positionner end='', chose impossible avec l'instruction **print** de la version 2.
+ 
+* **file** représente le dispositif de sortie (la sortie standard, par défaut)  
+
+Pour en savoir plus: http://www.python.org/dev/peps/pep-3105/
+
+.. note:: On peut disposer de la fonction print() de **Python 3.x** dans un script **Python 2.x** en exécutant au début du script l'instruction :
+
+          ::
+             
+             from __future__ import print_function
+
+     Cette démarche, qui sera expliquée plus tard, a été adoptée pour l'élaboration de ce support chaque fois qu'on a voulu qu'un exemple soit compatible avec les deux versions de Python.  
+
+.. slide_mark_e
+
+L'entrée standard
+=================
+
+.. slide_mark_b :L'entrée standard
+
+Pour lire l'entrée standard il faut utiliser:
+
+* raw_input([messg])=>str en Python 2.x
+
+* input([messg])=>str en Python 3.x
+
+.. admonition:: Avertissement
+   :class: warning
+
+   Python 2 dispose également d'une fonction appelée *input()* qui évalue à la volée le texte en entrée. Cette fonctionnalité, peu utilisée et potentiellement dangereuse en termes de sécurité a été supprimée dans la nouvelle version 3.x. et l'ancienne fonction *raw_input()* a été renommée *input()*.
+
+   **Conclusion:** En Python 2 il est déconseillé d'utiliser la fonction *input()*. Utiliser *raw_input()* à la place et convertir le résultat si nécessaire. 
+.. slide_mark_e
+.. slide_mark_b :L'entrée standard *[2]*
+
+La fonction affiche le message et restitue l'entrée clavier sous forme de chaîne.
+
+**Exemple en Python 2.7.x**
+
+::
+
+   $ cat echo2.py
+   #!/usr/bin/env python
+
+   inp = raw_input("?: ")
+   print inp
+   $ ./echo2.py
+   ?: ça va?
+   ça va?
+
+.. slide_mark_e
+.. slide_mark_b :L'entrée standard *[3]*
+
+**Exemple en Python 3.4.x**
+
+::
+
+   $ cat echo3.py
+   #!/usr/bin/env python3
+   
+   inp = input("?: ")
+   print(inp)
+   $ ./echo3.py 
+   ?: ça va?
+   ça va?
+
+.. slide_mark_e
+
+**************************
+Les structures de contrôle
+**************************
+
+.. slide_mark_b :Les structures de contrôle
+.. slide_insertion:* Structures alternatives (if-elif-else)
+.. slide_insertion:* Exceptions
+.. slide_insertion:* La structure **with**
+.. slide_insertion:* Structure répétitives (**while-else**, **for-else**)
+.. slide_mark_e
+
+Structures alternatives (if-elif-else)
+======================================
+
+.. slide_mark_b :Structures alternatives (if-elif-else)
+
+::
+
+   if <expr-0>:
+       <statement>
+       # ...
+       <statement>
+   elif <expr-1>: #optionnel
+       <statement>
+       # ...
+       <statement>
+   # autres blocs elif optionnels ...
+   elif <expr-i>:
+       <statement>
+       # ...
+       <statement>
+   else: #optionnel
+       <statement>
+       # ...
+       <statement>
+
+.. slide_mark_e
+
+.. slide_mark_b :Structures alternatives [2]
+
+Les blocs sont définis par l'indentation. Pour illustration, un exemple (artificiellement compliqué), qui implique deux niveaux de **if-elif-else** :
+
+
+.. literalinclude:: includes/if_elif_else.py
+
+.. slide_mark_e
+
+Dans certains cas, si les blocs d'instructions contenus dans un **if-elif-else** ne contiennent que des instructions simples, **et si cela améliore la lisibilité**, on peut écrire de manière plus compacte:
+
+.. literalinclude:: includes/simple_if.py
+
+Expressions ternaires
+---------------------
+
+.. slide_mark_b :Expressions ternaires
+
+Des nombreux langages (C/C++, Java, php,...) acceptent les expressions dites "ternaires" qui sont de la forme ``test ? expression1 : expression2``.
+Python permet d'écrire la même chose avec une syntaxe différente : ``expression1 if test else expression2``
+
+**Exemple:**
+
+::
+
+   >>> x = -10
+   >>> mod_x = x if x > 0 else -x
+   >>> mod_x
+   10
+   >>>
+
+.. slide_mark_e
+
+Exceptions
+==========
+
+.. slide_mark_b :Exceptions
+
+Contrairement aux erreurs de syntaxe qui sont détectées avant le début de l'exécution, les anomalies détectées pendant l'exécution activent des mécanismes spécifiques qui modifient le cours de l'exécution, qui ne peut pas se dérouler normalement. 
+
+On va parler dans ce cas d'**exceptions** :
+
+::
+
+   >>> "Python"+3
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: cannot concatenate 'str' and 'int' objects
+
+.. slide_mark_e
+.. slide_mark_b :Exceptions[2]
+
+Les informations affichées sont:
+
+* le contenu de la pile d'exécution au moment de la levée de l'exception
+* le type de l'exception levée
+* une description du problème rencontré
+
+.. slide_mark_e
+.. slide_mark_b :Exceptions[3]
+
+Au déclenchement d'une exception, le cours de l'exécution change (c'est pourquoi on a choisi de traiter la gestion des exceptions avec les structures de contrôle). L'exécution de la séquence courante s'arrête et les différentes strates de l'exécution sont remontées jusqu'à :
+
+* la rencontre d'un bloc **try-except** qui traite l'exception levée
+* la sortie du programme, en absence du dit bloc
+
+.. slide_mark_e
+.. slide_mark_b :Exceptions[4]
+
+Pour gérer les exceptions, un programme a la possibilité de:
+
+#. arrêter la propagation d'une exception par un bloc **try-except**
+#. lever des exceptions propres ou laisser remonter des exceptions préalablement "capturées" (par l'instruction *raise*)
+#. définir ses propres types d'exceptions
+
+.. slide_mark_e
+
+Le bloc  **try-except-finally**
+-------------------------------
+
+.. slide_mark_b :Le bloc  **try-except-finally**
+
+C'est une construction de la forme:
+
+.. literalinclude:: includes/try_except_else.py
+
+**NB:** Après un bloc **try** , au moins un bloc **except**  `ou` le bloc **finally** doit être présent. On peut donc avoir plusieurs cas:
+
+* try-except
+* try-finally
+* try-except-finally
+
+.. slide_mark_e
+
+Traitement des exceptions
+-------------------------
+
+.. slide_mark_b :Traitement des exceptions
+
+Le bloc *except* peut prendre plusieurs formes en fonction du traitement envisagé:
+
+.. literalinclude:: includes/except_forms.py
+
+.. slide_mark_e
+
+Lever des exceptions
+--------------------
+
+.. slide_mark_b :Lever des exceptions
+
+On utilisera l'instruction *raise*:
+
+.. literalinclude:: includes/raise_sample.py
+
+.. slide_mark_e
+.. slide_mark_b :Lever des exceptions[2]
+
+Les arguments du constructeur de l'exception levée par *raise* se retrouvent dans l'attribut *args* de l'objet récupérée par *except* :
+
+::
+
+   >>> try:
+   ...     # simule un traitement levant une exception
+   ...     raise ValueError("arg1","arg2") 
+   ... except ValueError as obj:
+   ...     print(obj.args)
+   ... 
+   ('arg1', 'arg2')
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Lever des exceptions[3]
+
+**NB:** Un bloc *except* peut laisser remonter une exception après avoir exploité l'information fournie. Par exemple, un serveur web peut utiliser le bloc *except* pour récupérer et écrire l'erreur dans les fichiers de journalisation (logs) et en même temps la laisser remonter pour que les couches supérieures de l'application qui pourraient utiliser aussi (pour la communiquer à l'interface utilisateur, par exemple) :
+
+::
+
+   try:
+       "café".encode("ascii") # simule un traitement provoquant une anomalie
+   except UnicodeEncodeError as err:
+       write_log(err)
+       raise
+
+.. slide_mark_e
+
+Définir des exceptions
+----------------------   
+
+.. slide_mark_b :Définir des exceptions
+
+Les exceptions sont des classes héritant directement ou indirectement de la classe prédéfinie *Exception*. Le chapitre sur le modèle objet de Python expliquera en détail comment définir ses propres classes.
+
+Néanmoins, il convient de préciser que les exceptions prédéfinies sont déjà nombreuses et elles couvrent la plupart des situations pratiques. Plus de détails : http://docs.python.org/3.4/library/exceptions.html#exception-hierarchy 
+
+.. slide_mark_e
+
+La structure **with**
+=====================
+
+.. slide_mark_b :La structure **with**
+
+Cette structure est une application directe de **try-except-finally**. Utilisée beaucoup pour la manipulation des fichiers, elle garantit la libération de la ressource même si l'opération se passe mal. Ainsi, la structure:
+
+::
+
+   >>> with open("/tmp/fich.txt","w") as fd:
+   ...     fd.write("some text")
+
+qui permet l'ouverture d'un fichier suivie d'une opération d'écriture peut être résumée, (en simplifiant un peu...), par la séquence:
+
+::
+
+   >>> fd = open("/tmp/fich.txt","w")
+   >>> try:
+   ...     fd.write("some text")
+   ... finally:
+   ...     fd.close()
+
+.. slide_mark_e
+.. slide_mark_b :La structure **with** (2)
+
+L'utilisateur peut définir ses propres objets *"with  compatibles"* appelés "gestionnaires de context" (**context managers**), à condition de définir deux méthodes "magiques" (qui n'ont pas vocation à être appelées dans le programme, car en principe destinées aux mécanismes internes de l'interpréteur):
+
+* *__enter__()* 
+* *__exit__()* 
+
+Ces deux méthodes participent au protocole suivant, qui a pour but de garantir que si *__enter__()* s'exécute avec succès alors *__exit__()*  sera toujours exécutée, même en cas d'exception survenue à l'exécution du bloc:
+
+.. slide_mark_e
+.. slide_mark_b :La structure **with** (3)
+
+::
+   
+   with expression [as var]:
+       code
+
+1. *expression* est évaluée, le résultat étant un objet **context manager** 
+2. la méthode *__enter__()* est invoquée (sur l'objet  **context manager**). Elle peut effectuer, par exemple, l'ouverture d'un fichier, socket, connexion DB etc. Le retour de *__enter__()* est affecté à la variable **var** si elle est fournie (i.e. la partie "[as var]" est présente).
+3. le **code** est exécuté dans un bloc **try-except-finally**
+4. la méthode **__exit__()** est appelée. En cas d'exception levée à l'exécution de *code* (3) l'appel contiendra trois informations décrivant l'exception: type, valeur, traceback. Dans ce cas, *__exit__()* peut retourner:
+
+
+   * **False** pour provoquer la propagation de l'exception par l'appelant
+   * **True** pour empêcher la propagation de l'exception
+
+.. slide_mark_e
+.. slide_mark_b :La structure **with** (4)
+     
+.. note:: A partir de **Python 3.1**, l'instruction **with** peut déclarer plusieurs contextes:
+
+          ::
+             
+             with expression1 [as var1], expression2 [as var2], ...:
+                 code
+
+          Ce qui est équivalent à:
+          ::
+
+             with expression1 [as var1]:
+                 with expression2 [as var2]:
+                    ....
+                    code
+.. slide_mark_e
+
+
+Structure répétitives (**while-else**, **for-else**)
+====================================================
+
+La structure **while-else**
+---------------------------
+
+.. slide_mark_b :La structure **while-else**
+
+L'instruction **while**, ressemble beaucoup à son homonyme dans les autres langages :
+
+::
+
+   while condition:
+      instruction 1
+      instruction 2
+      ...
+   else: # optionnel
+      ...
+      ...
+
+Le bloc (*instruction 1, instruction 2, ...*) s'exécute tant que la *condition* reste vraie:
+
+.. slide_mark_e
+.. slide_mark_b :La structure **while-else** [2]
+
+::
+
+   >>> x=0
+   >>> while x < 5:
+   ...     print(x)
+   ...     x += 1
+   ... 
+   0
+   1
+   2
+   3
+   4
+   >>> 
+
+Python dispose, comme d'autres langages, de deux instructions permettant le contrôle de l'exécution des boucles, à utiliser dans le bloc **while** :
+
+* **break** permettant la sortie de la boucle avant la fin (i.e. avant que la condition ne devienne fausse)
+* **continue** qui permet de passer directement à l'itération suivante
+
+.. slide_mark_e
+.. slide_mark_b :La structure **while-else** [3]
+
+La vraie spécificité est le bloc **else** qui préserve la même sémantique que dans un **if-else**, autrement dit, il s'exécute quand la condition est fausse. Dans un *while* la condition est nécessairement fausse à la sortie de la boucle, si la sortie se fait **normalement**, sans recours à l'instruction **break** .
+
+Illustration:
+
+.. literalinclude:: includes/while_else.py
+
+.. slide_mark_e
+
+La structure **for-in**
+-----------------------
+
+.. slide_mark_b :La structure **for-in**
+
+La forme générale :
+
+::
+
+   for element in iterable:
+      ...
+      ...
+   else: # optionnel
+      ...
+      ...
+
+Propriétés en commun avec l'instruction **while** :
+
+* la possibilité d'utiliser les instructions *break* et *continue*
+* le bloc optionnel **else** avec une sémantique équivalente
+
+.. slide_mark_e
+.. slide_mark_b :La structure **for-in** [2]
+
+On appelle **"itérable"** un objet qui permet l'accès séquentiel à un ensemble d'autres objets qui le composent ou qu'il crée à la demande, autrement dit un objet qui supporte l'itération. 
+
+C'est le cas de tous les objets **conteneurs**, autrement dit des objets contenant d'autres objets (listes, chaînes etc.), mais pas seulement (plus de détails dans la section sur le **générateurs**). 
+
+.. slide_mark_e
+.. slide_mark_b :La structure **for-in** [3]
+
+
+* Un objet **itérable** doit implémenter la méthode magique *__iter__()*. Cette méthode sera exécutée à chaque invocation de la primitive *iter()* pour retourner un **itérateur** qui est une sorte d'"objet-curseur".
+
+* Un **itérateur** doit implémenter :
+
+  * *next()* (renommée en  **__next__()** en Python 3) qui renvoie à chaque appel l'élément "suivant", s'il y en a un, ou lève l'exception **StopIteration** dans le cas contraire.
+
+.. note:: Accessoirement, les itérateurs implémentent également  *__iter__()* qui renvoie l'itérateur lui même (seulement pour assurer un comportement homogène entre itérateurs et itérables)
+
+.. slide_mark_e
+.. slide_mark_b :La structure **for-in** [4]
+
+Illustration:
+
+::
+
+   >>> l=[1,2,3]
+   >>> l.__iter__
+   <method-wrapper '__iter__' of list object at 0x7f4020da0830>
+   >>> i = iter(l)
+   >>> next(i)
+   1
+   >>> next(i)
+   2
+   >>> next(i)
+   3
+   >>> next(i)
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   StopIteration
+   >>> 
+
+**NB:** Dans l'exemple précédent *next(i)* est une primitive du langage (la même dans les deux versions) qui se chargera de l'appel de *i.next()* (Python 2.x) ou de *i.__next__()* (Python 3.x).
+
+.. slide_mark_e
+.. slide_mark_b :La structure **for-in** [5]
+
+
+Ainsi, l'instruction:
+
+::
+
+   for element in iterable:
+      ... # bloc
+      ... # d'instructions
+
+est équivalente à:
+
+::
+
+   i = iter(iterable)
+   while True:
+      try:
+         element = next(i)
+      except StopIteration:
+         break
+      ... # bloc
+      ... # d'instructions
+
+.. slide_mark_e
+.. slide_mark_b :La structure **for-in** [6]
+
+Exemple basique:
+
+::
+
+   >>> for elt in [1,2,3]:
+   ...     print(elt)
+   ... 
+   1
+   2
+   3
+   >>> 
+
+.. note:: Python ne possède pas d'instruction équivalente à ``for(i=0;i<max;i++){\...}`` présente dans le langage *C*  et dans bien d'autres. Dans la section suivante on va voir un idiome qui permet une écriture équivalente.
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/loop.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/loop_sol.py
+      :lines: 3,11-
+
+Une écriture légèrement différente, plus "pythonique":
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/loop_sol2.py
+      :lines: 3,11-
+
+.. slide_mark_e
+
+
+
+****************
+Le types de base
+****************
+
+.. slide_mark_b :Le types de base
+
+Il s'agit des types prédéfinis dans Python et intégrés dans la syntaxe du langage:
+
+* types numériques
+
+* conteneurs (types itérables)
+
+* types des constantes nommées
+
+* le type **file** 
+
+.. slide_mark_e
+
+Les types numériques
+====================
+
+.. slide_mark_b :Les types numériques
+
+Permettent de représenter les nombres entiers, réels (virgule flottante), complexes et décimaux.
+
+Les entiers et les réels ont beaucoup de points communs avec leurs équivalents en **C** .
+
+.. slide_mark_e
+
+Les entiers
+-----------
+
+.. slide_mark_b :Les entiers
+
+En **Python 2** il y a deux types entiers signés:
+
+* Les **int** sont représentés sur 32 ou 64 bits selon le processeur, avec la même représentation que le type *int* du langage **C** , la plage de représentation étant [-2 :sup:`arch`, 2 :sup:`arch` - 1] avec arch = 32-1 ou arch = 64-1 (le *-1* étant dû au bit de signe).
+* Les **long** sont utilisés pour représenter les entiers situés à l'extérieur de cet intervalle. Leur plage de représentation est illimitée.
+
+.. slide_mark_e
+.. slide_mark_b :Les entiers[2]
+
+L'interpréteur choisit automatiquement le bon type pour représenter les entiers:
+
+::
+
+   >>> # Python 2.7.x
+   >>> type(1)   
+   <type 'int'>
+   >>> type(9223372036854775808) # i.e. 2 ** 63
+   <type 'long'>
+   >>> type(-9223372036854775808) # i.e. -(2 ** 63)
+   <type 'int'>
+   >>> type(9223372036854775807)
+   <type 'int'>
+
+.. slide_mark_e
+.. slide_mark_b :Les entiers[3]
+
+En **Python 3** il y a un type unique pour les entiers:
+
+::
+
+   >>> # Python 3.4.x   
+   >>> type(1)
+   <class 'int'>
+   >>> type(9223372036854775808)
+   <class 'int'>
+
+.. slide_mark_e
+.. slide_mark_b :Les entiers[4]
+
+.. admonition:: Avertissement
+   :class: warning
+
+           Des différences de comportement existent à ce niveau entre les versions 2 et 3 du langage:
+
+::
+
+   >>> # Python 2.7
+   ... 
+   >>> isinstance(1, int)
+   True
+   >>> isinstance(2**63, int)
+   False
+   >>> isinstance(2**63, long)
+   True
+   >>>
+
+::
+   
+   >>> # Python 3.4
+   ... 
+   >>> isinstance(1, int)
+   True
+   >>> isinstance(2**63, int)
+   True
+   >>> isinstance(2**63, long)
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   NameError: name 'long' is not defined
+   >>> 
+          
+           
+.. slide_mark_e
+.. slide_mark_b :Les entiers[5]
+
+Comme d'autres langages, Python supporte plusieurs notations pour les entiers, pratiquement les mêmes que celles de C/C++ et Java :
+
++--------------+---------+------------+
+| Notation     | Préfixe | Exemple    |
++==============+=========+============+
+| Décimale     | sans    | 165        |
++--------------+---------+------------+
+| Hexadécimale | 0x      | 0xA5       |
++--------------+---------+------------+
+| Octale       | 0o      | 0o245      |
++--------------+---------+------------+
+| Binaire      | 0b      | 0b10100101 |
++--------------+---------+------------+
+
+.. slide_mark_e
+
+
+
+Les réels
+---------
+
+.. slide_mark_b :Les réels
+
+Les réels, au sens mathématique, n'existent pas dans les langages de programmation. Ils sont exprimés par des nombres dits "à virgule flottante" ou **flottants** (cf. `IEEE754 <http://fr.wikipedia.org/wiki/IEEE_754>`_ ) qui représentent une approximation rationnelle. Il existe deux formes standarisées de flottants : simple précision (32 bits) et double précision (64 bits).
+
+Python implémente seulement les flottants en double précision.
+
+.. http://www.h-schmidt.net/FloatConverter/
+.. http://perso.limsi.fr/pruvost/res/teach-doc/ieee754.pdf
+
+.. slide_mark_e
+
+Les décimaux
+------------
+
+.. slide_mark_b :Les décimaux
+
+Permettent de s'affranchir des problèmes de perte de précision inhérents au flottants pour représenter des nombres rationnels. Leur utilisation nécessite l'importation du module **decimal** .
+
+.. slide_mark_e
+
+Les nombres complexes
+---------------------
+
+.. slide_mark_b :Les nombres complexes
+
+Les nombres complexes sont représentés par une paire de flottants pour les parties réelle et imaginaire. La partie imaginaire est suffixée par la lettre **j** ou **J** .
+
+::
+
+   >>> c=3+4j
+   >>> c
+   (3+4j)
+   >>> type(c)
+   <type 'complex'>
+   >>> c/2
+   (1.5+2j)
+   >>> c.real
+   3.0
+   >>> c.imag
+   4.0
+   >>> abs(c)
+   5.0
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les opérateurs arithmétiques
+
+
+Les opérateurs arithmétiques, par ordre croissante de leur priorité sont :
+
+============    ===============     ======================================
+Opérateurs      Forme               Commentaire
+============    ===============     ======================================
++, -,           binaire, infixe     même chose qu'en C/C++, Java etc.
+\*, /, //, %    binaire, infixe     particularité: deux opérateurs 
+                                    de division: / et //, op.modulo: %
++x, -x, ~       unaire, préfixe     +/- signe d'une expression, ~ négation binaire (bit à bit)
+x \*\* y        binaire, infixe     x :sup:`y`
+============    ===============     ======================================
+
+.. slide_mark_e
+.. slide_mark_b :Les deux opérateurs de division
+
+.. _py-div:
+.. note::
+   **Pourquoi deux opérateurs de division?**
+   Initialement, Python disposait du seul opérateur de division, **/**, au comportement identique à celui du C:
+
+   * division entière si les deux opérandes sont entiers
+   * division réelle si au moins un des opérandes est réel
+
+   Malgré sa compatibilité avec le C, ce fonctionnement n'a pas eu l'adhésion de la communauté et il a été décidé depuis longtemps de le changer dans la version 3 de Python avec une division réelle, non tronquée, y compris quand les deux opérandes sont des entiers.
+
+Pour préparer ce changement important, la version 2.2 a introduit l'opérateur // qui fait une division tronquée de manière homogène, pour tous les types numériques, l'opérateur / restant inchangé en attendant la version 3.
+
+.. slide_mark_e
+.. slide_mark_b :Les deux opérateurs de division[2]
+
+
+**Pour résumer:**
+
+=========  ===========================  ================================
+Opérateur  Python 2.x                   Python 3.x
+=========  ===========================  ================================
+/          **compatible C/C++/Java** :  Division réelle, même si le deux
+           division entière si les      opérandes sont entiers
+           2 opérandes sont entiers,    
+           réelle si au moins
+           un des deux est réel
+//         Division tronquée, même si    Comportement inchangé 
+           les opérandes sont réels      entre les versions 2.x et 3.x
+=========  ===========================  ================================
+
+.. slide_mark_e
+
+Les itérables prédéfinis
+========================
+
+.. slide_mark_b :Les itérables prédéfinis
+
+Il s'agit d'objets prédéfinis qui sont itérables au sens de l'explication fournie dans la section sur l'instruction **for-in**.
+Ils sont, pour la plupart, des **conteneurs**, autrement dit des objets qui ont vocation à contenir d'autres objets (listes, ensembles, etc.). 
+
+Certains itérables prédéfinis sont plus "opaques": ils ne contiennent pas physiquement d'autres objets mais ils les créent au fur et à mesure de la demande (range/xrange).
+
+.. slide_mark_e
+.. slide_mark_b :Les itérables prédéfinis[2]
+
+Les itérables fournissent au moins les fonctionnalités suivantes:
+
+* accès aux objets contenus un par un, autrement dit ils sont utilisables par l'instruction **for** (*for elt in conteneur:*...)
+* test d'appartenance d'un objet au conteneur, utilisable par l'instruction **if** (*if elt in conteneur*)
+* nombre d'éléments du conteneur (ou sa longueur, i.e. **len(conteneur)**). Exception: *enumerate*
+* le plus petit et le plus grand élément du conteneur (si une relation d'ordre existe entre les éléments). Optionellement, la relation d'ordre peut être définie par une fonction particulière (plus de détails au chapitre sur les **fonctions**)
+
+
+.. Ces fonctionnalités sont assurées par tous les conteneurs :
+   * les séquences
+     * les dictionnaires
+       * les ensembles
+	 * enumerate
+
+..  * les itérateurs 
+..   "conteneur" -- "itérateur";
+..   unicode -> str [ label="encode()" rankdir="LR" ];
+
+.. slide_mark_e
+.. slide_mark_b :Les itérables prédéfinis[3]
+
+.. graphviz::
+
+   graph conteneurs_g {  
+   rankdir="LR"
+   size="7.75,10.25"
+   "itérable" -- "séquence";
+   "itérable" -- "dictionnaire";
+   "itérable" -- "ensemble";
+   "itérable" -- "itérateur";
+   "itérateur" -- "enumerate";   
+   "séquence" -- "séq.modifiable";
+   "séquence" -- "séq.immuable";
+   "séq.modifiable" -- "list";
+   "séq.modifiable" -- "bytearray";
+   "séq.immuable" -- "str";
+   "séq.immuable" -- "tuple";
+   "séq.immuable" -- "bytes";
+   "séq.immuable" -- "unicode";
+   "séq.immuable" -- "(x)range";
+   "séq.immuable" -- "buffer";
+   "ensemble" -- "set";
+   "ensemble" -- "frozenset";
+
+
+   }
+
+
+
+
+Les séquences, les dictionnaires et les ensembles, ainsi que leur sous-types concrets sont des containers spécialisés, proposant des fonctionnalités spécifiques en plus de celles déjà énumérées.
+
+.. slide_mark_e
+
+Les séquences
+=============
+
+.. slide_mark_b :Les séquences
+
+On appelle **séquence** une collection dont les éléments sont ordonnés et indexés. 
+
+Pour faire une parallèle avec d'autres langages, les tableaux du **C** ainsi que les objets de type **std::Vector** en **C++** et  **java.util.Vector** en **Java** sont des séquences. 
+
+La convention de numérotation des index, héritée du **C**, fait que pour une séquence de taille *N* les index prennent des valeurs entre *0* et *N-1*.
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences[2]
+
+En plus des fonctionnalités communes à tous les conteneurs, les séquences proposent deux propriétés spécifiques:
+
+* l'accès direct aux éléments à travers leur index:
+
+  * avec des index positifs: 1er élément: seq[0], dernier élément: seq[taille-1]
+  * avec des index négatifs: 1er élément: seq[-taille], dernier élément: seq[-1] (**NB:** index :sub:`[-]` = index :sub:`[+]` - taille)
+
+* la possibilité d'extraire des tranches d'une séquence donnée (slicing)
+
+  * seq[i:j] avec i=premier **dans** la tranche, j=premier **dehors**
+  * seq[i:j:p] où p est le **pas** qui peut être positif ou négatif
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences[3]
+
+::
+
+   >>> s="Python"
+   >>> s
+   'Python'
+   >>> s[1:3]
+   'yt'
+   >>> s[1:-1]
+   'ytho'
+   >>> s[1:5:2]
+   'yh'
+   >>> s[5:1:-2]
+   'nh'
+   >>> 
+
+**NB:** i, j et p peuvent être absents:
+
+* i absent => La seule manière de sélectionner le **premier** élément de la séquence quand le pas est **négatif**
+* j absent => La seule manière de sélectionner le **dernier** élément de la séquence quand le pas est **positif**
+* p absent => pas = 1
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences[4]
+
+**NB(2):** Dans le slicing les index hors limites sont tronqués implicitement, sans message d'erreur:
+
+::
+
+   >>> s[-100:100]
+   'Python'
+   >>> s[100:-100:-1]
+   'nohtyP'
+   >>> 
+
+Par contre, une tentative d'accès indexé à une position inexistante provoquera une erreur:
+
+::
+
+   >>> s[100]
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   IndexError: string index out of range
+   >>> 
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/slicing.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/slicing_sol.py	 
+      :lines: 2,10-
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences[5]
+
+
+Toutes les séquences supportent les  méthodes:
+
+* *seq.index(elt,[first,[last]])* # index de la première occurence de *elt*
+* *seq.count(elt)* # nombre d'occurences de *elt*
+
+.. note:: Toutes les séquences peuvent être triées avec la fonction native **sorted(seq,...)** qui sera détaillée au chapitre **fonctions**.
+
+
+Selon leur capacité à être modifiées ou pas, on va parler de séquences **modifiables** respectivement ou non-modifiables (ou **immuables**)  .
+
+.. slide_mark_e
+
+Les séquences modifiables ( **list** et bytearray )
+---------------------------------------------------
+
+.. slide_mark_b :Les séquences modifiables
+
+Il y a seulement deux types de séquences modifiables, les **list** et les **bytearray**. Les opérations supplémentaires supportées par les séquences modifiables sont:
+
+* modification d'une position ou d'une plage de positions
+* ajout/suppression d'un élément ou d'une (sous)séquence
+
+Ainsi, toutes les expressions de sélection d'un élément ou d'une sous-séquence pourront apparaître en partie gauche d'une affectation ou en argument de l'instruction de suppression **del**
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences modifiables[2]
+
+Les modifications peuvent se faire également à travers les méthodes natives suivantes :
+
+* *seq.append(x)* # ajout d'un élément à la fin de la séquence
+* *seq.extend(seq2)* # extension de seq avec seq2
+* *seq.insert(i,x)* # insertion de l'élément x en position i
+* *seq.pop(i)* # retourne et enlève l'élément en position i 
+* *seq.remove(x)* # supprime la première occurrence de x dans seq
+* *seq.reverse()* # inverse l'ordre des éléments
+* *seq.sort(...)* # tri (sera détaillée, au chapitre **fonctions**)   
+
+.. * *seq.sort([cmp[, key[, reverse]]])* # tri (plus de détails au chapitre **fonctions**)
+
+.. note:: La différence entre  *seq.sort(...)* et *sorted(seq,...)* est que *seq.sort(...)* modifie *seq* et renvoie *None*
+          pendant que *sorted(seq,...)* laisse *seq* inchangé et renvoie une nouvelle séquence, triée.
+
+   
+.. slide_mark_e
+.. slide_mark_b :Les séquences modifiables[3]
+
+Illustration avec le type **list**, qui porte assez mal son nom (son comportement est plus proche des vecteurs que des listes (chaînées) présentes dans d'autres langages:
+
+Affectation :
+
+::
+
+   >>> lst
+   ['P', 'y', 't', 'h', 'o', 'n']
+   >>> lst[3]="H"
+   >>> lst
+   ['P', 'y', 't', 'H', 'o', 'n']
+   >>> lst[1:4] = ["l","a","t"]
+   >>> lst
+   ['P', 'l', 'a', 't', 'o', 'n']
+   >>>
+
+**NB:** En cas d'affectation avec slicing, la tranche substituée peut avoir une taille différente de celle la liste substitution:
+
+::
+
+   >>> lst = ['a','b','c','d','e']
+   >>> lst2 = ['X','Y','Z']
+   >>> lst[2:4] = lst2
+   >>> lst
+   ['a', 'b', 'X', 'Y', 'Z', 'e']
+
+.. image:: images/slicing_left_side_cut.jpg
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences modifiables[4]
+
+Délétion :
+
+::
+
+   >>> lst
+   ['P', 'l', 'a', 't', 'o', 'n']
+   >>> del lst[3:-1]
+   >>> lst
+   ['P', 'l', 'a', 'n']
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les séquences modifiables[5]
+
+Primitives :
+
+::
+
+   >>> lst = list("Monty")
+   >>> lst.append(" ")
+   >>> lst
+   ['M', 'o', 'n', 't', 'y', ' ']
+   >>> lst2 = list("Python")
+   >>> lst.extend(lst2)
+   >>> lst
+   ['M', 'o', 'n', 't', 'y', ' ', 'P', 'y', 't', 'h', 'o', 'n']
+   >>> 
+   >>> lst2
+   ['P', 'y', 't', 'h', 'o', 'n']
+   >>> lst2.insert(2,"*")
+   >>> lst2
+   ['P', 'y', '*', 't', 'h', 'o', 'n']
+   >>> lst2.pop(2)
+   '*'
+   >>> lst2
+   ['P', 'y', 't', 'h', 'o', 'n']
+   >>> 
+   >>> lst2.remove("h")
+   >>> lst2
+   ['P', 'y', 't', 'o', 'n']
+   >>> 
+   >>> lst2.reverse()
+   >>> lst2
+   ['n', 'o', 't', 'y', 'P']
+   >>> 
+   >>> lst2.sort()
+   >>> lst2
+   ['P', 'n', 'o', 't', 'y']
+   >>> 
+
+
+**Astuce:** Pour obtenir une copie (superficielle) d'une liste **lst**, on peut utiliser le slicing: **lst[:]**
+
+.. slide_mark_e
+
+Les listes en intension (ou compréhension)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. slide_mark_b :Les listes en intension
+
+Un problème récurent en programmation est la construction d'une liste à partir d'une liste existante (ou de tout autre ensemble d'objets existant). On souhaite souvent obtenir :
+
+#. une nouvelle liste de la même taille que la liste en entrée (Ex: la liste des carrés d'une liste d'entiers fournie)
+#. une liste avec filtrage (Ex: liste des carrés des entiers impaires se trouvant dans la liste fournie)
+
+.. slide_mark_e
+.. slide_mark_b :Les listes en intension[2]
+
+Une construction de ces listes avec une boucle **for-in** classique est, bien sûr, possible.
+
+Premier cas:
+
+::
+
+   >>> result=[]
+   >>> for e in [1,2,3]:
+   ...     result.append(e**2)
+   ... 
+   >>> result
+   [1, 4, 9]
+   >>> 
+
+Deuxième cas:
+
+::
+
+   >>> result=[]
+   >>> for e in [1,2,3,4,5]:
+   ...     if e % 2:
+   ...             result.append(e**2)
+   ... 
+   >>> result
+   [1, 9, 25]
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les listes en intension[3]
+
+Python propose en plus, une écriture plus concise, plus élégante aussi : c'est la construction de listes dites "en compréhension" ou "en intension" (antonyme du mot "extension") inspirée des notations utilisées dans la théorie des ensembles.
+
+Avec cette notation, le premier cas (sans filtre) s'écrit ainsi:
+
+::
+
+   >>> [e**2 for e in [1,2,3]]
+   [1, 4, 9]
+   >>> 
+
+et le deuxième (avec filtre):
+
+::
+
+   >>> [e**2 for e in [1,2,3,4,5] if e%2]
+   [1, 9, 25]
+   >>> 
+
+L'écriture de boucles imbriquées est également possible.
+
+.. slide_mark_e
+.. slide_mark_b :Les listes en intension[4]
+
+L'écriture classique pour obtenir un pseudo produit cartésien ("pseudo", car les listes ne sont pas des ensembles au sens mathématique):
+
+::
+
+   >>> result=[]
+   >>> for c in ["a","b","c"]:
+   ...     for n in [1,2,3]:
+   ...             result.append([n,c])
+   ... 
+   >>> result
+   [[1, 'a'], [2, 'a'], [3, 'a'], [1, 'b'], [2, 'b'], [3, 'b'], [1, 'c'], [2, 'c'], [3, 'c']]
+   >>> 
+
+Devient:
+
+::
+
+   >>> [[n,c] for c in ["a","b","c"] for n in [1,2,3]]
+   [[1, 'a'], [2, 'a'], [3, 'a'], [1, 'b'], [2, 'b'], [3, 'b'], [1, 'c'], [2, 'c'], [3, 'c']]
+   >>> 
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/comprehension.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/comprehension_sol.py
+      :lines: 2,10-
+
+.. slide_mark_e
+
+Les séquences immuables
+-----------------------
+
+.. slide_mark_b :Les séquences immuables
+
+En Python, les types suivants correspondent à cette classification:
+
+* Le type **tuple** (déjà évoqué avec l'affectation multiple)
+* Les types **str**, **bytes** et **unicode** sont liés à la représentation des caractères et seront traités ensemble.
+* Le type **buffer/memoryview** donne accès à l'image mémoire d'un objet (supportant un protocole particulier) pour un traitement efficace des gros volumes de données. Il relève d'une utilisation avancée et ne sera pas traité ici.
+* Le type **xrange/range** est une séquence de valeurs entières contiguës dans une plage donnée. Son utilité (par rapport à une liste) est l'économie de mémoire (dans les instructions **for** par exemple)
+
+.. slide_mark_e
+
+
+Les **tuples**
+--------------
+
+.. slide_mark_b :Les tuples
+
+Sont des tableaux très simples et assez similaires aux tableaux du **C** (par exemple: ``int int_var[5] = {1,3,5};``, mais leurs éléments peuvent être hétérogènes. Ils peuvent se définir de deux manières:
+
+* en énumérant leurs éléments, séparés par des virgules (souvent, mais pas toujours, entre parenthèses pour éviter les ambiguïtés syntaxiques)
+* en passant une autre itérable (une liste, par exemple) en argument au constructeur *tuple()*
+
+::
+
+   >>> 1,"a",[3,4]
+   (1, 'a', [3, 4])
+   >>> (1,"a",[3,4])
+   (1, 'a', [3, 4])
+   >>> tuple([1,"a",[3,4]])
+   (1, 'a', [3, 4])
+   >>> 
+
+
+.. note:: Syntaxiquement, ce ne sont pas les parenthèses qui définissent le tuple, mais la virgule utilisée comme séparateur entre ses éléments. Dans un tuple à un seul élément l'unique élément doit être suivi d'une virgule :
+
+::
+
+   >>> (1) #ceci n'est pas un tuple
+   1
+   >>> (1,) #ceci est un tuple
+   (1,)
+   >>> 1, #ceci aussi est un tuple
+   (1,)
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les tuples *[2]*
+
+Une fois créé, le tuple est immuable mais il peut contenir des éléments modifiables:
+
+::
+
+   >>> t=(1,"a",[3,4])
+   >>> t[2] = 9
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: 'tuple' object does not support item assignment
+   >>> t[2][1]=9
+   >>> t
+   (1, 'a', [3, 9])
+   >>> 
+
+.. slide_mark_e
+
+.. slide_mark_b :Unpacking
+
+Une séquence contenant des variables, et en particulier un tuple peut être lvalue dans une affectation:
+
+::
+
+   >>> [a, b] = ["x", "y"] # ou ("x", "y") ou "xy"
+   >>> a
+   'x'
+   >>> b
+   'y'
+   >>> (a, b) = ["x", "y"]
+   >>> a
+   'x'
+   >>> b
+   'y'
+
+Les parenthèses n'étant pas obligatoires, on peut écrire:
+
+::
+
+   >>> a, b = ("x", "y")
+   >>> a
+   'x'
+   >>> b
+   'y'
+
+ou:
+
+::
+
+   >>> a, b = "x", "y"
+   >>> a
+   'x'
+   >>> b
+   'y'
+
+qu'on a appelé précédemment "affectation multiple".
+
+
+.. slide_mark_e
+
+
+Les chaînes de caractères  (**str**, mais aussi **bytes** et **unicode**)
+-------------------------------------------------------------------------
+
+.. slide_mark_b :Les chaînes de caractères
+
+.. slide_insertion:Les chaînes de caractères sont des **séquences immuables** qui méritent une attention particulière. 
+
+On est obligé d'évoquer trois types (*str*, *bytes* et *unicode*) pour expliquer le propriétés des chaînes de caractères en Python. 
+
+Il convient de préciser que c'est le type **str** qui représente, par défaut, les chaînes de caractères en Python. Les deux autres, *bytes* et *unicode*, ont joué et jouent encore un rôle de transition, pour aider à la prise en charge des mutations que le type **str** a subi entre les versions 2 et 3 du langage. 
+
+Dans les explications qui vont suivre il s'agit du type **str** implicitement. Les références ponctuelles aux deux autres types seront explicites.
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[2]
+
+Les chaînes de caractères sont des séquences destinées à manipuler du texte. En Python, plusieurs syntaxes sont acceptées. Un peut utiliser les simples et les doubles quotes :
+
+::
+
+   >>> print('un texte')
+   un texte
+   >>> print("un texte")
+   un texte
+
+
+On peut écrire une chaîne sur plusieurs lignes (si elle est trop longue, par exemple). Cette écriture est sans impact sur le contenu de la chaîne (elle n'introduit pas des retours à la ligne) :
+
+::
+
+   >>> print("si un texte est trop long \
+   ... on peut l'écrire \
+   ... sur plusieurs lignes")
+   si un texte est trop long on peut l'écrire sur plusieurs lignes
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[3]
+
+On peut introduire des retours à la ligne de deux manières:
+
+* avec la séquence d'échappement **\\n** (norme *POSIX*)
+
+  ::
+
+     >>> print("première ligne \n deuxième ligne")
+     première ligne 
+     deuxième ligne
+     >>> print("première ligne \n\
+     ... deuxième ligne")
+     première ligne 
+     deuxième ligne
+
+* Avec des triples quotes (spécifique Python):
+
+  ::
+
+     >>> print("""
+     ... première ligne
+     ... deuxième ligne
+     ... """)
+     
+     première ligne
+     deuxième ligne
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[4]
+
+Dans certaines situations, l'interprétation des séquences d'échappement (\\n, \\r etc.) n'est pas souhaitable, par exemple, dans les expressions rationnelles (regular expressions). Dans ce cas, on peut utiliser les chaînes brutes (raw strings), introduites par le préfixe **"r"** :
+
+::
+
+   >>> print(r"première ligne \n deuxième ligne")
+   première ligne \n deuxième ligne
+
+
+Les chaînes sont des instances la classe **str** et elles supportent toutes les opérations sur les séquences non modifiables (indexing, slicing, etc.)
+
+Elles supportent également des opérations spécifiques implémentés en tant que fonctions ou accessibles en tant que méthodes et opérateurs sur la classe **str**. 
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[5]
+
+
+Les opérateurs supportés par les chaînes sont:
+
+* **+** concaténation (Exemple : ``"abc" + "xyz"``)
+* **\*** multiplication (Une répétition, en réalité. Exemple : ``"abc" * 3``)
+* **%**  opérateur d'interpolation, expliqué en détail plus loin 
+
+Deux fonctions spécifiques, *chr()* et *ord()*, particulièrement importantes car elles font le lien entre un caractère et le code (ASCII ou Unicode, selon le cas) correspondant:
+
+::
+
+   >>> chr(65)
+   'A'
+   >>> ord('A')
+   65
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[6]
+
+Les méthodes sur les chaînes sont nombreuses, illustration en utilisant l'autocomplétion (déclenchée par la tabulation) dans **ipython** pour voir leur liste exhaustive: 
+
+::
+
+   In [1]: s="abc"
+
+   In [2]: s.
+   s.capitalize  s.endswith    s.isalnum     s.istitle     s.lstrip      s.rjust       s.splitlines  s.translate
+   s.center      s.expandtabs  s.isalpha     s.isupper     s.partition   s.rpartition  s.startswith  s.upper
+   s.count       s.find        s.isdigit     s.join        s.replace     s.rsplit      s.strip       s.zfill
+   s.decode      s.format      s.islower     s.ljust       s.rfind       s.rstrip      s.swapcase    
+   s.encode      s.index       s.isspace     s.lower       s.rindex      s.split       s.title    
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères[7]
+
+Exemples:
+
+* quelques méthodes de test (retournant un booléen) :
+
+  ::
+
+     >>> s="abc"
+     >>> s.islower()
+     True
+     >>> s.isupper()
+     False
+     >>> s.startswith("ab")
+     True
+     >>> s.startswith("x")
+     False
+
+* quelques méthodes produisant une chaîne à partir de la chaîne donnée:
+
+  ::
+
+     >>> s.upper()
+     'ABC'
+     >>> s.title()
+     'Abc'
+
+Pour savoir plus sur ces méthodes, consulter: http://docs.python.org/2/library/stdtypes.html#string-methods
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/lcd.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/lcd_sol.py
+      :lines: 2,10-
+
+.. slide_mark_e
+
+**Le formatage des chaînes de caractères**
+
+.. slide_mark_b :Le formatage des chaînes
+
+
+
+Depuis la version **2.6** les chaînes peuvent être formatées en utilisant la méthode *format()* et un "mini-langage" puissant de description des formats. Précédemment, le formatage était fait grâce à l'opérateur d'interpolation, expliqué plus loin. 
+
+
+Le spécificateur de substitution le plus simple est **{}** :
+
+::
+
+   >>> "Langage: {}, version: {}".format("Python",3)
+   'Langage: Python, version: 3'
+
+Dans ce cas, l'ordre des substitutions dans la chaîne est identique à l'ordre des arguments de l'appel.
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [2]
+
+
+On peut (ré)utiliser les substitutions dans un ordre arbitraire en numérotant les spécificateurs:
+
+::
+
+   >>> "Que choisir: {2} {1} ou {2} {0} ?".\
+   ... format(3, 2, 'Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+
+Si un des arguments de *format()* est une **liste**, les spécificateurs peuvent accéder ses éléments de cette liste par leur **index** :
+
+::
+
+   >>> versions=[2, 3]
+   >>> "Que choisir: {1} {0[0]} ou {1} {0[1]} ?".\
+   ... format(versions,'Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [3]
+
+Si un des arguments de *format()* est un **dictionnaire**, les spécificateurs peuvent accéder ses éléments de cette liste par leur **clé** :
+
+::
+
+   >>> versions={'old_v':2, 'new_v':3}
+   >>> "Que choisir: {1} {0[old_v]} ou {1} {0[new_v]} ?".\
+   ... format(versions,'Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+   
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [4]
+
+Les spécificateurs peuvent accéder aux attributs d'un objet ou d'un module:
+
+::
+
+   >>> import sys
+   >>> sys.version_info.major
+   2
+   >>> sys.version_info.minor
+   7
+   >>> sys.version_info.micro
+   3
+   >>> "{1} {0.major}.{0.minor}.{0.micro}".\
+   ... format(sys.version_info,"Python")
+   'Python 2.7.3'
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [5]
+
+Dans les exemples précédents, les arguments de *format()* sont identifiés par leur position à l'appel, mais on peut également utiliser des arguments nommés.
+
+Les exemples précédents peuvent être réécrits ainsi:
+
+::
+
+   >>> "Langage: {langage}, version: {version}".\
+   ... format(langage="Python",version=3)
+   'Langage: Python, version: 3'
+
+::
+
+   >>> "Que choisir: {lang} {old_v} ou {lang} {new_v} ?".\
+   ... format(new_v=3, old_v=2, lang='Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+
+::
+
+   >>> versions=[2, 3]
+   >>> "Que choisir: {lang} {v_list[0]} ou {lang} {v_list[1]} ?".\
+   ... format(v_list=versions,lang='Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [6]
+
+::
+
+   >>> versions={'old_v':2, 'new_v':3}
+   >>> "Que choisir: {lang} {v_dict[old_v]} ou {lang} {v_dict[new_v]} ?".\
+   ... format(v_dict=versions,lang='Python')
+   'Que choisir: Python 2 ou Python 3 ?'
+
+::
+
+   >>> import sys
+   >>> "{lang} {v_info.major}.{v_info.minor}.{v_info.micro}".\
+   ... format(v_info=sys.version_info,lang="Python")
+   'Python 2.7.3'
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [7]
+
+
+**NB:** Si on doit générer des accolades, il suffit de les doubler:
+ 
+::
+
+   >>> "Ensemble vide: {{}},1 elt:{{{0}}}, 2 elts:{{{0},{1}}}".\
+   ... format('a','b')
+   'Ensemble vide: {},1 elt:{a}, 2 elts:{a,b}'
+
+**NB:** Dans les cas précédents, les formats n'étant pas spécifiés, les arguments sont convertis en **str** avec la conversion par défaut.
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [8]
+
+En général les syntaxes suivantes sont correctes:
+
+* **{}** : (voir les cas précédents)
+* **{id}** : (voir les cas précédents)
+* **{id!conversion}}**
+* **{id:format}**
+* **{id!conversion:format}}**
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [9]
+
+**Les conversions**
+
+Trois types de conversions sont possibles:
+
+* **s** : force la conversion en chaîne de caractères ( **str** ) qui est la conversion par défaut
+* **r** : force la forme "représentative"
+* **a** : (Python 3 seulement) force la forme "représentative" en utilisant seulement les caractères ASCII
+
+::
+
+   >>> import datetime
+   >>> d = datetime.datetime(2014,12,1)
+   >>> d # affiche la forme représentative
+   datetime.datetime(2014, 12, 1, 0, 0)
+   >>> str(d)
+   '2014-12-01 00:00:00'
+   >>> "{0} || {0!s} || {0!r}".format(d)
+   '2014-12-01 00:00:00 || 2014-12-01 00:00:00 || datetime.datetime(2014, 12, 1, 0, 0)'
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [10]
+
+**Les formatage proprement dit**
+
+Pour les chaînes de caractères il s'agit de définir:
+
+* caractère de remplissage
+* alignement (à gauche, à droite, au centre)
+* largeur minimum du champ  
+
+Plus spécifiquement, pour les nombres il s'agit de préciser:
+
+* la base de numération pour les entiers (binaire, octal, décimal, hexadécimal ...)
+* la précision pour les flottants (6 par défaut)
+* la notation pour les flottants (exponentielle, décimale)
+* le traitement du signe
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [11]
+
+
+La syntaxe générale du descripteur est: `[[fill]align][sign][#][0][width][,][.precision][type]` avec :
+
+* **fill** : tout caractère 
+* **align** :
+
+  * **'<'** : à gauche
+  * **'>'** : à droite
+  * **'^'** : au centre
+  * **'='** : pour les nombres, le remplissage (fill) se fera entre le signe et le nombre
+
+* **sign** : 
+
+  * **'+'** : toujours afficher le signe, '+' ou '-'
+  * **'-'** : afficher que le '-', le '+' étant implicite (comportement par défaut)
+  * **' '** : un espace sera utilisé à la place du '+' pour les nombres positifs
+
+* **#** : indique si les entiers doivent être préfixés par `0b`, `0o`, `0x`, selon leur base 
+* **0** : remplissage avec des zéros pour les nombres (raccourci équivalent à fill:'0' et align:'=')
+* **width** : largeur minimum du champ
+* **precision** : pour les flottants
+* **type** :
+
+  * **s** : chaîne de caractères (par défaut, omis d'habitude)
+  * **d,i** : entier (en décimal)
+  * **b** : entier en binaire
+  * **o** : entier en octal
+  * **x,X** : entier en hexadécimal
+  * **e,E** : flottant (notation exponentielle)
+  * **f,F** : flottant (notation décimale)
+  * **g,G** format général selon la grandeur du nombre, appliquera un de deux types précédents pour obtenir la représentation la plus compacte
+
+Pour en savoir plus : https://docs.python.org/3/library/string.html#format-specification-mini-language
+    
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [12]
+
+**Exemples:**
+
+Alignements :
+
+::
+   >>> '|{:<20}|{:^20}|{:>20}|'.format('gauche', 'centre', 'droite')
+   '|gauche              |       centre       |              droite|'
+   >>> '|{:_<20}|{:=^20}|{:->20}|'.format('gauche', 'centre', 'droite')
+   '|gauche______________|=======centre=======|--------------droite|'
+
+Affichage de flottants:
+
+::
+
+   >>> import math
+   >>> math.pi
+   3.141592653589793
+   >>> '|{0:<20.2f}|{0:^+20.3f}|{0:>20.4f}|'.format(math.pi)
+   '|3.14                |       +3.142       |              3.1416|'
+
+
+
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [13]
+
+**L'opérateur d'interpolation (%)**
+
+.. note:: L'utilisation de cet opérateur n'est plus préconisée, même s'il est toujours présent dans Python 3. Le nouveau standard est la méthode ``format()``, présentée précédemment.
+
+Il rappelle la fonction **sprintf()** du **C** et il est de la forme:
+
+format % substitution
+
+* La partie **format** est une chaîne contenant 0..n spécificateurs de substitution
+* La partie **substitution** peut contenir:
+
+  * un tuple de valeurs ou un dictionnaire d'une taille **N** égale au nombre de spécificateurs si N!=1
+  * un objet d'un autre type pour une substitution unique si N==1
+
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [14]
+
+La syntaxe d'un spécificateur de substitution dans la partie *format*  est **%**\ [kfmpl]\ **T**:
+
+Seuls sont obligatoires le **%** initial et le **T** final qui représente le type de conversion encodé par une lettre:
+
+* **s** chaîne de caractères
+* **d,i** entier (en décimal)
+* **o** entier en octal
+* **x,X** entier en hexadécimal
+* **e,E** flottant (notation exponentielle)
+* **f,F** flottant (notation décimale simple)
+* ...
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [15]
+
+**Exemple:**
+
+::
+
+   >>> "Langage: %s, version: %d" % ("Python", 3)
+   'Langage: Python, version: 3'
+   >>> 
+
+Le même exemple avec des spécificateurs nommés :
+
+::
+
+   "Langage: %(langage)s, version: %(version)d" % {"langage":"Python", "version":3}
+   'Langage: Python, version: 3'
+
+Les options ([kfmpl]), qui peuvent apparaître entre le **%** et le **T**:
+
+* **k** la clé indiquant le nom du spécificateur entre parenthèses (cf. exemple précédent avec des spécificateurs nommés et dictionnaire) 
+* **f** paramétrage pour certaines conversions comme, par exemple, justification à gauche, remplissage avec des zéros etc. (détails ici: http://docs.python.org/2/library/stdtypes.html#string-formatting-operations).
+* **m** taille minimum du résultat
+* **p** précision (entier précédé par un point)
+* **l** peut être l,h ou L. Ce paramètre est ignoré (gardé juste pour la compatibilité avec le **C**)
+
+
+.. slide_mark_e
+.. slide_mark_b :Le formatage des chaînes [16]
+
+
+**Exemple:**
+
+::
+
+   >>> import math
+   >>> math.pi
+   3.141592653589793
+   >>> "PI: %10.2f" % math.pi
+   'PI:       3.14'
+
+
+
+Plus de détails sur l'ensemble des options **[kfmpl]** ainsi que la liste exhaustive de types de conversion sont accessibles ici:  http://docs.python.org/2/library/stdtypes.html#string-formatting-operations
+
+
+.. slide_mark_e
+.. slide_mark_b :La représentation des chaînes
+
+**NB:** En Python, il n'existe pas de type "caractère". Un élément d'une chaîne est à son tour une chaîne à un seul élément:
+
+::
+
+   >>> type("foo")
+   <type 'str'>
+   >>> s="foo"
+   >>> type(s)
+   <type 'str'>
+   >>> s[1]
+   'o'
+   >>> type(s[1])
+   <type 'str'>
+   >>> s[1][0]
+   'o'
+
+.. note:: Mais qu'est-ce qu'un caractère ? 
+   :class: warning
+
+   * Pour l'utilisateur, il s'agit d'une lettre, d'un symbole, d'un contrôle
+   * Pour un langage de programmation, un caractère à été longtemps un octet, un code *ASCII*. Avec l'internationalisation, les choses ont changé...
+
+A ses débuts, et jusqu'à une date récente, *Python* a représenté les caractères par des octets encodés en *ASCII*, comme bien d'autres langages (n'oublions pas qu'en **C** le type **char** a la taille d'un octet!). Le type **str** a été, avant la version 3, une séquence d'octets. Cette approche a montré ses limites assez tôt et la version 2.0 introduisait déjà un nouveau type, appelé **unicode** ...
+
+
+.. slide_mark_e
+.. slide_mark_b :La représentation des chaînes[2]
+
+.. note:: Un peu d'histoire...
+
+   * Au départ (1963), il y a eu *ASCII* (American Standard Code for Information Interchange): 
+
+     * 128 codes (2^7 car encodage sur 7 bits seulement)
+     * bijection "caractère <=> octet" 
+     * jeu de caractères limité aux besoins de l'anglais (pas de caractères accentués)
+
+
+   * Plus tard (1987), une première tentative d'internationalisation, la norme IS0/CEI 8859:
+
+     * 256 codes (2^8)
+     * sur-ensemble *ASCII*
+     * déclinée en plusieurs jeux de caractères nationaux, dont *ISO 8859-1* (ou *Latin-1*) pour l'Europe de l'Ouest.
+     * (+) bijection "caractère <=> octet" préservée
+     * (-) impossible de combiner plusieurs jeux de caractères dans un même document (par exemple : un texte en français avec des citations en grec)
+     * (-) pas de solution pour les jeux de caractères riches (chinois, par exemple)
+
+   * 1990 *Unicode*, standard qui définit un jeu de caractères unique
+
+     * 1114112 codes (de 0x00 à 0x10FFFF)
+     * couvrant la plupart des alphabets connus, symboles mathématiques etc.( http://www.unicode.org/charts/)
+     * abandon de la représentation "octet", au profit du "code point" (point code), numéro unique pour chaque caractère, implémenté dans les langages comme un **int**
+     * reste un sur-ensemble *ASCII* (malgré l'abandon de la représentation octet)
+     * bijection "caractère <=> code point"
+
+.. slide_mark_e
+.. slide_mark_b :La représentation des chaînes[3]
+
+La représentation des caractères par des points code ne pose pas de problème tant qu'il n'y a pas d'opération d'entrée-sortie. Par contre, les points code, qui sont des entiers, ne peuvent pas être utilisés tels quels dans les opérations d'entrée-sortie pour au moins deux raisons:
+..  la représentation interne des points code n'est pas standardisée. Par exemple, un langage peut très bien les représenter avec des entiers 64 bits, un autre avec des int 32 bits.
+
+* la représentation en mémoire des points code peut varier en fonction :
+
+  * des choix d'implémentation, les points code étant simplement des entiers
+  * de l'architecture physique (*little endian* ou *big endian*)
+* tous les protocoles et *APIs* d'entrée/sortie sont conçus pour manipuler des octets.
+
+**Que faire** (pour travailler en *Unicode*) **?**
+
+* décoder les entrées (octets = > Unicode)
+* encoder les sorties (Unicode => octets)
+
+.. slide_mark_e
+.. slide_mark_b :La représentation des chaînes[4]
+
+Les encodages **UTF** (Unicode Transformation Format) se déclinent en UTF-8, UTF-16  et UTF-32
+
+====== ============================== ===================================
+UTF    Format                         Commentaires
+====== ============================== ===================================
+UTF-8  variable (1-4 octets)          Encodage par défaut dans Python 3.x
+UTF-16 variable (1-2 mots de 16 bits) Utilisé par Windows et Java
+UTF-32 fixe (32 bits)                 Non supportée dans Python
+====== ============================== ===================================
+
+**Remarque:** Les fichiers *UTF\** peuvent contenir au début une signature de 4 octets appelée **BOM** (Byte Order Mark). Non obligatoire pour *UTF-8*, elle permet de déterminer l'ordre des octets à la lecture d'un fichier UTF-16 ou UTF-32 car ces deux formats dépendent de l'*endianité*.
+
+Pour en savoir plus sur *Unicode* et *UTF*: http://www.unicode.org/faq/utf_bom.html
+
+.. slide_mark_e
+.. slide_mark_b :La représentation des chaînes[5]
+
+
+
+Le détail de l'encodage *UTF-8*:
+
+======  ============  ===================================
+Octets  Bits codants  Format
+======  ============  ===================================
+1       7             0xxxxxxx (*ASCII*)
+2       11            110xxxxx 10xxxxxx
+3       16            1110xxxx 10xxxxxx 10xxxxxx
+4       21            11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+======  ============  ===================================
+
+Le traitement des chaînes de caractères est un point majeur de divergence entre les versions 2 et 3 de Python.
+
+.. slide_mark_e
+
+Les chaînes de caractères en Python 2
+-------------------------------------
+
+.. slide_mark_b :Les chaînes de caractères en Python 2
+
+* l'encodage par défaut est l'*ASCII*:
+
+  ::
+
+     Python 2.7.3 (default, Sep 26 2013, 20:03:06) 
+     [GCC 4.6.3] on linux2
+     Type "help", "copyright", "credits" or "license" for more information.
+     >>> import sys
+     >>> sys.getdefaultencoding()
+     'ascii'
+
+* l'encodage par défaut ne s'applique pas pour l'entrée et pour la sortie standard, qui utilisent l'encodage de votre environnement (la variable ``$LANG`` sous Linux). Dans les environnements Linux récents, *LANG=UTF-8* par défaut.
+
+  ::
+
+     Python 2.7.3 (default, Sep 26 2013, 20:03:06) 
+     [GCC 4.6.3] on linux2
+     Type "help", "copyright", "credits" or "license" for more information.
+     >>> import sys
+     >>> sys.stdin.encoding
+     'UTF-8'
+     >>> sys.stdout.encoding
+     'UTF-8'
+* Le type **str** est une séquence d'octets. En complément, depuis la version 2.0, on dispose du type **unicode** pour gérer les caractères *non-ASCII*.
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères en Python 2 [2]
+
+Cette implémentation n'est pas sans conséquences :
+
+* Les chaînes contenant des caractères non-ASCII sont plus longues que le nombre de symboles représentés:
+
+  ::
+
+     >>> s = "Café"
+     >>> len(s)
+     5
+     >>> s
+     'Caf\xc3\xa9'
+
+* Il n'y a pas de bijection entre chaque caractère et une position dans la séquence
+
+
+**Explication:** La longueur affichée est de 5 au lieu de 4 car l'entrée standard utilise l'encodage du sytème d'exploitation qui est (dans ce cas) `UTF-8`. Le caractère **é** est encodé par les deux octets ``\xc3\xa9``. Sur un système basé sur un autre encodage, le résultat pourrait être différent...
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères en Python 2 [3]
+
+Pour rétablir la bijection `caractère <=> donnée` il faut décoder la chaîne pour obtenir une séquence *Unicode*. Cette opération nous réserve une nouvelle surprise:
+
+::
+
+   >>> s="Café"
+   >>> s.decode()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   UnicodeDecodeError: 'ascii' codec can't decode byte 0xc3 in position 3: ordinal not in range(128)
+
+Enfin, en utilisant le bon format, *UTF-8*, on obtient :
+
+::
+
+   >>> u=s.decode('UTF-8')
+   >>> u
+   u'Caf\xe9'
+   >>> type(u)
+   <type 'unicode'>
+   >>> print u
+   Café
+   >>> len(u)
+   4
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères en Python 2 [4]
+
+**Remarque:** Un format de décodage inadapté ne produit pas forcément une erreur mais le résultat sera décevant:
+
+::
+
+   >>> s="Café" # chaîne UTF-8
+   >>> u=s.decode("iso-8859-1") #mauvais format
+   >>> len(u)
+   5
+   >>> print u
+   CafÃ©
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères en Python 2 [5]
+
+On peut concaténer objets unicode et objets str (le type de l'objet résultat sera unicode):
+
+::
+
+   >>> s="Café"
+   >>> s2=" concert"
+   >>> u=s.decode("UTF-8")
+   >>> print u
+   Café
+   >>> print s2
+   concert
+   >>> u2=u+s2
+   >>> print u2
+   Café concert
+   >>> type(u2)
+   <type 'unicode'>
+
+Le passage de *unicode* à *str* se fait par *encodage*, toujours en indiquant le bon format:
+
+::
+
+   >>> u2
+   u'Caf\xe9 concert'
+   >>> print u2
+   Café concert
+   >>> u2.encode()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   UnicodeEncodeError: 'ascii' codec can't encode character u'\xe9' in position 3: ordinal not in range(128)
+   >>> u2.encode('UTF-8')
+   'Caf\xc3\xa9 concert'
+   >>> print 'Caf\xc3\xa9 concert'
+   Café concert
+
+.. slide_mark_e
+.. slide_mark_b :Les chaînes de caractères en Python 2 [6]
+
+**Conseil** pour le traitement des chaînes d'entrée-sortie:
+
+* **décoder** le plus tôt possible pour passer à **unicode**
+* faire les traitements en **unicode**
+* **encoder** le résultat le plus tard possible (pour la sortie)
+
+
+.. graphviz::
+
+   digraph unicode_str {  
+   rankdir="LR"
+   unicode -> str [ label="encode()" rankdir="LR" ];
+   str -> unicode [ label="decode()"  rankdir="LR" ];
+   }
+
+En Python 2, le type **bytes** est un simple alias pour **str**
+
+.. slide_mark_e
+
+
+
+Les chaînes de caractères en Python 3
+-------------------------------------
+
+.. slide_mark_b :Les chaînes de caractères en Python 3
+
+Le traitement des chaînes de caractères, avec l'adoption du standard *Unicode* pour le type *str*, est un des grands progrès de Python 3, mais les structures de données de la version précédente sont bouleversées:
+
+========= ================================ ==============================================================================
+Type      Python 2                         Python 3
+========= ================================ ==============================================================================
+str       séquence d'octets                adopte la structure **unicode** de la V2
+unicode   séquence d'entiers (points code) disparaît car devenu inutile 
+bytes     simple alias pour str            comportement inchangé mais ce n'est plus un alias, mais un type à part entière
+========= ================================ ==============================================================================
+
+De plus, l'encodage par défaut n'est plus l'*ASCII*, mais **UTF-8**.
+
+::
+
+   Python 3.2.3 (default, Sep 25 2013, 18:22:43) 
+   [GCC 4.6.3] on linux2
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> s="Café"
+   >>> s
+   'Café'
+   >>> len(s)
+   4
+
+
+Les opérations d'entrée sortie sont facilitées, surtout quand l'encodage 'UTF-8' est utilisé. On n'est pas complètement à l'abri des problèmes évoqué précédemment, car le format 'UTF-8', même s'il est de plus en plus répandu, il n'est pas unique. Des logiciels produisant des fichiers ISO-8859 sont encore en service, le format UTF-16 est utilisé dans certains environnements.
+
+.. slide_mark_e
+
+
+Les dictionnaires
+=================
+
+.. slide_mark_b :Les dictionnaires
+
+Les dictionnaires sont des collections de couples clé-valeur donnant un accès efficace à chaque valeur à travers sa clé correspondante. 
+Propriétés:
+
+* Chaque clé est unique et non modifiable. 
+* Les éléments ne sont pas ordonnés
+* Les valeurs associés aux clé peuvent être de n'importe quel type, modifiable ou pas
+* Les dictionnaires sont des objets modifiables: on peut ajouter ou retirer des éléments, modifier les valeurs associées aux clés.
+
+Syntaxiquement, l'élément générique est de la forme *<clé>:<valeur>*. Les éléments sont écrits entre accolades et séparés par des virgules:
+
+::
+
+   >>> account = {'sn':'Poli','gn':'Christian','login':'cpoli','uid':1000,'gid':1000,'groups':[1005,1007]}
+   >>> account
+   {'sn': 'Poli', 'uid': 1000, 'gid': 1000, 'groups': [1005, 1007], 'login': 'cpoli', 'gn': 'Christian'}
+
+.. slide_mark_e
+.. slide_mark_b :Les dictionnaires[2]
+
+Une écriture alternative utilisant la fonction native *dict()* (qui est un constructeur) :
+
+::
+
+   >>> account = dict(sn='Poli',gn='Christian',login='cpoli',uid=1000, gid=1000, groups=[1005,1007])
+   >>> account
+   {'sn': 'Poli', 'gid': 1000, 'uid': 1000, 'groups': [1005, 1007], 'login': 'cpoli', 'gn': 'Christian'}
+
+**Remarque:** Cette écriture alternative est réservée aux situations où les clés peuvent s'écrire sous forme d'identifiants et respectent donc la syntaxe des noms des variables.
+
+.. note::
+   Pour garantir la cohérence des dictionnaires, seulement les objets immuables peuvent servir de clés. 
+
+.. slide_mark_e
+.. slide_mark_b :Les dictionnaires[3]
+
+L'implémentation des dictionnaires est basée sur des "hash tables" (tableaux associatifs) et les objets faisant office de clés doivent disposer d'une fonction de hashage, implémentée seulement par les objets immuables. Ainsi, par exemple, une chaîne de caractères peut servir de clé mais une liste ne le peut pas car:
+
+::
+
+   >>> hash("Café")
+   7319500004332556263
+   >>> hash([1,2,3])
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: unhashable type: 'list'
+
+.. slide_mark_e
+.. slide_mark_b :Les dictionnaires[4]
+
+**Accès aux valeurs:**
+
+La syntaxe rappelle celle utilisée pour accéder aux valeurs d'une séquence modifiable, les index étant remplacés par des clés:
+
+::
+
+   >>> account = {'sn':'Poli','gn':'Christian','login':'cpoli','uid':1000,'gid':1000,'groups':[1005,1007]}
+   >>> account['sn']
+   'Poli'
+   >>> account['login']='christian'
+   >>> account
+   {'sn': 'Poli', 'gn': 'Christian', 'gid': 1000, 'groups': [1005, 1007], 'login': 'christian', 'uid': 1000}
+   >>> account['office']=14
+   >>> account
+   {'sn': 'Poli', 'gn': 'Christian', 'office': 14, 'gid': 1000, 'groups': [1005, 1007], 'login': 'christian', 'uid': 1000}
+
+Bien sûr, le slicing n'existe pas, les clés n'étant pas ordonnées.
+
+**Suppressions:**
+
+::
+
+   >>> account = {'sn':'Poli','gn':'Christian','login':'cpoli','uid':1000,'gid':1000,'groups':[1005,1007]}
+   >>> del account['groups']
+   >>> account
+   {'sn': 'Poli', 'gn': 'Christian', 'gid': 1000, 'login': 'cpoli', 'uid': 1000}
+   >>> account.clear()
+   >>> account
+   {}
+
+.. slide_mark_e
+.. slide_mark_b :Les dictionnaires[5]
+
+En dehors des fonctionnalités communes à tous les conteneurs, les dictionnaires disposent de plusieurs méthodes spécifiques intéressantes:
+
+================== =================================================================================
+Méthode            Description                     
+================== =================================================================================
+keys()             fournit les clés du dictionnaire 
+values()           fournit les valeurs associées aux clés            
+items()            fournit les couples (clé,valeur)
+get(cle,defaut)    fournit la valeur associée à la clé si la clé est présente, sinon renvoie defaut
+has_key(cle)       teste la présence d'une clé (**supprimée dans la version 3**)
+copy()             copie superficielle
+================== =================================================================================
+
+.. slide_mark_e
+.. slide_mark_b :Les dictionnaires[6]
+
+.. note:: Le résultat retourné par les méthodes keys(), values(), items() est:
+
+   * une liste en Python 2.x
+   * un itérateur en Python 3.x
+
+   Les 3 méthodes retournant des itérateurs ont été introduites comme implémentations alternatives, plus performantes, des méthodes *keys()*, *values()*,*items()* dans **Python 2.2** sous les noms *iterkeys()*, *itervalues()*, *iteritems()*.
+
+   A partir de **Python 3.0** les méthodes *iter...()* ont remplacé les méthodes les implémentations anciennes, retournant des listes.
+
+::
+
+   >>> account = {'sn':'Poli','gn':'Christian','login':'cpoli','uid':1000,'gid':1000,'groups':[1005,1007]}
+   >>> account.keys()
+   ['sn', 'gn', 'gid', 'groups', 'login', 'uid']
+   >>> account.values()
+   ['Poli', 'Christian', 1000, [1005, 1007], 'cpoli', 1000]
+   >>> account.items()
+   [('sn', 'Poli'), ('gn', 'Christian'), ('gid', 1000), ('groups', [1005, 1007]), ('login', 'cpoli'), ('uid', 1000)]
+   >>> account.has_key("gid")
+   True
+   >>> account.has_key("email")
+   False
+   >>> account.get("email","inconnu")
+   'inconnu'
+
+.. slide_mark_e
+
+
+**Question de style...**
+
+.. slide_mark_b :Question de style...
+
+
+Ecrire:
+
+.. literalinclude:: includes/key_in_dict.py
+   :emphasize-lines: 1
+
+au lieu de :
+
+.. literalinclude:: includes/has_key.py
+
+ou de:
+
+.. literalinclude:: includes/key_in_dict_keys.py
+
+Ecrire:
+
+.. literalinclude:: includes/get_default.py
+   :emphasize-lines: 1
+
+
+au lieu de :
+
+
+.. literalinclude:: includes/if_not_key.py
+   :emphasize-lines: 1
+
+
+Dans un traitement nécessitant aussi bien la présence des clés que celles des valeurs associées, éviter d'écrire (même si ce n'est pas incorrect):
+
+.. literalinclude:: includes/for_dict_ko.py
+
+écrire plutôt:
+
+.. literalinclude:: includes/for_dict_ok.py
+
+.. slide_mark_e
+
+**Dictionnaires et listes:**
+
+.. slide_mark_b :Dictionnaires et listes
+
+La méthode *items()*, employée dans l'exemple précédent, fournit  une liste de tuples correspondant aux paires clé-valeur du dictionnaire:
+
+::
+
+   >>> account
+   {'uid': 1000, 'gid': 1000, 'sn': 'Poli', 'groups': [1005, 1007], 'gn': 'Christian', 'login': 'cpoli'}
+   >>> account.items()
+   [('uid', 1000), ('gid', 1000), ('sn', 'Poli'), ('groups', [1005, 1007]), ('gn', 'Christian'), ('login', 'cpoli')]
+
+
+
+On peut également réunir les éléments de deux ou plusieurs sequences distinctes en une séquence (liste en Python2, itérateur en Python 3) de tuples avec la fonction *zip()*:
+
+::
+
+   >>> account_keys
+   ['uid', 'gid', 'sn', 'groups', 'gn', 'login']
+   >>> account_values
+   [1000, 1000, 'Poli', [1005, 1007], 'Christian', 'cpoli']
+   >>> zip(account_keys,account_values)
+   [('uid', 1000), ('gid', 1000), ('sn', 'Poli'), ('groups', [1005, 1007]), ('gn', 'Christian'), ('login', 'cpoli')]
+
+.. slide_mark_e
+.. slide_mark_b :Dictionnaires et listes[2]
+
+A partir d'une liste de paires on peut construire un dictionnaire:
+
+::
+
+   >>> zipped
+   [('uid', 1000), ('gid', 1000), ('sn', 'Poli'), ('groups', [1005, 1007]), ('gn', 'Christian'), ('login', 'cpoli')]
+   >>> dict(zipped)
+   {'uid': 1000, 'gid': 1000, 'sn': 'Poli', 'groups': [1005, 1007], 'gn': 'Christian', 'login': 'cpoli'}
+
+Les dictionnaires en intension, c'est possible :
+
+::
+
+   >>> {x:ord(x) for x in "Python"}
+   {'h': 104, 'o': 111, 'n': 110, 'P': 80, 't': 116, 'y': 121}
+
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/week_dict.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/week_dict_sol.py
+      :lines: 2,10-
+
+Une solution légèrement différente:
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/week_dict_sol2.py
+      :lines: 2,10-
+
+
+.. slide_mark_e
+
+Objets partagés, copie d'objets
+===============================
+
+.. slide_mark_b :Objets partagés, copie d'objets
+
+Par défaut, les objets référencés plusieurs fois sont partagés, ce qui nécessite quelques précautions dans le cas des objets modifiables (listes, dictionnaires etc).
+
+Illustration:
+
+.. image:: images/list_nocopy_cut.jpg
+
+::
+
+   >>> lst = ['a','b',['c','d']]
+   >>> lst2 = lst
+   >>> lst[1] = 'X'
+   >>> lst2 # lst2 est affectée par l'op.précédente
+   ['a', 'X', ['c', 'd']]
+
+
+Si ce comportement n'est pas celui souhaité, une solution imparfaite à ce problème est la copie superficielle (shallow copy). Ainsi, l'objet de premier niveau est dupliqué, mais pas les objets qu'il référence. Dans l'illustration suivante, la liste de premier niveau est repliquée, mais pas "la liste dans la liste":
+
+.. image:: images/list_copy_cut.jpg
+
+::
+
+   >>> lst = ['a','b',['c','d']]
+   >>> lst2 = lst[:]
+   >>> lst[1] = 'X'
+   >>> lst2 # lst2 n'est pas affecté par l'op. précédente
+   ['a', 'b', ['c', 'd']]
+   >>> lst[2][1] = 'Y'
+   >>> lst2 # maintenant si...
+   ['a', 'b', ['c', 'Y']]
+
+
+Une solution radicale est la copie profonde, qui s'applique récursivement aux objets référencés tant que ces références concernent des objets modifiables:
+
+.. image:: images/list_deepcopy_cut.jpg
+
+::
+
+   >>> import copy
+   >>> lst = ['a','b',['c','d']]
+   >>> lst2 = copy.deepcopy(lst)
+   >>> lst[1] = 'X'
+   >>> lst2
+   ['a', 'b', ['c', 'd']]
+   >>> lst[2][1] = 'Y'
+   >>> lst2
+   ['a', 'b', ['c', 'd']]
+
+.. note:: On peut personnaliser la copie des objets sur une classe en définissant les méthodes **__copy__()** et **__deepcopy__()**
+
+.. slide_mark_e
+
+Les ensembles
+=============
+
+.. slide_mark_b :Les ensembles
+
+Il s'agit d'objets représentant  la notion d'ensemble au sens mathématique:
+
+* les éléments sont uniques
+* il n'y a pas de notion d'ordre entre les éléments.
+
+Concrètement, les ensembles dans Python sont représentés par deux types:
+
+* **set** : ensembles modifiables
+* **frozenset** : ensembles immuables
+
+Les éléments d'un ensemble (set ou frozenset) sont des objets hashables donc immuables.
+
+On peut ajouter/retirer des éléments sur un ensemble *set* après sa création, mais pas sur un ensemble *frozenset*. L'intérêt de ce dernier et d'entre hashable à son tour, donc utilisable comme clé dans un dictionnaire ou comme élément d'un autre ensemble.
+
+.. slide_mark_e
+.. slide_mark_b :Les ensembles[2]
+
+::
+
+   >>> {1, 'a'}  # premier format (à privilégier)
+   set(['a', 1])
+   >>> set([1,"a"]) # création avec le constructeur
+   set(['a', 1])
+   >>> set([1,"a",[6,7]])
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: unhashable type: 'list'
+   >>> set1 = set([1,"a"])
+   >>> set1.add("b")
+   >>> set1
+   set(['a', 1, 'b'])
+   >>> set1.remove("b")
+   >>> set1
+   set(['a', 1])
+   >>> set2=set(["x",set1])
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: unhashable type: 'set'
+   >>> frozen = frozenset(['a', 1, 'b'])
+   >>> set2=set(["x",frozen])
+   >>> set2
+   set(['x', frozenset(['a', 1, 'b'])])
+   >>> frozen.add("y")
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   AttributeError: 'frozenset' object has no attribute 'add'
+   >>> 
+
+.. slide_mark_e
+
+Le type **range/xrange** 
+-------------------------
+
+.. slide_mark_b :Le type **xrange/range** 
+
+Le type appelé **range** en *Python 3*, pré-existant sous le nom **xrange** en *Python 2.x (x>=6)* est un type de séquence très simple supportant seulement:
+
+* l'itération
+* la fonction *len()*
+* l'accès indexé
+
+**NB:** La documentation Python classe ce type parmi les séquences car il permet l'accès indexé. Néanmoins, il ne supporte pas des fonctionnalités communes à toutes les autres séquences, comme le slicing.
+
+
+Son rôle est de fournir une séquence de valeurs entières contiguës dans une plage donnée et il est destiné à la construction des boucles "for" équivalentes à ``for(i=0;i<max;i++){\...}``, possibles en *C* et les langages "C-like" pour lesquelles Python ne propose pas de syntaxe dédiée.
+Ainsi, en Python on va écrire:
+
+::
+
+   >>> # Python 3
+   >>> max=3
+   >>> for e in range(max):
+   ...     print(e)
+   ... 
+   0
+   1
+   2
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le type **xrange/range** [2]
+
+::
+
+   >>> # Python 2.7.x
+   >>> max=3
+   >>> for e in xrange(max):
+   ...     print(e)
+   ... 
+   0
+   1
+   2
+   >>> 
+   
+En Python 2.7, **xrange** coexiste avec la fonction "historique" *range()* qui renvoie une liste:
+
+::
+
+   >>> range(5)
+   [0, 1, 2, 3, 4]
+   >>>
+
+.. slide_mark_e
+.. slide_mark_b :Le type **xrange/range** [3]
+
+   
+Elle assure le même fonctionnement d'une boucle que *xrange()*:
+
+::
+
+
+   >>> max=3
+   >>> for e in range(max):
+   ...     print(e)
+   ... 
+   0
+   1
+   2
+   >>> 
+
+Pourquoi avoir introduit *xrange*? Pour une consommation mémoire constante par rapport au nombre d'itérations.
+
+**NB:** Dans la version 3 de Python  la fonction *range()* a été réimplémentée sur le principe du type *xrange* de la version 2. Le type *xrange* n'existe plus dans la nouvelle version.
+
+.. slide_mark_e
+
+Le type **enumerate**
+---------------------
+
+.. slide_mark_b :Le type **enumerate**
+
+Tout comme (x)range, cet itérateur est important par les possibilités qu'il offre dans l'écriture des boucles.
+
+.. En effet, il répond au besoin récurent d'effectuer un traitement sur chaque élément d'une liste, traitement qui est, pour chaque élément, fonction aussi bien de l'élément lui même que de sa position dans la liste
+
+**Scénario:** Supposons que, pour la liste ['a', 'b', 'c', d'], il est demandé d'afficher chaque élément précédé par sa position dans la liste:
+
+::
+
+   0 a
+   1 b
+   2 c
+   3 d
+
+.. slide_mark_e
+.. slide_mark_b :Le type **enumerate** [2]
+   
+Une écriture possible est:
+
+.. literalinclude:: includes/sans_enumerate.py
+
+Ou encore:
+
+.. literalinclude:: includes/sans_enumerate2.py
+
+mais cette écriture n'est pas très élégante...
+
+.. slide_mark_e
+.. slide_mark_b :Le type **enumerate** [3]
+
+C'est ici que *enumerate* intervient:
+
+.. literalinclude:: includes/avec_enumerate.py
+
+**Explication:** un objet *enumerate* produit à chaque itération un tuple *(position, item)* :
+
+::
+
+   >>> e=enumerate(['a','b','c','d'])
+   >>> type(e)
+   <type 'enumerate'>
+   >>> e.next()
+   (0, 'a')
+   >>> e.next()
+   (1, 'b')
+   >>> e.next()
+   (2, 'c')
+   >>> e.next()
+   (3, 'd')
+   >>> e.next()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   StopIteration
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le type **enumerate** [4]
+
+   
+Sur l'exemple précédent, si on souhaite numéroter les éléments à partir de 1, on peut écrire:
+
+.. literalinclude:: includes/avec_enumerate_1.py
+
+::
+
+   1 a
+   2 b
+   3 c
+   4 d
+
+
+.. http://docs.python.org/3.3/howto/unicode.html
+
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/week_dict2.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/week_dict2_sol.py
+      :lines: 2,10-
+
+
+.. slide_mark_e
+
+Les types des constantes nommées
+================================
+
+Ils sont destinés à introduire les constantes spéciales du langage:
+
+Les constantes booléennes 
+--------------------------
+
+.. slide_mark_b :Les types des constantes nommées
+
+.. slide_insertion:**Les constantes booléennes** 
+
+Les deux catégories logiques de **vrai** et de **faux** sont représentées par les deux objets de type **bool** : **True** et **False**. Ils ont la même valeur logique que les *int* **1** et **0** tout en ayant leur identité propre:
+
+::
+
+   >>> type(True)
+   <type 'bool'>
+   >>> 
+   >>> id(True)
+   8916816
+   >>> id(1)
+   27633592
+   >>> True==1
+   True
+   >>> True==2
+   False
+
+.. slide_mark_e
+
+La constante None
+-----------------
+
+.. slide_mark_b :Les types des constantes nommées [2]
+.. slide_insertion:**La constante None**
+
+Elle désigne l'absence de valeur (équivalent du **null** dans d'autres langages) et est définie par un type dont *None* est le nom est la seule instance.
+
+::
+
+   >>> type(None)
+   <type 'NoneType'>
+   >>> 
+
+
+D'autres constantes spéciales, moins utilisées sont implémentées de la même manière: *NotImplemented* , *Ellipsis* etc.
+
+.. slide_mark_e
+
+Le type **file**
+----------------
+
+.. slide_mark_b :Le type **file**
+
+
+Sans surprise, il intervient dans les opérations sur des fichiers. Il a été brièvement évoqué avec l'instruction **with** et sera détaillé dans le chapitre sur la bibliothèque standard.
+
+On va juste souligner ici son comportement en tant que type itérable:
+
+::
+
+   $ cat abc.txt 
+   aaa
+   bbb
+   ccc
+
+::
+
+   >>> with open('abc.txt') as f:
+   ...     for line in f:
+   ...             print(line)
+   ... 
+   aaa
+   
+   bbb
+
+   ccc
+
+**NB:** On notera que, même si le constructeur ``file()`` existe, il est préférable d'utiliser la primitive ``open()`` pour les créations de fichiers.
+
+
+.. slide_mark_e
+
+*************************
+Les conventions de codage
+*************************
+
+.. slide_mark_b :Les conventions de codage
+
+Les conventions de codage en Python ont été synthétisées dans une *"PEP"* (*Python Enhancement Proposals*), probablement une des *PEPs* les plus connues, la **PEP8** (auteurs : Guido van Rossum, Barry Warsaw et Nick Coghlan)
+
+La *PEP8* est disponible en ligne et c'est un document important, qui mérite une lecture intégrale : http://legacy.python.org/dev/peps/pep-0008/
+
+Dans l'immédiat, on va se contenter d'un rapide survol:
+
+.. slide_mark_e
+.. slide_mark_b :Les conventions de codage [2]
+
+* utiliser 4 espaces pour l'indentation (la tabulation à 8 espaces tolérée pour les codes anciens, mais ne pas combiner espaces et tabulations!)
+* Longueur des lignes < 80 caractères
+* Eviter les espaces dans les situations suivantes:
+  
+  * avant les "," ":" :
+    
+    * ne pas écrire `a , b` mais plutôt `a, b`
+    * ne pas écrire `{'a' :1, ...}` mais plutôt `{'a': 1, ...}`
+
+  * après les '(', '[', '{' :
+    
+    * ne pas écrire `[ a, b ]`, `( a, b )`, `{ a, b }` mais plutôt `[a, b]`, `(a, b)`, `{a, b}`
+
+  * entre un nom de variable et '(', '[':
+    
+    * ne pas écrire `func ()`, `map ['id']` mais plutôt `func()`, `map['id']`
+
+.. slide_mark_e
+.. slide_mark_b :Les conventions de codage [3]
+   
+* Entourer d'un espace de chaque coté les opérateurs binaires dans les expressions (une exception: '=' dans les arguments d'appel des méthodes):
+  
+  * on va écrire (espaces avant/après '=' et '=='):
+
+    ::
+
+       var = 1 # affectation
+       if var == 1:
+          pass
+
+  * mais on va écrire (sans espaces avant/après '='):
+
+    ::
+
+       '{langage},{version}'.format(langage='Python', version=3)
+
+* Si on utilise des opérateurs de priorité différentes dans une expression, prévoir des espaces (seulement) autour de opérateurs de priorité moindre. Exemple ``a*x + b*y``
+
+**NB:** Ne pas hésiter à utiliser l'utilitaire **pylint** pour auditer son code par rapport aux préconisations de la PEP8:
+
+::
+
+   $pylint fichier.py
+
+.. slide_mark_e
+.. slide_mark_b :Les conventions de codage [4]
+
+
+Les noms des variables
+======================
+
+La **PEP8** cite les styles suivants, sans les préconiser tous pour autant:
+
+* b (single lowercase letter)
+
+* B (single uppercase letter)
+
+* lowercase
+
+* lower_case_with_underscores
+
+* UPPERCASE
+
+* UPPER_CASE_WITH_UNDERSCORES
+
+* CapitalizedWords (CapWords, CamelCase)
+
+* mixedCase 
+
+* Capitalized_Words_With_Underscores (ugly!)
+
+.. slide_mark_e
+.. slide_mark_b :Les conventions de codage [5]
+
+  
+Convention générales de nommage
+===============================
+
+* Noms à éviter: en règle générale, les variables à une seule lettre et en particulier les lettres 'l' (L minuscule) et 'O' ('o' majuscule) et I ('i' majuscule)
+
+* variables désignant des constantes sont nommées en lettre majuscules avec des soulignées. Exemple MAX_HEIGHT
+* une variable définie au niveau du module commençant avec un "_" est "locale" au module. Elle ne sera pas importée par ``from module import *``
+* une variable se termine par un "_" pour éviter la collision avec un mot clé du langage. Exemples : min\_, max\_
+
+Le prochains chapitres vont apporter plus des précision sur les conventions de nommage spécifiques aux notions qui seront introduites.
+
+.. slide_mark_e
+
+
+********
+Exercice
+********
+
+.. slide_mark_b :Exercice
+
+.. slide_insertion:Seulement si on a le temps...
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/coauteurs.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/coauteurs_sol.py
+      :lines: 2,10-
+
+
+.. slide_mark_e

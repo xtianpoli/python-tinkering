@@ -1,0 +1,908 @@
+################
+L'approche objet
+################
+
+.. slide_mark_b :L'approche objet
+
+.. slide_insertion:* Classes et instances
+.. slide_insertion:* Les attributs
+.. slide_insertion:* Les méthodes
+.. slide_insertion:* La méthode __init__()
+.. slide_insertion:* La documentation des classes
+.. slide_insertion:* Héritage
+.. slide_insertion:* Old style / New style classes
+.. slide_insertion:* Polymorphisme
+.. slide_insertion:* Encapsulation
+.. slide_insertion:* Agrégation d’objets
+.. slide_insertion:* Méthodes de classe
+.. slide_insertion:* La surcharge des opérateurs
+
+.. slide_mark_e
+.. slide_mark_b :L'approche objet *[2]*
+
+En langage commun on entend par *classe* une catégorie qui permet de désigner un ensemble d'objets ayant des propriétés en commun. 
+
+.. Dans les langages orientés objets (LOO) la notion de **classe** est l'extension de la notion de **type** déjà présente dans d'autres familles de langages de programmation car:
+.. * le paradigme objet remet en cause cette séparation et étend la notion de **type** par la notion de **classe**, regroupant des objets qui ont:
+
+   
+Dans les langages orientés objets (LOO) la notion de **classe** désigne l'implémentation d'un **type**.
+
+**Question légitime:** Pourquoi "implémenter" des types alors que les types existent, sans les classes, dans d'autres familles de langages de programmation?
+
+**Réponse:**
+
+* l'approche procédurale classigue désigne par **type** une structure de données (seulement) et opère ainsi une
+  séparation conceptuelle données - traitements
+* le paradigme objet remet en cause cette séparation et étend la notion de **type** qui devient un ensemble cohérent
+  de données et de traitements
+
+.. slide_mark_e
+.. slide_mark_b :L'approche objet *[3]*
+
+  
+La classe implémente le type (qui est juste une spécification, une "interface") et elle permet de créer, par instanciation,
+des objets qui ont:
+
+  * une structure de données commune
+  * des comportements en commun
+
+.. note:: Dans la pratique, les deux termes (classe et type) sont utilisés souvent comme de synonymes.
+    
+.. slide_mark_e
+.. slide_mark_b :L'approche objet *[4]*
+
+Dans la terminologie des *LOO* on va parler d'*attributs* pour désigner les champs de la structure de données d'un objet et de *méthodes* pour désigner les comportements associés à l'objet (qui sont des fonctions avec quelques spécificités). 
+Les comportements propres aux objets (l'exécution des *méthodes*) sont déclenchés par le mécanisme dit d'"envoi de message" déjà utilisé dans les chapitres précédents pour les types prédéfinis, par exemple:
+
+::
+
+   >>> "abc".upper()
+   'ABC'
+   >>> s="abc"
+   >>> s.upper()
+   'ABC'
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :L'approche objet *[5]*
+
+L'approche objet revendique l'aptitude de favoriser la réutilisation du code grâce au mécanisme d'héritage combiné avec le polymorphisme.
+
+Généralement on considère que les trois piliers de l'approche objet sont:
+
+* l'héritage
+* le polymorphisme
+* l'encapsulation
+
+.. slide_mark_e
+
+Dans la suite de ce chapitre on va voir dans quelle mesure ces concepts sont représentés dans Python et de quelle manière.
+
+********************
+Classes et instances
+********************
+
+.. slide_mark_b :Classes et instances
+
+Une classe représente un **type** dans le sens décrit précédemment mais aussi une "fabrique" d'objets appartenant à ce type pour lesquels la classe elle-même constitue le *modèle*.
+
+Le processus de création d'un objet à partir d'une classe s'appelle *instanciation* et l'objet résultant de ce processus s'appelle *instance* de ladite classe.
+
+Chaque instance d'une classe est un objet ayant une identité propre mais possédant les attributs et les méthodes de sa classe.
+
+.. slide_mark_e
+.. slide_mark_b :Classes et instances *[2]*
+
+Concrètement, en Python, une classe est un regroupement de variables et de fonctions dans un espace de nommage qui lui est propre.
+
+Elle est créée par l'instruction **class** qui est (tout comme *def*) une instruction d'affectation particulière. 
+
+Tout comme l'instruction *def*, **class** contient un bloc d'instructions, mais contrairement à *def*, les instructions membres du bloc sont immédiatement exécutées, dans la foulée.
+
+Normalement, les instructions du bloc sont des affectations de variables et des définitions de fonctions (méthodes) par *def* (qui est, on le rappelle, une forme d'affectation également). Tous les noms ainsi créés feront partie de l'espace de nommage portant le nom de la classe et désigneront ses attributs et ses méthodes.
+
+.. slide_mark_e
+.. slide_mark_b :Classes et instances *[3]*
+
+En faisant, pour l'instant, abstraction de la notion d'héritage, la classe la plus simple (sans attributs, sans méthodes) s'écrit:
+
+::
+
+   >>> class Simple:
+   ...     pass #instruction qui ne fait rien
+   ... 
+   >>> id(Simple)
+   29608288
+
+Pour instancier une classe, on fait appel à son *constructeur* qui est une fonction du même nom que la classe:
+
+::
+
+   >>> s = Simple()
+   >>> id(s)
+   29913552
+   >>> s2 = Simple()
+   >>> id(s2)
+   29913616
+   >>> 
+
+Les objets *s* et *s2* sont des *instances* de la classe *Simple*. Ils ont des identités propres.
+
+.. slide_mark_e
+
+*************
+Les attributs
+*************
+
+.. slide_mark_b :Les attributs
+
+.. literalinclude:: includes/point.py
+
+Contrairement à *C++* et *Java*, la séparation *attribut de classe*/*attribut d'instance* n'est pas "étanche". Ainsi, l'attribut, défini par une affectation dans le corps de la classe, est accessible aussi bien sur la classe elle même que sur ses instances:
+
+::
+
+   >>> Point.x
+   100.0
+   >>> Point.y
+   100.0
+   >>> p = Point()
+   >>> p.x
+   100.0
+   >>> p.y
+   100.0
+
+Le mécanisme de résolution pour les variables, présenté au chapitre sur les fonctions, s'applique également entre la classe et ses instances. Tout comme dans les fonctions imbriquées, le contexte de la classe se comporte comme étant nonlocal par rapport au contexte de ses instances.
+
+.. slide_mark_e
+.. slide_mark_b :Les attributs *[2]*
+
+
+La résolution (en référencement ) de *p.x* se fait dans l'ordre suivant:
+
+#. dans le contexte de **p**
+#. dans le contexte de la classe de **p**, (en cas d'échec à l'étape précédente)
+#. en cas de nouvel échec le processus continuera en utilisant les mécanismes d'héritage décrits plus loin.
+
+
+Ainsi, une nouvelle affectation de *x* au niveau de l'instance n'affectera pas la valeur de *x* au niveau de la classe:
+
+::
+
+   >>> p.x = 33.0
+   >>> p.x
+   33.0
+   >>> Point.x # valeur inchangée:
+   100.0 
+   >>> 
+
+L'affectation de *x* se fera dans le contexte local (celui de l'instance) et va "cacher" la définition non-locale, existante au niveau de la classe.
+
+.. slide_mark_e
+.. slide_mark_b :Les attributs *[3]*
+
+Réciproquement, après une affectation de *x* au niveau de l'instance, un changement de valeur (nouvelle affectation) de *x* au niveau de la classe sera sans effets sur l'instance ayant déjà affecté *x* localement:
+
+::
+
+   >>> Point.x = 150.0
+   >>> p.x
+   33.0
+   >>> 
+
+Évidemment, les choses sont différentes pour l'attribut **y** que l'instance n'a pas modifié localement:
+
+::
+
+   >>> p.y
+   100.0
+   >>> Point.y  = 150.0
+   >>> p.y
+   150.0
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les attributs *[4]*
+   
+.. admonition:: Mise en garde
+   :class: warning
+
+   Les objets Python acceptent de nouveaux attributs de manière "ad-hoc", ce
+   qui peut faire passer sous silence une erreur de nom d'attribut.
+
+::
+
+   >>> class Foo: pass
+   ... 
+   >>> f= Foo()
+   >>> f.x=4
+   >>> f.y=5
+   >>> f.z=6
+   >>> f.x
+   4
+   >>> f.y
+   5
+   >>> f.z
+   6
+   >>> 
+
+.. slide_mark_e
+
+************
+Les méthodes
+************
+
+.. slide_mark_b :Les méthodes
+
+Appelées aussi *fonctions membres*, elles sont des fonctions définies dans l'espace de nom de la classe, mais qui ont vocation à être utilisées au niveau des instances, par le biais du mécanisme d'envoi de messages. 
+
+Afin que chaque méthode puisse accéder au contexte de l'instance concernée par l'appel (contexte qui ne lui est pas accessible par le mécanisme de résolution) l'interpréteur "injecte" à l'appel la référence de l'instance ayant reçu me message (syntaxiquement, l'entité se trouvant du coté gauche du point précédant le message) à chaque invocation de la fonction. Afin de recevoir cette instance, la signature de chaque méthode doit contenir en première position une variable. Par convention, cette variable doit s'appeler **toujours** *self*. 
+
+.. slide_mark_e
+.. slide_mark_b :Les méthodes *[3]*
+
+La variable "self" est l'équivalente de la variable "this", présente en *C++* et *Java*:
+
+.. literalinclude:: includes/point_move.py
+
+::
+
+   >>> p=Point()
+   >>> p.move(5,6)
+   >>> p.x
+   105.0
+   >>> p.y
+   106.0
+   >>> Point.x
+   100.0
+   >>> Point.y
+   100.0
+   >>> 
+
+.. slide_mark_e
+
+*********************
+La méthode __init__()
+*********************
+
+.. slide_mark_b :La méthode __init__()
+
+C'est une méthode spéciale ou "magique" ce qui signifie qu'elle n'a pas vocation à être appelée directement par le programme, mais indirectement, par des mécanismes du langage. Néanmoins la méthode *__init__()* représente une petite entorse à cette règle : elle peut être appelée par programme mais seulement dans la définition d'une autre méthode *__init__()*.
+
+.. slide_mark_e
+.. slide_mark_b :La méthode __init__() *[2]*
+
+La méthode *__init__()*, si elle existe, est appelée à chaque instanciation, suite à l'invocation du constructeur de la classe (fonction du même nom que la classe). Elle peut avoir des paramètres (autres que *self*) et dans ce cas le constructeur pourra (et devra) être invoqué avec des arguments:
+
+.. literalinclude:: includes/point_init.py
+
+::
+
+   >>> p = Point(7,8)
+   >>> p.x
+   7
+   >>> p.y
+   8
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :La méthode __init__() *[3]*
+
+.. note:: 
+
+   Afin d'éviter les interférences non souhaitées entre les attributs de classe et ceux d'instance, il est recommandé d'utiliser la méthode __init__ pour initialiser **tous** les attributs "d'instance" (qui définissent l'état de chaque instance comme, par exemple, les attributs *x* et *y* de la classe *Point*) et de dédier les attributs définis au niveau de la classe aux informations non locales, concernant l'ensemble des instances de la classe (par exemple, un compteur d'instances de *Point* créées):
+
+.. slide_mark_e
+.. slide_mark_b :La méthode __init__() *[4]*
+
+   .. literalinclude:: includes/point_counter.py
+
+   ::
+
+      >>> p = Point()
+      Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+      TypeError: __init__() takes exactly 3 arguments (1 given)
+      >>> Point.counter
+      0
+      >>> p = Point(5,6)
+      >>> Point.counter
+      1
+      >>> p.x
+      5
+      >>> p.y
+      6
+      >>> 
+
+.. slide_mark_e
+
+****************************
+La documentation des classes
+****************************
+
+.. slide_mark_b :La documentation des classes
+
+Les classes disposent, tout comme les méthodes, d'une "docstring" accessible par programme:
+
+::
+
+   >>> class Simple:
+   ...     """Une classe
+   ...     très simple"""
+   ...     pass
+   ... 
+   >>> Simple.__doc__
+   'Une classe\n\ttrès simple'
+   >>> 
+
+.. slide_mark_e
+
+**********
+L'héritage
+**********
+
+.. slide_mark_b :L'héritage
+
+C'est un mécanisme permettant à une classe de s'attribuer les définitions des attributs et les méthodes provenant d'une ou plusieurs autres classes. L'attribution des dites définitions se fait sans recopie, par le lien particulier, appelé "lien d'héritage". 
+
+
+La classe héritière (ou fille) dispose des définitions héritées comme s'ils elles étaient définies localement. En fonction du nombre de classes héritées (appelées *classes parentes* ou *super-classes*) on va parler d'héritage simple ou multiple.
+
+.. literalinclude:: includes/placemark.py
+
+.. slide_mark_e
+.. slide_mark_b :L'héritage *[2]*
+
+Dans cette exemple, la classe *Placemark* (destinée à définir des points d'intérêt sur une carte ou un plan) hérite de *Point* pour les coordonnées. C'est une spécialisation de la classe *Point*, ou une "classe fille". A ce titre:
+
+* elle bénéficie de la méthode *move()* sans avoir à la définir.
+* utilise la méthode __init__() de *Point* dans sa propre implémentation, en évitant toute redondance.
+* enfin, elle est une spécialisation de *Point*, car elle implémente une nouvelle méthode, *show()*, qui lui est propre.
+
+::
+
+   >>> p = Placemark(3,4,"phone", "@")
+   >>> p.show()
+   'Position (3, 4):@ phone'
+   p.move(6,7)
+   >>> p.show()
+   'Position (9.0, 11.0):@ phone'
+
+
+.. note:: La primitive *super(Class,self)* permet d'appeler une méthode (le plus souvent une homonyme) héritée, en excluant *Class* et sa descendance du processus de résolution (sinon, dans l'exemple précédent, en utilisant *self* directement, on aurait une récursion infinie). Typiquement, *Class* désigne la classe courante (la classe de définition de la méthode appelante, comme dans l'exemple précédent). La primitive ``super()`` fait partie du modèle objet "new style", détaillé au chapitre suivant.
+
+.. slide_mark_e
+
+*****************************
+Old style / New style classes
+*****************************
+
+.. slide_mark_b :Old style / New style classes
+
+* Avant la version 2.2 de Python, le modèle objet du langage était dissocié de ses types de base. 
+* A partir de la 2.2, on a introduit les "new style classes" dans le but d'unifier à terme les types prédéfinis et les types utilisateur. Pour écrire des classes "new style" il suffit de les faire hériter (directement ou indirectement) de la classe prédéfinie **object** qui est aussi la racine de tous les types prédéfinis. Le modèle "old style" est supporté dans toutes les versions 2.x pour des raisons de compatibilité.
+* A partir de la 3.0 le modèle "old style" est abandonné: toute classe sans super-classe explicite hérite d'office de la classe *object*:
+
+.. slide_mark_e
+.. slide_mark_b :Old style / New style classes *[2]*
+
+Illustration :
+
+* Python 2.7.x:
+
+  ::
+
+     >>> class Simple: # Old Style
+     ...     pass
+     ... 
+     >>> s = Simple()
+     >>> type(s)
+     <type 'instance'>
+     >>> s.__class__
+     <class __main__.Simple at 0x7f449397c0b8>
+     >>> dir(s)
+     ['__doc__', '__module__']
+     >>> 
+     >>> class Simple(object): # New style
+     ...     pass
+     ... 
+     >>> s = Simple()
+     >>> type(s)
+     <class '__main__.Simple'>
+     >>> s.__class__
+     <class '__main__.Simple'>
+     >>> dir(s)
+     ['__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__']
+
+* Python 3.x:
+
+  ::
+
+     >>> class Simple: # New style
+     ...     pass
+     ... 
+     >>> s = Simple()
+     >>> type(s)
+     <class '__main__.Simple'>
+     >>> dir(s)
+     ['__class__', '__delattr__', '__dict__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__']
+     >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Old style / New style classes *[2]*
+
+.. note:: Dans l'exemple précédent, on a déjà utilisé des classes "new style" en faisant hériter *Point* de *object* car, sinon, l'utilisation de la primitive *super()* n'aurait pas été possible.
+
+.. slide_mark_e
+
+.. http://panmental.de/symbols/info.htm
+
+
+*******************
+L'héritage multiple
+*******************
+
+.. slide_mark_b :L'héritage multiple
+
+L'héritage multiple existe dans les deux modèles ("old style" et "new style") mais les méthodes de résolution diffèrent:
+
+* recherche en profondeur d'abord pour les classes "old style"
+* résolution selon l'algorithme le `linéarisation C3 <https://www.python.org/download/releases/2.3/mro/>`_ (à partir de la version 2.3)
+
+Le modèle "new style" permet de connaître l'ordre de résolution de l'interpréteur en appelant la méthode ``mro()`` (method resolution order).
+
+.. slide_mark_e
+.. slide_mark_b :L'héritage multiple *[2]*
+
+Exemple pour le diagramme dit "en diamant":
+
+.. literalinclude:: includes/diamond.txt
+
+::
+
+   >>> class A(object): pass
+   ... 
+   >>> class B(A): pass
+   ... 
+   >>> class C(A): pass
+   ... 
+   >>> class D(B,C): pass
+   ... 
+   >>> D.mro()
+   [<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <type 'object'>]
+
+.. slide_mark_e
+.. slide_mark_b :L'héritage multiple *[3]*
+
+**Remarques:**
+
+* En **Python 3.x** la primitive ``super()`` peut être appelée sans arguments, avec un comportement par défaut identique à celui décrit précédemment.
+* L'utilisation de la primitive ``super()`` dans la méthode ``__init__()`` en cas d'héritage multiple est problématique. Pour plus de détails voir http://www.artima.com/weblogs/viewpost.jsp?thread=281127
+
+
+
+.. slide_mark_e
+
+*************
+Polymorphisme
+*************
+
+.. slide_mark_b :Polymorphisme
+
+On parle de *polymorphisme* lorsque deux ou plusieurs méthodes, ayant des signatures identiques, sont définies sur des classes différentes. Dans la pratique, le polymorphisme est intéressant quand les dites classes sont reliées par des liens d'héritage.
+
+
+En effet, le polymorphisme complète l'héritage au sens que :
+
+* l'héritage permet à la classe de s'approprier l'ensemble des méthodes définies par ses super-classes.
+* grâce au polymorphisme on peut redéfinir, ponctuellement, certaines méthodes héritées dans un but de *spécialisation*.
+
+Pour mettre en perspective le polymorphisme de plusieurs *LOO* il est utile de souligner que:
+
+* En C++, le mécanisme s'appelle aussi "liaison dynamique" et s'applique uniquement aux méthodes déclarées **virtual** ou **pure virtual**.
+
+* En Java, toute méthode peut être spécialisée dans une sous-classe de sa classe d'origine, sauf si la dite méthode est déclarée **final**.
+
+* En Python, les mécanismes de spécialisation s'appliquent toujours, sans exception.
+
+.. slide_mark_e
+.. slide_mark_b :Polymorphisme *[2]*
+
+Pour illustrer la complémentarité héritage - polymorphisme, prenons l'exemple d'un outil de dessin très rudimentaire, permettant de tracer le contour de certaines figures géométriques de tailles fixes avec un "motif" particulier (le motif étant un caractère) :
+
+.. literalinclude:: includes/figures.py
+
+La classe *Figure* est, en jargon "objet", une *classe abstraite* : son utilité n'est pas de produire des instances mais de faire hériter à ses classes filles  (*Rectangle* et *Triangle*) des comportements communs, comme la méthode *draw()*, sans avoir à les réécrire. 
+
+
+Par contre, la méthode *shape()*, héritée aussi par *Rectangle* et *Triangle* a vocation à être redéfinie, sous peine d'obtenir une *NotImplementedError* à l'exécution. 
+
+Cette redéfinition de *shape()* par les classes filles est l'expression du **polymorphisme**.
+
+.. slide_mark_e
+.. slide_mark_b :Polymorphisme *[3]*
+
+Même si techniquement *Figure* reste instanciable, ses instances sont inutilisables:
+
+::
+
+   >>> f=Figure()
+   >>> f.draw('*')
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 10, in draw
+   File "<stdin>", line 8, in shape
+   NotImplementedError
+
+
+Par contre, ses sous-classes :
+
+* bénéficient, grâce à l'héritage, de la méthode *draw()* qu'elles ne possèdent pas localement
+* spécialisent la méthode *shape()* en fonction de leur propres besoins, grâce au polymorphisme
+
+**Illustration :**
+
+::
+
+   >>> r=Rectangle()
+   >>> r.draw('*')
+   
+               ********
+               *      *
+               *      *
+               *      *
+               ********
+   >>> 
+   >>> t = Triangle()
+   >>> t.draw('+')
+
+                   +
+                  + +
+                 +   +
+                +     +
+               +++++++++
+   >>> 
+
+.. slide_mark_e
+
+*************
+Encapsulation
+*************
+
+.. slide_mark_b :Encapsulation
+
+Python ne dispose pas d'un mécanisme d'encapsulation au sens strict, comme C++ et Java. Il propose en échange une convention de nommage qui assure une forme de "pseudo-encapsulation":
+
+* si le nom d'un attribut/méthode à l'intérieur d'une classe commence par **__** (double underscore) et **ne** se termine **pas** par **__** (par exemple: *__nom*) alors:
+
+  * il sera accessible sous le nom *__nom* **seulement** dans le contexte de la classe et de ses instances
+  * il sera accessible dans les autres contextes sous le nom *_Classe__nom*
+
+.. literalinclude:: includes/encapsulation.py
+
+Les implémentations des méthodes accèdent les attributs sous leur vrai nom:
+
+::
+
+   >>> p = FrozenPoint(5,6)
+   >>> p.getX()
+   5
+   >>> p.getY()
+   6
+   >>> p.getCounter()
+   1
+
+Alors que les accès directs (avec les vrais noms) échouent s'ils sont faits à partir d'un contexte extérieur:
+
+::
+
+   >>> p.__x
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   AttributeError: 'FrozenPoint' object has no attribute '__x'
+
+Par contre, cette protection est contournable :
+
+::
+
+   >>> p._FrozenPoint__x
+   5
+   >>>
+
+.. slide_mark_e
+
+La fonction property()
+======================
+
+.. slide_mark_b :La fonction property()
+
+Dans les bonnes pratiques de la programmation objet en C++ et Java il est préconisé de contrôler l'accès aux attributs privés avec des méthodes dédiées, appelées parfois "accesseurs" (``setAttr(val)``, ``val = getAttr()``, etc.). Cette pratique a des mérites mais elle nous prive de l'écriture plus lisible et concise que l'accès direct aux attributs confère.
+
+Python arrive à concilier les deux aspects avec la primitive ``property()`` ayant la signature complète:
+
+``attribute =  property([getfun[, setfun[, delfun[, docstring]]]])``
+
+* getfun(): méthode d'accès en lecture
+* setfun(): méthode de mise à jour 
+* delfun(): suppression
+* docstring : documentation
+
+
+.. literalinclude:: includes/circle_property.py
+
+
+::
+
+   >>> c = Circle(4,5,15)
+   >>> c.ray # consultation
+   15
+   >>> c.ray=-7 # tentative d'affectation avec une valeur illegale
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 10, in set_ray
+   ValueError
+   >>> c.ray=7 # affectation correcte
+   >>> c.ray
+   7
+   >>> del c.ray # suppression interdite
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 13, in del_ray
+   NotImplementedError
+   >>> Circle.ray.__doc__ # documentation
+   'this is the ray attribute property'
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :La fonction property() *[2]*
+
+Une écriture sémantiquement équivalente, avec des décorateurs dédiés, est également possible:
+
+.. literalinclude:: includes/circle_property_decorator.py
+
+**NB:** Dans cette deuxième variante il y a un "intrus", appelé *diameter*. Il illustre la possibilité de définir des pseudo-attributs calculés, accessibles, bien sûr, en lecture seule:
+
+::
+
+   >>> c.ray=7
+   >>> c.ray
+   7
+   >>> c.diameter
+   14
+   >>> c.ray=10
+   >>> c.diameter
+   20
+   >>> 
+   >>> c.diameter=15
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   AttributeError: can't set attribute
+   >>> 
+
+.. slide_mark_e
+
+*******************
+Agrégation d'objets
+*******************
+
+.. slide_mark_b :Agrégation d'objets
+
+L'agrégation est une association asymétrique entre deux classe **A** et **B** qui exprime un rapport de type:
+
+* **A** est composé de ... **B**
+* **A** possède ... **B**
+
+On va parler de **A** comme étant le contenant et de **B** comme contenu.
+
+Dans la classe *Circle* de l'exemple précédent on a utilisé les coordonnées x et y pour désigner le centre. En utilisant l'agrégation avec la classe *Point* déjà évoquée on obtient:
+
+.. literalinclude:: includes/circle_point.py
+
+.. admonition:: Question
+   :class: warning
+
+   Pourquoi ne pas avoir fait hériter *Circle* de *Point* pour obtenir le même résultat ?
+
+.. slide_mark_e
+
+******************
+Méthodes de classe
+******************
+
+.. slide_mark_b :Méthodes de classe
+
+Les méthodes déjà étudiées ne peuvent pas être appelées sans avoir créé préalablement une instance de leur classe de définition ou de l'une de ses sous-classes. 
+
+Pourtant, on peut avoir besoin définir des traitements qui concernent la classe indépendamment de ses instances. 
+
+Dans l'exemple suivant on souhaite afficher l'attribut *title*, qui est un attribut de classe par la méthode *banner()*, qui fait une mise en forme quelconque:
+
+.. literalinclude:: includes/class_method_0.py
+
+::
+
+   >>> A.banner()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   TypeError: unbound method banner() must be called with A instance as first argument (got nothing instead)
+   >>> a=A()
+   >>> a.banner()
+   *******
+   class A
+   *******
+
+Dans l'exemple précédent, pour pouvoir exécuter *banner()* on a dû créer une instance pour une utilisation détournée, ce qui est généralement une mauvaise idée.
+Pour résoudre ce problème, Python propose deux décorateurs apportant deux solutions différentes: **@staticmethod** et **@classmethod**
+
+.. slide_mark_e
+
+Le décorateur @staticmethod
+===========================
+
+.. slide_mark_b :Le décorateur @staticmethod
+
+Ce décorateur permet de définir une fonction "classique" dans l'espace de noms de la classe, rappelant le fonctionnement des méthodes statiques du *C++* et *Java*. La signature de la fonction ne contiendra pas le paramètre *self* :
+
+
+.. literalinclude:: includes/static_method.py
+
+La méthode est héritée, mais l'absence de *self* empêche une écriture "polymorphe" (prendre en compte l'attribut *title* de la classe sur laquelle la méthode *banner()* s'exécute): 
+
+::
+
+   >>> A.banner()
+   *******
+   class A
+   *******
+   >>> B.banner()
+   *******
+   class A
+   *******
+   >>> 
+
+.. slide_mark_e
+
+Le décorateur @classmethod
+==========================
+
+.. slide_mark_b :Le décorateur @classmethod
+
+Il apporte une solution aux limitations de @staticmethod. La méthode décorée ainsi contient un paramètre équivalent à *self* (appelé **par convention** *cls*) qui permet l'expression du polymorphisme:
+
+
+.. literalinclude:: includes/class_method.py
+
+::
+
+   >>> A.banner()
+   *******
+   class A
+   *******
+   >>> B.banner()
+   *******
+   class B
+   *******
+   >>> 
+
+.. slide_mark_e
+
+***************************
+La surcharge des opérateurs
+***************************
+
+.. slide_mark_b :La surcharge des opérateurs
+
+Tout comme C++ Python permet la surcharge des opérateurs à l'exception de celui d'affectation. Cette surcharge se fait en implémentant des méthodes spéciales ou "magiques". Les noms de ces méthodes commencent et se terminent par **__** (double underscore):
+
+
+* méthodes pour les opérateurs arithmétiques : __add__, __sub__, __mul__, __div__, __neg__, ...
+* méthodes pour les opérateurs de comparaison : __eq__, __gt__, __lt__, ...
+* méthodes pour les itérables : __iter__, __len__, ...
+* autres méthodes __call__ pour (), __str__, ...
+
+.. slide_mark_e
+.. slide_mark_b :La surcharge des opérateurs *[2]*
+
+Sans redéfinition des comportements par défaut:
+
+.. literalinclude:: includes/point_overload.py
+
+
+Le résultat  de la comparaison entre deux objets *Point* identiques est surprenant:
+
+::
+
+   >>> p1 = Point(4,5)
+   >>> p2 = Point(4,5)
+   >>> p1 == p2
+   False
+   >>> 
+
+Et le résultat de l'impression pas très parlant:
+
+::
+
+   >>> print(p1)
+   <__main__.Point object at 0x286e150>
+   >>>
+
+.. slide_mark_e
+.. slide_mark_b :La surcharge des opérateurs *[3]*
+
+Le remède :
+
+* spécialisation de l'opérateur "==" (méthode *__eq__*) 
+* spécialisation de la méthode *__str__*
+
+.. literalinclude:: includes/point_overload2.py
+
+
+Les résultats sont différents:
+
+::
+
+   >>> p1 = Point(4,5)
+   >>> p2 = Point(4,5)
+   >>> p1 == p2
+   True
+   >>> print(p1)
+   Point(4, 5)
+   >>> 
+
+.. slide_mark_e
+
+**********************
+Conventions de nommage
+**********************
+
+.. slide_mark_b :Conventions de nommage
+
+La **PEP8** préconise:
+
+* Pour les **noms des classes**, la convention "CapWords" sera utilisée par défaut. La convention utilisée pour les fonctions peut s'appliquer pour certaines classes dont l'usage est basé principalement sur leur interface appelable (autrement dit, qui sont perçues par l'utilisateur comme des fonctions) **NB:** Cette convention ne s'applique pas aux builtins
+* Les exceptions sont des classes (rappel) et leur nommage suit les mêmes règles.
+* Toujours utiliser **self** en premier argument d'une méthode (d'instance) et **cls** en premier argument d'une méthode de classe (décorée @classmethod)
+* les noms des méthodes et des attributs suivent la même convention que les fonctions En plus :
+
+  * les noms commençant par un underscore sont considérés, par convention, comme "internes" (weak “internal use” indicator)
+  * les noms commençant par deux underscores  seront littéralement remplacés à la compilation comme montré précédemment
+ 
+.. slide_mark_e
+
+********
+Exercice
+********
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/chess.py
+      :lines: 10-
+	
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/chess_sol.py
+      :lines: 10-
+
+.. slide_mark_e
+
+Exercice (suite)
+================
+
+.. slide_mark_b :Exercice (suite)
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/chess2.py
+      :lines: 10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/chess_sol2.py
+      :lines: 10-
+
+.. slide_mark_e
+

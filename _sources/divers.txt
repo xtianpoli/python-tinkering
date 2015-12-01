@@ -1,0 +1,455 @@
+#############
+Outils divers
+#############
+
+.. slide_mark_b :Outils divers
+
+.. slide_insertion:* L’installeur Pip
+.. slide_insertion:* Les environnements virtuels
+.. slide_insertion:* Le débogueur pdb
+.. slide_insertion:* Le module __future__
+
+.. slide_mark_e
+
+****************
+L'installeur Pip
+****************
+
+.. slide_mark_b :L'installeur Pip
+
+L'installation de nouveaux paquets peut se faire de plusieurs manières, entre autres:
+
+#. en utilisant les paquets de sa distribution de système d'exploitation (Linux, par exemple)
+#. en utilisant les paquets du PyPi (Python Package Index) https://pypi.python.org/pypi et l'installeur **pip**
+
+Les deux approches présentent des avantages et des inconvénients et il ne s'agit pas ici de proposer un choix dans le cas d'une utilisation *standard* car ce choix peut dépendre de plusieurs facteurs (culture de l'équipe, contraintes de déploiement etc.).
+
+Par contre dans la perspective de l'utilisation de **virtualenv**  pour créer des environnements d'expérimentation (section suivante), la connaissance des fonctionnalités de *pip* est utile.
+
+.. slide_mark_e
+
+
+Installer pip
+=============
+
+.. slide_mark_b :Installer pip
+
+On a le choix entre:
+
+* installer le paquet de la distribution (selon le système d'exploitation)
+* L'archive source  http://pypi.python.org/packages/source/p/pip/
+
+  * télécharger le bonne version
+  * décompresser, désarchiver
+  * dans le répertoire pip-xxx (désarchivé) exécuter ``python setup.py install``
+* utiliser *easy_install*:
+
+  ::
+
+     easy_install pip
+
+.. slide_mark_e
+
+Installer un paquet avec *pip* :
+================================
+
+.. slide_mark_b :Installer un paquet avec *pip* :
+
+::
+
+   $ pip install MonPaquet
+
+Lister les paquets installés
+============================
+
+::
+
+   $ pip freeze
+   Cheetah==2.4.4
+   CherryPy==3.2.2
+   Django==1.5.4
+   Fabric==1.3.2
+   .....
+
+.. slide_mark_e
+
+Installer une version avec contraintes
+======================================
+
+.. slide_mark_b :Installer une version avec contraintes
+
+::
+
+   $ pip install 'MonPaquet<2.1'
+
+On peut combiner plusieurs contraintes parmi **==, >=, >, <, <=**:
+
+::
+
+   $ pip install 'MonPaquet>2.0,<2.1'
+
+.. sl_ide_mark_e
+
+Mise à jour d'un paquet
+=======================
+
+.. sli_de_mark_b :Mise à jour d'un paquet
+
+::
+
+   $ pip install -U MonPaquet
+
+
+Suppression d'un paquet
+=======================
+
+
+::
+
+   $ pip uninstall MonPaquet
+
+.. slide_mark_e
+
+***************************
+Les environnements virtuels
+***************************
+
+.. slide_mark_b :Les environnements virtuels
+
+Nous avons parfois besoin d'expérimenter des logiciels qui ont des dépendances particulières (par exemple, des versions très récentes et pas encore stables de certaines bibliothèques). 
+
+Plusieurs projets gérés en parallèle peuvent utiliser des  bibliothèques incompatibles entre elles. Faire ces installations dans l'environnement standard peut être dangereux (risque de rendre le système instable) voire impossible. 
+
+Pour faire face à ce problème, une des solutions passe par la création des environnements virtuels. Même si Python3.3 possède une solution integrée (**venv**) la solution la plus répandue reste, pour l'instant (début 2014), **virtualenv** .
+
+.. slide_mark_e
+
+Installer **virtualenv**
+========================
+
+.. slide_mark_b :Installer **virtualenv**
+
+On peut installer *virtualenv* à partir de la distribution système, par exemple, pour ubuntu:
+
+::
+
+   $ sudo apt-get install python-virtualenv
+
+ou avec pip:
+
+::
+
+   $ sudo pip install virtualenv
+
+ou, pour une installation dans son espace personnel:
+
+::
+
+   $ pip install --user virtualenv
+
+.. slide_mark_e
+
+
+Ensuite, on peut créer des environnements virtuels (par exemple, dans un sous-répertoire dédié dans son répertoire $HOME):
+
+.. slide_mark_b :Créer des environnements virtuels
+
+::
+
+
+   $ pwd
+   /home/poli/virtual_envs
+   $ virtualenv virt_env_1
+   New python executable in virt_env_1/bin/python
+   Installing distribute.............................................................................................................................................................................................done.
+   Installing pip...............done.
+
+.. slide_mark_e
+.. slide_mark_b :Créer des environnements virtuels *[2]*
+
+La commande précédente crée un environnement Python à part entière (ici, une vue partielle de l'arborescence de fichiers créée):
+
+::
+
+   $ tree --charset ascii  -L 2 virt_env_1
+   virt_env_1
+   |-- bin
+   |   |-- activate
+   |   |-- activate.csh
+   |   |-- activate.fish
+   |   |-- activate_this.py
+   |   |-- easy_install
+   |   |-- easy_install-2.7
+   |   |-- pip
+   |   |-- pip-2.7
+   |   `-- python
+   |-- include
+   |   `-- python2.7 -> /usr/include/python2.7
+   |-- lib
+   |   `-- python2.7
+   `-- local
+       |-- bin -> /home/poli/virtual_envs/virt_env_1/bin
+       |-- include -> /home/poli/virtual_envs/virt_env_1/include
+       `-- lib -> /home/poli/virtual_envs/virt_env_1/lib
+
+.. slide_mark_e
+.. slide_mark_b :Créer des environnements virtuels *[3]*
+
+Une fois créé, il faut activer l'environnement pour l'utiliser:
+
+::
+
+   $ cd virt_env_1/
+   $ source bin/activate
+   (virt_env_1) $
+
+**NB:** Le prompt modifié ``(virt_env_1) $`` indique l'environnement courant
+
+.. slide_mark_e
+.. slide_mark_b :Créer des environnements virtuels *[4]*
+
+Toute installation faite avec **pip** dans un environnement activé sera locale à cet environnement, sans interférence avec l'environnement standard.
+
+L'interpréteur lancé dans cet environnement aura accès aux modules installés localement.
+
+::
+
+   >>> import sys
+   >>> sys.path
+   ['', '/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages/distribute-0.6.24-py2.7.egg', '/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages/pip-1.1-py2.7.egg', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages/distribute-0.6.24-py2.7.egg', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages/pip-1.1-py2.7.egg', '/home/poli/virtual_envs/virt_env_1/lib/python2.7', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/plat-linux2', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-tk', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-old', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/lib-dynload', '/usr/lib/python2.7', '/usr/lib/python2.7/plat-linux2', '/usr/lib/python2.7/lib-tk', '/home/poli/virtual_envs/virt_env_1/local/lib/python2.7/site-packages', '/home/poli/virtual_envs/virt_env_1/lib/python2.7/site-packages']
+   >>> 
+
+.. slide_mark_e
+
+Installation d'un module :
+
+.. slide_mark_b :Installation d'un module dans l'env. virtuel
+
+::
+
+   (virt_env_1) $ pip install web.py
+   Downloading/unpacking web.py
+   Downloading web.py-0.37.tar.gz (90Kb): 90Kb downloaded
+   Running setup.py egg_info for package web.py
+    
+   Installing collected packages: web.py
+   Running setup.py install for web.py
+    
+   Successfully installed web.py
+   Cleaning up...
+
+
+Desactivation de l'environnement (pour revenir à l'environnement de départ):
+
+::
+
+   (virt_env_1) $ deactivate
+
+.. slide_mark_e
+
+Options intéressantes *de virtualenv*
+=====================================
+
+.. slide_mark_b :Options intéressantes *de virtualenv*
+
+Niveau d'isolation par rapport au système:
+
+* *--no-site-packages* : pas d'héritage des modules installés sur le système, sauf les modules standard (os,sys,...)
+* *--system-site-packages* : tout module python installé sur le système sera disponible en local (y compris les installations ultérieures à la création de l'environnement virtuel). Bien sûr, tout module installé localement sera prioritaire par rapport à  son homonyme présent sur le système, le cas échéant.
+
+Choix de la version de Python:
+
+Si plusieurs versions de Python sont disponibles sur le système on peut opter pour une des versions à la création de l'environnement:
+
+::
+
+   $ virtualenv virt_env_2 -p /usr/bin/python3
+
+.. slide_mark_e
+
+********************
+Le débogueur **pdb**
+********************
+
+.. slide_mark_b :Le débogueur **pdb**
+
+Est un environnement interactif proposant les fonctionnalités classiques, utiles dans la mise au point du logiciel:
+
+* mise en pause du programme
+* inspection des variables et de la pile d'exécution
+* exécution "pas à pas"
+* définition de points d'arrêt
+* ...
+
+Dans la suite on utilisera le script suivant pour illustrer l'utilisation de pdb :
+
+
+.. literalinclude:: includes/pdb_sample.py
+
+
+Il y a trois manières pour lancer *pdb*:
+
+* à partir de la ligne de commande
+* dans une session interactive de l'interpréteur
+* à partir du programme
+
+.. slide_mark_e
+
+
+pdb en ligne de commande
+========================
+
+.. slide_mark_b :pdb en ligne de commande
+
+Il s'agit d'exécuter **pdb** en lui passant en argument le script à déboguer. 
+
+::
+
+   $ python -m pdb ./pdb_sample.py
+   > /home/poli/mypython-course/source/includes/pdb_sample.py(1)<module>()
+   -> class DummyClass(object):
+   (Pdb) 
+
+L'exécution de pdb aura comme effet le chargement du code source. L'exécution s'arrête sur la première instruction présente dans le fichier et *pdb* se met en attente des commandes utilisateur.
+
+.. slide_mark_e
+
+pdb lancé dans une session interactive
+======================================
+
+.. slide_mark_b :pdb lancé dans une session interactive
+
+Il s'agit d'importer le module à déboguer ainsi que le module pdb ensuite exécuter ``pdb.run()``:
+
+::
+
+   >>> import pdb_sample
+   >>> import pdb
+   >>> pdb.run('pdb_sample.DummyClass(514).do_something()')
+   > <string>(1)<module>()
+   (Pdb)
+
+.. slide_mark_e
+
+Parmi les commandes les plus utilisées:
+
+.. slide_mark_b :**pdb** , quelques commandes
+
+* h(elp) [cmd] : aide en ligne
+* w(here) : affiche la pile d'exécution, de haut en bas. Une flèche indique le contexte courant (dans lequel on peut visualiser l'état des variables etc.)
+* d(own) [cnt]/u(p) [cnt] : déplacements dans la pile
+* b(reak) [([fich:]ligne | fonction) [, condition]] : point d'arrêt (retourne un numéro)
+* tbreak  [([fich:]ligne | fonction) [, condition]] : point d'arrêt temporaire (disparaît après avoir été déclenché une fois)
+* cl(ear) [fich:ligne | num [num ...]] : effacer 1..n points d'arrêt
+* enable/disable [num [num ...]] : activer désactiver point d'arrêt.
+* ...
+
+.. slide_mark_e
+
+pdb lancé à partir du programme
+===============================
+
+.. slide_mark_b :pdb lancé à partir du programme
+
+Cette possibilité est utile quand on souhaite déclencher *pdb* le plus tard possible, par exemple en cas d'exécution longue avant l'apparition du problème à déboguer.
+
+La mise en oeuvre se fait en appelant la fonction *pdb.set_trace()* :
+
+.. literalinclude:: includes/pdb_sample_set_trace.py
+
+Il suffit d'exécuter le script par un appel normal:
+
+::
+
+
+   $ python pdb_sample_set_trace.py
+   a:514
+   > /home/poli/mypython-course/source/includes/pdb_sample_set_trace.py(12)do_something()
+   -> for tpl in alpha_zip:
+   (Pdb) 
+
+.. slide_mark_e
+
+débogue  "post mortem"
+======================
+
+.. slide_mark_b :débogue  "post mortem"
+
+Il s'agit de déboguer en programme qui s'est déjà terminé par une exception. Dans l'exemple initial, appelant le constructeur *DummyClass()* avec une chaîne en argument l'exécution se terminera avec une exception *TypeError*. On peut ensuite, en utilisant la fonction ``pdb.pm()`` ou ``pdb.post_mortem()`` retrouver le contexte d'exécution au moment où l'erreur s'est produite:
+
+::
+
+   >>> import pdb_sample
+   >>> import pdb
+   >>> pdb_sample.DummyClass("abc").do_something()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "pdb_sample.py", line 8, in do_something
+     last = first + len(alphabet)
+   TypeError: cannot concatenate 'str' and 'int' objects
+   >>> pdb.pm() 
+   > /home/poli/mypython-course/source/includes/pdb_sample.py(8)do_something()
+   -> last = first + len(alphabet)
+   (Pdb) 
+
+.. slide_mark_e
+
+.. slide_mark_b :Autres outils de debogage
+
+**NB:** Plusieurs outils de débogage basés sur **pdb** existent. Ils ont le mérite de proposer une ergonomie améliorée. Parmi eux on peut citer:
+
+* **pudb** : https://pypi.python.org/pypi/pudb proposant une interface un mode caractère.
+* **spyder** : https://pypi.python.org/pypi/spyder Environnement intégré (IDE) proposant une interface graphique. 
+
+.. slide_mark_e
+
+************************
+Le module **__future__**
+************************
+
+.. https://pythonhosted.org/six/
+.. http://python-future.org/faq.html#what-is-the-relationship-between-future-and-six
+.. http://python3porting.com/differences.html
+
+.. slide_mark_b :Le module **__future__**
+
+Les fonctionnalités Python 3 incompatibles avec la version 2 peuvent être testées et utilisées "par anticipation" dans l'ancienne version. C'est une stratégie possible pour préparer le passage à la nouvelle version mais sa pertinence est à évaluer au cas par cas. 
+
+Les propriétés importantes par rapport à la version 3 sont:
+
+* division
+* absolute_import
+* print_function
+* unicode_literals
+
+Illustration:
+
+::
+
+   >>> 5/6
+   0
+   >>> from __future__ import division
+   >>> 5/6
+   0.8333333333333334
+   >>> print sys.version
+   2.7.3 (default, Feb 27 2014, 19:58:35) 
+   [GCC 4.6.3]
+   >>> from __future__ import print_function
+   >>> print sys.version
+     File "<stdin>", line 1
+       print sys.version
+               ^
+   SyntaxError: invalid syntax
+   >>> print(sys.version)
+   2.7.3 (default, Feb 27 2014, 19:58:35) 
+   [GCC 4.6.3]
+   >>> 
+
+.. slide_mark_e
+
+.. slide_mark_b :Fin
+
+.. slide_insertion:* **Merci!**
+.. slide_insertion:* Des questions?
+
+.. slide_mark_e

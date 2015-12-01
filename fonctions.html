@@ -1,0 +1,1029 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Les fonctions &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="Concepts avancés" href="avances.html" />
+    <link rel="prev" title="Modules et paquets" href="modules.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="avances.html" title="Concepts avancés"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules et paquets"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="les-fonctions">
+<h1>Les fonctions<a class="headerlink" href="#les-fonctions" title="Permalink to this headline">¶</a></h1>
+<p>Au cours des chapitres précédents on a été amené à appeler des fonctions prédéfinies (built-in).</p>
+<p>Dans ce chapitre on va expliquer comment définir ses propres fonctions et on va détailler l&#8217;ensemble des mécanismes intervenant dans la définition et dans l&#8217;appel d&#8217;une fonction. On va également revenir sur le concept de variable pour introduire la notion de <em>portée</em>.</p>
+<div class="section" id="une-vue-d-ensemble">
+<h2>Une vue d&#8217;ensemble<a class="headerlink" href="#une-vue-d-ensemble" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="une-fonction-tres-simple">
+<h3>Une fonction très simple<a class="headerlink" href="#une-fonction-tres-simple" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Premières remarques:</p>
+<ul class="simple">
+<li>Une fonction est définie avec <em>def</em></li>
+<li><em>def</em> est une <strong>instruction</strong> (et non pas une déclaration, directive etc.) qui, entre autres, opère une <strong>affectation</strong> de variable.</li>
+<li>Le nom introduit avec <em>def</em>, le mot <em>say_hi</em>, est une <em>variable</em> comme une autre, référençant un objet de type <em>function</em>.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span><span class="p">(</span><span class="s">&#39;Mom&#39;</span><span class="p">)</span>
+<span class="go">Hi Mom!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span> <span class="c"># est une variable</span>
+<span class="go">&lt;function say_hi at 0x7f23515985f0&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="l-instruction-return">
+<h3>L&#8217;instruction <strong>return</strong><a class="headerlink" href="#l-instruction-return" title="Permalink to this headline">¶</a></h3>
+<p>En Python, comme en C/C++ et Java, une fonction retourne <strong>toujours</strong> une valeur. En Python, en absence de l&#8217;instruction <em>return</em> ou en cas d&#8217;appel de l&#8217;instruction <em>return</em> sans argument, la valeur de retour est <strong>None</strong>.</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; res # au départ, n&#39;existe pas
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name &#39;res&#39; is not defined
+&gt;&gt;&gt; res = say_hi(&#39;Mom&#39;)
+Hi Mom!
+&gt;&gt;&gt; res # existe bien maintenant (plus d&#39;erreur)!
+&gt;&gt;&gt;
+&gt;&gt;&gt; res==None
+True
+</pre></div>
+</div>
+<p>L&#8217;instruction <em>return</em> peut être suivie d&#8217;une expression qui sera évaluée pour calculer la valeur de retour:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cube</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cube</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">8</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>Astuce:</strong> Si la valeur de retour est un tuple, le résultat retourné peut être récupéré directement dans plusieurs variables (qui forment un tuple aussi) :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c"># ...</span>
+<span class="gp">... </span>    <span class="c"># ...</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">f</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>
+<span class="go">&#39;abc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z</span>
+<span class="go">[5, 6]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="les-fonctions-imbriquees">
+<h3>Les fonctions imbriquées<a class="headerlink" href="#les-fonctions-imbriquees" title="Permalink to this headline">¶</a></h3>
+<p>En Python les définitions des fonctions peuvent s&#8217;imbriquer à volonté:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">cube</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">t</span><span class="o">**</span><span class="mi">2</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cube</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">8</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Dans les chapitres suivants on va rencontrer des utilisations plus pertinentes de cette propriété très puissante...</p>
+</div>
+</div>
+<div class="section" id="la-portee-des-variables">
+<h2>La portée des variables<a class="headerlink" href="#la-portee-des-variables" title="Permalink to this headline">¶</a></h2>
+<p>On a vu précédemment que définir une variable revient à associer une référence d&#8217;objet à un nom. Une variable peut donc être définie à l&#8217;intérieur d&#8217;une fonction comme en dehors de toute fonction. Selon l&#8217;endroit de leur définition, la &#8220;visibilité&#8221; des variables, appelée couramment <strong>portée</strong> (<em>scope</em> en anglais) n&#8217;est pas la même.</p>
+<p><strong>Python 2.x</strong> implémente 2 niveaux de portée:</p>
+<ul class="simple">
+<li><em>local</em>, qui est celui de la fonction, i.e. du bloc <em>def</em>. Il est accessible via la primitive <em>locals()</em></li>
+<li><em>global</em>, celui du module, i.e. du fichier, accessible via la primitive <em>globals()</em>.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="n">arg</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">{&#39;x&#39;: 5, &#39;arg&#39;: 5}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">globals</span><span class="p">()</span>
+<span class="go">{&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__name__&#39;: &#39;__main__&#39;, &#39;f&#39;: &lt;function f at 0x10815f0&gt;, &#39;__doc__&#39;: None, &#39;__package__&#39;: None}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB :</strong> Des noms identiques, définis dans des modules distincts, peuvent coexister dans un même contexte, sans conflit, car ils seront préfixés par le nom de leur module de définition, après importation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>En <em>Python</em>, contrairement à <em>C++</em> et <em>Java</em>, la portée locale est relative <strong>exclusivement</strong> au contexte de la fonction. Il n&#8217;y a pas de portée locale liée à un autre type de bloc d&#8217;instructions (comme c&#8217;est le cas pour  les boucles <em>while</em> ou <em>for</em> en <em>Java</em> et <em>C++</em>), sauf pour deux cas très particuliers :</p>
+<ul class="simple">
+<li>la variable de liste en intension (seulement depuis Python 3)</li>
+<li>la variable du bloc <em>except</em> (introduite par <em>as</em>)</li>
+</ul>
+<p class="last">Autrement dit, une affectation de variable faite à l&#8217;intérieur d&#8217;une boucle <em>while</em> ou <em>for</em> dans une fonction sera visible dans le corps de la fonction même après la sortie de la boucle.
+L&#8217;exemple suivant illustre ce comportement avec une boucle <em>for</em> dans une fonction:</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">33</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+    <span class="c"># end for</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;values in the context of f(): x={}, y={}, i={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">values in f() context: x=3, y=2, i=2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<p>On constate que les variables <em>x</em>, <em>y</em> et <em>i</em> conservent les modifications intervenues à l&#8217;intérieur de la boucle <em>for</em> après la sortie du bloc.</p>
+<p>En plus, <em>y</em> et <em>i</em> apparaissent pour la première fois dans le <em>for</em>, et pourtant elles sont présentes dans le contexte de la fonction, après la sortie de la boucle.</p>
+<div class="section" id="que-se-passe-t-il-en-cas-de-conflit">
+<h3>Que se passe-t-il en cas de conflit?<a class="headerlink" href="#que-se-passe-t-il-en-cas-de-conflit" title="Permalink to this headline">¶</a></h3>
+<p>Des conflits de nom de variable peuvent apparaître entre le niveau local et global. Plusieurs situations peuvent se présenter:</p>
+<ul>
+<li><p class="first"><strong>référencement:</strong> la variable globale est accédée en lecture à l&#8217;intérieur de la fonction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p class="first"><strong>affectation:</strong> la variable globale est &#8220;cachée&#8221; (silencieusement) par son homonyme locale:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">x=2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">1</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul>
+<li><p class="first"><strong>référencement suivi d&#8217;affectation</strong> situation plus contrariante pour l&#8217;interpréteur (mais réaction logique):</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; x=1
+&gt;&gt;&gt; def f():
+...     print(&quot;x={}&quot;.format(x))
+...     x = 2
+...
+&gt;&gt;&gt; f()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;&lt;stdin&gt;&quot;, line 2, in f
+UnboundLocalError: local variable &#39;x&#39; referenced before assignment
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="l-instruction-global">
+<h3>L&#8217;instruction <strong>global</strong><a class="headerlink" href="#l-instruction-global" title="Permalink to this headline">¶</a></h3>
+<p>La sémantique de cette instruction rappelle les déclarations de variables des autres langages.</p>
+<p>Appelée à l&#8217;intérieur d&#8217;une fonction, elle prends la forme <tt class="docutils literal"><span class="pre">global</span> <span class="pre">var1[,var2][,...]</span></tt> et elle indique à l&#8217;interpréteur que les variables var1, var2, ... font partie du contexte global:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">global</span> <span class="n">x</span>
+<span class="gp">... </span>    <span class="n">x</span><span class="o">=</span><span class="mi">2</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">2</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> En complément de l&#8217;instruction <em>global</em>, Python 3 introduit l&#8217;instruction <em>nonlocal</em> qui sera expliquée par la suite.</p>
+</div>
+<div class="section" id="la-resolution-des-noms">
+<h3>La résolution des noms<a class="headerlink" href="#la-resolution-des-noms" title="Permalink to this headline">¶</a></h3>
+<p>Pour toute variable qui n&#8217;est pas <strong>global</strong> ou <strong>nonlocal</strong>, les règles suivantes s&#8217;appliquent:</p>
+<ul class="simple">
+<li>L&#8217;<strong>affectation</strong> de variable à l&#8217;intérieur d&#8217;une fonction <strong>F</strong> se fait dans le contexte local de la fonction</li>
+<li>Toute <strong>référence</strong> à une variable à l&#8217;intérieur de <strong>F</strong> donnera lieu à une recherche dans plusieurs endroits, dans l&#8217;ordre suivant (la recherche s&#8217;arrête au premier succès):<ol class="arabic">
+<li>Le contexte local de <strong>F</strong></li>
+<li>Si <strong>F</strong> est définie à l&#8217;intérieur d&#8217;une autre fonction <strong>G</strong> on va chercher la variable dans le contexte local de <strong>G</strong>. En cas d&#8217;échec la recherche continuera en remontant les contextes des fonctions englobantes, s&#8217;il y en a.</li>
+<li>Le contexte global du module</li>
+<li>Le contexte des noms prédéfinis (built-ins)</li>
+</ol>
+</li>
+</ul>
+<p><strong>NB:</strong></p>
+<ul class="simple">
+<li>Si la variable est <strong>global</strong>, la recherche commencera à l&#8217;étape <strong>3</strong></li>
+<li>Les paramètres d&#8217;une fonction font partie du contexte local de celle ci.</li>
+</ul>
+<p><strong>Illustration:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">z</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
+    <span class="c">#---------------------------</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">22</span>
+    <span class="k">def</span> <span class="nf">fun2</span><span class="p">():</span>
+        <span class="c">#-----------------------</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="mi">333</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;y={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;z={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;True={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
+        <span class="c">#-----------------------</span>
+    <span class="n">fun2</span><span class="p">()</span>
+    <span class="c">#---------------------------</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">fun</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">()</span>
+<span class="go">x=1</span>
+<span class="go">y=22</span>
+<span class="go">z=333</span>
+<span class="go">True=True</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>On voit que :</p>
+<ul class="simple">
+<li><strong>z</strong> provient du contexte local de fun2()</li>
+<li><strong>y</strong> provient du contexte local de fun() (qui contient fun2())</li>
+<li><strong>x</strong> provient du contexte global</li>
+<li><strong>True</strong> est une variable du contexte built-in</li>
+</ul>
+<p><strong>Problème:</strong></p>
+<p>Supposons qu&#8217;on veut modifier l&#8217;exemple précédent pour que la fonction <strong>fun2()</strong> modifie <strong>y</strong> dans le contexte de <strong>fun()</strong> mais pas dans le contexte global (car pour le niveau global il suffirait de déclarer <strong>global y</strong> à l&#8217;intérieur de <strong>fun2()</strong>)</p>
+<p><strong>Réponse:</strong></p>
+<ul class="simple">
+<li><strong>Python 2.x:</strong> il n&#8217;y a pas de solution</li>
+<li><strong>Python 3.x:</strong> il suffit de déclarer <strong>nonlocal y</strong>:</li>
+</ul>
+<p><strong>Illustration</strong> avec l&#8217;exemple précédent modifié (on a tracé <strong>y</strong> à tous les niveaux et éliminé les variables <strong>x</strong> et <strong>z</strong>):</p>
+<div class="highlight-python"><div class="highlight"><pre>y = 2
+
+def fun():
+    #----------------------------
+    y = 22
+    def fun2():
+        nonlocal y
+        #------------------------
+        print(&quot;fun2(): y={} [avant affectation]&quot;.format(y))
+        #------------------------
+        y = 99
+        #------------------------
+        print(&quot;fun2(): y={} [apres affectation]&quot;.format(y))
+        #------------------------
+    fun2()
+    print(&quot;fun(): y={}&quot;.format(y))
+    #----------------------------
+
+if __name__ == &quot;__main__&quot;:
+    fun()
+    print(&quot;global: y={}&quot;.format(y))
+    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python3 resolution_nonlocal.py
+fun2(): y=22 [avant affectation]
+fun2(): y=99 [apres affectation]
+fun(): y=99
+global: y=2
+</pre></div>
+</div>
+</div>
+<div class="section" id="l-instruction-nonlocal">
+<h3>L&#8217;instruction <strong>nonlocal</strong><a class="headerlink" href="#l-instruction-nonlocal" title="Permalink to this headline">¶</a></h3>
+<p>Cette instruction à été introduite avec la version 3 pour répondre au besoin illustré précédemment.</p>
+<p>La résolution des noms, aussi bien pour l&#8217;affectation que pour le référencement, se fait suivant l&#8217;étape 2 (seulement) du processus décrit précédemment pour le référencement des variables locales.</p>
+<p>Ainsi, si la variable n&#8217;est pas trouvée dans un des blocs <strong>def</strong> qui englobent la fonction contenant la déclaration <strong>nonlocal</strong>, une erreur de syntaxe se produit (même si la variable existe dans le contexte global!)</p>
+</div>
+</div>
+<div class="section" id="signatures-des-fonctions">
+<h2>Signatures des fonctions<a class="headerlink" href="#signatures-des-fonctions" title="Permalink to this headline">¶</a></h2>
+<p>La signature d&#8217;une fonction est composée du nom de la fonction suivi, entre parenthèses, par l&#8217;ensemble de ses paramètres (ensemble qui peut être vide). Elle représente la première partie de l&#8217;instruction <strong>def</strong> et est suivie par <strong>&#8221;:&#8221;</strong>.</p>
+<p>La forme générale d&#8217;une signature est:</p>
+<p><em>def</em> <strong>nom_fonction(p1, p2, ...)</strong> <em>:</em></p>
+<p>les paramètres <em>p1</em>, <em>p2</em>,... pouvant prendre plusieurs formes.</p>
+<div class="note admonition">
+<p class="first admonition-title"><strong>Vocabulaire</strong></p>
+<p>On va appeler :</p>
+<ul class="simple">
+<li><strong>&#8220;paramètres&#8221;</strong> les entités nommées (<em>p1</em>, <em>p2</em>, ...), faisant partie de la <strong>signature</strong> de la fonction.</li>
+<li><strong>&#8220;arguments&#8221;</strong> les valeurs concrètes (références, en fait) passées à la fonction lors des <strong>appels</strong> .</li>
+<li><strong>&#8220;paramètres mono-valués&#8221;</strong> les paramètres recevant un seul argument (maximum) lors des appels de la fonction.</li>
+<li><strong>&#8220;paramètres multi-valués&#8221;</strong> les paramètres pouvant recevoir un nombre indéterminé (0..N) d&#8217;arguments lors des appels de la fonction.</li>
+</ul>
+<p class="last"><strong>NB :</strong> On a utilisé des noms de la forme <em>arg_x</em>, <em>args</em>, <em>kwargs</em> pour nommer des paramètres afin de mieux identifier leur rôle.</p>
+</div>
+<p>On va voir que, dans le cas le plus général, <strong>il n&#8217;y a pas de bijection paramètre&lt;=&gt;argument</strong>.</p>
+<p>Dans une signature de fonction, trois catégories de paramètres peuvent être présentes, toutes optionnelles :</p>
+<div class="highlight-python"><div class="highlight"><pre>#
+# définition de la fonction avec ses paramètres
+#
+def func(arg_1, arg_2, ..., arg_i-1, arg_i=def_val_i, ..., arg_n=def_val_n, *args, **kwargs):
+   ...     ^                    ^      ^                      ^               ^        ^
+   ...     |                    |      |                      |               |        |
+           \____________________/      \______________________/  +------------+        |  
+                      ^                           ^              |              +------+      
+                      |                           |              |              |
+           +--------------------+       +--------------------+   |    +--------------------+ 
+           | params mono-valués |       | params mono-valués |   |    | param multi-valué  | 
+           |       SANS         |       |       AVEC         |   |    | &quot;clés - valeurs&quot;   |
+	   | valeur par défaut  |       | valeur par défaut  |   |    |       (C)          |
+	   |       (A-1)        |       |       (A-2)        |   |    +--------------------+ 
+           +--------------------+       +--------------------+   |
+                                                          +--------------------+ 
+                                                          | param multi-valué  | 
+                                                          | à valeurs simples  | 
+	                                                  |        (B)         | 
+                                                          +--------------------+ 
+</pre></div>
+</div>
+<ul>
+<li><p class="first"><strong>0..n</strong> paramètres mono-valués <strong>(A)</strong> , notés dans la suite <strong>arg_1</strong>,..., <strong>arg_n</strong>, qui peuvent prendre deux formes :</p>
+<ul>
+<li><p class="first"><em>variable</em> : à l&#8217;appel, cette variable <strong>(A-1)</strong> recevra un argument, qui devra <strong>toujours</strong> être fourni.</p>
+</li>
+<li><p class="first"><em>variable = valeur_par_defaut</em> : à l&#8217;appel, l&#8217;argument correspondant au paramètre  <strong>(A-2)</strong> peut manquer, et dans ce cas la valeur par défaut sera utilisée. Cette notation (<em>nom=valeur</em>) est connue sous le nom de &#8220;syntaxe <strong>keyword</strong>&#8221; en jargon Python. Dans la suite, on va l&#8217;appeler parfois &#8220;syntaxe <strong>clé-valeur</strong>&#8221;.</p>
+<p><strong>NB :</strong> Tous les paramètres suivant un paramètre à valeur par défaut doivent avoir aussi une valeur par défaut.</p>
+</li>
+</ul>
+</li>
+<li><p class="first"><strong>0..1</strong> paramètre multi-valué à valeurs simples <strong>(B)</strong> : reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments sous la forme d&#8217;un tuple (noté <strong>*args</strong> dans la suite), l&#8217;ordre des arguments à l&#8217;appel étant respectée dans le tuple.</p>
+</li>
+<li><p class="first"><strong>0..1</strong> paramètre multi-valué à valeurs nommées <strong>(C)</strong> (syntaxe <em>clé-valeur</em>): reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments &#8220;clé-valeur&#8221; sous la forme d&#8217;un dictionnaire (noté <strong>**kwargs</strong> dans la suite)</p>
+</li>
+</ul>
+<p>Si présents, ces trois types de paramètres apparaissent dans la signature dans cet ordre:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg_1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">arg_n</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+   <span class="o">...</span>
+</pre></div>
+</div>
+<p>Les seuls appels de fonctions permettant aux trois catégories de paramètres de recevoir des arguments sont ceux qui:</p>
+<ul class="simple">
+<li>fournissent les arguments destinés aux paramètres mono-valués sous forme de valeurs simples (non-nommées) dans l&#8217;ordre des paramètres. On va parler d&#8217;<strong>arguments positionnels</strong> (on va voir que ce n&#8217;est pas la seule manière pour passer des arguments à une fonction).</li>
+<li>fournissent à l&#8217;appel <strong>tous</strong> les arguments correspondants aux paramètres mono-valués  (pas d&#8217;utilisation des valeurs par défaut)</li>
+</ul>
+<p>Dans cette situation, la correspondance entre les paramètres de la signature et les arguments à l&#8217;appel se présente ainsi :</p>
+<div class="highlight-python"><div class="highlight"><pre>#
+# correspondance paramètres &lt;=&gt; arguments
+#
+def func(arg_1, arg_2, ..., arg_n, *args, **kwargs):
+   ...     ^       ^          ^      ^      ^
+   ...     |       |          |      |      |
+   ...     |       |          |      |      +---------------------+
+           |       |          |      |                            |
+...        |       |          |      +---+--------+     +---------+-------------+
+#          |       |          |      |   |        |     |         |             |
+# appel :  |       |          |      |   |        |     |         |             |
+#          |       |          |      |   |        |     |         |             |
+var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_p=v_p)
+           \_____________________/   \_____________/   \___________________________/
+                      ^                     ^                       ^
+                      |                     |                       |
+             +----------------+      +--------------+         +--------------+
+             |args =&gt; params  |      |args =&gt; params|         |args =&gt; params|
+             | mono-valués    |      |multi-valués  |         | multi-valués |
+             |                |      |   simples    |         |   nommés     |
+             +----------------+      +--------------+         +--------------+
+</pre></div>
+</div>
+<div class="section" id="les-parametres-mono-values">
+<h3>Les paramètres mono-valués<a class="headerlink" href="#les-parametres-mono-values" title="Permalink to this headline">¶</a></h3>
+<p>Représentés précédemment par <em>arg_1,...,arg_n</em>. On rappelle qu&#8217;un paramètre mono-valué peut se présenter sous une des deux formes:</p>
+<ul class="simple">
+<li>Paramètre simple  (<em>variable</em>) : à l&#8217;appel, il référencera un argument, qui devra <strong>toujours</strong> être présent.</li>
+<li>Paramètre clé-valeur (<em>variable=valeur_par_défaut</em>) : à l&#8217;appel, l&#8217;argument correspondant au paramètre peut manquer, et dans ce cas la valeur par défaut sera utilisée.</li>
+</ul>
+<p>On va rappeler également  qu&#8217;un paramètre à valeur par défaut ne peut pas être suivi, dans la signature, par un paramètre simple (sans valeur par défaut).</p>
+<p><strong>Exemple</strong></p>
+<p>Une fonction de division avec une option de division tronquée:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">trunc</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">trunc</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">//</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c"># en V3, inutile de convertir a en float</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">0.4166666666666667</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">0.4166666666666667</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="first admonition-title">Attention</p>
+<blockquote class="last">
+<div>Les valeurs par défaut ne sont pas évaluées à chaque appel de la fonction, mais une seule fois, à l&#8217;appel de l&#8217;instruction <strong>def</strong> (qui se produit en règle générale une seule fois, au chargement d&#8217;un module, pour les fonctions non-imbriquées)</div></blockquote>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">k</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="o">=</span><span class="mi">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">10</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Une précaution particulière s&#8217;impose quand les valeurs par défaut sont des objets modifiables.</p>
+<p><strong>Exemple</strong> à ne pas suivre :</p>
+<p>Supposons que la fonction <em>create_user()</em> est destiné à la création de comptes informatiques (dans cette implémentation factice, elle retourne simplement un dictionnaire):</p>
+<ul class="simple">
+<li>Par défaut, en absence d&#8217;argument <em>groups</em> explicite, l&#8217;utilisateur créé sera associé au groupe &#8216;lambda&#8217;, le groupe de &#8220;tout le monde&#8221;.</li>
+<li>Si l&#8217;argument is_admin est vrai, l&#8217;utilisateur sera associé en plus au groupe &#8216;admin&#8217; qui donne des privilèges élevés. Ce groupe sera ajouté à la liste des groupes, qu&#8217;elle soit implicite ou explicite.</li>
+</ul>
+<p>Avec l&#8217;implémentation suivante, les choses ne se passent pas comme prévu:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">surname</span><span class="p">,</span> <span class="n">given_name</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lambda&#39;</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    - par défaut, tout le monde appartient au groupe &#39;&#39;lambda&#39;</span>
+<span class="sd">    - les admins sont aussi dans le groupe &#39;admin&#39; qui donne des</span>
+<span class="sd">    privilèges élevés</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_admin</span><span class="p">:</span> <span class="c"># c&#39;est un admin</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">)</span> <span class="c"># ajout du groupe &#39;admin&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;sn&#39;</span><span class="p">:</span> <span class="n">surname</span><span class="p">,</span> <span class="s">&#39;gn&#39;</span><span class="p">:</span> <span class="n">given_name</span><span class="p">,</span> <span class="s">&#39;groups&#39;</span><span class="p">:</span> <span class="n">groups</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Poli&#39;</span><span class="p">,</span><span class="s">&#39;Christian&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c"># utilisateur sans privilèges</span>
+<span class="go">{&#39;gn&#39;: &#39;Christian&#39;, &#39;sn&#39;: &#39;Poli&#39;, &#39;groups&#39;: [&#39;lambda&#39;]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Grand&#39;</span><span class="p">,</span><span class="s">&#39;Gourou&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span> <span class="c"># création d&#39;un utilisateur admin</span>
+<span class="go">{&#39;gn&#39;: &#39;Gourou&#39;, &#39;sn&#39;: &#39;Grand&#39;, &#39;groups&#39;: [&#39;lambda&#39;, &#39;admin&#39;]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Lagaffe&#39;</span><span class="p">,</span><span class="s">&#39;Gaston&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c"># oups! lambda avec privileges admin!</span>
+<span class="go">{&#39;gn&#39;: &#39;Gaston&#39;, &#39;sn&#39;: &#39;Lagaffe&#39;, &#39;groups&#39;: [&#39;lambda&#39;, &#39;admin&#39;]}</span>
+</pre></div>
+</div>
+<p><strong>Explication:</strong></p>
+<ul class="simple">
+<li>le premier appel se passe comme prévu, un utilisateur sans privilèges est créé</li>
+<li>le deuxième appel produit également le résultat attendu (l&#8217;utilisateur créé, administrateur, a les bons groupes) mais la liste <em>groups</em> est altérée.</li>
+<li>le troisième appel donne un résultat erroné (alors que les arguments sont corrects) et potentiellement dangereux: un utilisateur &#8216;lambda&#8217; se retrouve avec des privilèges &#8216;admin&#8217;</li>
+</ul>
+<div class="section" id="arguments-positionnels-et-arguments-nommes-keyword-args">
+<h4>Arguments positionnels et arguments nommés (<em>keyword args</em>)<a class="headerlink" href="#arguments-positionnels-et-arguments-nommes-keyword-args" title="Permalink to this headline">¶</a></h4>
+<p>Dans les exemples précédents les arguments à l&#8217;appel sont associés à leur paramètres correspondants par leur position à l&#8217;appel. On va parler dans ce cas d&#8217;arguments <strong>positionnels</strong> (<em>non-keyword args</em> en jargon pythonique). Une autre possibilité est d&#8217;exprimer les arguments sous la forme <em>nom=valeur</em> (<em>keyword args</em>) où <em>nom</em> est le nom du paramètre dans la signature. Pour ce deuxième type d&#8217;appel, l&#8217;ordre des arguments est arbitraire.</p>
+<p>Un peut utiliser librement arguments positionnels et arguments nommés au sein d&#8217;un même appel, à condition de <strong>ne jamais faire succéder un argument positionnel à un argument nommé</strong> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">trunc</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="n">trunc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="n">trunc</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">File &quot;&lt;stdin&gt;&quot;, line 1</span>
+<span class="go">SyntaxError: non-keyword arg after keyword arg</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="le-parametre-multi-value-a-valeurs-simples-ou-positionnelles">
+<h3>Le paramètre multi-valué à valeurs simples (ou &#8220;positionnelles&#8221;)<a class="headerlink" href="#le-parametre-multi-value-a-valeurs-simples-ou-positionnelles" title="Permalink to this headline">¶</a></h3>
+<p>Ce paramètre optionnel succède au dernier paramètre mono-valué dans la signature (s&#8217;il y en a).</p>
+<p>Il est unique et son nom est précédé par une étoile (&#8220;<strong>*</strong>&#8221;).</p>
+<p>Il permet d&#8217;inclure dans un appel, à la suite des arguments positionnels correspondants aux paramètres mono-valués, un nombre arbitraire d&#8217;arguments simples (positionnels aussi) qui seront accessibles, dans le bon ordre, en tant que membres d&#8217;un tuple désigné par la variable dont le nom est précédée par &#8220;*&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">a:1</span>
+<span class="go">b:2</span>
+<span class="go">c:0</span>
+<span class="go">args:()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">a:1</span>
+<span class="go">b:2</span>
+<span class="go">c:4</span>
+<span class="go">args:()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">a:1</span>
+<span class="go">b:2</span>
+<span class="go">c:4</span>
+<span class="go">args:(10, 11, 12)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="go">File &quot;&lt;stdin&gt;&quot;, line 1</span>
+<span class="go">SyntaxError: non-keyword arg after keyword arg</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Pour pouvoir utiliser ce paramètre multi-valué il faut:</p>
+<ul class="last simple">
+<li>Utiliser uniquement des arguments positionnels pour renseigner les paramètres mono-valués qui le précèdent.</li>
+<li>Fournir des valeurs pour <strong>tous</strong> les paramètres mono-valués, même pour ceux pourvus de valeurs par défaut.</li>
+</ul>
+</div>
+<p><strong>NB:</strong> Ce paramètre est similaire au paramètre dit &#8220;elliptique&#8221; (...) présent dans la signature de la fonction <strong>printf</strong> et des autres fonctions dites &#8220;multivariadiques&#8221;, présentes dans certaines bibliothèques du langage <strong>C</strong> .</p>
+</div>
+<div class="section" id="le-parametre-multi-value-a-valeurs-nommees">
+<h3>Le paramètre multi-valué à valeurs nommées<a class="headerlink" href="#le-parametre-multi-value-a-valeurs-nommees" title="Permalink to this headline">¶</a></h3>
+<p>Ce paramètre optionnel et quand il est présent, il est toujours le dernier paramètre de la signature.</p>
+<p>Il est unique et son nom est précédé par deux étoiles (&#8220;<strong>**</strong>&#8221;).</p>
+<p>Il permet d&#8217;inclure dans un appel un nombre arbitraire d&#8217;arguments &#8220;nom=valeur&#8221; (keyword args).</p>
+<p>Les noms des variables correspondant aux paramètres mono-valués ne peuvent pas servir de clé pour ces arguments.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;kwargs:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,[],</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">a:1</span>
+<span class="go">b:2</span>
+<span class="go">c:3</span>
+<span class="go">args:([], 4, 5)</span>
+<span class="go">kwargs:{&#39;y&#39;: 12, &#39;x&#39;: 11}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">a:2</span>
+<span class="go">b:6</span>
+<span class="go">c:0</span>
+<span class="go">args:()</span>
+<span class="go">kwargs:{&#39;y&#39;: 2, &#39;x&#39;: 55}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Dans le dernier exemple on voit que les arguments &#8220;nom=valeur&#8221; correspondant au paramètres mono-valués se mélangent sans restriction avec les arguments &#8220;nom=valeur&#8221; du paramètre <tt class="docutils literal"><span class="pre">kwargs</span></tt>.</p>
+<p><strong>NB:</strong> La fonction dict(**kwargs), déjà utilisée précédemment pour définir des dictionnaires, est un exemple d&#8217;utilisation de ce paramètre.</p>
+</div>
+<div class="section" id="les-var-et-var-dans-les-appels-de-fonctions">
+<h3>Les *var et **var dans les appels de fonctions<a class="headerlink" href="#les-var-et-var-dans-les-appels-de-fonctions" title="Permalink to this headline">¶</a></h3>
+<p>Les préfixes * et ** sont utilisés aussi dans les appels de fonctions:</p>
+<ul class="simple">
+<li>Avec *iter_var on peut passer les éléments contenus dans un itérable quelconque sous forme d&#8217;arguments individuels à une fonction appelée</li>
+<li>Avec **dict_var on peut faire la même chose avec un dictionnaire (les arguments seront de la forme nom=valeur)</li>
+</ul>
+<p><strong>NB:</strong> par <em>iter_var</em> on désigne ici toute variable référençant un itérable et par <em>dict_var</em> toute autre référençant un dictionnaire</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    prend exactement 4 args</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;f({},{},{},{})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">f_call</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    tente (sans succès) d&#39;appeler f() an lui passant une liste</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">f_call2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    appel correct</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sans surprise, l&#8217;appel suivant de <em>f_call()</em> va échouer:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; f_call()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;&lt;stdin&gt;&quot;, line 3, in f_call
+TypeError: f() takes exactly 4 arguments (1 given)
+</pre></div>
+</div>
+<p>En revanche, l&#8217;appel de <em>f_call2()</em> fonctionnera correctement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f_call2</span><span class="p">()</span>
+<span class="go">f(0,1,2,3)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Les expressions *nom **nom (appelées &#8220;varargs&#8221; en jargon Python) sont utiles pour construire des appels de fonctions dynamiquement, par programme.</p>
+<div class="section" id="exercice">
+<h4>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: print_table.py</span>
+
+<span class="sd">Ecrire une fonction qui affiche des tableaux avec print.</span>
+<span class="sd">Les arguments positionnels donnent les noms des colonnes.</span>
+<span class="sd">L&#39;appel de la fonction comporte autant d&#39;arguments positionnels qu&#39;il y a </span>
+<span class="sd">des colonnes, mais la signature de la fonction doit imposer qu&#39;il y ait </span>
+<span class="sd">au moins une colonne. </span>
+
+<span class="sd">Après les noms des colonnes, un nombre arbitraire de lignes du tableau sont</span>
+<span class="sd">fournies sous forme d&#39;arguments nommés id=[v1, v2,..]</span>
+<span class="sd">La clé de chaque argument nommé va alimenter la première cellule de la ligne, </span>
+<span class="sd">les éléments de la liste associé rempliront les cellules suivantes</span>
+
+<span class="sd">Par exemple, pour obtenir ce tableau:</span>
+
+<span class="sd">+--------------------------------+</span>
+<span class="sd">|Col1      |Col2      |Col3      |</span>
+<span class="sd">+--------------------------------+</span>
+<span class="sd">|yy        |789       |234       |</span>
+<span class="sd">|xx        |123       |456       |</span>
+<span class="sd">+--------------------------------+</span>
+
+<span class="sd">On doit appeler:</span>
+
+<span class="sd">print_table(&#39;Col1&#39;, &#39;Col2&#39;, &#39;Col3&#39;, xx=[123,456], yy=[789,234])</span>
+
+<span class="sd">Pour simplifier, on va considérer:</span>
+<span class="sd">1) la largeur des colonnes comme étant fixe (par exemple 10) </span>
+<span class="sd">2) les arguments nommés comme étant valides (bon nombre de valeurs, </span>
+<span class="sd">   pas de dépassement).</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: print_table_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">print_table</span><span class="p">(</span><span class="n">first_hdr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imprime un tableau de valeurs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nb_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="c"># à cause du  first_hdr</span>
+    <span class="n">size_col</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">nb_pipes</span> <span class="o">=</span> <span class="n">nb_cols</span> <span class="o">-</span><span class="mi">1</span> <span class="c"># barres verticales entre cols (sans les extremités)</span>
+    <span class="n">nb_minus</span> <span class="o">=</span> <span class="n">size_col</span><span class="o">*</span><span class="n">nb_cols</span> <span class="o">+</span> <span class="n">nb_pipes</span>
+    <span class="c"># ligne de &quot;-&quot;, sans les extremités:</span>
+    <span class="n">minus_line</span> <span class="o">=</span> <span class="n">nb_minus</span> <span class="o">*</span> <span class="s">&#39;-&#39;</span>
+    <span class="c"># avec des &quot;+&quot; aux extremités:</span>
+    <span class="n">horizontal_line</span> <span class="o">=</span> <span class="s">&#39;+{}+&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minus_line</span><span class="p">)</span>
+    <span class="c"># i.e. horizontal_line: +-------------------------------+</span>
+    <span class="n">row_template</span> <span class="o">=</span> <span class="s">&#39;|{:&lt;10}&#39;</span><span class="o">*</span><span class="n">nb_cols</span> <span class="c"># i.e. |{:10}|{:10}|{:10}....</span>
+    <span class="n">row_template</span> <span class="o">+=</span><span class="s">&#39;|&#39;</span> <span class="c"># i.e. |{:10}|{:10}...|</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">row_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_hdr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span> <span class="c">#print headers</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">row_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">row</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">print_table</span><span class="p">(</span><span class="s">&#39;Col1&#39;</span><span class="p">,</span> <span class="s">&#39;Col2&#39;</span><span class="p">,</span> <span class="s">&#39;Col3&#39;</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="p">[</span><span class="mi">123</span><span class="p">,</span><span class="mi">456</span><span class="p">],</span> <span class="n">yy</span><span class="o">=</span><span class="p">[</span><span class="mi">789</span><span class="p">,</span><span class="mi">234</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="la-documentation-des-fonctions">
+<h2>La documentation des fonctions<a class="headerlink" href="#la-documentation-des-fonctions" title="Permalink to this headline">¶</a></h2>
+<p>La syntaxe des fonctions Python prévoit un élément dédié à leur documentation. Cet élément, appelée <strong>docstring</strong> est une chaîne de caractères placée après la signature et avant le corps de la fonction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">trunc</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction divise a par b,....</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">trunc</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">//</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c"># en V3, inutile de convertir a en float</span>
+</pre></div>
+</div>
+<p>Tous le formats string sont acceptés, le plus courant étant le format multi-ligne (triple quote).</p>
+<p>La docstring est accessible par programme à travers l&#8217;attribut <em>__doc__</em> ou à travers la fonction <em>help()</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">&#39;\n    Cette fonction divise a par b,....\n    &#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
+
+<span class="go">Help on function div in module docstring:</span>
+
+<span class="go">div(a, b, trunc=False)</span>
+<span class="go">   Cette fonction divise a par b,....</span>
+<span class="go">(END)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fonctions-anonymes-lambda">
+<h2>Fonctions anonymes (lambda)<a class="headerlink" href="#fonctions-anonymes-lambda" title="Permalink to this headline">¶</a></h2>
+<p>En dehors des fonctions créées avec l&#8217;instruction <strong>def</strong> qui ont toujours un nom et une implémentation définie par un bloc d&#8217;instructions, il existe également la possibilité de définir à la volée, pour des traitements très simples, des fonctions implémentées par une simple expression. Elles ont la forme :</p>
+<p><strong>lambda</strong> arg_1, arg_2,...arg_n <strong>:</strong> expression</p>
+<p><strong>Illustration :</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">moyenne</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">moyenne</span><span class="p">)</span>
+<span class="go">&lt;type &#39;function&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">moyenne</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="go">5.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c"># même chose avec évaluation directe</span>
+<span class="go">5.5</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">module</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span><span class="p">)(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="c"># même chose avec évaluation directe</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span><span class="p">)(</span><span class="mi">7</span><span class="p">)</span>
+<span class="go">7</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="note admonition">
+<p class="first admonition-title">Important</p>
+<blockquote class="last">
+<div><p>L&#8217;écriture <tt class="docutils literal"><span class="pre">moyenne</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">a,b:</span> <span class="pre">(a+b)/2.0</span></tt> a été utilisée dans l&#8217;illustration précédente seulement pour &#8220;prouver&#8221; que <em>moyenne</em> est bien une fonction.</p>
+<p>Dans le développement, les écritures de la forme <tt class="docutils literal"><span class="pre">foo</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">x,y:...</span></tt> sont bannies par la <strong>PEP8</strong> et sans intérêt pratique. Si on a besoin  d&#8217;une &#8220;fonction-expression&#8221;, non-anonyme, l&#8217;écriture préconisée (pour l&#8217;illustration précédente) est <tt class="docutils literal"><span class="pre">def</span> <span class="pre">moyenne(a,</span> <span class="pre">b):</span>&nbsp; <span class="pre">return</span> <span class="pre">(a+b)/2.0</span></tt>.</p>
+</div></blockquote>
+</div>
+<p>Différences entre les structures <strong>lambda</strong> et <strong>def</strong>:</p>
+<ul class="simple">
+<li><strong>lambda</strong> est une expression alors que <strong>def</strong> est une instruction</li>
+<li><strong>lambda</strong> renvoie un objet-fonction alors que <strong>def</strong> affecte l&#8217;objet-fonction à un nom</li>
+<li><strong>def</strong> définit une fonction par un bloc d&#8217;instructions, <strong>lambda</strong> par une simple expression (pas d&#8217;instruction dans une fonction lambda, donc pas de <em>return</em> explicite)</li>
+</ul>
+<div class="warning admonition">
+<p class="first admonition-title">Quand utiliser des fonctions anonymes</p>
+<p class="last">Quand cela améliore la lisibilité du code. En règle générale, une fonction classique trop simple est un moindre mal qu&#8217;une fonction anonyme trop complexe :)</p>
+</div>
+</div>
+<div class="section" id="conventions-de-nommage">
+<h2>Conventions de nommage<a class="headerlink" href="#conventions-de-nommage" title="Permalink to this headline">¶</a></h2>
+<p>La <strong>PEP8</strong> préconise l&#8217;utilisation des noms en minuscules pour les fonctions, si nécessaire avec des underscores pour une meilleure lisibilité. L&#8217;écriture &#8220;mixedMode&#8221; est tolérée dans les contextes ou elle est déjà présente, pour assurer la compatibilité.</p>
+</div>
+<div class="section" id="le-tri-revisite">
+<h2>Le tri revisité<a class="headerlink" href="#le-tri-revisite" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rappel">
+<h3>Rappel<a class="headerlink" href="#rappel" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Tout itérable peut être trié</li>
+<li>les <strong>séquences modifiables</strong> (<em>list</em>, <em>bytearray</em>) disposent d&#8217;une méthode <strong>sort()</strong> qui trie la sequence en la modifiant et retourne <strong>None</strong></li>
+<li><strong>tous les itérables</strong> peuvent être triées avec la fonction <strong>sorted()</strong> qui ne modifie pas l&#8217;objet à trier et qui retourne un nouvel objet qui est le résultat du tri.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span>
+<span class="go">[0, 1, 2, 5, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span> <span class="c"># ceci n&#39;est pas une séquence...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">set_</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 5, 8]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-tri-en-python-2-x">
+<h3>Le tri en Python 2.x<a class="headerlink" href="#le-tri-en-python-2-x" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre># Signatures:
+
+sorted(iterable[, cmp[, key[, reverse]]])
+
+sequence.sort([cmp[, key[, reverse]]])
+</pre></div>
+</div>
+<ul class="simple">
+<li><em>cmp:</em> fonction de comparaison &#8220;à l&#8217;ancienne&#8221;, à 2 paramètres (disons x et y) qui retourne:<ul>
+<li>une valeur négative si x&lt;y</li>
+<li>zéro si x==y</li>
+<li>une valeur positive si x&gt;y</li>
+</ul>
+</li>
+<li><em>key:</em> fonction à un seul paramètre qui retourne la clé à comparer pour chaque item</li>
+<li><em>reverse:</em> booléen</li>
+</ul>
+</div>
+<div class="section" id="illustration">
+<h3>Illustration:<a class="headerlink" href="#illustration" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">us_presidents</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}]</span>
+
+<span class="k">def</span> <span class="nf">cmp_sn</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># tri avec cmp=cmp_sn</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="nb">cmp</span><span class="o">=</span><span class="n">cmp_sn</span><span class="p">)</span>
+<span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même chose avec une fonction lambda (assez illisible...)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="nb">cmp</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span>  <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># key + lambda (bien adaptée car très simple)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">])</span>
+<span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même chose avec reverse</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">[{&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-tri-en-python-3-x">
+<h3>Le tri en Python 3.x<a class="headerlink" href="#le-tri-en-python-3-x" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre># Signatures:
+
+sorted(iterable[, key][, reverse])
+
+sequence.sorted([key][, reverse])
+</pre></div>
+</div>
+<div class="section" id="ce-qui-change">
+<h4>Ce qui change:<a class="headerlink" href="#ce-qui-change" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>les fonctions <strong>cmp</strong> ne sont plus supportées. La bibliothèque standard fournit la fonction <strong>functools.cmp_to_key()</strong> qui est un outil de transition entre les versions.</li>
+<li>les paramètres optionnels (key, reverse) exigent des arguments keyword à l&#8217;appel</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">cmp_sn</span><span class="p">))</span>
+<span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Pour en savoir plus: <a class="reference external" href="https://docs.python.org/3/howto/sorting.html#the-old-way-using-the-cmp-parameter">https://docs.python.org/3/howto/sorting.html#the-old-way-using-the-cmp-parameter</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Les fonctions</a><ul>
+<li><a class="reference internal" href="#une-vue-d-ensemble">Une vue d&#8217;ensemble</a><ul>
+<li><a class="reference internal" href="#une-fonction-tres-simple">Une fonction très simple</a></li>
+<li><a class="reference internal" href="#l-instruction-return">L&#8217;instruction <strong>return</strong></a></li>
+<li><a class="reference internal" href="#les-fonctions-imbriquees">Les fonctions imbriquées</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#la-portee-des-variables">La portée des variables</a><ul>
+<li><a class="reference internal" href="#que-se-passe-t-il-en-cas-de-conflit">Que se passe-t-il en cas de conflit?</a></li>
+<li><a class="reference internal" href="#l-instruction-global">L&#8217;instruction <strong>global</strong></a></li>
+<li><a class="reference internal" href="#la-resolution-des-noms">La résolution des noms</a></li>
+<li><a class="reference internal" href="#l-instruction-nonlocal">L&#8217;instruction <strong>nonlocal</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#signatures-des-fonctions">Signatures des fonctions</a><ul>
+<li><a class="reference internal" href="#les-parametres-mono-values">Les paramètres mono-valués</a><ul>
+<li><a class="reference internal" href="#arguments-positionnels-et-arguments-nommes-keyword-args">Arguments positionnels et arguments nommés (<em>keyword args</em>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#le-parametre-multi-value-a-valeurs-simples-ou-positionnelles">Le paramètre multi-valué à valeurs simples (ou &#8220;positionnelles&#8221;)</a></li>
+<li><a class="reference internal" href="#le-parametre-multi-value-a-valeurs-nommees">Le paramètre multi-valué à valeurs nommées</a></li>
+<li><a class="reference internal" href="#les-var-et-var-dans-les-appels-de-fonctions">Les *var et **var dans les appels de fonctions</a><ul>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#la-documentation-des-fonctions">La documentation des fonctions</a></li>
+<li><a class="reference internal" href="#fonctions-anonymes-lambda">Fonctions anonymes (lambda)</a></li>
+<li><a class="reference internal" href="#conventions-de-nommage">Conventions de nommage</a></li>
+<li><a class="reference internal" href="#le-tri-revisite">Le tri revisité</a><ul>
+<li><a class="reference internal" href="#rappel">Rappel</a></li>
+<li><a class="reference internal" href="#le-tri-en-python-2-x">Le tri en Python 2.x</a></li>
+<li><a class="reference internal" href="#illustration">Illustration:</a></li>
+<li><a class="reference internal" href="#le-tri-en-python-3-x">Le tri en Python 3.x</a><ul>
+<li><a class="reference internal" href="#ce-qui-change">Ce qui change:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">Modules et paquets</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="avances.html"
+                        title="next chapter">Concepts avancés</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="avances.html" title="Concepts avancés"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules et paquets"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

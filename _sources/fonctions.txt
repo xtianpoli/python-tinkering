@@ -1,0 +1,938 @@
+#############
+Les fonctions
+#############
+
+.. slide_mark_b :Les fonctions
+
+Au cours des chapitres précédents on a été amené à appeler des fonctions prédéfinies (built-in).
+
+Dans ce chapitre on va expliquer comment définir ses propres fonctions et on va détailler l'ensemble des mécanismes intervenant dans la définition et dans l'appel d'une fonction. On va également revenir sur le concept de variable pour introduire la notion de *portée*.
+
+.. slide_mark_e
+
+******************
+Une vue d'ensemble
+******************
+
+Une fonction très simple
+========================
+
+.. slide_mark_b :Une fonction très simple
+
+.. literalinclude:: includes/fonction_simple.py
+
+Premières remarques:
+
+* Une fonction est définie avec *def*
+* *def* est une **instruction** (et non pas une déclaration, directive etc.) qui, entre autres, opère une **affectation** de variable.
+* Le nom introduit avec *def*, le mot *say_hi*, est une *variable* comme une autre, référençant un objet de type *function*.
+
+::
+
+   >>> def say_hi(name):
+   ...     print("Hi {}!".format(name))
+   ... 
+   >>> say_hi('Mom')
+   Hi Mom!
+   >>> say_hi # est une variable
+   <function say_hi at 0x7f23515985f0>
+
+
+.. slide_mark_e
+
+L'instruction **return**
+========================
+
+.. slide_mark_b :L'instruction **return**
+
+En Python, comme en C/C++ et Java, une fonction retourne **toujours** une valeur. En Python, en absence de l'instruction *return* ou en cas d'appel de l'instruction *return* sans argument, la valeur de retour est **None**.
+
+::
+
+   >>> res # au départ, n'existe pas
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   NameError: name 'res' is not defined
+   >>> res = say_hi('Mom')
+   Hi Mom!
+   >>> res # existe bien maintenant (plus d'erreur)!
+   >>> 
+   >>> res==None
+   True
+
+.. slide_mark_e
+.. slide_mark_b :L'instruction **return** (2)
+
+L'instruction *return* peut être suivie d'une expression qui sera évaluée pour calculer la valeur de retour:
+
+.. literalinclude:: includes/fonction_return.py
+
+::
+
+   >>> cube(2)
+   8
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :L'instruction **return** (3)
+
+**Astuce:** Si la valeur de retour est un tuple, le résultat retourné peut être récupéré directement dans plusieurs variables (qui forment un tuple aussi) :
+
+::
+
+   >>> def f():
+   ...     # ...
+   ...     # ...
+   ...     return 5, "abc", [5,6]
+   ... 
+   >>> x, y, z = f()
+   >>> x
+   5
+   >>> y
+   'abc'
+   >>> z
+   [5, 6]
+   >>> 
+
+.. slide_mark_e
+
+Les fonctions imbriquées
+========================
+
+.. slide_mark_b :Les fonctions imbriquées
+
+En Python les définitions des fonctions peuvent s'imbriquer à volonté:
+
+::
+
+   >>> def cube(x):
+   ...     def square(t):
+   ...         return t**2
+   ...     return x*square(x)
+   ... 
+   >>> cube(2)
+   8
+   >>> 
+
+Dans les chapitres suivants on va rencontrer des utilisations plus pertinentes de cette propriété très puissante...
+
+.. slide_mark_e
+
+***********************
+La portée des variables
+***********************
+
+.. slide_mark_b :La portée des variables
+
+On a vu précédemment que définir une variable revient à associer une référence d'objet à un nom. Une variable peut donc être définie à l'intérieur d'une fonction comme en dehors de toute fonction. Selon l'endroit de leur définition, la "visibilité" des variables, appelée couramment **portée** (*scope* en anglais) n'est pas la même.
+
+**Python 2.x** implémente 2 niveaux de portée:
+
+* *local*, qui est celui de la fonction, i.e. du bloc *def*. Il est accessible via la primitive *locals()*
+
+* *global*, celui du module, i.e. du fichier, accessible via la primitive *globals()*. 
+
+.. slide_mark_e
+.. slide_mark_b :La portée des variables(2)
+
+::
+
+   >>> def f(arg):
+   ...     x = arg
+   ...     print(locals())
+   ... 
+   >>> f(5)
+   {'x': 5, 'arg': 5}
+   >>> globals()
+   {'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', 'f': <function f at 0x10815f0>, '__doc__': None, '__package__': None}
+   >>> 
+
+**NB :** Des noms identiques, définis dans des modules distincts, peuvent coexister dans un même contexte, sans conflit, car ils seront préfixés par le nom de leur module de définition, après importation.
+
+.. slide_mark_e
+.. slide_mark_b :La portée des variables(3)
+
+.. note:: En *Python*, contrairement à *C++* et *Java*, la portée locale est relative **exclusivement** au contexte de la fonction. Il n'y a pas de portée locale liée à un autre type de bloc d'instructions (comme c'est le cas pour  les boucles *while* ou *for* en *Java* et *C++*), sauf pour deux cas très particuliers :
+
+   * la variable de liste en intension (seulement depuis Python 3)
+   * la variable du bloc *except* (introduite par *as*) 
+
+   Autrement dit, une affectation de variable faite à l'intérieur d'une boucle *while* ou *for* dans une fonction sera visible dans le corps de la fonction même après la sortie de la boucle.
+   L'exemple suivant illustre ce comportement avec une boucle *for* dans une fonction:
+
+.. slide_mark_e
+.. slide_mark_b :La portée des variables(3)
+
+.. literalinclude:: includes/fun_scope.py
+
+::
+
+   >>> x = 5
+   >>> f()
+   values in f() context: x=3, y=2, i=2
+   >>> x
+   5
+
+
+On constate que les variables *x*, *y* et *i* conservent les modifications intervenues à l'intérieur de la boucle *for* après la sortie du bloc. 
+
+En plus, *y* et *i* apparaissent pour la première fois dans le *for*, et pourtant elles sont présentes dans le contexte de la fonction, après la sortie de la boucle. 
+
+.. slide_mark_e
+
+Que se passe-t-il en cas de conflit?
+====================================
+
+.. slide_mark_b :Que se passe-t-il en cas de conflit?
+
+Des conflits de nom de variable peuvent apparaître entre le niveau local et global. Plusieurs situations peuvent se présenter:
+
+* **référencement:** la variable globale est accédée en lecture à l'intérieur de la fonction:
+
+  ::
+
+     >>> x=1
+     >>> def f():
+     ...     print(x)
+     ... 
+     >>> f()
+     1
+     >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Que se passe-t-il en cas de conflit? [2]
+     
+
+* **affectation:** la variable globale est "cachée" (silencieusement) par son homonyme locale:
+
+  ::
+
+     >>> x=1
+     >>> def f():
+     ...     x = 2
+     ...     print("x={}".format(x))
+     ... 
+     >>> f()
+     x=2
+     >>> x
+     1
+     >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Que se passe-t-il en cas de conflit? [3]
+
+* **référencement suivi d'affectation** situation plus contrariante pour l'interpréteur (mais réaction logique):
+
+  ::
+
+     >>> x=1
+     >>> def f():
+     ...     print("x={}".format(x))
+     ...     x = 2
+     ... 
+     >>> f()
+     Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+     File "<stdin>", line 2, in f
+     UnboundLocalError: local variable 'x' referenced before assignment
+     >>> 
+
+.. slide_mark_e
+
+L'instruction **global**
+========================
+
+.. slide_mark_b :L'instruction **global**
+
+La sémantique de cette instruction rappelle les déclarations de variables des autres langages. 
+
+Appelée à l'intérieur d'une fonction, elle prends la forme ``global var1[,var2][,...]`` et elle indique à l'interpréteur que les variables var1, var2, ... font partie du contexte global:
+
+::
+
+   >>> x=1
+   >>> def f():
+   ...     global x
+   ...     x=2
+   ... 
+   >>> x
+   1
+   >>> f()
+   >>> x
+   2
+   >>> 
+
+**NB:** En complément de l'instruction *global*, Python 3 introduit l'instruction *nonlocal* qui sera expliquée par la suite.
+
+.. slide_mark_e
+
+La résolution des noms
+======================
+
+.. slide_mark_b :La résolution des noms
+
+Pour toute variable qui n'est pas **global** ou **nonlocal**, les règles suivantes s'appliquent:
+
+* L'**affectation** de variable à l'intérieur d'une fonction **F** se fait dans le contexte local de la fonction
+* Toute **référence** à une variable à l'intérieur de **F** donnera lieu à une recherche dans plusieurs endroits, dans l'ordre suivant (la recherche s'arrête au premier succès):
+
+  #. Le contexte local de **F**
+  #. Si **F** est définie à l'intérieur d'une autre fonction **G** on va chercher la variable dans le contexte local de **G**. En cas d'échec la recherche continuera en remontant les contextes des fonctions englobantes, s'il y en a.
+  #. Le contexte global du module
+  #. Le contexte des noms prédéfinis (built-ins)
+
+**NB:** 
+
+* Si la variable est **global**, la recherche commencera à l'étape **3**
+* Les paramètres d'une fonction font partie du contexte local de celle ci.
+
+.. slide_mark_e
+
+**Illustration:**
+
+.. slide_mark_b :La résolution de noms(2)
+   
+.. literalinclude:: includes/resolution.py
+
+.. slide_mark_e
+.. slide_mark_b :La résolution de noms(3)
+                    
+::
+
+   >>> fun()
+   x=1
+   y=22
+   z=333
+   True=True
+   >>> 
+
+
+On voit que :
+
+* **z** provient du contexte local de fun2()
+* **y** provient du contexte local de fun() (qui contient fun2())
+* **x** provient du contexte global
+* **True** est une variable du contexte built-in
+
+.. slide_mark_e
+.. slide_mark_b :La résolution de noms(4)
+
+**Problème:**
+
+Supposons qu'on veut modifier l'exemple précédent pour que la fonction **fun2()** modifie **y** dans le contexte de **fun()** mais pas dans le contexte global (car pour le niveau global il suffirait de déclarer **global y** à l'intérieur de **fun2()**)
+
+**Réponse:**
+
+* **Python 2.x:** il n'y a pas de solution
+* **Python 3.x:** il suffit de déclarer **nonlocal y**:
+
+.. slide_mark_e
+
+**Illustration** avec l'exemple précédent modifié (on a tracé **y** à tous les niveaux et éliminé les variables **x** et **z**):
+
+.. slide_mark_b :La résolution de noms(4)
+   
+.. literalinclude:: includes/resolution_nonlocal.py
+
+::
+
+   $ python3 resolution_nonlocal.py 
+   fun2(): y=22 [avant affectation]
+   fun2(): y=99 [apres affectation]
+   fun(): y=99
+   global: y=2
+
+.. slide_mark_e
+
+L'instruction **nonlocal**
+==========================
+
+.. slide_mark_b :L'instruction **nonlocal**
+
+Cette instruction à été introduite avec la version 3 pour répondre au besoin illustré précédemment. 
+
+La résolution des noms, aussi bien pour l'affectation que pour le référencement, se fait suivant l'étape 2 (seulement) du processus décrit précédemment pour le référencement des variables locales. 
+
+Ainsi, si la variable n'est pas trouvée dans un des blocs **def** qui englobent la fonction contenant la déclaration **nonlocal**, une erreur de syntaxe se produit (même si la variable existe dans le contexte global!)
+
+.. slide_mark_e
+
+************************
+Signatures des fonctions
+************************
+
+.. slide_mark_b :Signatures des fonctions
+
+La signature d'une fonction est composée du nom de la fonction suivi, entre parenthèses, par l'ensemble de ses paramètres (ensemble qui peut être vide). Elle représente la première partie de l'instruction **def** et est suivie par **":"**.
+
+La forme générale d'une signature est:
+
+*def* **nom_fonction(p1, p2, ...)** *:*
+
+les paramètres *p1*, *p2*,... pouvant prendre plusieurs formes.
+
+
+.. admonition:: **Vocabulaire**
+   :class: note
+
+   On va appeler :
+
+   * **"paramètres"** les entités nommées (*p1*, *p2*, ...), faisant partie de la **signature** de la fonction.
+   * **"arguments"** les valeurs concrètes (références, en fait) passées à la fonction lors des **appels** .
+   * **"paramètres mono-valués"** les paramètres recevant un seul argument (maximum) lors des appels de la fonction.
+   * **"paramètres multi-valués"** les paramètres pouvant recevoir un nombre indéterminé (0..N) d'arguments lors des appels de la fonction.
+
+   **NB :** On a utilisé des noms de la forme *arg_x*, *args*, *kwargs* pour nommer des paramètres afin de mieux identifier leur rôle.
+
+On va voir que, dans le cas le plus général, **il n'y a pas de bijection paramètre<=>argument**.
+
+.. slide_mark_e
+.. slide_mark_b :Signatures des fonctions(2)
+
+Dans une signature de fonction, trois catégories de paramètres peuvent être présentes, toutes optionnelles :
+
+.. literalinclude:: includes/param_types.txt
+
+* **0..n** paramètres mono-valués **(A)** , notés dans la suite **arg_1**,..., **arg_n**, qui peuvent prendre deux formes :
+
+  * *variable* : à l'appel, cette variable **(A-1)** recevra un argument, qui devra **toujours** être fourni.
+  * *variable = valeur_par_defaut* : à l'appel, l'argument correspondant au paramètre  **(A-2)** peut manquer, et dans ce cas la valeur par défaut sera utilisée. Cette notation (*nom=valeur*) est connue sous le nom de "syntaxe **keyword**" en jargon Python. Dans la suite, on va l'appeler parfois "syntaxe **clé-valeur**".
+
+    **NB :** Tous les paramètres suivant un paramètre à valeur par défaut doivent avoir aussi une valeur par défaut. 
+* **0..1** paramètre multi-valué à valeurs simples **(B)** : reçoit, à l'appel, un nombre arbitraire (0..\*) d'arguments sous la forme d'un tuple (noté **\*args** dans la suite), l'ordre des arguments à l'appel étant respectée dans le tuple.
+* **0..1** paramètre multi-valué à valeurs nommées **(C)** (syntaxe *clé-valeur*): reçoit, à l'appel, un nombre arbitraire (0..\*) d'arguments "clé-valeur" sous la forme d'un dictionnaire (noté **\*\*kwargs** dans la suite)
+
+.. slide_mark_e
+.. slide_mark_b :Signatures des fonctions(3)
+
+Si présents, ces trois types de paramètres apparaissent dans la signature dans cet ordre:
+
+::
+
+   def func(arg_1, ..., arg_n, *args, **kwargs):
+      ...
+
+Les seuls appels de fonctions permettant aux trois catégories de paramètres de recevoir des arguments sont ceux qui:
+
+* fournissent les arguments destinés aux paramètres mono-valués sous forme de valeurs simples (non-nommées) dans l'ordre des paramètres. On va parler d'**arguments positionnels** (on va voir que ce n'est pas la seule manière pour passer des arguments à une fonction).
+* fournissent à l'appel **tous** les arguments correspondants aux paramètres mono-valués  (pas d'utilisation des valeurs par défaut)
+
+.. slide_mark_e
+.. slide_mark_b :Signatures des fonctions(3)
+
+Dans cette situation, la correspondance entre les paramètres de la signature et les arguments à l'appel se présente ainsi :
+
+.. literalinclude:: includes/param_args.txt
+
+.. Tous les types de paramètres étant optionnels, tous les cas de figure sont autorisées si l'ordre des trois types (quand ils sont présents) est respectée.
+
+.. slide_mark_e
+
+
+Les paramètres mono-valués
+==========================
+
+.. slide_mark_b :Les paramètres mono-valués
+
+Représentés précédemment par *arg_1,...,arg_n*. On rappelle qu'un paramètre mono-valué peut se présenter sous une des deux formes:
+
+* Paramètre simple  (*variable*) : à l'appel, il référencera un argument, qui devra **toujours** être présent.
+* Paramètre clé-valeur (*variable=valeur_par_défaut*) : à l'appel, l'argument correspondant au paramètre peut manquer, et dans ce cas la valeur par défaut sera utilisée.
+
+
+On va rappeler également  qu'un paramètre à valeur par défaut ne peut pas être suivi, dans la signature, par un paramètre simple (sans valeur par défaut).
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres mono-valués(2)
+
+**Exemple**
+
+Une fonction de division avec une option de division tronquée:
+
+
+.. literalinclude:: includes/div.py
+
+::
+
+   >>> div(5,12)
+   0.4166666666666667
+   >>> div(5,12,False)
+   0.4166666666666667
+   >>> div(5,12,True)
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres mono-valués(3)
+
+.. admonition:: Attention
+   :class: warning
+
+    Les valeurs par défaut ne sont pas évaluées à chaque appel de la fonction, mais une seule fois, à l'appel de l'instruction **def** (qui se produit en règle générale une seule fois, au chargement d'un module, pour les fonctions non-imbriquées)
+
+::
+
+   >>> k = 7
+   >>> def f(x=k+3):
+   ...     print(x)
+   ... 
+   >>> f()
+   10
+   >>> k=15
+   >>> f()
+   10
+   >>> 
+
+
+Une précaution particulière s'impose quand les valeurs par défaut sont des objets modifiables. 
+
+.. Dans le (contre)exemple suivant, le comportement de la fonction  fake_extend() est loin de celui qu'un non averti aurait pu espérer.
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres mono-valués(4)
+
+
+**Exemple** à ne pas suivre :
+
+.. La fonction *fake_extend()* est censée ajouter les éléments de la liste *l1* à la fin de la liste *l2*, le résultat retourné étant la liste *l2* étendue. 
+
+.. On aurait pu espérer, à tort, qu'en cas d'appel avec un seul argument, la liste retournée contiendra les mêmes éléments que la liste fournie en argument.
+
+.. En effet, en absence du deuxième argument à l'appel, le paramètre *l2* étant optionnel, la valeur par défaut s'applique mais le résultat n'est pas celui attendu:
+
+Supposons que la fonction *create_user()* est destiné à la création de comptes informatiques (dans cette implémentation factice, elle retourne simplement un dictionnaire):
+
+* Par défaut, en absence d'argument *groups* explicite, l'utilisateur créé sera associé au groupe 'lambda', le groupe de "tout le monde".
+* Si l'argument is_admin est vrai, l'utilisateur sera associé en plus au groupe 'admin' qui donne des privilèges élevés. Ce groupe sera ajouté à la liste des groupes, qu'elle soit implicite ou explicite.
+
+Avec l'implémentation suivante, les choses ne se passent pas comme prévu:
+
+.. literalinclude:: includes/default_list2.py
+   :lines: 3-
+
+::
+
+   >>> create_user('Poli','Christian',False) # utilisateur sans privilèges
+   {'gn': 'Christian', 'sn': 'Poli', 'groups': ['lambda']}
+   >>> create_user('Grand','Gourou',True) # création d'un utilisateur admin
+   {'gn': 'Gourou', 'sn': 'Grand', 'groups': ['lambda', 'admin']}
+   >>> create_user('Lagaffe','Gaston',False) # oups! lambda avec privileges admin!
+   {'gn': 'Gaston', 'sn': 'Lagaffe', 'groups': ['lambda', 'admin']}
+
+
+
+**Explication:**
+
+* le premier appel se passe comme prévu, un utilisateur sans privilèges est créé
+* le deuxième appel produit également le résultat attendu (l'utilisateur créé, administrateur, a les bons groupes) mais la liste *groups* est altérée.
+* le troisième appel donne un résultat erroné (alors que les arguments sont corrects) et potentiellement dangereux: un utilisateur 'lambda' se retrouve avec des privilèges 'admin'
+
+
+.. Le résultat du premier appel semble correct : en absence de *l2*, la liste retournée contient bien les même éléments que *l1*. 
+
+.. Seulement, lors de ce premier appel, la liste *l2* a été modifiée et elle faussera le résultat du prochain appel et des suivants car elle ne sera pas remise à *[]* entre temps. 
+
+.. Ainsi, le résultat du deuxième appel et des suivants sera erroné.
+
+.. slide_mark_e
+
+Arguments positionnels et arguments nommés (*keyword args*)
+-----------------------------------------------------------
+
+.. slide_mark_b :Arguments 
+.. slide_insertion: **Arguments positionnels** (*non-keyword args*) **et arguments nommés** (*keyword args*)
+
+Dans les exemples précédents les arguments à l'appel sont associés à leur paramètres correspondants par leur position à l'appel. On va parler dans ce cas d'arguments **positionnels** (*non-keyword args* en jargon pythonique). Une autre possibilité est d'exprimer les arguments sous la forme *nom=valeur* (*keyword args*) où *nom* est le nom du paramètre dans la signature. Pour ce deuxième type d'appel, l'ordre des arguments est arbitraire.
+
+.. slide_mark_e
+.. slide_mark_b :Arguments(2) 
+
+Un peut utiliser librement arguments positionnels et arguments nommés au sein d'un même appel, à condition de **ne jamais faire succéder un argument positionnel à un argument nommé** :
+
+::
+
+   >>> div(12,5,trunc=True)
+   2
+   >>> div(12,trunc=True,b=5)
+   2
+   >>> div(trunc=True,b=5,a=12)
+   2
+   >>> div(b=5,a=12,True)
+   File "<stdin>", line 1
+   SyntaxError: non-keyword arg after keyword arg
+   >>> 
+
+.. slide_mark_e
+
+Le paramètre multi-valué à valeurs simples (ou "positionnelles")
+================================================================
+
+.. slide_mark_b :Les paramètres multi-valués
+
+.. slide_insertion:**Le paramètre multi-valué à valeurs simples** (ou "positionnelles")
+
+Ce paramètre optionnel succède au dernier paramètre mono-valué dans la signature (s'il y en a). 
+
+Il est unique et son nom est précédé par une étoile ("**\***"). 
+
+Il permet d'inclure dans un appel, à la suite des arguments positionnels correspondants aux paramètres mono-valués, un nombre arbitraire d'arguments simples (positionnels aussi) qui seront accessibles, dans le bon ordre, en tant que membres d'un tuple désigné par la variable dont le nom est précédée par "\*":
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres multi-valués(2)
+.. slide_insertion:**Le paramètre multi-valué à valeurs simples**
+
+.. literalinclude:: includes/args.py
+
+::
+
+   >>> f(1,2)
+   a:1
+   b:2
+   c:0
+   args:()
+   >>> f(1,2,4)
+   a:1
+   b:2
+   c:4
+   args:()
+   >>> f(1,2,4,10,11,12)
+   a:1
+   b:2
+   c:4
+   args:(10, 11, 12)
+   >>> f(b=1,a=2,4,10,11)
+   File "<stdin>", line 1
+   SyntaxError: non-keyword arg after keyword arg
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres multi-valués(3)
+.. slide_insertion:**Le paramètre multi-valué à valeurs simples**
+
+.. note:: Pour pouvoir utiliser ce paramètre multi-valué il faut:
+
+	  * Utiliser uniquement des arguments positionnels pour renseigner les paramètres mono-valués qui le précèdent.
+	  * Fournir des valeurs pour **tous** les paramètres mono-valués, même pour ceux pourvus de valeurs par défaut.
+
+**NB:** Ce paramètre est similaire au paramètre dit "elliptique" (\...) présent dans la signature de la fonction **printf** et des autres fonctions dites "multivariadiques", présentes dans certaines bibliothèques du langage **C** .
+
+.. slide_mark_e
+
+Le paramètre multi-valué à valeurs nommées
+==========================================
+
+.. slide_mark_b :Les paramètres multi-valués(4)
+.. slide_insertion:**Le paramètre multi-valué à valeurs nommées**
+
+Ce paramètre optionnel et quand il est présent, il est toujours le dernier paramètre de la signature. 
+
+Il est unique et son nom est précédé par deux étoiles ("**\*\***"). 
+
+Il permet d'inclure dans un appel un nombre arbitraire d'arguments "nom=valeur" (keyword args). 
+
+Les noms des variables correspondant aux paramètres mono-valués ne peuvent pas servir de clé pour ces arguments.
+
+.. slide_mark_e
+.. slide_mark_b :Les paramètres multi-valués(5)
+.. slide_insertion:**Le paramètre multi-valué à valeurs nommées**
+
+.. literalinclude:: includes/kwargs.py
+
+::
+
+   >>> f(1,2,3,[],4,5,x=11,y=12)
+   a:1
+   b:2
+   c:3
+   args:([], 4, 5)
+   kwargs:{'y': 12, 'x': 11}
+   >>> f(x=55,b=6,y=2,a=2)
+   a:2
+   b:6
+   c:0
+   args:()
+   kwargs:{'y': 2, 'x': 55}
+   >>> 
+
+Dans le dernier exemple on voit que les arguments "nom=valeur" correspondant au paramètres mono-valués se mélangent sans restriction avec les arguments "nom=valeur" du paramètre ``kwargs``. 
+
+
+**NB:** La fonction dict(\*\*kwargs), déjà utilisée précédemment pour définir des dictionnaires, est un exemple d'utilisation de ce paramètre.
+
+.. slide_mark_e
+
+Les \*var et \*\*var dans les appels de fonctions
+=====================================================
+
+.. slide_mark_b :Les \* et \*\* dans les appels de fonctions
+
+Les préfixes \* et \** sont utilisés aussi dans les appels de fonctions:
+
+* Avec \*iter_var on peut passer les éléments contenus dans un itérable quelconque sous forme d'arguments individuels à une fonction appelée
+* Avec \*\*dict_var on peut faire la même chose avec un dictionnaire (les arguments seront de la forme nom=valeur)
+
+**NB:** par *iter_var* on désigne ici toute variable référençant un itérable et par *dict_var* toute autre référençant un dictionnaire
+
+.. literalinclude:: includes/varargs.py
+
+Sans surprise, l'appel suivant de *f_call()* va échouer:
+
+::
+
+   >>> f_call()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 3, in f_call
+   TypeError: f() takes exactly 4 arguments (1 given)
+
+En revanche, l'appel de *f_call2()* fonctionnera correctement:
+
+::
+
+   >>> f_call2()
+   f(0,1,2,3)
+   >>> 
+
+Les expressions \*nom \*\*nom (appelées "varargs" en jargon Python) sont utiles pour construire des appels de fonctions dynamiquement, par programme.
+
+.. slide_mark_e
+
+Exercice
+--------
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/print_table.py
+      :lines: 2,10-
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/print_table_sol.py
+      :lines: 2,10-
+
+.. slide_mark_e
+
+******************************
+La documentation des fonctions
+******************************
+
+.. slide_mark_b :La documentation des fonctions
+
+La syntaxe des fonctions Python prévoit un élément dédié à leur documentation. Cet élément, appelée **docstring** est une chaîne de caractères placée après la signature et avant le corps de la fonction:
+
+.. literalinclude:: includes/docstring.py
+
+
+Tous le formats string sont acceptés, le plus courant étant le format multi-ligne (triple quote).
+
+La docstring est accessible par programme à travers l'attribut *__doc__* ou à travers la fonction *help()*:
+
+::
+
+   >>> div.__doc__
+   '\n    Cette fonction divise a par b,....\n    '
+   >>> help(div)
+
+   Help on function div in module docstring:
+
+   div(a, b, trunc=False)
+      Cette fonction divise a par b,....
+   (END)
+
+.. slide_mark_e
+
+***************************
+Fonctions anonymes (lambda)
+***************************
+
+.. slide_mark_b :Fonctions anonymes (lambda)
+
+En dehors des fonctions créées avec l'instruction **def** qui ont toujours un nom et une implémentation définie par un bloc d'instructions, il existe également la possibilité de définir à la volée, pour des traitements très simples, des fonctions implémentées par une simple expression. Elles ont la forme : 
+
+
+**lambda** arg_1, arg_2,...arg_n **:** expression
+
+**Illustration :**
+
+::
+
+   >>> moyenne = lambda a,b: (a+b)/2.0
+   >>> type(moyenne)
+   <type 'function'>
+   >>> moyenne(5,6)
+   5.5
+   >>> (lambda a,b: (a+b)/2.0)(5,6) # même chose avec évaluation directe
+   5.5
+   >>> 
+   >>> module = lambda x: x if x>0 else -x
+   >>> module(-5)
+   5
+   >>> module(7)
+   7
+   >>> (lambda x: x if x>0 else -x)(-5) # même chose avec évaluation directe
+   5
+   >>> (lambda x: x if x>0 else -x)(7)
+   7
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Fonctions anonymes (lambda)(2)
+
+.. admonition:: Important
+   :class: note
+
+    L'écriture ``moyenne = lambda a,b: (a+b)/2.0`` a été utilisée dans l'illustration précédente seulement pour "prouver" que *moyenne* est bien une fonction.
+    
+    Dans le développement, les écritures de la forme ``foo = lambda x,y:...`` sont bannies par la **PEP8** et sans intérêt pratique. Si on a besoin  d'une "fonction-expression", non-anonyme, l'écriture préconisée (pour l'illustration précédente) est ``def moyenne(a, b):  return (a+b)/2.0``.
+
+.. Couramment on utilise des expressions *lambda* pour écrire des "callbacks" (fonctions passées en argument à d'autres fonctions) avec des expressions très simples, par exemple dans une opération de tri:
+
+.. comment!   ::
+
+..   >>> l=[
+..   ...     {'gn':'George','sn':'Washington'},
+..   ...     {'gn':'John','sn':'Adams'},
+..   ...     {'gn':'Thomas','sn':'Jefferson'}
+..   ...     ]
+..   >>> sorted(l) # pas de critère pertinent de tri...
+..   [{'gn': 'George', 'sn': 'Washington'}, {'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}]
+..   >>> sorted(l, key=lambda elt: elt['sn']) # tri par le nom
+..   [{'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'George', 'sn': 'Washington'}]
+..   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Fonctions anonymes (lambda)(3)
+
+Différences entre les structures **lambda** et **def**:
+
+* **lambda** est une expression alors que **def** est une instruction
+* **lambda** renvoie un objet-fonction alors que **def** affecte l'objet-fonction à un nom
+* **def** définit une fonction par un bloc d'instructions, **lambda** par une simple expression (pas d'instruction dans une fonction lambda, donc pas de *return* explicite)
+
+.. admonition:: Quand utiliser des fonctions anonymes
+   :class: warning
+
+   Quand cela améliore la lisibilité du code. En règle générale, une fonction classique trop simple est un moindre mal qu'une fonction anonyme trop complexe :)
+
+.. slide_mark_e
+
+**********************
+Conventions de nommage
+**********************
+
+.. slide_mark_b :Conventions de nommage
+
+La **PEP8** préconise l'utilisation des noms en minuscules pour les fonctions, si nécessaire avec des underscores pour une meilleure lisibilité. L'écriture "mixedMode" est tolérée dans les contextes ou elle est déjà présente, pour assurer la compatibilité.
+
+.. slide_mark_e
+
+***************
+Le tri revisité
+***************
+
+.. slide_mark_b :Le tri revisité
+
+
+Rappel
+======
+
+* Tout itérable peut être trié
+* les **séquences modifiables** (*list*, *bytearray*) disposent d'une méthode **sort()** qui trie la sequence en la modifiant et retourne **None**
+* **tous les itérables** peuvent être triées avec la fonction **sorted()** qui ne modifie pas l'objet à trier et qui retourne un nouvel objet qui est le résultat du tri.
+
+::
+
+   >>> L = [5,2,1,8,0]
+   >>> L.sort()
+   >>> L
+   [0, 1, 2, 5, 8]
+   >>> set_ = {5,2,1,8,0} # ceci n'est pas une séquence...
+   >>> sorted(set_)
+   [0, 1, 2, 5, 8]
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Le tri revisité *[2]*
+   
+Le tri en Python 2.x
+====================
+
+::
+
+   # Signatures:
+   
+   sorted(iterable[, cmp[, key[, reverse]]])
+
+   sequence.sort([cmp[, key[, reverse]]])
+
+* *cmp:* fonction de comparaison "à l'ancienne", à 2 paramètres (disons x et y) qui retourne:
+
+  * une valeur négative si x<y
+  * zéro si x==y
+  * une valeur positive si x>y
+* *key:* fonction à un seul paramètre qui retourne la clé à comparer pour chaque item
+* *reverse:* booléen
+
+.. slide_mark_e
+.. slide_mark_b :Le tri revisité *[3]*
+
+  
+Illustration:
+=============
+
+.. literalinclude:: includes/sort_pers.py
+
+
+::
+
+   >>> # tri avec cmp=cmp_sn
+   >>> sorted(us_presidents,cmp=cmp_sn)
+   [{'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'George', 'sn': 'Washington'}]
+   >>> # même chose avec une fonction lambda (assez illisible...)
+   >>> sorted(us_presidents,cmp=lambda p1, p2: 1 if p1['sn'] > p2['sn'] else -1 if  p1['sn'] < p2['sn'] else 0)
+   [{'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'George', 'sn': 'Washington'}]
+   >>> # key + lambda (bien adaptée car très simple)
+   >>> sorted(us_presidents,key=lambda p: p['sn'])
+   [{'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'George', 'sn': 'Washington'}]
+   >>> # même chose avec reverse
+   >>> sorted(us_presidents,key=lambda p: p['sn'], reverse=True)
+   [{'gn': 'George', 'sn': 'Washington'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'John', 'sn': 'Adams'}]
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b: Le tri revisité *[4]*
+
+   
+Le tri en Python 3.x
+====================
+
+::
+
+   # Signatures:
+   
+   sorted(iterable[, key][, reverse])
+
+   sequence.sorted([key][, reverse])
+
+Ce qui change:
+--------------
+
+* les fonctions **cmp** ne sont plus supportées. La bibliothèque standard fournit la fonction **functools.cmp_to_key()** qui est un outil de transition entre les versions.
+* les paramètres optionnels (key, reverse) exigent des arguments keyword à l'appel
+  
+::
+
+   >>> import functools
+   >>> sorted(us_presidents, key=functools.cmp_to_key(cmp_sn))
+   [{'gn': 'John', 'sn': 'Adams'}, {'gn': 'Thomas', 'sn': 'Jefferson'}, {'gn': 'George', 'sn': 'Washington'}]
+   >>> 
+
+Pour en savoir plus: https://docs.python.org/3/howto/sorting.html#the-old-way-using-the-cmp-parameter
+
+.. slide_mark_e
+
+.. sorted(us_presidents,cmp=lambda p1, p2: 1 if p1['sn'] > p2['sn'] else -1 if  p1['sn'] < p2['sn'] else 0)
+
+.. sorted(us_presidents,key=lambda p: p['sn'])
+
+.. sorted(us_presidents,key=lambda p: p['sn'], reverse=True)

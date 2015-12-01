@@ -1,0 +1,61 @@
+#####################
+Quelques liens utiles
+#####################
+
+.. slide_mark_b :Quelques liens utiles
+
+Il y a beaucoup d'information utiles sur https://www.python.org/documentation/ et en particulier:
+
+* The Python Language Reference:
+
+  * version 2 : http://docs.python.org/2/reference/
+  * version 3 : http://docs.python.org/3/reference/
+* Les tutoriels et les FAQs de la "Python Software Foundation" :
+
+  * version 2 : http://docs.python.org/2/tutorial/
+  * version 3 : http://docs.python.org/3/tutorial/
+
+Un cours introductif en français : 
+
+* http://perso.limsi.fr/pointal/python:courspython3
+
+.. slide_mark_e
+.. slide_mark_b :Quelques liens utiles *[2]*
+
+"Think Python" ou "How to Think Like a Computer Scientist" by Allen B. Downey :
+
+* http://www.greenteapress.com/thinkpython/thinkpython.html
+
+  
+  
+  
+Les ressources didactiques Gérard Swinnen :
+
+* http://inforef.be/swi/python.htm
+
+L'Association Francophone Python :
+
+* http://www.afpy.org/
+
+.. slide_mark_e
+.. slide_mark_b :Quelques liens utiles *[3]*
+
+"Dive Into Python 3" by  Mark Pilgrim :
+
+* http://www.diveintopython3.net/
+
+Des nombreuses ressources aussi sur :
+
+* http://pythonbooks.revolunet.com/
+
+.. slide_mark_e
+.. slide_mark_b :Quelques liens utiles *[4]*
+  
+Pour découvrir les bibliothèques pour le calcul scientifique:
+
+* Scipy Lecture Notes (One document to learn numerics, science, and data with Python)
+  http://www.scipy-lectures.org/
+* Formation à Python scientifique - ENS Paris
+  http://python-prepa.github.io/index.html
+    
+.. slide_mark_e

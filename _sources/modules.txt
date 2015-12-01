@@ -1,0 +1,326 @@
+##################
+Modules et paquets
+##################
+
+.. slide_mark_b :Modules et paquets
+
+* Modules
+* Paquets (ou packages)
+
+.. slide_mark_e
+
+*******
+Modules
+*******
+
+.. slide_mark_b :Modules
+
+Un module est un fichier contenant des instructions Python. 
+
+.. literalinclude:: includes/simplemod.py
+
+Il peut être utilisé de deux manières:
+
+* en tant que script
+
+  ::
+     
+     python simplemod.py
+     runs as a script
+     do something
+
+* chargé avec la directive *import*
+
+  ::
+
+     >>> import simplemod
+     module simplemod was imported
+     >>> __doc__
+     >>> help(simplemod)
+     
+     >>> simplemod.__doc__
+     "\nModule: 'simplemod'\n"
+     >>> simplemod.do_something()
+     do something
+     >>> simplemod._do_something_else()
+     do something else
+     >>> 
+
+On notera la possibilité de documenter un module à l'aide d'une chaîne de caractères en début du fichier, appelée une *docstring* . La docstring ast accessible dans l'attribut ``__doc__`` .
+
+**NB:** Les noms contenus dans le module importé (de cette façon) doivent être préfixés par le nom du module pour être référencés (dans le contexte de l'*import*). 
+
+.. slide_mark_e
+.. slide_mark_b :Modules *[2]*
+
+**Rappel:** Pour rendre *simplemod.py* directement exécutable (en environnement *Linux* ou *Unix*) il faut:
+
+* rajouter  ``#!/usr/bin/env python`` comme première ligne du fichier
+* attribuer des droits d'exécution sur le fichier ``chmod u+x  simplemod.py``
+
+Au chargement, un objet de type *module* est créé, les instructions contenues dans le fichier sont exécutées et les noms résultant de l'exécution (variables, classes, fonctions) sont placés dans un espace de noms défini par l'objet-module. 
+
+Cet objet-module définit l'attribut **__name__** contenant:
+
+#.  "__main__" si le module est chargé en tant que script
+#. le nom du fichier (sans l'extension ".py") s'il s'agit d'un import
+
+Si le corps du module commence avec une chaîne de caractères (entre quotes simples, doubles, triples etc.) celle-ci sera interprétée comme une "docstring".
+
+.. slide_mark_e
+.. slide_mark_b :Modules *[2]*
+
+**Remarques:**
+
+* le nom du fichier doit satisfaire les règles imposés pour les noms des variables en Python. La **PEP 8** préconise l'utilisation de noms courts, les **_** étant "tolérés".
+* un même module peut être utilisé aussi bien en tant que script ou par importation. Par exemple, une bibliothèque ayant vocation à être importée peut contenir une suite de tests à exécuter un mode script. Dans ce cas, c'est une bonne idée de prévoir une exécution conditionnelle de la partie du code réservée au mode script:
+
+::
+
+   if __name__ == "__main__":
+     ...
+     ...
+
+Au chargement, un module est cherché dans trois endroits:
+
+#. dans le répertoire courant
+#. dans les endroits définis dans la variable d'environnement PYTHONPATH
+#. dans le répertoire d'installation de l'interpréteur
+
+.. slide_mark_e
+.. slide_mark_b :Modules *[3]*
+
+**NB:** Le contenu de la variable d'environnement **PYTHONPATH** est accessible à travers l'attribut *path* du module *sys*:
+
+::
+
+   >>> import sys
+   >>> sys.path
+   ['', '/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/django_userena-1.1.2-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/django_guardian-1.0.4-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/easy_thumbnails-1.0.3-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/codenode-0.02-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/django_compress-1.0.1-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/Whoosh-2.4.1-py2.7.egg', '/usr/local/lib/python2.7/dist-packages/Twisted-12.3.0-py2.7-linux-x86_64.egg', '/usr/local/lib/python2.7/dist-packages/django_passwords-0.2.0-py2.7.egg', '/usr/lib/python2.7', '/usr/lib/python2.7/plat-linux2', '/usr/lib/python2.7/lib-tk', '/usr/lib/python2.7/lib-old', '/usr/lib/python2.7/lib-dynload', '/usr/local/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages', '/usr/lib/python2.7/dist-packages/PIL', '/usr/lib/python2.7/dist-packages/gst-0.10', '/usr/lib/python2.7/dist-packages/gtk-2.0', '/usr/lib/pymodules/python2.7', '/usr/lib/python2.7/dist-packages/ubuntu-sso-client', '/usr/lib/python2.7/dist-packages/wx-2.8-gtk2-unicode']
+   >>> 
+
+La fonction *dir()* révèle d'autres attributs importants:
+
+::
+
+   >>> dir(simplemod)
+   ['__builtins__', '__doc__', '__file__', '__name__', '__package__', '_do_something_else', 'do_something']
+
+* '__builtins__' est le dictionnaire des noms prédéfinis
+* '__file__' est le nom du fichier du module
+
+.. slide_mark_e
+
+Le cache
+========
+
+.. slide_mark_b :Le cache
+
+Lors du chargement d'un module, l'interpréteur vérifie la présence d'un fichier précompilé ayant l'extension ".pyc":
+
+* si le fichier existe et il est valide alors il est chargé directement en évitant une nouvelle compilation à partir du code source.
+* si le fichier est absent, corrompu et obsolète, le code source est compilé et chargé en mémoire et le fichier correspondant ".pyc" est généré.
+
+L'emplacement du fichier ".pyc" est:
+
+* dans le répertoire courant en Python 2.x
+* dans le répertoire ./__pycache__ en Python 3.x
+
+.. slide_mark_e
+
+
+Importation dans le contexte courant
+====================================
+
+.. slide_mark_b :Importation dans le contexte courant
+
+Avec l'instruction from\.\.\.import\.\.\. on peut importer sélectivement des objets d'un module dans le contexte courant en s'affranchissant de l'utilisation du préfixe à l'appel:
+
+::
+
+   >>> from simplemod import do_something, _do_something_else
+   module simplemod is imported
+   >>> do_something()
+   do something
+   >>> _do_something_else()
+   do something else
+   >>> 
+
+On peut aussi importer **tous** les noms (**sauf** ceux préfixés par un **_**) d'un module dans le contexte courant :
+
+::
+
+   >>> from simplemod import *
+   module simplemod is imported
+   >>> do_something()
+   do something
+   >>> _do_something_else()
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   NameError: name '_do_something_else' is not defined
+   >>> 
+
+
+.. admonition:: Attention
+   :class: warning
+
+   La pratique consistant à importer tous les noms d'un module dans un autre contexte est **déconseillée** (sauf cas particuliers) car:
+
+   * elle nuit à la lisibilité du code
+   * il y a risque d'écrasement de fonctions prédéfinies pas leurs homonymes éventuelles
+ 
+.. slide_mark_e
+
+Recharger un module
+===================
+
+.. slide_mark_b :Recharger un module
+
+En mode interactif on peut avoir besoin de recharger un module après l'avoir modifié, mais une ré-exécution de l'import ne va pas recharger le module. On peut avoir recours à la fonction *reload()*.
+Néanmoins cela peut s'avérer insatisfaisant dans certains cas, étant donné que les instances des classes rechargées déjà présentes dans le contexte d'exécution ne seront pas impactées.
+
+.. slide_mark_e
+
+*******
+Paquets
+*******
+
+.. slide_mark_b :Paquets
+
+Grâce au paquets (packages) on peut créer des hiérarchies de modules en organisant les fichiers correspondants dans des répertoires à plusieurs niveaux. Lors de l'importation, un module est identifié par son nom précédé par les noms successifs des répertoires le contenant, à partir de la racine du paquet, séparés par des points.
+
+Pour illustration, la structure "fichiers" d'un paquet (correspondant à un *framework* imaginaire):
+
+..   $ tree --charset ascii framework/
+
+::
+
+   framework
+   |-- controller
+   |   |-- admurls.py
+   |   |-- appurls1.py
+   |   |-- appurls2.py
+   |   `-- __init__.py
+   |-- __init__.py
+   |-- model
+   |   |-- admin.py
+   |   |-- appmodel1.py
+   |   |-- appmodel2.py
+   |   `-- __init__.py
+   `-- view
+       |-- admviews.py
+       |-- appviews1.py
+       |-- appviews2.py
+       `-- __init__.py
+
+.. slide_mark_e
+.. slide_mark_b :Paquets *[2]*
+
+Pour qu'un répertoire soit reconnu par l'interpréteur comme membre du paquet, il doit contenir un fichier *__init__.py*, éventuellement vide.
+
+Exemples d'importations:
+
+::
+
+   >>> import framework.controller.admurls
+   >>> import framework.model.appmodel1
+   >>> 
+
+**NB:** Le fichier *__init__.py*, quand il n'est pas vide, il peut contenir l'attribut spécial *__all__* et/ou tout autre code utile au processus d'initialisation (création de fonctions, constantes etc.)
+
+.. slide_mark_e
+
+Importer tous les modules d'un paquet
+=====================================
+
+.. slide_mark_b :Importer tous les modules d'un paquet
+
+La structure  ``from ... import *`` peut être utilisée pour importer "tous" les  modules d'un paquet. Seulement, par "tous" on entend **seulement** les noms listés par la variable **__all__** si elle est présente dans *__init__.py*. Les autres fichiers ".py" présents dans le répertoire seront ignorés. En absence de la variable **__all__** aucun module ne sera importé:
+
+.. literalinclude:: includes/framework/model/__init__.py
+
+::
+
+   >>> dir()
+   ['__builtins__', '__doc__', '__name__', '__package__']
+   >>> from framework.model import *
+   >>> dir()
+   ['__builtins__', '__doc__', '__name__', '__package__', 'admin', 'appmodel1']
+
+
+Dans l'exemple, on constate que *appmodel2*, module pourtant bien présent dans *model*, n'a pas été importé car absent de *__all__*.
+
+.. slide_mark_e
+.. slide_mark_b :Importer tous les modules d'un paquet *[2]*
+
+Néanmoins, il existe une situation où ``from ... import *`` peut importer des modules non référencés dans *__all__*. C'est le cas ou les modules en question on fait préalablement l'objet d'importations individuelles:
+
+::
+
+   >>> from framework.view import *
+   >>> dir() 
+   ['__builtins__', '__doc__', '__name__', '__package__'] # normal, __init__.py étant vide
+   >>> import framework.view.admviews
+   >>> import framework.view.appviews1
+   >>> import framework.view.appviews2
+   >>> dir()
+   ['__builtins__', '__doc__', '__name__', '__package__', 'framework']
+   >>> from framework.view import *
+   >>> dir()
+   ['__builtins__', '__doc__', '__name__', '__package__', 'admviews', 'appviews1', 'appviews2', 'framework']
+   >>> 
+
+.. slide_mark_e
+
+Références intra-paquet
+=======================
+
+.. slide_mark_b :Références intra-paquet
+
+A l'intérieur d'un paquet on peut utiliser la notation **.** pour référencer le répertoire courant et **..** pour le répertoire parent.
+
+Par exemple, ``framework.model.appmodel2`` peut importer les modules se situant au même niveau que lui en utilisant la notation **"."**:
+
+.. literalinclude:: includes/framework/model/appmodel2.py
+
+
+Le résultat:
+
+::
+
+   >>> import framework.model.appmodel2
+   >>> dir(framework.model.appmodel2)
+   ['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'admin', 'appmodel1']
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Références intra-paquet *[2]*
+
+Un autre exemple, ``framework.controller.appurls1`` importe les modules se situant dans le répertoire *model* en utilisant **..**:
+
+.. literalinclude:: includes/framework/controller/appurls1.py
+
+::
+
+   >>> import framework.controller.appurls1
+   >>> dir(framework.controller.appurls1)
+   ['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'admin', 'appmodel1']
+   >>> 
+
+
+.. slide_mark_e
+
+**********************
+Conventions de nommage
+**********************
+
+.. slide_mark_b :Conventions de nommage
+
+* pour les modules: noms courts, en minuscules. Les underscores sont tolérés pour une meilleure lisibilité.
+* pour les packages: noms courts, en minuscules, mais l'utilisation des underscores est déconseillée.
+
+**NB:** Garder à l'esprit que les nom de modules et de packages correspondent à des noms de fichiers et répertoires qui peuvent être soummis à des contraintes spécifiques de certains OS.
+
+
+.. slide_mark_e
+

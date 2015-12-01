@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Les tests &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="Outils divers" href="divers.html" />
+    <link rel="prev" title="La bibliothèque standard en bref" href="libstd.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="divers.html" title="Outils divers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="libstd.html" title="La bibliothèque standard en bref"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="les-tests">
+<h1>Les tests<a class="headerlink" href="#les-tests" title="Permalink to this headline">¶</a></h1>
+<p>Plusieurs méthodes dites <em>agiles</em> préconisent une démarche de développement dirigée par les tests (&#8220;Test Driven Development&#8221; ou TDD) qui suppose l&#8217;écriture des scripts de test parallèlement à l&#8217;écriture du logiciel cible.</p>
+<p>D&#8217;autres approches méthodologiques préconisent l&#8217;utilisation de tests unitaires au cours du processus de développement.</p>
+<p>La mise en place de tout processus de développement intégrant les tests dans sa stratégie nécessite des outils d&#8217;automatisation des <em>tests unitaires</em>. La bibliothèque standard de Python dispose de deux modules dédiés à cette tache:</p>
+<ul class="simple">
+<li><em>doctest</em> qui est destiné plus à maintenir une documentation de qualité qu&#8217;à écrire des vrais tests unitaires</li>
+<li><em>unittest</em> outil beaucoup plus complet que le précédent, bien adapté pour la mise en place d&#8217;une politique de test.</li>
+</ul>
+<div class="section" id="le-module-doctest">
+<h2>Le module doctest<a class="headerlink" href="#le-module-doctest" title="Permalink to this headline">¶</a></h2>
+<p>Est un outil qui va scanner un module et va exécuter les tests incorporés dans les docstrings des fonctions. Même s&#8217;il n&#8217;est pas complet en tant qu&#8217;outil de test, il a au moins trois mérites:</p>
+<ul class="simple">
+<li>permet d&#8217;enrichir la documentation</li>
+<li>permet de détecter des éventuelles divergences entre la documentation et le code</li>
+<li>il est très simple à mettre en place. Il suffit d&#8217;exécuter la fonction à tester dans l&#8217;interpréteur interactif et de copier/coller les lignes contenant l&#8217;appel ainsi que le résultat dans la docstring de la dite fonction.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">height</span><span class="p">,</span><span class="n">base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Computes the triangle area</span>
+<span class="sd">    &gt;&gt;&gt; triangle_area(5,7)</span>
+<span class="sd">    17.5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">height</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="kn">import</span> <span class="nn">doctest</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Si on injecte une erreur dans le code (par exemple, on remplace par inadvertance l&#8217;opérateur <strong>/</strong> par <strong>//</strong>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">height</span><span class="p">,</span><span class="n">base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Computes the triangle area</span>
+<span class="sd">    &gt;&gt;&gt; triangle_area(5,7)</span>
+<span class="sd">    17.5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">height</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span><span class="o">//</span><span class="mf">2.0</span>
+<span class="kn">import</span> <span class="nn">doctest</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>l&#8217;exécution va lever une exception:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python area_doctest_err.py
+**********************************************************************
+File &quot;area_doctest_err.py&quot;, line 3, in __main__.triangle_area
+Failed example:
+triangle_area(5,7)
+Expected:
+     17.5
+Got:
+     17.0
+**********************************************************************
+1 items had failures:
+1 of   1 in __main__.triangle_area
+***Test Failed*** 1 failures.
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-module-unittest">
+<h2>Le module unittest<a class="headerlink" href="#le-module-unittest" title="Permalink to this headline">¶</a></h2>
+<p>Est un outil plus complet, permettant de définir des jeux de test ayant une structure propre et maintenus dans des fichiers séparés du module testé. Il met en oeuvre quatre concepts:</p>
+<ul class="simple">
+<li>&#8220;test fixture&#8221; (banc de test) qui met en place l&#8217;environnement d&#8217;exécution. Cette action précède le  test (création d&#8217;objets, connexions DB, répertoires etc).</li>
+<li>&#8220;test case&#8221; c&#8217;est une unité individuelle de test. Concrètement, c&#8217;est une sous-classe de la classe <em>TestCase</em> fournie par le module.</li>
+<li>&#8220;test suite&#8221; une collection composite de  &#8220;test cases&#8221; et/ou  &#8220;test suites&#8221;</li>
+<li>&#8220;test runner&#8221; dispositif pour organiser l&#8217;exécution des tests et la collecte/rendu des résultats. Il peut prendre plusieurs formes: interface graphique, ligne de commande etc.</li>
+</ul>
+<p>Les sous-classes de <em>TestCase</em> héritent de plusieurs méthodes intéressantes:</p>
+<ul class="simple">
+<li>setUp() : appelée avant l&#8217;exécution de chaque méthode de test:<ul>
+<li>met en place l&#8217;environnement d&#8217;exécution préalable au test (&#8220;test fixture&#8221;)</li>
+<li>elle a vocation à être surchargée (par défaut elle ne fait rien)</li>
+</ul>
+</li>
+<li>run() : lance les test de la classe (les méthodes dont le nom commence par <strong>test_</strong></li>
+<li>TearDown() : fait le ménage après chaque test (réussi ou pas)</li>
+</ul>
+<p>Les tests, (les méthodes <strong>test_</strong>) ont la possibilité d&#8217;utiliser dans leur implémentation plusieurs méthodes héritées utiles, au nom évocateur (liste non exhaustive):</p>
+<ul class="simple">
+<li><em>assertEqual(first, second, msg=None)</em></li>
+<li><em>assertRaises(exceptionClass, callableObj, *args, **kwargs)</em></li>
+<li><em>assertTrue(expr, msg=None)</em></li>
+</ul>
+<p>Par exemple, si on se propose de tester le module <em>modpoint</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>Un <em>test case</em> très simple peut se présenter ainsi :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">modpoint</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<span class="k">class</span> <span class="nc">TestPoint</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">point</span> <span class="o">=</span> <span class="n">modpoint</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">test_equal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">point2</span> <span class="o">=</span>  <span class="n">modpoint</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">point</span> <span class="o">==</span> <span class="n">point2</span><span class="p">)</span>
+    
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c">#unittest.main()</span>
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestPoint</span><span class="p">)</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On peut faire exécuter les tests avec:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+<p>Sinon, avec un &#8220;runner&#8221; plus évolué:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+   <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestLoader</span><span class="p">()</span><span class="o">.</span><span class="n">loadTestsFromTestCase</span><span class="p">(</span><span class="n">TestPoint</span><span class="p">)</span>
+   <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">(</span><span class="n">verbosity</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>$ python test_modpoint.py
+test_equal (__main__.TestPoint) ... ok
+test_move (__main__.TestPoint) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+</pre></div>
+</div>
+<p><strong>NB:</strong> Par convention, les tests relatifs à un module (par exemple <em>foobar</em>) sont regroupé dans un fichier séparé appelé test_foobar.py</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Les tests</a><ul>
+<li><a class="reference internal" href="#le-module-doctest">Le module doctest</a></li>
+<li><a class="reference internal" href="#le-module-unittest">Le module unittest</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="libstd.html"
+                        title="previous chapter">La bibliothèque standard en bref</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="divers.html"
+                        title="next chapter">Outils divers</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="divers.html" title="Outils divers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="libstd.html" title="La bibliothèque standard en bref"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

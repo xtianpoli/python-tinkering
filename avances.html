@@ -1,0 +1,1200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Concepts avancés &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="L’approche objet" href="objet.html" />
+    <link rel="prev" title="Les fonctions" href="fonctions.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="objet.html" title="L’approche objet"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fonctions.html" title="Les fonctions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="concepts-avances">
+<h1>Concepts avancés<a class="headerlink" href="#concepts-avances" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="les-fermetures-closures">
+<h2>Les fermetures (closures)<a class="headerlink" href="#les-fermetures-closures" title="Permalink to this headline">¶</a></h2>
+<p><strong>Rappel:</strong> En Python, les fonctions sont des objets de &#8220;premier ordre&#8221;. Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fa</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;je suis fa(), je renvoie fb&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">fb</span><span class="p">():</span>
+<span class="gp">... </span>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;je suis fb() et je connais x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">fb</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func_fb</span> <span class="o">=</span> <span class="n">fa</span><span class="p">()</span>
+<span class="go">je suis fa(), je renvoie fb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func_fb</span><span class="p">()</span>
+<span class="go">je suis fb() et je connais x=123</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Dans cet exemple:</p>
+<ol class="arabic simple">
+<li>la fonction <em>fa()</em> est appelée et elle retourne l&#8217;objet-fonction <em>fb</em> qui est affecté à la variable <em>func_fb</em>. A ce stade, <em>fb</em> n&#8217;a pas été exécutée, mais seulement définie (par <em>def</em>).</li>
+<li>ensuite, en exécutant <em>func_fb()</em> (par l&#8217;application de <em>()</em> à la variable <em>func_fb</em>) la fonction <em>fb</em> s&#8217;exécute enfin.</li>
+</ol>
+<p>De manière informelle, le terme de <strong>fermeture</strong> (ou <em>closure</em> en anglais) désigne une fonction (considérée en tant qu&#8217;objet) accomapgnée de son contexte de définition. Ce contexte est représenté par l&#8217;ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.</p>
+<p>Autrement dit, dans l&#8217;exemple précédent, <em>func_fb</em> (qui référence l&#8217;objet-fonction <em>fb</em>, retourné lors de l&#8217;appel de <em>fa()</em>) se &#8220;rappelle&#8221; que <tt class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">123</span></tt> alors que cette information provient du contexte d&#8217;exécution de <em>fa()</em>, terminé depuis.</p>
+<p><strong>NB:</strong> On va parler de <em>fermeture</em> seulement pour les fonctions définies à l&#8217;intérieur d&#8217;autres fonctions, les seules disposant d&#8217;un contexte non local).</p>
+<p>Pour une illustration plus complète, voici une utilisation possible des fonctions imbriquées et du principe de fermeture.</p>
+<p><strong>Scénario :</strong> Dans une organisation, les utilisateurs peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.</p>
+<p><strong>Solution :</strong> Nous allons définir un &#8220;générateur de profils&#8221; concrétisé par la fonction <strong>make_profile()</strong> qui a le rôle de &#8220;fabriquer&#8221; les fonctions créatrices de comptes souhaitées (implémentation factice qui renvoie un dictionnaire).</p>
+<p>A chaque appel <em>make_profile(groups, protocols)</em> produira une fonction capable de créer des utilisateurs ayant un profil donné :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">protocols</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    retourne des fonctions permettant de créer des comptes utilisateur</span>
+<span class="sd">    avec un profil donné</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">organisation</span> <span class="o">=</span> <span class="s">&#39;Example.org&#39;</span>
+    <span class="k">def</span> <span class="nf">add_user</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">cn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        dans une vraie implémentation, crée le compte</span>
+<span class="sd">        ici, retourne les données de création sous forme de dictionnaire </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">login</span><span class="o">=</span><span class="n">login</span><span class="p">,</span> <span class="n">cn</span><span class="o">=</span><span class="n">cn</span><span class="p">,</span> <span class="n">org</span><span class="o">=</span><span class="n">organisation</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+                <span class="n">protocols</span><span class="o">=</span><span class="n">protocols</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">add_user</span>
+</pre></div>
+</div>
+<p>On va utiliser cette fonction pour &#8220;fabriquer&#8221; des fonctions utilisables pour créer des comptes :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;guests&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">,</span><span class="s">&#39;imap&#39;</span><span class="p">,</span><span class="s">&#39;smtp&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;adm&#39;</span><span class="p">,</span> <span class="s">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">,</span><span class="s">&#39;imap&#39;</span><span class="p">,</span>\
+<span class="gp">... </span><span class="s">&#39;smtp&#39;</span><span class="p">,</span><span class="s">&#39;ssh&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Utilisation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="p">(</span><span class="s">&#39;alex&#39;</span><span class="p">,</span><span class="s">&#39;Alex Terrieur&#39;</span><span class="p">)</span>
+<span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;alex&#39;, &#39;protocols&#39;: [&#39;http&#39;], &#39;groups&#39;: [&#39;guests&#39;], &#39;cn&#39;: &#39;Alex Terrieur&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span><span class="p">(</span><span class="s">&#39;alain&#39;</span><span class="p">,</span><span class="s">&#39;Alain Terrieur&#39;</span><span class="p">)</span>
+<span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;alain&#39;, &#39;protocols&#39;: [&#39;http&#39;, &#39;imap&#39;, &#39;smtp&#39;], &#39;groups&#39;: [&#39;staff&#39;], &#39;cn&#39;: &#39;Alain Terrieur&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span><span class="p">(</span><span class="s">&#39;cpoli&#39;</span><span class="p">,</span><span class="s">&#39;Christian Poli&#39;</span><span class="p">)</span>
+<span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;cpoli&#39;, &#39;protocols&#39;: [&#39;http&#39;, &#39;imap&#39;, &#39;smtp&#39;, &#39;ssh&#39;], &#39;groups&#39;: [&#39;adm&#39;, &#39;staff&#39;], &#39;cn&#39;: &#39;Christian Poli&#39;}</span>
+</pre></div>
+</div>
+<p><strong>Question légitime:</strong> Comment les fonctions créées (<em>add_guest()</em>, <em>add_staff()</em>, <em>add_admin()</em>) ont mémorisé les valeurs de <em>groups</em>, <em>protocols</em> et <em>organisation</em> alors que ces variables ne font pas partie de leurs contextes locaux respectifs, mais du contexte d&#8217;une fonction englobante (<em>make_profile()</em>) dont l&#8217;exécution est terminée et, par conséquent, son contexte aussi?</p>
+<p>C&#8217;est ici que la notion de <strong>fermeture</strong> intervient. Si on regarde de près l&#8217;objet <em>add_guest</em> par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">add_guest</span><span class="p">)</span>
+<span class="go">[&#39;__call__&#39;, &#39;__class__&#39;, &#39;__closure__&#39;, &#39;__code__&#39;, &#39;__defaults__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;, &#39;__get__&#39;, &#39;__getattribute__&#39;, &#39;__globals__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__name__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;func_closure&#39;, &#39;func_code&#39;, &#39;func_defaults&#39;, &#39;func_dict&#39;, &#39;func_doc&#39;, &#39;func_globals&#39;, &#39;func_name&#39;]</span>
+</pre></div>
+</div>
+<p>on observe la présence d&#8217;un attribut magique nommé <strong>__closure__</strong>.</p>
+<p>Cet attribut contient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="o">.</span><span class="n">__closure__</span>
+<span class="go">(&lt;cell at 0x1156d00: str object at 0x1159090&gt;, &lt;cell at 0x1156e18: list object at 0x1129b90&gt;, &lt;cell at 0x1156de0: list object at 0x1129b48&gt;)</span>
+</pre></div>
+</div>
+<p>et encore:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="o">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span>
+<span class="go">&#39;Example.org&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="o">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span>
+<span class="go">[&#39;guests&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="o">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span>
+<span class="go">[&#39;http&#39;]</span>
+</pre></div>
+</div>
+<p>On y reconnaît les objets référencés par les variables <em>organisation</em>, <em>groups</em> et <em>protocols</em> (on obtiendra des résultats similaires pour <em>add_staff</em> et <em>add_admin</em> ).</p>
+<p>L&#8217;attribut <em>__closure__</em> conserve ainsi une copie partielle du contexte non local des fonctions imbriquées, faite à l&#8217;instant précis de leur définition. Cette partie de contexte conservée dans <em>__closure__</em> concerne les objets référencés dans le corps de la fonction et définis dans la (ou les) fonction(s) englobante(s).</p>
+<div class="section" id="exercice">
+<h3>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: polynom.py</span>
+
+<span class="sd">Ecrire une fonction polynom() ayant la signature:</span>
+
+<span class="sd">def polynom(degree, a=0, b=0, c=0, d=0):</span>
+<span class="sd">    ....</span>
+
+<span class="sd">Cette fonction retourne un objet-fonction destiné au calcul de la valeur d&#39;un</span>
+<span class="sd">polynome de degré &lt;degree&gt; {0,...3} et de coéfficients a, [b,[ c,[ d]]] selon</span>
+<span class="sd">le degré choisi.</span>
+
+<span class="sd">Exemple d&#39;utilisation:</span>
+<span class="sd">Pour construire la fonction correspondante à : P2(x) = 2 *x^2 + x + 1</span>
+<span class="sd">on appelle:</span>
+
+<span class="sd">&gt;&gt;&gt; p2 = polynom(degree=2, a=2, b=1, c=1)</span>
+
+<span class="sd">&gt;&gt;&gt; type(p2)</span>
+<span class="sd">&lt;type &#39;function&#39;&gt;</span>
+
+<span class="sd">Ensuite, pour x = 2:</span>
+
+<span class="sd">&gt;&gt;&gt; p2(2)</span>
+<span class="sd">11</span>
+
+<span class="sd">Ensuite, pour x = 3:</span>
+
+<span class="sd">&gt;&gt;&gt; p2(3)</span>
+<span class="sd">22</span>
+
+<span class="sd">Pour faire simple, on ne va pas s&#39;occuper de la validité des arguments d&#39;appel.</span>
+
+<span class="sd">Dans ces conditions, comme exercice de style, essayez d&#39;écrire la fonction sans </span>
+<span class="sd">utiliser des structures de contrôle.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: polynom_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">polynom</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Polynom factory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">p_0</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span>
+    <span class="k">def</span> <span class="nf">p_1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b</span>
+    <span class="k">def</span> <span class="nf">p_2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="n">c</span>
+    <span class="k">def</span> <span class="nf">p_3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">d</span>
+    <span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">p_0</span><span class="p">,</span> <span class="n">p_1</span><span class="p">,</span> <span class="n">p_2</span><span class="p">,</span> <span class="n">p_3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">f_list</span><span class="p">[</span><span class="n">degree</span><span class="p">]</span>
+        
+
+
+
+    
+</pre></div>
+</div>
+</div>
+<p>Une autre solution:</p>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: polynom_sol2.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">polynom</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Polynom factory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">b</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span><span class="n">c</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">d</span>
+        <span class="p">]</span>
+    <span class="k">return</span> <span class="n">f_list</span><span class="p">[</span><span class="n">degree</span><span class="p">]</span>
+        
+
+
+
+    
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="les-decorateurs-de-fonctions">
+<h2>Les décorateurs de fonctions<a class="headerlink" href="#les-decorateurs-de-fonctions" title="Permalink to this headline">¶</a></h2>
+<p>Il s&#8217;agit d&#8217;une technique simple et surtout non-intrusive permettant d&#8217;enrichir le comportement d&#8217;une fonction donnée sans modifier son code.</p>
+<p>L&#8217;enrichissement du comportement se traduit par le rajout de nouvelles actions qui seront exécutées avant et/ou après l&#8217;exécution de la fonction elle même.</p>
+<p>On va appeler <strong>&#8220;fonction décorée&#8221;</strong> la fonction dont le comportement sera enrichi et <strong>&#8220;décoration&#8221;</strong> la fonction apportant les nouveaux comportements.</p>
+<p>Enfin, on appelera <strong>&#8220;décorateur&#8221;</strong> la fonction qui fait l&#8217;assemblage des deux fonctions précédentes.</p>
+<p>Les décorateurs de fonctions sont applications directes du mécanisme de <strong>fermeture</strong> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">simple_decorator</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">    entre la décoration et la fonction</span>
+<span class="sd">    à décorer. Elle contient la définition</span>
+<span class="sd">    de la fonction &quot;décoration&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction constitue</span>
+<span class="sd">        la décoration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">simple_wrapper</span>
+
+
+
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    une méthode à décorer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">do_something_else</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    une autre méthode à décorer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># exécution sans décoration:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">fait qq chose (x=1,y=2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s">&quot;g&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="s">&quot;e&quot;</span><span class="p">)</span>
+<span class="go">fait qq chose d&#39;autre (a=g,b=r,c=e)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>L&#8217;application du décorateur aux deux fonctions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="o">=</span><span class="n">simple_decorator</span><span class="p">(</span><span class="n">do_something</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="o">=</span><span class="n">simple_decorator</span><span class="p">(</span><span class="n">do_something_else</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Exécution après décoration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">action avant do_something()</span>
+<span class="go">fait qq chose (x=1,y=2)</span>
+<span class="go">action après do_something()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s">&quot;g&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="s">&quot;e&quot;</span><span class="p">)</span>
+<span class="go">action avant do_something_else()</span>
+<span class="go">fait qq chose d&#39;autre (a=g,b=r,c=e)</span>
+<span class="go">action après do_something_else()</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Python propose une syntaxe simplifiée pour appliquer un décorateur:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">simple_decorator</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">    entre la décoration et la fonction</span>
+<span class="sd">    à décorer. Elle contient la définition</span>
+<span class="sd">    de la fonction &quot;décoration&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction constitue</span>
+<span class="sd">        la décoration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">simple_wrapper</span>
+
+
+<span class="nd">@simple_decorator</span>
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    une méthode à décorer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+
+<span class="nd">@simple_decorator</span>
+<span class="k">def</span> <span class="nf">do_something_else</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    une autre méthode à décorer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Le décorateur présenté ici illustre bien le principe, mais il est encore imparfait. Par exemple, la <em>docstring</em> de la fonction décorée n&#8217;est pas correcte:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="o">.</span><span class="n">__name__</span>
+<span class="go">&#39;simple_wrapper&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">&#39;\n        Cette fonction constitue\n        la décoration\n        &#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Pour y remédier, la bibliothèque standard propose un outil qui copie les informations nécessaires de la fonction initiale vers la fonction décorée. Le décorateur initial, revu et corrigé, devient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">simple_decorator</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">    entre la décoration et la fonction</span>
+<span class="sd">    à décorer. Elle contient la définition</span>
+<span class="sd">    de la fonction &quot;décoration&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction constitue</span>
+<span class="sd">        la décoration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">simple_wrapper</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h3>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator.py</span>
+
+<span class="sd">Une bibliothèque logicielle fournit des fonctions pour le calcul des surfaces </span>
+<span class="sd">de quelques figures géométriques.</span>
+
+<span class="sd">On souhaite adapter la bibliothèque pour l&#39;apprentissage du calcul des surfaces.</span>
+
+<span class="sd">L&#39;élève doit effectuer le calcul de la surface lui même avant d&#39;appeler </span>
+<span class="sd">la fonction.</span>
+
+<span class="sd">Le fonction appelée :</span>
+<span class="sd"> - demande la saisie de la valeur préalablement calculée par l&#39;élève</span>
+<span class="sd"> - effectue le même calcul</span>
+<span class="sd"> - affiche les deux résultats pour vérification</span>
+
+<span class="sd">Exemple d&#39;exécution:</span>
+
+
+<span class="sd">&gt;&gt;&gt; rectangle_area(3,4)</span>
+<span class="sd">Your value ?12</span>
+<span class="sd">Your value: 12, calculated value: 12</span>
+<span class="sd">12</span>
+<span class="sd">&gt;&gt;&gt;</span>
+
+
+<span class="sd">A l&#39;origine, la bibliothèque n&#39;a pas été conçue pour ça. Pour l&#39;adapter,</span>
+<span class="sd">on va éviter les solutions naïves qui consistent à:</span>
+<span class="sd"> - (N1) modifier les fonctions existantes (voir triangle_area_modified </span>
+<span class="sd">   par rapport à triangle_area)</span>
+<span class="sd"> - (N2) envelopper les fonctions de la bibliothèque par des fonctions dédiées </span>
+<span class="sd">   (voir triangle_area_wrapper pour triangle_area)</span>
+
+<span class="sd">Les deux solutions sont non satisfaisantes (pourquoi?) alors:</span>
+
+<span class="sd">Il est demandé d&#39;écrire un décorateur unique pour répondre à cette demande.</span>
+
+<span class="sd">NB: On ne va pas s&#39;occuper de détails (docstring etc.)</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#</span>
+<span class="c"># La bibliothèque</span>
+<span class="c">#</span>
+
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;triangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
+    <span class="s">&quot;circle area&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="c"># ...</span>
+<span class="c"># ...</span>
+
+
+<span class="c">#</span>
+<span class="c"># PS: Les solutions naïves - A EVITER!</span>
+<span class="c"># (elle sont là juste à titre d&#39;exemple négatif!)</span>
+<span class="c">#</span>
+
+<span class="k">def</span> <span class="nf">triangle_area_modified</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    N1) solution naïve I</span>
+<span class="sd">    triangle_area() modifiée pour intégrer le dialogue</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Your value ?&quot;</span><span class="p">)</span>
+    <span class="n">calc</span> <span class="o">=</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">calc</span>
+
+<span class="k">def</span> <span class="nf">triangle_area_wrapper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    N2) solution naïve II</span>
+<span class="sd">    wrapper dédié à triangle_area()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Your value ?&quot;</span><span class="p">)</span>
+    <span class="n">calc</span> <span class="o">=</span> <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">calc</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">simple_dialog</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">    entre la décoration et la fonction</span>
+<span class="sd">    à décorer. Elle contient la définition</span>
+<span class="sd">    de la fonction &quot;décoration&quot;    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction constitue</span>
+<span class="sd">        la décoration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="s">&quot;Your answer is?&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+        <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+        <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture!</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">calc</span>
+    <span class="k">return</span> <span class="n">simple_wrapper</span>
+
+<span class="nd">@simple_dialog</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;triangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="nd">@simple_dialog</span>
+<span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="nd">@simple_dialog</span>
+<span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nd">@simple_dialog</span>
+<span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
+    <span class="s">&quot;circle area&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span> 
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercice-suite">
+<h3>Exercice (suite)<a class="headerlink" href="#exercice-suite" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator2.py</span>
+
+<span class="sd">Parfois il peut être intéressant de pouvoir passer des paramètres à un </span>
+<span class="sd">décorateur.</span>
+
+<span class="sd">Reprenez l&#39;exemple précédent et créez un décorateur permettant de personnaliser</span>
+<span class="sd">le message d&#39;accueil.</span>
+
+<span class="sd">En absence d&#39;un message personnalisé, on va afficher un message par défaut.</span>
+<span class="sd">NB: Pour simplifier, on va considérer que le décorateur sera appliqué </span>
+<span class="sd">systématiquement avec l&#39;opérateur&quot;()&quot; de la manière suivante:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#</span>
+<span class="c"># avec message personnalisé:</span>
+<span class="c">#</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area?&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;...&quot;</span>
+    <span class="k">pass</span> <span class="c"># ...</span>
+
+<span class="c">#</span>
+<span class="c"># sans message personnalisé:</span>
+<span class="c">#</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;...&quot;</span>
+    <span class="k">pass</span> <span class="c"># ...</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator_sol2.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Your value ?&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    cette fonction permet d&#39;introduire la variable &#39;question&#39; dans la fermeture</span>
+<span class="sd">    du décorateur</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">simple_dialog</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">        entre la décoration et la fonction</span>
+<span class="sd">        à décorer. Elle contient la définition</span>
+<span class="sd">        de la fonction &quot;décoration&quot; </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Cette fonction constitue</span>
+<span class="sd">            la décoration</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+            <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+            <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">calc</span>
+        <span class="k">return</span> <span class="n">simple_wrapper</span>
+    <span class="k">return</span> <span class="n">simple_dialog</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area is?&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;triangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
+
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
+    <span class="s">&quot;circle area&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Exercice (suite)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator3.py</span>
+
+<span class="sd">Comment faire pour éviter l&#39;opérateur &quot;()&quot; quand on n&#39;a pas d&#39;option de décoration à passer?</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c">#</span>
+<span class="c"># avec message personnalisé et &quot;()&quot;:</span>
+<span class="c">#</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area?&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="c">#</span>
+<span class="c"># sans message personnalisé et SANS &quot;()&quot;:</span>
+<span class="c">#</span>
+
+<span class="nd">@dialog_with_args</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: lib_decorator_sol3.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="s">&quot;Your answer is?&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    cette fonction permet d&#39;introduire la variable &#39;question&#39; dans la fermeture</span>
+<span class="sd">    du décorateur</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">simple_dialog</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Cette fonction est le décorateur. Elle va faire l&#39;assemblage</span>
+<span class="sd">        entre la décoration et la fonction</span>
+<span class="sd">        à décorer. Elle contient la définition</span>
+<span class="sd">        de la fonction &quot;décoration&quot; </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">simple_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Cette fonction constitue</span>
+<span class="sd">            la décoration</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+            <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
+            <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">calc</span>
+        <span class="k">return</span> <span class="n">simple_wrapper</span>
+    <span class="k">if</span> <span class="n">to_decorate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> 
+        <span class="c"># appel avec options, du style:</span>
+        <span class="c"># @dialog_with_args(question=&quot;Triangle area?&quot;)</span>
+        <span class="c"># En clair:</span>
+        <span class="c"># triangle_area = dialog_with_args(question=&quot;Triangle area?&quot;)(triangle_area)</span>
+        <span class="c"># dialog_with_args() n&#39;est pas appelée en tant que décorateur mais en tant que</span>
+        <span class="c"># fonction retournant le décorateur donc:</span>
+        <span class="k">return</span> <span class="n">simple_dialog</span>
+    <span class="c"># appel sans options, du style:</span>
+    <span class="c"># @dialog_with_args</span>
+    <span class="c"># en clair triangle_area = dialog_with_args(triangle_area)</span>
+    <span class="c"># dialog_with_args() est  appelée en tant que décorateur!</span>
+    <span class="c"># elle doit donc relayer l&#39;appel au vrai décorateur</span>
+    <span class="c"># et retourner le résultat</span>
+    <span class="k">return</span> <span class="n">simple_dialog</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">)</span>
+
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area is?&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;triangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
+
+<span class="nd">@dialog_with_args</span>
+<span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
+
+<span class="nd">@dialog_with_args</span>
+<span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
+
+
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="nd">@dialog_with_args</span>
+<span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
+    <span class="s">&quot;circle area&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">6</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a rectangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="n">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="les-generateurs">
+<h2>Les générateurs<a class="headerlink" href="#les-generateurs" title="Permalink to this headline">¶</a></h2>
+<p>On a déjà évoqué précédemment le fait que les objets <em>itérables</em> sont soit des <em>conteneurs</em>, autrement dit des objets qui ont vocation à contenir d&#8217;autres objets (listes, ensembles, etc.) soit des objets plus &#8220;opaques&#8221; (comme range/xrange), qui ne contiennent pas physiquement d&#8217;autres objets, mais qui les créent au fur et à mesure de la demande, de manière &#8220;paresseuse&#8221;.</p>
+<p>Les générateurs sont des itérateurs (un itérateur peut être vu comme un itérable à usage unique!)</p>
+<p>Les avantages des générateurs par rapport aux conteneurs classiques:</p>
+<ul class="simple">
+<li>Consommation mémoire réduite et indépendante du nombre d&#8217;occurences</li>
+<li>Solution en cas d&#8217;impossibilité d&#8217;utiliser les conteneurs (quand le nombre d&#8217;occurrences n&#8217;est pas prévisible à l&#8217;avance).</li>
+</ul>
+<p>Syntaxiquement, un générateur se définit avec l&#8217;instruction <strong>def</strong>, comme une fonction classique.</p>
+<p>Sur la forme, la particularité d&#8217;une fonction-générateur par rapport à une fonction classique est l&#8217;usage de l&#8217;instruction <em>yield</em>.</p>
+<p>Sur le fond, la différence entre une fonction classique et une fonction-générateur est plus subtile :</p>
+<ul class="simple">
+<li>la fonction classique construit un résultat unique (par exemple, une liste de valeurs) qu&#8217;elle retourne d&#8217;un coup (avec l&#8217;instruction <em>return</em>)</li>
+<li>la fonction-générateur (où &#8220;générateur&#8221;, tout court), au lieu de construire une liste d&#8217;éléments, produit et délivre les éléments un par un, à la demande, par l&#8217;instruction <em>yield</em>. Après chaque valeur délivrée, le générateur suspende son exécution tout en conservant l&#8217;état courant (les valeurs courantes des variables locales) lui permettant de reprendre l&#8217;exécution lors de la prochaine demande de nouvelle valeur.</li>
+</ul>
+<p>Comme tout <strong>itérateur</strong>, un générateur implémente le protocole d&#8217;itération, déjà discuté précédemment.</p>
+<p>On rappelle que, pour supporter ce protocole, un objet doit:</p>
+<ul class="simple">
+<li>implémenter la méthode <em>next()</em> (renommée <em>__next__()</em> en Python3)</li>
+<li>lever de l&#8217;exception <em>StopIteration</em> à la fin du processus.</li>
+<li>implémenter, la méthode  <em>__iter__()</em> qui renvoie l&#8217;objet lui-même (alors qu&#8217;un itérable renvoie à chaque appel un itérateur &#8220;frais&#8221;)</li>
+</ul>
+<p>L&#8217;exécution de l&#8217;instruction <em>return</em> (explicite ou implicite) par une fonction-générateur provoque la levée de l&#8217;exception <em>StopIteration</em>.</p>
+<p>Pour illustration, un exemple simple de générateur, produisant les premiers <em>n</em> entiers au cube:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">gen_cube_n</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    1**3, 2**3, ...n**3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">**</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; gen = gen_cube_n(3)
+&gt;&gt;&gt; type(gen)
+&lt;type &#39;generator&#39;&gt;
+&gt;&gt;&gt; next(gen)
+1
+&gt;&gt;&gt; next(gen)
+8
+&gt;&gt;&gt; next(gen)
+27
+&gt;&gt;&gt; next(gen)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt; for e in gen_cube_n(4):
+...     print(e)
+...
+1
+8
+27
+64
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Le même exemple en version &#8220;sans fin&#8221; :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">gen_cube_endless</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    1**3, 2**3, ...(sans fin)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">i</span> <span class="o">**</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="n">gen_cube_endless</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">27</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">64</span>
+</pre></div>
+</div>
+<div class="section" id="les-generateurs-expression">
+<h3>Les générateurs &#8220;expression&#8221;<a class="headerlink" href="#les-generateurs-expression" title="Permalink to this headline">¶</a></h3>
+<p>Les expressions faisant office de générateurs ont une syntaxe très proche des listes en intension, les parenthèses prenant la place des crochets englobants:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; g= (i**3 for i in range(4))
+&gt;&gt;&gt; type(g)
+&lt;class &#39;generator&#39;&gt;
+&gt;&gt;&gt; next(g)
+0
+&gt;&gt;&gt; next(g)
+1
+&gt;&gt;&gt; next(g)
+8
+&gt;&gt;&gt; next(g)
+27
+&gt;&gt;&gt; next(g)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+StopIteration
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>Exercice<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: math_serie.py</span>
+
+<span class="sd">La fonction suivante calcule une liste avec les termes</span>
+<span class="sd">d&#39;une suite définie par une relation de récurence.</span>
+<span class="sd">Modifier cette fonction pour en faire un générateur.</span>
+<span class="sd">a) avec  n_max fixe</span>
+<span class="sd">b) sans limitation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">serie</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n&lt;n_max .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: math_serie_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">serie</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n&lt;n_max .</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="k">yield</span> <span class="n">u</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_max</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
+        <span class="k">yield</span> <span class="n">u</span>
+
+<span class="k">def</span> <span class="nf">serie2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n illimité</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">yield</span> <span class="n">u</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">u</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="fonctions-recursives">
+<h2>Fonctions récursives<a class="headerlink" href="#fonctions-recursives" title="Permalink to this headline">¶</a></h2>
+<p>En Python, comme dans d&#8217;autres langages, une fonction peut s&#8217;appeler elle-même, directement  (récursion simple) ou indirectement (récursion croisée : <em>a()</em> appelle <em>b()</em> qui appelle <em>a()</em>, par exemple).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fact</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    fonction factorielle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">n</span><span class="o">*</span><span class="n">fact</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fact</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">24</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Contrairement à d&#8217;autres langages qui accordent une place importante à la récursion (OCaml, Prolog), Python n&#8217;optimise pas la récursion terminale (tail recursion). La profondeur de la récursion est configurée par défaut à une valeur assez contraignante :</p>
+<div class="highlight-python"><div class="highlight"><pre> &gt;&gt;&gt; sys.getrecursionlimit()
+ 1000
+
+ &gt;&gt;&gt; fact(1001)
+File &quot;recursion.py&quot;, line 5, in fact
+  return 1 if n==0 else n*fact(n-1)
+....
+File &quot;recursion.py&quot;, line 5, in fact
+  return 1 if n==0 else n*fact(n-1)
+RuntimeError: maximum recursion depth exceeded in comparison
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-et-la-programmation-fonctionnelle">
+<h2>Python et la programmation fonctionnelle<a class="headerlink" href="#python-et-la-programmation-fonctionnelle" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rappel">
+<h3>Rappel<a class="headerlink" href="#rappel" title="Permalink to this headline">¶</a></h3>
+<p>La programmation fonctionnelle est une paradigme qui aborde le calcul en tant qu&#8217;évaluation des fonctions sans effet de bord, sur le modèle des fonctions mathématiques.</p>
+<p><strong>Corollaire:</strong> dans une telle approche, les changements d&#8217;état, les modifications de données sont bannis.</p>
+<p>Les avantages revendiquées par ce paradigme sont, principalement:</p>
+<ul class="simple">
+<li>Prouvabilité formelle des programmes</li>
+<li>Décomposabilité/Composabilité des programmes</li>
+<li>Testing et mise au point facilités</li>
+</ul>
+<p>Langage multi-paradigme, Python contient des éléments de langage propices à la programmation fonctionnelle :</p>
+<ul class="simple">
+<li>les fonctions sont des objets de première classe</li>
+<li>il offre des mécanismes avancés pour le traitement des listes et des itérables en général:<ul>
+<li>listes en intension et générateurs-expression</li>
+<li>une large palette de fonctions sur les itérateurs (module <strong>itertools</strong>)</li>
+<li>les primitives &#8220;historiques&#8221; de la programmation fonctionnelle <em>map()</em>, <em>reduce()</em>, <em>filter()</em></li>
+<li>d&#8217;autres primitives sur les itérables: <em>all()</em>, <em>any()</em>, <em>min()</em>, <em>max()</em></li>
+</ul>
+</li>
+<li>il permet la définition de fonctions d&#8217;ordre supérieur (fonctions qui manipulent d&#8217;autres fonctions, comme les décorateurs)</li>
+</ul>
+<p>Pourtant, Python n&#8217;est pas un langage fonctionnel &#8220;pur&#8221; car :</p>
+<ul class="simple">
+<li>il n&#8217;encourage pas l&#8217;utilisation de la récursivité</li>
+<li>par défaut, il n&#8217;empêche pas les effets de bord (sauf dans les fonctions anonymes) ni les données modifiables</li>
+</ul>
+<p>Les trois fonctions &#8220;historiques&#8221; de la programmation fonctionnelle (<em>map</em>, <em>filter</em>, <em>reduce</em>) sont présentes dans le langage, mais, dans la pratique les deux premières perdent du terrain en faveur des listes en intension et des générateurs-expression</p>
+<ul class="simple">
+<li><strong>map(f, iterable1, iterable2,...)</strong> : applique la fonction <em>f</em> sur chaque item résultat d&#8217;une itération:<ul>
+<li>le nombre d&#8217;arguments de la fonction doit correspondre avec le nombre d&#8217;itérables à traiter</li>
+<li>les itérables seront traités parallèlement : la fonction recevra en argument, lors d&#8217;une itération <em>i</em>, le i-ème élément de chaque</li>
+<li>le processus s&#8217;arrête lorsque la fin de l&#8217;itérable le plus court est atteinte</li>
+</ul>
+</li>
+<li><strong>filter(f, iterable_in)</strong> : applique la fonction <em>f</em> à tous les éléments de <em>iterable_in</em> et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels <em>f</em> renvoie <em>True</em></li>
+<li><strong>reduce(f, iterable_in[,init)</strong> : applique la fonction <em>f</em> (à deux arguments) à tous les items de <em>iterable_in</em> de manière cumulative, de gauche à droite:<ul>
+<li>pour [1,2,3,4] le résultat sera équivalent à  <tt class="docutils literal"><span class="pre">f(f(f(1,2),3),4)</span></tt></li>
+<li>Si init est fourni, il sera utilisé dans le processus comme l&#8217;élément le plus à gauche. pour init=99 l&#8217;équivalent en terme de résultat sera <tt class="docutils literal"><span class="pre">f(f(f(f(99,1),2),3),4)</span></tt></li>
+<li><strong>NB:</strong> En version 3, la fonction <em>reduce</em> a été déplacée dans le module <em>functools</em> (cf. <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">http://docs.python.org/3.0/whatsnew/3.0.html</a>)</li>
+</ul>
+</li>
+</ul>
+<p>Le même document <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">WHATSNEW</a> préconise l&#8217;utilisation des listes en intension à la place de <em>map</em> et <em>filter</em> quand le résultat souhaité est une liste (car en version 3 ces deux fonctions fournissent des itérateurs en sortie)</p>
+<p><strong>NB :</strong> Les fonctions <em>map()</em> et <em>filter()</em> renvoient une liste en version 2 et un itérateur en version 3.</p>
+</div>
+<div class="section" id="la-fonction-map">
+<h3>La fonction <em>map</em><a class="headerlink" href="#la-fonction-map" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lst</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    nom prénom</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span><span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension et générateurs-expression:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Les fonctions anonymes ont le mérite de ne jamais provoquer des effets de bord, ce qui est une exigence de première importance dans la programmation fonctionnelle:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">],</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension (pas besoin de lambda):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>Remarque:</strong> <em>map()</em> permet de travailler en parallèle sur plusieurs itérables, alors qu&#8217;avec les listes en intension on doit recourir à une astuce, l&#8217;utilisation de <strong>zip()</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+
+<span class="n">lst1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">lst2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">prod</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># ou encore:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">));</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="la-fonction-filter">
+<h3>La fonction <em>filter</em><a class="headerlink" href="#la-fonction-filter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span> <span class="n">lst</span>
+<span class="go">[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="la-fonction-reduce">
+<h3>La fonction <em>reduce</em><a class="headerlink" href="#la-fonction-reduce" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">[1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># factorielle de 5:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="go">120</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-module-itertools">
+<h3>Le module <em>itertools</em><a class="headerlink" href="#le-module-itertools" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/library/itertools.html">itertools</a> fournit des itérables très utiles, en programmation fonctionnelle ou impérative, illustré ici sur un exemple. Soit le générateur suivant implémentant une série:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">series</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n illimité</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">yield</span> <span class="n">u</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">u</span>
+</pre></div>
+</div>
+<p>On souhaite implémenter un itérable &#8220;paresseux&#8221; qui fournit à chaque itération, le terme courant de la série et la somme des éléments déjà générés</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">tee</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crt</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">series</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crt_acc</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt</span><span class="p">,</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">acc</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt_acc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(-5, -5)</span>
+<span class="go">(4, -1)</span>
+<span class="go">(15, 14)</span>
+<span class="go">(28, 42)</span>
+<span class="go">(43, 85)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Concepts avancés</a><ul>
+<li><a class="reference internal" href="#les-fermetures-closures">Les fermetures (closures)</a><ul>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#les-decorateurs-de-fonctions">Les décorateurs de fonctions</a><ul>
+<li><a class="reference internal" href="#id1">Exercice</a></li>
+<li><a class="reference internal" href="#exercice-suite">Exercice (suite)</a></li>
+<li><a class="reference internal" href="#id2">Exercice (suite)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#les-generateurs">Les générateurs</a><ul>
+<li><a class="reference internal" href="#les-generateurs-expression">Les générateurs &#8220;expression&#8221;</a></li>
+<li><a class="reference internal" href="#id3">Exercice</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fonctions-recursives">Fonctions récursives</a></li>
+<li><a class="reference internal" href="#python-et-la-programmation-fonctionnelle">Python et la programmation fonctionnelle</a><ul>
+<li><a class="reference internal" href="#rappel">Rappel</a></li>
+<li><a class="reference internal" href="#la-fonction-map">La fonction <em>map</em></a></li>
+<li><a class="reference internal" href="#la-fonction-filter">La fonction <em>filter</em></a></li>
+<li><a class="reference internal" href="#la-fonction-reduce">La fonction <em>reduce</em></a></li>
+<li><a class="reference internal" href="#le-module-itertools">Le module <em>itertools</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fonctions.html"
+                        title="previous chapter">Les fonctions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="objet.html"
+                        title="next chapter">L&#8217;approche objet</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="objet.html" title="L’approche objet"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fonctions.html" title="Les fonctions"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

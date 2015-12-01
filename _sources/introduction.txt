@@ -1,0 +1,469 @@
+############
+Introduction
+############
+
+.. slide_mark_b :Introduction
+
+Cette introduction au langage Python s'adresse à un public pratiquant déjà autre langage de programmation (Java, C/C++, perl etc.). 
+
+Tout en s'appuyant sur les points communs entre Python et les autres langages, on se propose ici de faire ressortir les spécificités de Python et d'introduire, aussi tôt que possible au cours de l'exposé, les idiomes et les bonnes pratiques permettant d'écrire des programmes lisibles et efficaces, correspondant à l'esprit de ce langage.
+
+.. slide_mark_e
+
+Connaître déjà un langage de programmation est un atout certain pour en apprendre un nouveau, au moindre coût. 
+
+Par contre, la tentation peut être grande (surtout quand on est obligé d'aller vite) d'écrire du code dans le nouveau langage en faisant confiance au réflexes acquises avec les langages déjà pratiqués. 
+
+Le bon, tout comme le mauvais coté de cette pratique est qu'en général ça marche: on peut écrire du Python opérationnel qui ressemble à du C ou du Perl mais il sera probablement inefficace, inélégant et difficile à maintenir et à partager. Car même sans être ancré dans un paradigme particulier, Python dispose de ses propres idiomes. 
+
+Ces idiomes sont souvent présentés comme des "concepts avancés", à l'intention des développeurs avertis. 
+
+Ce n'est pas cette vision de l'apprentissage de Python qui est développée ici : au contraire, on part du principe que les idiomes doivent être introduits en même temps que les concepts de base afin de faire adopter les bons réflexes avant que les mauvaises habitudes s'installent.
+
+.. admonition:: Cette introduction ne se veut pas exhaustive
+   :class: warning
+
+   Elle ne se substitue pas à la documentation de référence et sa lecture ne dispense pas de la consulter.
+
+Comme il arrive souvent dans la pratique, les notions présentées ici ne découlent pas les unes des autres au sens unique. Par exemple, il est difficile d'expliquer les types de base sans évoquer les fonctions et réciproquement. Afin de briser des tels cycles, il est souvent utile d'introduire une notion en deux temps: d'une manière succincte, voire incomplète d'abord et de manière détaillée ultérieurement.
+
+C'est pour cette raison, entre autres, que la pratique l'un autre langage facilite grandement l'utilisation efficace de ce support.
+
+
+
+**************************
+Python en quelques phrases
+**************************
+
+.. slide_mark_b :Python en quelques phrases
+
+Les langages sont souvent classifiés en fonction de leux expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :
+
+* **"bas niveau"** expressivité faible, grande dépendance par rapport à l'architecture de la machine (assembleur,...)
+* **"haut niveau"** bonne expressivité mais une certaine dépendance rapport  à la couche matérielle subsiste (la majeure partie des langages)
+* **"très haut niveau"** langages expressifs, offrant des mécanismes d'abstraction avancées et l'indépendance par rapport aux contraintes de l'architecture de la machine.
+
+.. slide_mark_e
+
+Selon cette classification, Python fait partie des langages dits de "très haut niveau" car:
+
+.. slide_mark_b :Langage de "très haut niveau"
+
+* Il est expressif, modulaire, multi-paradigme (impératif, objet, fonctionnel)
+* Encourage l'écriture d'un code de qualité, lisible et compact (indentation obligatoire, mécanismes de documentation intégrés au langage)
+* Il prend en charge les aspects "bas niveau" de la programmation, disposant d'un ramasse miettes (*garbage collector*), et de types prédéfinis de haut niveau (entiers de taille arbitraire, listes, dictionnaires, ensembles etc.)
+* Met en oeuvre des mécanismes favorisant l'abstraction : décorateurs, générateurs (détaillés dans la suite du présent document).
+
+.. slide_mark_e
+
+Python est également:
+
+.. slide_mark_b :Python est également...
+
+* Disponible sous licence open source (**Python Software Foundation License**), compatible avec la **GPL** pour les versions `>=2.0 de Python <http://opensource.org/licenses/Python-2.0>`_
+* Existe sur différents OS, supporte bien l'intégration avec d'autres langages et fait l'objet de plusieurs implémentations:
+
+  * **Cpython:** implémentation de référence (en **C**), la plus répandue
+  * **Pypy:** projet *R&D* visant une implémentation haute performance 
+  * **Jython:** implémentation exécutable sur la machine virtuelle **Java(TM)**
+  * **IronPython:** implémentation pour **.NET**
+  * **Stackless Python:** variante de **Python**, implémentant des **micro-threads**
+
+* Son typage est fort, mais dynamique (**duck typing**)
+  
+.. admonition:: Duck typing
+   :class: note
+
+           Un objet est du "bon type" dans un contexte donné s'il dispose des propriétés
+           nécessaires et non pas en fonction de son "étiquette":
+           
+           "Quand je vois un oiseau marcher comme un canard, nager comme un
+           canard et cancaner comme un canard, j'appelle cet oiseau un canard"
+           **James Whitcomb Riley** (1849-1916)
+
+                
+           
+.. slide_mark_e
+.. slide_mark_b :Python, usages
+
+* Les usages de Python sont diverses:
+
+  * Programmation système: utilisation de Python en tant que "super-shell"
+  * Calcul numérique (numpy, scipy)
+  * Développement réseau et web (twisted, django, flask, pyramid)
+
+* Son évolution est gérée par la Python Software Fundation (PSF)
+* Les normes du langage sont élaborées sous forme de **Python Enhancement Proposals**, ou **PEPs** 
+* Il existe une association francophone (AFPY) très active
+
+.. slide_mark_e
+
+***************
+L'esprit Python
+***************
+
+Tim Peters, un des pionniers du langage, a formulé un ensemble d'aphorismes qui définissent, selon certains, de manière humoristique, cet esprit. 
+
+Et, comme l'humour est parfois l'expression d'une sagesse, ces 19 aphorismes, regroupés sous le nom de "The Zen of Python", ont fait l'objet de la  **PEP 20** (PEP: document normatif, acronyme de *Python Enhancement Proposals*)
+
+*The Zen of python* est même accessible dans l'interpréteur interactif :
+
+.. slide_mark_b :Python, le Zen...
+
+::
+
+   >>> import this
+   The Zen of Python, by Tim Peters
+
+   Beautiful is better than ugly.
+   Explicit is better than implicit.
+   Simple is better than complex.
+   Complex is better than complicated.
+   Flat is better than nested.
+   Sparse is better than dense.
+   Readability counts.
+   Special cases aren't special enough to break the rules.
+   Although practicality beats purity.
+   Errors should never pass silently.
+   Unless explicitly silenced.
+   In the face of ambiguity, refuse the temptation to guess.
+   There should be one-- and preferably only one --obvious way to do it.
+   Although that way may not be obvious at first unless you're Dutch.
+   Now is better than never.
+   Although never is often better than *right* now.
+   If the implementation is hard to explain, it's a bad idea.
+   If the implementation is easy to explain, it may be a good idea.
+   Namespaces are one honking great idea -- let's do more of those!
+   >>> 
+
+.. slide_mark_e
+
+
+
+
+.. import this
+.. http://python-history.blogspot.fr/2009/01/pythons-design-philosophy.html
+
+
+*****************************
+Une courte histoire de Python
+*****************************
+
+.. slide_mark_b :Une courte histoire de Python
+
+Le développement de Python a commencé en décembre 1989 au CWI (Pays Bas) et son auteur est  *Guido van Rossum*, mais la première publication du code a lieu en février 1991 (sous le numéro de version 0.9.0).
+
+Ont suivi :
+
+* Python 1.0 - janvier 1994 
+* Python 2.0 - octobre 2000
+
+.. slide_mark_e
+
+Depuis 2008 on assiste à la coexistence de deux versions : la version 3 fait son apparition alors que la version 2 continue d'évoluer jusqu'en 2010. La 2.7 est encore présente sur le terrain malgré les progrès réels de portage des principales bibliothèques et frameworks en V3.
+
+.. slide_mark_b :Depuis 2008, deux versions...
+
+* Python 2.6 - octobre 2008
+* Python 2.7 - juillet 2010
+
+* Python 3.0 - décembre 2008
+
+  * Python 3.1 - juin 2009
+  * Python 3.2 - février 2011
+  * Python 3.3 - septembre 2012
+  * Python 3.4 - mars 2014
+  * Python 3.5 - septembre 2015    
+
+Pour prendre en compte cette situation de fait, le présent support met en perspective les deux versions.
+
+.. slide_mark_e
+
+*****************************
+Python et les autres langages
+*****************************
+
+.. slide_mark_b :Python et les autres langages
+
+Python présente des points communs avec les langages de programmation les plus populaires. On va mettre en perspective ces points communs ainsi que les différences pour deux raisons:
+
+* Tirer profit autant que possible des expériences acquises, éventuellement, dans les autres langages pour mieux appréhender le nouveau.
+* Donner un aperçu rapide des avantages/inconvénients d'utiliser Python plutôt qu'un autre langage dans des situations connues.
+ 
+.. slide_mark_e
+
+Python et Java
+==============
+
+.. slide_mark_b :Python et Java
+
+Malgré leurs syntaxes très différentes, les similarités entre les deux langages sont importantes mais avec quelques nuances.
+
+* **Compilation :** Les deux langages sont compilés vers un "bytecode", mais la compilation de Python (contrairement à celle de Java) n'est pas distincte de l'exécution. Entre autres, il n'y a pas de notion de "directive de compilation" dans Python.
+
+* **Typage :** Les deux langages sont fortement typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n'est pas un langage non typé!
+
+.. slide_mark_e
+.. slide_mark_b :Python et Java(2)
+
+* **Affectation, passage d'arguments, retour des fonctions :** Les deux langages implémentent la sémantique par *référence uniforme*, mais :
+
+  * partiellement en Java, où les types numériques disposent également d'une représentation alternative, non-objet, pour les entiers et les flottants
+  * intégralement  dans Python où tout est objet de première classe (y compris les entiers, les fonctions etc.)
+ 
+* **Gestion de la mémoire :** les deux disposent d'un garbage collector (ramassage de miettes)
+
+.. slide_mark_e
+.. slide_mark_b :Python et Java(3)
+
+* **Modèle objet :** 
+
+  * Le point commun: tout hérite d'une racine commune dans les deux langages (la classe *object*) avec les exceptions précitées pour les types numériques, pour ce qui concerne Java
+  * Python supporte l'héritage multiple, contrairement à Java.
+  * Pas de notion d'interface en Python (mais des extensions implémentant ce concept existent)
+  * Pas d'implémentation de l'encapsulation dans le modèle objet de Python, mais une simple convention de nommage (les attributs et les méthodes préfixés par "__" (deux "_") sont "privés", en quelque sorte)
+  * Python supporte aussi bien les méthodes statiques (comme Java) que les méthodes de classe dans l'esprit de *SmallTalk*
+
+* **Bibliothèque standard :** les deux langages disposent de bibliothèques standard riches
+
+.. slide_mark_e
+
+Python et C++
+=============
+
+.. slide_mark_b :Python et C++
+
+Les similarités entre Python et C++ sont moins nombreuses, mais elles méritent d'être soulignées :
+
+ * Les deux langages sont multi-paradigme
+ * Python, tout comme le C++, supporte la surcharge des opérateurs, à l'exception de celle de l'opérateur d'affectation (non supportée par Python).
+ * Les deux langages supportent l'héritage multiple.
+
+.. slide_mark_e
+
+Python et Bash
+==============
+
+.. slide_mark_b :Python et Bash
+
+* Les deux langages ont en commun la possibilité d'être utilisés en mode interactif
+* Certains aspects de la syntaxe de *Python* rappellent le *Bash* et le langages de script en général : par exemple, les instructions Python se terminent par un retour à la ligne, comme les instructions *Bash*.
+* Python, comme Bash, exécute les instructions présentes dans un script au chargement, sans faire intervenir une fonction spéciale, comme la fonction  "main" présente en  C/C++)
+
+.. slide_mark_e
+
+
+*************************************************
+Découverte de l'interpréteur, premiers programmes
+*************************************************
+
+.. slide_mark_b :Découverte de l'interpréteur...
+
+Comme dans bien d'autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique.
+
+Pour cette raison, avant d'aller plus loin, on va introduire provisoirement, de manière informelle et simplifiée, quelques notions indispensables, sachant que sur la plupart de ces notions on va revenir d'une manière plus rigoureuse dans la suite de ce document.
+
+.. slide_mark_e
+.. slide_mark_b :Variable, expression, fonction...
+
+Dans l'immédiat on parlera de **variable**, **expression** et de **fonction** avec les significations rencontrées dans la pratique de tout autre langage. Dans les chapitres suivants ces notions seront précisées pour le cas de Python.
+
+.. slide_mark_e
+.. slide_mark_b :Module, commentaire...
+
+Un **module**, désignera dans ce chapitre un fichier contenant des fonctions ayant vocation à être utilisées localement (appels dans le même fichier) ou dans un autre contexte, après chargement (ou importation) par l'interpréteur du dit module. C'est une notion qui sera également traitée plus en détail par la suite.
+
+**Le commentaire** en Python est une chaîne de caractères tenant sur une ligne et préfixée par un dièse.
+
+::
+
+   #ligne complète de commentaire
+   a = 1 #une affectation: commentaire en fin de ligne
+
+**NB:** Le commentaire multi-ligne n'existe pas en Python
+
+.. slide_mark_e
+
+
+
+
+Exécution interactive
+=====================
+
+.. slide_mark_b :Exécution interactive
+
+Afin de permettre le travail en mode interactif, l'interpréteur est prévu d'une boucle lecture-évaluation ("read-eval" loop). Sous Linux il suffit d'exécuter la commande "python" sans arguments pour accéder au mode interactif:
+::
+
+   $ python
+   Python 2.7.10 (default, Sep 24 2015, 17:50:09) 
+   [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux2
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> 
+
+.. slide_mark_e
+.. slide_mark_b :Exécution interactive(2)
+
+En mode interactif une expression est évaluée après le retour à la ligne. Si elle n'apparaît pas dans une affectation (à droite du signe "="), le résultat de l'évaluation est affiché.
+
+::
+
+   >>> 1+2
+   3
+   >>> 
+
+**NB:** En réalité, quand une expression apparaît sans affectation explicite, une affectation implicite du résultat à la variable _ se produit:
+
+::
+
+   >>> 1+2
+   3
+   >>> 
+   >>> _
+   3
+   >>> 
+
+
+.. slide_mark_e
+
+Avec **ipython** on bénéficiera de l'auto-complétion et on aura accès aux commandes système. Dans l'exemple, un premier essai avec l'incontournable "Hello world!"
+
+.. slide_mark_b :Exécution interactive, IPython
+.. slide_insertion:Avec **ipython** on bénéficiera de l'auto-complétion et on aura accès aux commandes système.
+
+::
+
+   $ ipython
+   Python 2.7.10 (default, Sep 24 2015, 17:50:09) 
+   Type "copyright", "credits" or "license" for more information.
+
+   IPython 2.4.1 -- An enhanced Interactive Python.
+   ?         -> Introduction and overview of IPython's features.
+   %quickref -> Quick reference.
+   help      -> Python's own help system.
+   object?   -> Details about 'object', use 'object??' for extra details.
+
+   In [1]: print "Hello world!"
+   Hello world!
+
+   In [2]:
+
+.. slide_mark_e
+.. slide_mark_b :Exécution interactive, Python3
+
+A l'heure actuelle (fin 2015) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut.
+
+
+::
+
+   $ python3
+   Python 3.4.2 (default, Jul  9 2015, 17:24:30) 
+   [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>>
+
+.. slide_mark_e
+
+
+Dans l'exemple on rencontre une première incompatibilité entre les versions 2 et 3 de Python ; l'instruction "print" devient une fonction dans la version 3: 
+
+.. slide_mark_b :Exécution interactive, Python3(2)
+.. slide_insertion:L'instruction "print" devient une fonction dans la version 3
+
+::
+
+   $ ipython3
+   Python 3.4.3 |Anaconda 2.3.0 (64-bit)| (default, Oct 19 2015, 21:52:17) 
+   Type "copyright", "credits" or "license" for more information.
+
+   IPython 3.2.0 -- An enhanced Interactive Python.
+   Anaconda is brought to you by Continuum Analytics.
+   Please check out: http://continuum.io/thanks and https://anaconda.org
+   ?         -> Introduction and overview of IPython's features.
+   %quickref -> Quick reference.
+   help      -> Python's own help system.
+   object?   -> Details about 'object', use 'object??' for extra details.
+
+   In [1]: print "Hello world!"
+   File "<ipython-input-1-59c9fe2caa70>", line 1
+   print "Hello world!"
+                      ^                  
+   SyntaxError: Missing parentheses in call to 'print'
+
+   In [2]: print("Hello world!")
+   Hello world!
+
+.. slide_mark_e
+
+
+
+Le rôle de l'indentation
+========================
+
+L'indentation détermine les blocs d'instructions, au même titre que les accolades en Java et C/C++. Par exemple, une tentative d'écrire une boucle sans indentation se soldera par une erreur :
+
+.. slide_mark_b :Le rôle de l'indentation
+.. slide_insertion:L'indentation détermine les blocs d'instructions :
+
+::
+
+   >>> #tentative d'écrire une boucle sans indentation:
+   ... for x in [1,2,3]:
+   ... print(x)
+   File "<stdin>", line 3
+    print(x)
+        ^
+   IndentationError: expected an indented block
+
+.. slide_mark_e
+.. slide_mark_b :Le rôle de l'indentation(2)
+
+::
+
+   >>> #...et avec indentation:
+   ... for x in [1,2,3]:
+   ...     print(x)
+   ... 
+   1
+   2
+   3
+   >>> 
+
+**NB:** pour terminer une instruction multi-ligne en mode interactif, saisir une ligne vide
+
+.. slide_mark_e
+
+Exécution à partir d'un fichier source
+======================================
+
+.. slide_mark_b :Exécution à partir d'un fichier source
+
+Le code source contenu dans un fichier est exécuté s'il est présent sur la ligne de commande invoquant l'interpréteur :
+::
+
+   $ cat hw.py 
+   print("Hello World!")
+   $ python3 hw.py 
+   Hello World!
+   $ 
+
+
+.. slide_mark_e
+.. slide_mark_b :Exécution à partir d'un fichier source[2]
+
+**Sous Linux**, ou tout autre environnement "UNIX-like", on peut rendre le fichier directement exécutable (sans avoir à le passer en argument à l'exécutable *python*):
+
+Pour cela, la première ligne du fichier doit être:
+
+::
+
+   #!/usr/bin/env python
+
+
+Le droits sur le fichiers devront être positionnés en conséquence, par exemple, pour un droit d'exécution réservé au propriétaire du fichier:
+
+::
+
+   chmod u+x sayhello.py
+
+.. slide_mark_e

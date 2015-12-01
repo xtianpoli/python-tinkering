@@ -1,0 +1,23 @@
+.. Introduction à Python documentation master file, created by
+   sphinx-quickstart on Mon Dec 30 15:57:18 2013.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Introduction à la programmation en Python
+=========================================
+
+.. toctree::
+   :maxdepth: 2
+
+   license
+   introduction
+   liens
+   leselements
+   modules
+   fonctions
+   avances
+   objet
+   libstd
+   tests
+   divers
+

@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="Quelques liens utiles" href="liens.html" />
+    <link rel="prev" title="Licence" href="license.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="liens.html" title="Quelques liens utiles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="license.html" title="Licence"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Cette introduction au langage Python s&#8217;adresse à un public pratiquant déjà autre langage de programmation (Java, C/C++, perl etc.).</p>
+<p>Tout en s&#8217;appuyant sur les points communs entre Python et les autres langages, on se propose ici de faire ressortir les spécificités de Python et d&#8217;introduire, aussi tôt que possible au cours de l&#8217;exposé, les idiomes et les bonnes pratiques permettant d&#8217;écrire des programmes lisibles et efficaces, correspondant à l&#8217;esprit de ce langage.</p>
+<p>Connaître déjà un langage de programmation est un atout certain pour en apprendre un nouveau, au moindre coût.</p>
+<p>Par contre, la tentation peut être grande (surtout quand on est obligé d&#8217;aller vite) d&#8217;écrire du code dans le nouveau langage en faisant confiance au réflexes acquises avec les langages déjà pratiqués.</p>
+<p>Le bon, tout comme le mauvais coté de cette pratique est qu&#8217;en général ça marche: on peut écrire du Python opérationnel qui ressemble à du C ou du Perl mais il sera probablement inefficace, inélégant et difficile à maintenir et à partager. Car même sans être ancré dans un paradigme particulier, Python dispose de ses propres idiomes.</p>
+<p>Ces idiomes sont souvent présentés comme des &#8220;concepts avancés&#8221;, à l&#8217;intention des développeurs avertis.</p>
+<p>Ce n&#8217;est pas cette vision de l&#8217;apprentissage de Python qui est développée ici : au contraire, on part du principe que les idiomes doivent être introduits en même temps que les concepts de base afin de faire adopter les bons réflexes avant que les mauvaises habitudes s&#8217;installent.</p>
+<div class="warning admonition">
+<p class="first admonition-title">Cette introduction ne se veut pas exhaustive</p>
+<p class="last">Elle ne se substitue pas à la documentation de référence et sa lecture ne dispense pas de la consulter.</p>
+</div>
+<p>Comme il arrive souvent dans la pratique, les notions présentées ici ne découlent pas les unes des autres au sens unique. Par exemple, il est difficile d&#8217;expliquer les types de base sans évoquer les fonctions et réciproquement. Afin de briser des tels cycles, il est souvent utile d&#8217;introduire une notion en deux temps: d&#8217;une manière succincte, voire incomplète d&#8217;abord et de manière détaillée ultérieurement.</p>
+<p>C&#8217;est pour cette raison, entre autres, que la pratique l&#8217;un autre langage facilite grandement l&#8217;utilisation efficace de ce support.</p>
+<div class="section" id="python-en-quelques-phrases">
+<h2>Python en quelques phrases<a class="headerlink" href="#python-en-quelques-phrases" title="Permalink to this headline">¶</a></h2>
+<p>Les langages sont souvent classifiés en fonction de leux expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :</p>
+<ul class="simple">
+<li><strong>&#8220;bas niveau&#8221;</strong> expressivité faible, grande dépendance par rapport à l&#8217;architecture de la machine (assembleur,...)</li>
+<li><strong>&#8220;haut niveau&#8221;</strong> bonne expressivité mais une certaine dépendance rapport  à la couche matérielle subsiste (la majeure partie des langages)</li>
+<li><strong>&#8220;très haut niveau&#8221;</strong> langages expressifs, offrant des mécanismes d&#8217;abstraction avancées et l&#8217;indépendance par rapport aux contraintes de l&#8217;architecture de la machine.</li>
+</ul>
+<p>Selon cette classification, Python fait partie des langages dits de &#8220;très haut niveau&#8221; car:</p>
+<ul class="simple">
+<li>Il est expressif, modulaire, multi-paradigme (impératif, objet, fonctionnel)</li>
+<li>Encourage l&#8217;écriture d&#8217;un code de qualité, lisible et compact (indentation obligatoire, mécanismes de documentation intégrés au langage)</li>
+<li>Il prend en charge les aspects &#8220;bas niveau&#8221; de la programmation, disposant d&#8217;un ramasse miettes (<em>garbage collector</em>), et de types prédéfinis de haut niveau (entiers de taille arbitraire, listes, dictionnaires, ensembles etc.)</li>
+<li>Met en oeuvre des mécanismes favorisant l&#8217;abstraction : décorateurs, générateurs (détaillés dans la suite du présent document).</li>
+</ul>
+<p>Python est également:</p>
+<ul class="simple">
+<li>Disponible sous licence open source (<strong>Python Software Foundation License</strong>), compatible avec la <strong>GPL</strong> pour les versions <a class="reference external" href="http://opensource.org/licenses/Python-2.0">&gt;=2.0 de Python</a></li>
+<li>Existe sur différents OS, supporte bien l&#8217;intégration avec d&#8217;autres langages et fait l&#8217;objet de plusieurs implémentations:<ul>
+<li><strong>Cpython:</strong> implémentation de référence (en <strong>C</strong>), la plus répandue</li>
+<li><strong>Pypy:</strong> projet <em>R&amp;D</em> visant une implémentation haute performance</li>
+<li><strong>Jython:</strong> implémentation exécutable sur la machine virtuelle <strong>Java(TM)</strong></li>
+<li><strong>IronPython:</strong> implémentation pour <strong>.NET</strong></li>
+<li><strong>Stackless Python:</strong> variante de <strong>Python</strong>, implémentant des <strong>micro-threads</strong></li>
+</ul>
+</li>
+<li>Son typage est fort, mais dynamique (<strong>duck typing</strong>)</li>
+</ul>
+<div class="note admonition">
+<p class="first admonition-title">Duck typing</p>
+<blockquote class="last">
+<div><p>Un objet est du &#8220;bon type&#8221; dans un contexte donné s&#8217;il dispose des propriétés
+nécessaires et non pas en fonction de son &#8220;étiquette&#8221;:</p>
+<p>&#8220;Quand je vois un oiseau marcher comme un canard, nager comme un
+canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
+<strong>James Whitcomb Riley</strong> (1849-1916)</p>
+</div></blockquote>
+</div>
+<ul class="simple">
+<li>Les usages de Python sont diverses:<ul>
+<li>Programmation système: utilisation de Python en tant que &#8220;super-shell&#8221;</li>
+<li>Calcul numérique (numpy, scipy)</li>
+<li>Développement réseau et web (twisted, django, flask, pyramid)</li>
+</ul>
+</li>
+<li>Son évolution est gérée par la Python Software Fundation (PSF)</li>
+<li>Les normes du langage sont élaborées sous forme de <strong>Python Enhancement Proposals</strong>, ou <strong>PEPs</strong></li>
+<li>Il existe une association francophone (AFPY) très active</li>
+</ul>
+</div>
+<div class="section" id="l-esprit-python">
+<h2>L&#8217;esprit Python<a class="headerlink" href="#l-esprit-python" title="Permalink to this headline">¶</a></h2>
+<p>Tim Peters, un des pionniers du langage, a formulé un ensemble d&#8217;aphorismes qui définissent, selon certains, de manière humoristique, cet esprit.</p>
+<p>Et, comme l&#8217;humour est parfois l&#8217;expression d&#8217;une sagesse, ces 19 aphorismes, regroupés sous le nom de &#8220;The Zen of Python&#8221;, ont fait l&#8217;objet de la  <strong>PEP 20</strong> (PEP: document normatif, acronyme de <em>Python Enhancement Proposals</em>)</p>
+<p><em>The Zen of python</em> est même accessible dans l&#8217;interpréteur interactif :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">this</span>
+<span class="go">The Zen of Python, by Tim Peters</span>
+
+<span class="go">Beautiful is better than ugly.</span>
+<span class="go">Explicit is better than implicit.</span>
+<span class="go">Simple is better than complex.</span>
+<span class="go">Complex is better than complicated.</span>
+<span class="go">Flat is better than nested.</span>
+<span class="go">Sparse is better than dense.</span>
+<span class="go">Readability counts.</span>
+<span class="go">Special cases aren&#39;t special enough to break the rules.</span>
+<span class="go">Although practicality beats purity.</span>
+<span class="go">Errors should never pass silently.</span>
+<span class="go">Unless explicitly silenced.</span>
+<span class="go">In the face of ambiguity, refuse the temptation to guess.</span>
+<span class="go">There should be one-- and preferably only one --obvious way to do it.</span>
+<span class="go">Although that way may not be obvious at first unless you&#39;re Dutch.</span>
+<span class="go">Now is better than never.</span>
+<span class="go">Although never is often better than *right* now.</span>
+<span class="go">If the implementation is hard to explain, it&#39;s a bad idea.</span>
+<span class="go">If the implementation is easy to explain, it may be a good idea.</span>
+<span class="go">Namespaces are one honking great idea -- let&#39;s do more of those!</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="une-courte-histoire-de-python">
+<h2>Une courte histoire de Python<a class="headerlink" href="#une-courte-histoire-de-python" title="Permalink to this headline">¶</a></h2>
+<p>Le développement de Python a commencé en décembre 1989 au CWI (Pays Bas) et son auteur est  <em>Guido van Rossum</em>, mais la première publication du code a lieu en février 1991 (sous le numéro de version 0.9.0).</p>
+<p>Ont suivi :</p>
+<ul class="simple">
+<li>Python 1.0 - janvier 1994</li>
+<li>Python 2.0 - octobre 2000</li>
+</ul>
+<p>Depuis 2008 on assiste à la coexistence de deux versions : la version 3 fait son apparition alors que la version 2 continue d&#8217;évoluer jusqu&#8217;en 2010. La 2.7 est encore présente sur le terrain malgré les progrès réels de portage des principales bibliothèques et frameworks en V3.</p>
+<ul class="simple">
+<li>Python 2.6 - octobre 2008</li>
+<li>Python 2.7 - juillet 2010</li>
+<li>Python 3.0 - décembre 2008<ul>
+<li>Python 3.1 - juin 2009</li>
+<li>Python 3.2 - février 2011</li>
+<li>Python 3.3 - septembre 2012</li>
+<li>Python 3.4 - mars 2014</li>
+<li>Python 3.5 - septembre 2015</li>
+</ul>
+</li>
+</ul>
+<p>Pour prendre en compte cette situation de fait, le présent support met en perspective les deux versions.</p>
+</div>
+<div class="section" id="python-et-les-autres-langages">
+<h2>Python et les autres langages<a class="headerlink" href="#python-et-les-autres-langages" title="Permalink to this headline">¶</a></h2>
+<p>Python présente des points communs avec les langages de programmation les plus populaires. On va mettre en perspective ces points communs ainsi que les différences pour deux raisons:</p>
+<ul class="simple">
+<li>Tirer profit autant que possible des expériences acquises, éventuellement, dans les autres langages pour mieux appréhender le nouveau.</li>
+<li>Donner un aperçu rapide des avantages/inconvénients d&#8217;utiliser Python plutôt qu&#8217;un autre langage dans des situations connues.</li>
+</ul>
+<div class="section" id="python-et-java">
+<h3>Python et Java<a class="headerlink" href="#python-et-java" title="Permalink to this headline">¶</a></h3>
+<p>Malgré leurs syntaxes très différentes, les similarités entre les deux langages sont importantes mais avec quelques nuances.</p>
+<ul class="simple">
+<li><strong>Compilation :</strong> Les deux langages sont compilés vers un &#8220;bytecode&#8221;, mais la compilation de Python (contrairement à celle de Java) n&#8217;est pas distincte de l&#8217;exécution. Entre autres, il n&#8217;y a pas de notion de &#8220;directive de compilation&#8221; dans Python.</li>
+<li><strong>Typage :</strong> Les deux langages sont fortement typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n&#8217;est pas un langage non typé!</li>
+</ul>
+<ul class="simple">
+<li><strong>Affectation, passage d&#8217;arguments, retour des fonctions :</strong> Les deux langages implémentent la sémantique par <em>référence uniforme</em>, mais :<ul>
+<li>partiellement en Java, où les types numériques disposent également d&#8217;une représentation alternative, non-objet, pour les entiers et les flottants</li>
+<li>intégralement  dans Python où tout est objet de première classe (y compris les entiers, les fonctions etc.)</li>
+</ul>
+</li>
+<li><strong>Gestion de la mémoire :</strong> les deux disposent d&#8217;un garbage collector (ramassage de miettes)</li>
+</ul>
+<ul class="simple">
+<li><strong>Modèle objet :</strong><ul>
+<li>Le point commun: tout hérite d&#8217;une racine commune dans les deux langages (la classe <em>object</em>) avec les exceptions précitées pour les types numériques, pour ce qui concerne Java</li>
+<li>Python supporte l&#8217;héritage multiple, contrairement à Java.</li>
+<li>Pas de notion d&#8217;interface en Python (mais des extensions implémentant ce concept existent)</li>
+<li>Pas d&#8217;implémentation de l&#8217;encapsulation dans le modèle objet de Python, mais une simple convention de nommage (les attributs et les méthodes préfixés par &#8220;__&#8221; (deux &#8220;_&#8221;) sont &#8220;privés&#8221;, en quelque sorte)</li>
+<li>Python supporte aussi bien les méthodes statiques (comme Java) que les méthodes de classe dans l&#8217;esprit de <em>SmallTalk</em></li>
+</ul>
+</li>
+<li><strong>Bibliothèque standard :</strong> les deux langages disposent de bibliothèques standard riches</li>
+</ul>
+</div>
+<div class="section" id="python-et-c">
+<h3>Python et C++<a class="headerlink" href="#python-et-c" title="Permalink to this headline">¶</a></h3>
+<p>Les similarités entre Python et C++ sont moins nombreuses, mais elles méritent d&#8217;être soulignées :</p>
+<blockquote>
+<div><ul class="simple">
+<li>Les deux langages sont multi-paradigme</li>
+<li>Python, tout comme le C++, supporte la surcharge des opérateurs, à l&#8217;exception de celle de l&#8217;opérateur d&#8217;affectation (non supportée par Python).</li>
+<li>Les deux langages supportent l&#8217;héritage multiple.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="python-et-bash">
+<h3>Python et Bash<a class="headerlink" href="#python-et-bash" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Les deux langages ont en commun la possibilité d&#8217;être utilisés en mode interactif</li>
+<li>Certains aspects de la syntaxe de <em>Python</em> rappellent le <em>Bash</em> et le langages de script en général : par exemple, les instructions Python se terminent par un retour à la ligne, comme les instructions <em>Bash</em>.</li>
+<li>Python, comme Bash, exécute les instructions présentes dans un script au chargement, sans faire intervenir une fonction spéciale, comme la fonction  &#8220;main&#8221; présente en  C/C++)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="decouverte-de-l-interpreteur-premiers-programmes">
+<h2>Découverte de l&#8217;interpréteur, premiers programmes<a class="headerlink" href="#decouverte-de-l-interpreteur-premiers-programmes" title="Permalink to this headline">¶</a></h2>
+<p>Comme dans bien d&#8217;autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique.</p>
+<p>Pour cette raison, avant d&#8217;aller plus loin, on va introduire provisoirement, de manière informelle et simplifiée, quelques notions indispensables, sachant que sur la plupart de ces notions on va revenir d&#8217;une manière plus rigoureuse dans la suite de ce document.</p>
+<p>Dans l&#8217;immédiat on parlera de <strong>variable</strong>, <strong>expression</strong> et de <strong>fonction</strong> avec les significations rencontrées dans la pratique de tout autre langage. Dans les chapitres suivants ces notions seront précisées pour le cas de Python.</p>
+<p>Un <strong>module</strong>, désignera dans ce chapitre un fichier contenant des fonctions ayant vocation à être utilisées localement (appels dans le même fichier) ou dans un autre contexte, après chargement (ou importation) par l&#8217;interpréteur du dit module. C&#8217;est une notion qui sera également traitée plus en détail par la suite.</p>
+<p><strong>Le commentaire</strong> en Python est une chaîne de caractères tenant sur une ligne et préfixée par un dièse.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#ligne complète de commentaire</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c">#une affectation: commentaire en fin de ligne</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> Le commentaire multi-ligne n&#8217;existe pas en Python</p>
+<div class="section" id="execution-interactive">
+<h3>Exécution interactive<a class="headerlink" href="#execution-interactive" title="Permalink to this headline">¶</a></h3>
+<p>Afin de permettre le travail en mode interactif, l&#8217;interpréteur est prévu d&#8217;une boucle lecture-évaluation (&#8220;read-eval&#8221; loop). Sous Linux il suffit d&#8217;exécuter la commande &#8220;python&#8221; sans arguments pour accéder au mode interactif:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python
+Python 2.7.10 (default, Sep 24 2015, 17:50:09)
+[GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>En mode interactif une expression est évaluée après le retour à la ligne. Si elle n&#8217;apparaît pas dans une affectation (à droite du signe &#8220;=&#8221;), le résultat de l&#8217;évaluation est affiché.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span>
+<span class="go">3</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> En réalité, quand une expression apparaît sans affectation explicite, une affectation implicite du résultat à la variable _ se produit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span>
+<span class="go">3</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span>
+<span class="go">3</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Avec <strong>ipython</strong> on bénéficiera de l&#8217;auto-complétion et on aura accès aux commandes système. Dans l&#8217;exemple, un premier essai avec l&#8217;incontournable &#8220;Hello world!&#8221;</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ipython
+Python 2.7.10 (default, Sep 24 2015, 17:50:09)
+Type &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+
+IPython 2.4.1 -- An enhanced Interactive Python.
+?         -&gt; Introduction and overview of IPython&#39;s features.
+%quickref -&gt; Quick reference.
+help      -&gt; Python&#39;s own help system.
+object?   -&gt; Details about &#39;object&#39;, use &#39;object??&#39; for extra details.
+
+In [1]: print &quot;Hello world!&quot;
+Hello world!
+
+In [2]:
+</pre></div>
+</div>
+<p>A l&#8217;heure actuelle (fin 2015) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python3
+Python 3.4.2 (default, Jul  9 2015, 17:24:30)
+[GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Dans l&#8217;exemple on rencontre une première incompatibilité entre les versions 2 et 3 de Python ; l&#8217;instruction &#8220;print&#8221; devient une fonction dans la version 3:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ipython3
+Python 3.4.3 |Anaconda 2.3.0 (64-bit)| (default, Oct 19 2015, 21:52:17)
+Type &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+
+IPython 3.2.0 -- An enhanced Interactive Python.
+Anaconda is brought to you by Continuum Analytics.
+Please check out: http://continuum.io/thanks and https://anaconda.org
+?         -&gt; Introduction and overview of IPython&#39;s features.
+%quickref -&gt; Quick reference.
+help      -&gt; Python&#39;s own help system.
+object?   -&gt; Details about &#39;object&#39;, use &#39;object??&#39; for extra details.
+
+In [1]: print &quot;Hello world!&quot;
+File &quot;&lt;ipython-input-1-59c9fe2caa70&gt;&quot;, line 1
+print &quot;Hello world!&quot;
+                   ^
+SyntaxError: Missing parentheses in call to &#39;print&#39;
+
+In [2]: print(&quot;Hello world!&quot;)
+Hello world!
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-role-de-l-indentation">
+<h3>Le rôle de l&#8217;indentation<a class="headerlink" href="#le-role-de-l-indentation" title="Permalink to this headline">¶</a></h3>
+<p>L&#8217;indentation détermine les blocs d&#8217;instructions, au même titre que les accolades en Java et C/C++. Par exemple, une tentative d&#8217;écrire une boucle sans indentation se soldera par une erreur :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c">#tentative d&#39;écrire une boucle sans indentation:</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+<span class="gp">... </span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="go">File &quot;&lt;stdin&gt;&quot;, line 3</span>
+<span class="go"> print(x)</span>
+<span class="go">     ^</span>
+<span class="go">IndentationError: expected an indented block</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c">#...et avec indentation:</span>
+<span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> pour terminer une instruction multi-ligne en mode interactif, saisir une ligne vide</p>
+</div>
+<div class="section" id="execution-a-partir-d-un-fichier-source">
+<h3>Exécution à partir d&#8217;un fichier source<a class="headerlink" href="#execution-a-partir-d-un-fichier-source" title="Permalink to this headline">¶</a></h3>
+<p>Le code source contenu dans un fichier est exécuté s&#8217;il est présent sur la ligne de commande invoquant l&#8217;interpréteur :</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat hw.py
+print(&quot;Hello World!&quot;)
+$ python3 hw.py
+Hello World!
+$
+</pre></div>
+</div>
+<p><strong>Sous Linux</strong>, ou tout autre environnement &#8220;UNIX-like&#8221;, on peut rendre le fichier directement exécutable (sans avoir à le passer en argument à l&#8217;exécutable <em>python</em>):</p>
+<p>Pour cela, la première ligne du fichier doit être:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+</pre></div>
+</div>
+<p>Le droits sur le fichiers devront être positionnés en conséquence, par exemple, pour un droit d&#8217;exécution réservé au propriétaire du fichier:</p>
+<div class="highlight-python"><div class="highlight"><pre>chmod u+x sayhello.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#python-en-quelques-phrases">Python en quelques phrases</a></li>
+<li><a class="reference internal" href="#l-esprit-python">L&#8217;esprit Python</a></li>
+<li><a class="reference internal" href="#une-courte-histoire-de-python">Une courte histoire de Python</a></li>
+<li><a class="reference internal" href="#python-et-les-autres-langages">Python et les autres langages</a><ul>
+<li><a class="reference internal" href="#python-et-java">Python et Java</a></li>
+<li><a class="reference internal" href="#python-et-c">Python et C++</a></li>
+<li><a class="reference internal" href="#python-et-bash">Python et Bash</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#decouverte-de-l-interpreteur-premiers-programmes">Découverte de l&#8217;interpréteur, premiers programmes</a><ul>
+<li><a class="reference internal" href="#execution-interactive">Exécution interactive</a></li>
+<li><a class="reference internal" href="#le-role-de-l-indentation">Le rôle de l&#8217;indentation</a></li>
+<li><a class="reference internal" href="#execution-a-partir-d-un-fichier-source">Exécution à partir d&#8217;un fichier source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="license.html"
+                        title="previous chapter">Licence</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="liens.html"
+                        title="next chapter">Quelques liens utiles</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="liens.html" title="Quelques liens utiles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="license.html" title="Licence"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

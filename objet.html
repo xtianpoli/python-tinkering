@@ -1,0 +1,1162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>L’approche objet &mdash; Introduction à la programmation en Python</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
+    <link rel="next" title="La bibliothèque standard en bref" href="libstd.html" />
+    <link rel="prev" title="Concepts avancés" href="avances.html" /> 
+  </head>
+  <body>
+   <!--  add javascript -->
+    
+   <script type="text/javascript">
+     (function(){
+
+     })();
+   </script>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="libstd.html" title="La bibliothèque standard en bref"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="avances.html" title="Concepts avancés"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="l-approche-objet">
+<h1>L&#8217;approche objet<a class="headerlink" href="#l-approche-objet" title="Permalink to this headline">¶</a></h1>
+<p>En langage commun on entend par <em>classe</em> une catégorie qui permet de désigner un ensemble d&#8217;objets ayant des propriétés en commun.</p>
+<p>Dans les langages orientés objets (LOO) la notion de <strong>classe</strong> désigne l&#8217;implémentation d&#8217;un <strong>type</strong>.</p>
+<p><strong>Question légitime:</strong> Pourquoi &#8220;implémenter&#8221; des types alors que les types existent, sans les classes, dans d&#8217;autres familles de langages de programmation?</p>
+<p><strong>Réponse:</strong></p>
+<ul class="simple">
+<li>l&#8217;approche procédurale classigue désigne par <strong>type</strong> une structure de données (seulement) et opère ainsi une
+séparation conceptuelle données - traitements</li>
+<li>le paradigme objet remet en cause cette séparation et étend la notion de <strong>type</strong> qui devient un ensemble cohérent
+de données et de traitements</li>
+</ul>
+<p>La classe implémente le type (qui est juste une spécification, une &#8220;interface&#8221;) et elle permet de créer, par instanciation,
+des objets qui ont:</p>
+<blockquote>
+<div><ul class="simple">
+<li>une structure de données commune</li>
+<li>des comportements en commun</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dans la pratique, les deux termes (classe et type) sont utilisés souvent comme de synonymes.</p>
+</div>
+<p>Dans la terminologie des <em>LOO</em> on va parler d&#8217;<em>attributs</em> pour désigner les champs de la structure de données d&#8217;un objet et de <em>méthodes</em> pour désigner les comportements associés à l&#8217;objet (qui sont des fonctions avec quelques spécificités).
+Les comportements propres aux objets (l&#8217;exécution des <em>méthodes</em>) sont déclenchés par le mécanisme dit d&#8216;&#8220;envoi de message&#8221; déjà utilisé dans les chapitres précédents pour les types prédéfinis, par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;abc&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">&#39;ABC&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">=</span><span class="s">&quot;abc&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">&#39;ABC&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>L&#8217;approche objet revendique l&#8217;aptitude de favoriser la réutilisation du code grâce au mécanisme d&#8217;héritage combiné avec le polymorphisme.</p>
+<p>Généralement on considère que les trois piliers de l&#8217;approche objet sont:</p>
+<ul class="simple">
+<li>l&#8217;héritage</li>
+<li>le polymorphisme</li>
+<li>l&#8217;encapsulation</li>
+</ul>
+<p>Dans la suite de ce chapitre on va voir dans quelle mesure ces concepts sont représentés dans Python et de quelle manière.</p>
+<div class="section" id="classes-et-instances">
+<h2>Classes et instances<a class="headerlink" href="#classes-et-instances" title="Permalink to this headline">¶</a></h2>
+<p>Une classe représente un <strong>type</strong> dans le sens décrit précédemment mais aussi une &#8220;fabrique&#8221; d&#8217;objets appartenant à ce type pour lesquels la classe elle-même constitue le <em>modèle</em>.</p>
+<p>Le processus de création d&#8217;un objet à partir d&#8217;une classe s&#8217;appelle <em>instanciation</em> et l&#8217;objet résultant de ce processus s&#8217;appelle <em>instance</em> de ladite classe.</p>
+<p>Chaque instance d&#8217;une classe est un objet ayant une identité propre mais possédant les attributs et les méthodes de sa classe.</p>
+<p>Concrètement, en Python, une classe est un regroupement de variables et de fonctions dans un espace de nommage qui lui est propre.</p>
+<p>Elle est créée par l&#8217;instruction <strong>class</strong> qui est (tout comme <em>def</em>) une instruction d&#8217;affectation particulière.</p>
+<p>Tout comme l&#8217;instruction <em>def</em>, <strong>class</strong> contient un bloc d&#8217;instructions, mais contrairement à <em>def</em>, les instructions membres du bloc sont immédiatement exécutées, dans la foulée.</p>
+<p>Normalement, les instructions du bloc sont des affectations de variables et des définitions de fonctions (méthodes) par <em>def</em> (qui est, on le rappelle, une forme d&#8217;affectation également). Tous les noms ainsi créés feront partie de l&#8217;espace de nommage portant le nom de la classe et désigneront ses attributs et ses méthodes.</p>
+<p>En faisant, pour l&#8217;instant, abstraction de la notion d&#8217;héritage, la classe la plus simple (sans attributs, sans méthodes) s&#8217;écrit:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Simple</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">pass</span> <span class="c">#instruction qui ne fait rien</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">Simple</span><span class="p">)</span>
+<span class="go">29608288</span>
+</pre></div>
+</div>
+<p>Pour instancier une classe, on fait appel à son <em>constructeur</em> qui est une fonction du même nom que la classe:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Simple</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">29913552</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s2</span> <span class="o">=</span> <span class="n">Simple</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">id</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="go">29913616</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Les objets <em>s</em> et <em>s2</em> sont des <em>instances</em> de la classe <em>Simple</em>. Ils ont des identités propres.</p>
+</div>
+<div class="section" id="les-attributs">
+<h2>Les attributs<a class="headerlink" href="#les-attributs" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mf">100.0</span>
+</pre></div>
+</div>
+<p>Contrairement à <em>C++</em> et <em>Java</em>, la séparation <em>attribut de classe</em>/<em>attribut d&#8217;instance</em> n&#8217;est pas &#8220;étanche&#8221;. Ainsi, l&#8217;attribut, défini par une affectation dans le corps de la classe, est accessible aussi bien sur la classe elle même que sur ses instances:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">x</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">y</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="go">100.0</span>
+</pre></div>
+</div>
+<p>Le mécanisme de résolution pour les variables, présenté au chapitre sur les fonctions, s&#8217;applique également entre la classe et ses instances. Tout comme dans les fonctions imbriquées, le contexte de la classe se comporte comme étant nonlocal par rapport au contexte de ses instances.</p>
+<p>La résolution (en référencement ) de <em>p.x</em> se fait dans l&#8217;ordre suivant:</p>
+<ol class="arabic simple">
+<li>dans le contexte de <strong>p</strong></li>
+<li>dans le contexte de la classe de <strong>p</strong>, (en cas d&#8217;échec à l&#8217;étape précédente)</li>
+<li>en cas de nouvel échec le processus continuera en utilisant les mécanismes d&#8217;héritage décrits plus loin.</li>
+</ol>
+<p>Ainsi, une nouvelle affectation de <em>x</em> au niveau de l&#8217;instance n&#8217;affectera pas la valeur de <em>x</em> au niveau de la classe:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">33.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="go">33.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">x</span> <span class="c"># valeur inchangée:</span>
+<span class="go">100.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>L&#8217;affectation de <em>x</em> se fera dans le contexte local (celui de l&#8217;instance) et va &#8220;cacher&#8221; la définition non-locale, existante au niveau de la classe.</p>
+<p>Réciproquement, après une affectation de <em>x</em> au niveau de l&#8217;instance, un changement de valeur (nouvelle affectation) de <em>x</em> au niveau de la classe sera sans effets sur l&#8217;instance ayant déjà affecté <em>x</em> localement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">150.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="go">33.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Évidemment, les choses sont différentes pour l&#8217;attribut <strong>y</strong> que l&#8217;instance n&#8217;a pas modifié localement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">y</span>  <span class="o">=</span> <span class="mf">150.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="go">150.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="first admonition-title">Mise en garde</p>
+<p class="last">Les objets Python acceptent de nouveaux attributs de manière &#8220;ad-hoc&#8221;, ce
+qui peut faire passer sous silence une erreur de nom d&#8217;attribut.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">y</span><span class="o">=</span><span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">z</span><span class="o">=</span><span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">x</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">y</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">z</span>
+<span class="go">6</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="les-methodes">
+<h2>Les méthodes<a class="headerlink" href="#les-methodes" title="Permalink to this headline">¶</a></h2>
+<p>Appelées aussi <em>fonctions membres</em>, elles sont des fonctions définies dans l&#8217;espace de nom de la classe, mais qui ont vocation à être utilisées au niveau des instances, par le biais du mécanisme d&#8217;envoi de messages.</p>
+<p>Afin que chaque méthode puisse accéder au contexte de l&#8217;instance concernée par l&#8217;appel (contexte qui ne lui est pas accessible par le mécanisme de résolution) l&#8217;interpréteur &#8220;injecte&#8221; à l&#8217;appel la référence de l&#8217;instance ayant reçu me message (syntaxiquement, l&#8217;entité se trouvant du coté gauche du point précédant le message) à chaque invocation de la fonction. Afin de recevoir cette instance, la signature de chaque méthode doit contenir en première position une variable. Par convention, cette variable doit s&#8217;appeler <strong>toujours</strong> <em>self</em>.</p>
+<p>La variable &#8220;self&#8221; est l&#8217;équivalente de la variable &#8220;this&#8221;, présente en <em>C++</em> et <em>Java</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">=</span><span class="n">Point</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="go">105.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="go">106.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">x</span>
+<span class="go">100.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">y</span>
+<span class="go">100.0</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="la-methode-init">
+<h2>La méthode __init__()<a class="headerlink" href="#la-methode-init" title="Permalink to this headline">¶</a></h2>
+<p>C&#8217;est une méthode spéciale ou &#8220;magique&#8221; ce qui signifie qu&#8217;elle n&#8217;a pas vocation à être appelée directement par le programme, mais indirectement, par des mécanismes du langage. Néanmoins la méthode <em>__init__()</em> représente une petite entorse à cette règle : elle peut être appelée par programme mais seulement dans la définition d&#8217;une autre méthode <em>__init__()</em>.</p>
+<p>La méthode <em>__init__()</em>, si elle existe, est appelée à chaque instanciation, suite à l&#8217;invocation du constructeur de la classe (fonction du même nom que la classe). Elle peut avoir des paramètres (autres que <em>self</em>) et dans ce cas le constructeur pourra (et devra) être invoqué avec des arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">dy</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">y</span>
+<span class="go">8</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Afin d&#8217;éviter les interférences non souhaitées entre les attributs de classe et ceux d&#8217;instance, il est recommandé d&#8217;utiliser la méthode __init__ pour initialiser <strong>tous</strong> les attributs &#8220;d&#8217;instance&#8221; (qui définissent l&#8217;état de chaque instance comme, par exemple, les attributs <em>x</em> et <em>y</em> de la classe <em>Point</em>) et de dédier les attributs définis au niveau de la classe aux informations non locales, concernant l&#8217;ensemble des instances de la classe (par exemple, un compteur d&#8217;instances de <em>Point</em> créées):</p>
+</div>
+</div>
+<div class="section" id="la-documentation-des-classes">
+<h2>La documentation des classes<a class="headerlink" href="#la-documentation-des-classes" title="Permalink to this headline">¶</a></h2>
+<p>Les classes disposent, tout comme les méthodes, d&#8217;une &#8220;docstring&#8221; accessible par programme:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Simple</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot;Une classe</span>
+<span class="gp">... </span><span class="sd">    très simple&quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Simple</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">&#39;Une classe\n\ttrès simple&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="l-heritage">
+<h2>L&#8217;héritage<a class="headerlink" href="#l-heritage" title="Permalink to this headline">¶</a></h2>
+<p>C&#8217;est un mécanisme permettant à une classe de s&#8217;attribuer les définitions des attributs et les méthodes provenant d&#8217;une ou plusieurs autres classes. L&#8217;attribution des dites définitions se fait sans recopie, par le lien particulier, appelé &#8220;lien d&#8217;héritage&#8221;.</p>
+<p>La classe héritière (ou fille) dispose des définitions héritées comme s&#8217;ils elles étaient définies localement. En fonction du nombre de classes héritées (appelées <em>classes parentes</em> ou <em>super-classes</em>) on va parler d&#8217;héritage simple ou multiple.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Placemark</span><span class="p">(</span><span class="n">Point</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">desc</span><span class="p">,</span> <span class="n">icon</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Placemark</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">desc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">icon</span>
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        description of the placemark</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;Position ({0.x}, {0.y}):{0.icon} {0.description}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Dans cette exemple, la classe <em>Placemark</em> (destinée à définir des points d&#8217;intérêt sur une carte ou un plan) hérite de <em>Point</em> pour les coordonnées. C&#8217;est une spécialisation de la classe <em>Point</em>, ou une &#8220;classe fille&#8221;. A ce titre:</p>
+<ul class="simple">
+<li>elle bénéficie de la méthode <em>move()</em> sans avoir à la définir.</li>
+<li>utilise la méthode __init__() de <em>Point</em> dans sa propre implémentation, en évitant toute redondance.</li>
+<li>enfin, elle est une spécialisation de <em>Point</em>, car elle implémente une nouvelle méthode, <em>show()</em>, qui lui est propre.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Placemark</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">&quot;phone&quot;</span><span class="p">,</span> <span class="s">&quot;@&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="go">&#39;Position (3, 4):@ phone&#39;</span>
+<span class="go">p.move(6,7)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="go">&#39;Position (9.0, 11.0):@ phone&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">La primitive <em>super(Class,self)</em> permet d&#8217;appeler une méthode (le plus souvent une homonyme) héritée, en excluant <em>Class</em> et sa descendance du processus de résolution (sinon, dans l&#8217;exemple précédent, en utilisant <em>self</em> directement, on aurait une récursion infinie). Typiquement, <em>Class</em> désigne la classe courante (la classe de définition de la méthode appelante, comme dans l&#8217;exemple précédent). La primitive <tt class="docutils literal"><span class="pre">super()</span></tt> fait partie du modèle objet &#8220;new style&#8221;, détaillé au chapitre suivant.</p>
+</div>
+</div>
+<div class="section" id="old-style-new-style-classes">
+<h2>Old style / New style classes<a class="headerlink" href="#old-style-new-style-classes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Avant la version 2.2 de Python, le modèle objet du langage était dissocié de ses types de base.</li>
+<li>A partir de la 2.2, on a introduit les &#8220;new style classes&#8221; dans le but d&#8217;unifier à terme les types prédéfinis et les types utilisateur. Pour écrire des classes &#8220;new style&#8221; il suffit de les faire hériter (directement ou indirectement) de la classe prédéfinie <strong>object</strong> qui est aussi la racine de tous les types prédéfinis. Le modèle &#8220;old style&#8221; est supporté dans toutes les versions 2.x pour des raisons de compatibilité.</li>
+<li>A partir de la 3.0 le modèle &#8220;old style&#8221; est abandonné: toute classe sans super-classe explicite hérite d&#8217;office de la classe <em>object</em>:</li>
+</ul>
+<p>Illustration :</p>
+<ul>
+<li><p class="first">Python 2.7.x:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Simple</span><span class="p">:</span> <span class="c"># Old Style</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Simple</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;type &#39;instance&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">__class__</span>
+<span class="go">&lt;class __main__.Simple at 0x7f449397c0b8&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;__doc__&#39;, &#39;__module__&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Simple</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="c"># New style</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Simple</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;class &#39;__main__.Simple&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">__class__</span>
+<span class="go">&lt;class &#39;__main__.Simple&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;, &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__module__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Python 3.x:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Simple</span><span class="p">:</span> <span class="c"># New style</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">Simple</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">&lt;class &#39;__main__.Simple&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__dict__&#39;, &#39;__doc__&#39;, &#39;__eq__&#39;, &#39;__format__&#39;, &#39;__ge__&#39;, &#39;__getattribute__&#39;, &#39;__gt__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__le__&#39;, &#39;__lt__&#39;, &#39;__module__&#39;, &#39;__ne__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;__weakref__&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dans l&#8217;exemple précédent, on a déjà utilisé des classes &#8220;new style&#8221; en faisant hériter <em>Point</em> de <em>object</em> car, sinon, l&#8217;utilisation de la primitive <em>super()</em> n&#8217;aurait pas été possible.</p>
+</div>
+</div>
+<div class="section" id="l-heritage-multiple">
+<h2>L&#8217;héritage multiple<a class="headerlink" href="#l-heritage-multiple" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;héritage multiple existe dans les deux modèles (&#8220;old style&#8221; et &#8220;new style&#8221;) mais les méthodes de résolution diffèrent:</p>
+<ul class="simple">
+<li>recherche en profondeur d&#8217;abord pour les classes &#8220;old style&#8221;</li>
+<li>résolution selon l&#8217;algorithme le <a class="reference external" href="https://www.python.org/download/releases/2.3/mro/">linéarisation C3</a> (à partir de la version 2.3)</li>
+</ul>
+<p>Le modèle &#8220;new style&#8221; permet de connaître l&#8217;ordre de résolution de l&#8217;interpréteur en appelant la méthode <tt class="docutils literal"><span class="pre">mro()</span></tt> (method resolution order).</p>
+<p>Exemple pour le diagramme dit &#8220;en diamant&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre>           +---+
+           | A |
+	   +---+
+            /\
+           /  \
+       +---+  +---+
+       | B |  | C |
+       +---+  +---+
+           \  /
+            \/ 
+           +---+
+           | D |
+           +---+
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="n">A</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span>
+<span class="go">[&lt;class &#39;__main__.D&#39;&gt;, &lt;class &#39;__main__.B&#39;&gt;, &lt;class &#39;__main__.C&#39;&gt;, &lt;class &#39;__main__.A&#39;&gt;, &lt;type &#39;object&#39;&gt;]</span>
+</pre></div>
+</div>
+<p><strong>Remarques:</strong></p>
+<ul class="simple">
+<li>En <strong>Python 3.x</strong> la primitive <tt class="docutils literal"><span class="pre">super()</span></tt> peut être appelée sans arguments, avec un comportement par défaut identique à celui décrit précédemment.</li>
+<li>L&#8217;utilisation de la primitive <tt class="docutils literal"><span class="pre">super()</span></tt> dans la méthode <tt class="docutils literal"><span class="pre">__init__()</span></tt> en cas d&#8217;héritage multiple est problématique. Pour plus de détails voir <a class="reference external" href="http://www.artima.com/weblogs/viewpost.jsp?thread=281127">http://www.artima.com/weblogs/viewpost.jsp?thread=281127</a></li>
+</ul>
+</div>
+<div class="section" id="polymorphisme">
+<h2>Polymorphisme<a class="headerlink" href="#polymorphisme" title="Permalink to this headline">¶</a></h2>
+<p>On parle de <em>polymorphisme</em> lorsque deux ou plusieurs méthodes, ayant des signatures identiques, sont définies sur des classes différentes. Dans la pratique, le polymorphisme est intéressant quand les dites classes sont reliées par des liens d&#8217;héritage.</p>
+<p>En effet, le polymorphisme complète l&#8217;héritage au sens que :</p>
+<ul class="simple">
+<li>l&#8217;héritage permet à la classe de s&#8217;approprier l&#8217;ensemble des méthodes définies par ses super-classes.</li>
+<li>grâce au polymorphisme on peut redéfinir, ponctuellement, certaines méthodes héritées dans un but de <em>spécialisation</em>.</li>
+</ul>
+<p>Pour mettre en perspective le polymorphisme de plusieurs <em>LOO</em> il est utile de souligner que:</p>
+<ul class="simple">
+<li>En C++, le mécanisme s&#8217;appelle aussi &#8220;liaison dynamique&#8221; et s&#8217;applique uniquement aux méthodes déclarées <strong>virtual</strong> ou <strong>pure virtual</strong>.</li>
+<li>En Java, toute méthode peut être spécialisée dans une sous-classe de sa classe d&#8217;origine, sauf si la dite méthode est déclarée <strong>final</strong>.</li>
+<li>En Python, les mécanismes de spécialisation s&#8217;appliquent toujours, sans exception.</li>
+</ul>
+<p>Pour illustrer la complémentarité héritage - polymorphisme, prenons l&#8217;exemple d&#8217;un outil de dessin très rudimentaire, permettant de tracer le contour de certaines figures géométriques de tailles fixes avec un &#8220;motif&#8221; particulier (le motif étant un caractère) :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Figure</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        raise an error</span>
+<span class="sd">        subclasses have to implement </span>
+<span class="sd">        their own shape method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern</span><span class="p">):</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">,</span><span class="n">pattern</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">Rectangle</span><span class="p">(</span><span class="n">Figure</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">               ........</span>
+<span class="s">               .      .</span>
+<span class="s">               .      .</span>
+<span class="s">               .      .</span>
+<span class="s">               ........&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">Triangle</span><span class="p">(</span><span class="n">Figure</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">                   .</span>
+<span class="s">                  . .</span>
+<span class="s">                 .   .</span>
+<span class="s">                .     .</span>
+<span class="s">               .........&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>La classe <em>Figure</em> est, en jargon &#8220;objet&#8221;, une <em>classe abstraite</em> : son utilité n&#8217;est pas de produire des instances mais de faire hériter à ses classes filles  (<em>Rectangle</em> et <em>Triangle</em>) des comportements communs, comme la méthode <em>draw()</em>, sans avoir à les réécrire.</p>
+<p>Par contre, la méthode <em>shape()</em>, héritée aussi par <em>Rectangle</em> et <em>Triangle</em> a vocation à être redéfinie, sous peine d&#8217;obtenir une <em>NotImplementedError</em> à l&#8217;exécution.</p>
+<p>Cette redéfinition de <em>shape()</em> par les classes filles est l&#8217;expression du <strong>polymorphisme</strong>.</p>
+<p>Même si techniquement <em>Figure</em> reste instanciable, ses instances sont inutilisables:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; f=Figure()
+&gt;&gt;&gt; f.draw(&#39;*&#39;)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;&lt;stdin&gt;&quot;, line 10, in draw
+File &quot;&lt;stdin&gt;&quot;, line 8, in shape
+NotImplementedError
+</pre></div>
+</div>
+<p>Par contre, ses sous-classes :</p>
+<ul class="simple">
+<li>bénéficient, grâce à l&#8217;héritage, de la méthode <em>draw()</em> qu&#8217;elles ne possèdent pas localement</li>
+<li>spécialisent la méthode <em>shape()</em> en fonction de leur propres besoins, grâce au polymorphisme</li>
+</ul>
+<p><strong>Illustration :</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">=</span><span class="n">Rectangle</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">)</span>
+
+<span class="go">            ********</span>
+<span class="go">            *      *</span>
+<span class="go">            *      *</span>
+<span class="go">            *      *</span>
+<span class="go">            ********</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">Triangle</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">)</span>
+
+<span class="go">                +</span>
+<span class="go">               + +</span>
+<span class="go">              +   +</span>
+<span class="go">             +     +</span>
+<span class="go">            +++++++++</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encapsulation">
+<h2>Encapsulation<a class="headerlink" href="#encapsulation" title="Permalink to this headline">¶</a></h2>
+<p>Python ne dispose pas d&#8217;un mécanisme d&#8217;encapsulation au sens strict, comme C++ et Java. Il propose en échange une convention de nommage qui assure une forme de &#8220;pseudo-encapsulation&#8221;:</p>
+<ul class="simple">
+<li>si le nom d&#8217;un attribut/méthode à l&#8217;intérieur d&#8217;une classe commence par <strong>__</strong> (double underscore) et <strong>ne</strong> se termine <strong>pas</strong> par <strong>__</strong> (par exemple: <em>__nom</em>) alors:<ul>
+<li>il sera accessible sous le nom <em>__nom</em> <strong>seulement</strong> dans le contexte de la classe et de ses instances</li>
+<li>il sera accessible dans les autres contextes sous le nom <em>_Classe__nom</em></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FrozenPoint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">getCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__counter</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">def</span> <span class="nf">getX</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span>
+    <span class="k">def</span> <span class="nf">getY</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__y</span>
+</pre></div>
+</div>
+<p>Les implémentations des méthodes accèdent les attributs sous leur vrai nom:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">FrozenPoint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">getX</span><span class="p">()</span>
+<span class="go">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">getY</span><span class="p">()</span>
+<span class="go">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">getCounter</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Alors que les accès directs (avec les vrais noms) échouent s&#8217;ils sont faits à partir d&#8217;un contexte extérieur:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; p.__x
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: &#39;FrozenPoint&#39; object has no attribute &#39;__x&#39;
+</pre></div>
+</div>
+<p>Par contre, cette protection est contournable :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">_FrozenPoint__x</span>
+<span class="go">5</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="la-fonction-property">
+<h3>La fonction property()<a class="headerlink" href="#la-fonction-property" title="Permalink to this headline">¶</a></h3>
+<p>Dans les bonnes pratiques de la programmation objet en C++ et Java il est préconisé de contrôler l&#8217;accès aux attributs privés avec des méthodes dédiées, appelées parfois &#8220;accesseurs&#8221; (<tt class="docutils literal"><span class="pre">setAttr(val)</span></tt>, <tt class="docutils literal"><span class="pre">val</span> <span class="pre">=</span> <span class="pre">getAttr()</span></tt>, etc.). Cette pratique a des mérites mais elle nous prive de l&#8217;écriture plus lisible et concise que l&#8217;accès direct aux attributs confère.</p>
+<p>Python arrive à concilier les deux aspects avec la primitive <tt class="docutils literal"><span class="pre">property()</span></tt> ayant la signature complète:</p>
+<p><tt class="docutils literal"><span class="pre">attribute</span> <span class="pre">=</span>&nbsp; <span class="pre">property([getfun[,</span> <span class="pre">setfun[,</span> <span class="pre">delfun[,</span> <span class="pre">docstring]]]])</span></tt></p>
+<ul class="simple">
+<li>getfun(): méthode d&#8217;accès en lecture</li>
+<li>setfun(): méthode de mise à jour</li>
+<li>delfun(): suppression</li>
+<li>docstring : documentation</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">=</span> <span class="n">ray</span> <span class="c"># internal attribute</span>
+    <span class="k">def</span> <span class="nf">get_ray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span>
+    <span class="k">def</span> <span class="nf">set_ray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ray</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">=</span> <span class="n">ray</span>
+    <span class="k">def</span> <span class="nf">del_ray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="n">ray</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_ray</span><span class="p">,</span> <span class="n">set_ray</span><span class="p">,</span> <span class="n">del_ray</span><span class="p">,</span> <span class="s">&quot;this is the ray attribute property&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; c = Circle(4,5,15)
+&gt;&gt;&gt; c.ray # consultation
+15
+&gt;&gt;&gt; c.ray=-7 # tentative d&#39;affectation avec une valeur illegale
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;&lt;stdin&gt;&quot;, line 10, in set_ray
+ValueError
+&gt;&gt;&gt; c.ray=7 # affectation correcte
+&gt;&gt;&gt; c.ray
+7
+&gt;&gt;&gt; del c.ray # suppression interdite
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;&lt;stdin&gt;&quot;, line 13, in del_ray
+NotImplementedError
+&gt;&gt;&gt; Circle.ray.__doc__ # documentation
+&#39;this is the ray attribute property&#39;
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>Une écriture sémantiquement équivalente, avec des décorateurs dédiés, est également possible:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">=</span> <span class="n">ray</span> <span class="c"># internal attribute</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;this is the &#39;ray&#39; property&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span>
+    <span class="nd">@ray.setter</span>
+    <span class="k">def</span> <span class="nf">ray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ray</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">=</span> <span class="n">ray</span>
+    <span class="nd">@ray.deleter</span>
+    <span class="k">def</span> <span class="nf">ray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">diameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> Dans cette deuxième variante il y a un &#8220;intrus&#8221;, appelé <em>diameter</em>. Il illustre la possibilité de définir des pseudo-attributs calculés, accessibles, bien sûr, en lecture seule:</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; c.ray=7
+&gt;&gt;&gt; c.ray
+7
+&gt;&gt;&gt; c.diameter
+14
+&gt;&gt;&gt; c.ray=10
+&gt;&gt;&gt; c.diameter
+20
+&gt;&gt;&gt;
+&gt;&gt;&gt; c.diameter=15
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: can&#39;t set attribute
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="agregation-d-objets">
+<h2>Agrégation d&#8217;objets<a class="headerlink" href="#agregation-d-objets" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;agrégation est une association asymétrique entre deux classe <strong>A</strong> et <strong>B</strong> qui exprime un rapport de type:</p>
+<ul class="simple">
+<li><strong>A</strong> est composé de ... <strong>B</strong></li>
+<li><strong>A</strong> possède ... <strong>B</strong></li>
+</ul>
+<p>On va parler de <strong>A</strong> comme étant le contenant et de <strong>B</strong> comme contenu.</p>
+<p>Dans la classe <em>Circle</em> de l&#8217;exemple précédent on a utilisé les coordonnées x et y pour désigner le centre. En utilisant l&#8217;agrégation avec la classe <em>Point</em> déjà évoquée on obtient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ray</span> <span class="o">=</span> <span class="n">ray</span> 
+    <span class="c"># ...</span>
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="first admonition-title">Question</p>
+<p class="last">Pourquoi ne pas avoir fait hériter <em>Circle</em> de <em>Point</em> pour obtenir le même résultat ?</p>
+</div>
+</div>
+<div class="section" id="methodes-de-classe">
+<h2>Méthodes de classe<a class="headerlink" href="#methodes-de-classe" title="Permalink to this headline">¶</a></h2>
+<p>Les méthodes déjà étudiées ne peuvent pas être appelées sans avoir créé préalablement une instance de leur classe de définition ou de l&#8217;une de ses sous-classes.</p>
+<p>Pourtant, on peut avoir besoin définir des traitements qui concernent la classe indépendamment de ses instances.</p>
+<p>Dans l&#8217;exemple suivant on souhaite afficher l&#8217;attribut <em>title</em>, qui est un attribut de classe par la méthode <em>banner()</em>, qui fait une mise en forme quelconque:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;class A&quot;</span>
+    <span class="k">def</span> <span class="nf">banner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; A.banner()
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: unbound method banner() must be called with A instance as first argument (got nothing instead)
+&gt;&gt;&gt; a=A()
+&gt;&gt;&gt; a.banner()
+*******
+class A
+*******
+</pre></div>
+</div>
+<p>Dans l&#8217;exemple précédent, pour pouvoir exécuter <em>banner()</em> on a dû créer une instance pour une utilisation détournée, ce qui est généralement une mauvaise idée.
+Pour résoudre ce problème, Python propose deux décorateurs apportant deux solutions différentes: <strong>&#64;staticmethod</strong> et <strong>&#64;classmethod</strong></p>
+<div class="section" id="le-decorateur-staticmethod">
+<h3>Le décorateur &#64;staticmethod<a class="headerlink" href="#le-decorateur-staticmethod" title="Permalink to this headline">¶</a></h3>
+<p>Ce décorateur permet de définir une fonction &#8220;classique&#8221; dans l&#8217;espace de noms de la classe, rappelant le fonctionnement des méthodes statiques du <em>C++</em> et <em>Java</em>. La signature de la fonction ne contiendra pas le paramètre <em>self</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;class A&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">banner</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;class B&quot;</span>
+</pre></div>
+</div>
+<p>La méthode est héritée, mais l&#8217;absence de <em>self</em> empêche une écriture &#8220;polymorphe&#8221; (prendre en compte l&#8217;attribut <em>title</em> de la classe sur laquelle la méthode <em>banner()</em> s&#8217;exécute):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">.</span><span class="n">banner</span><span class="p">()</span>
+<span class="go">*******</span>
+<span class="go">class A</span>
+<span class="go">*******</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">banner</span><span class="p">()</span>
+<span class="go">*******</span>
+<span class="go">class A</span>
+<span class="go">*******</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-decorateur-classmethod">
+<h3>Le décorateur &#64;classmethod<a class="headerlink" href="#le-decorateur-classmethod" title="Permalink to this headline">¶</a></h3>
+<p>Il apporte une solution aux limitations de &#64;staticmethod. La méthode décorée ainsi contient un paramètre équivalent à <em>self</em> (appelé <strong>par convention</strong> <em>cls</em>) qui permet l&#8217;expression du polymorphisme:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;class A&quot;</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">banner</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;*******&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;class B&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="o">.</span><span class="n">banner</span><span class="p">()</span>
+<span class="go">*******</span>
+<span class="go">class A</span>
+<span class="go">*******</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">banner</span><span class="p">()</span>
+<span class="go">*******</span>
+<span class="go">class B</span>
+<span class="go">*******</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="la-surcharge-des-operateurs">
+<h2>La surcharge des opérateurs<a class="headerlink" href="#la-surcharge-des-operateurs" title="Permalink to this headline">¶</a></h2>
+<p>Tout comme C++ Python permet la surcharge des opérateurs à l&#8217;exception de celui d&#8217;affectation. Cette surcharge se fait en implémentant des méthodes spéciales ou &#8220;magiques&#8221;. Les noms de ces méthodes commencent et se terminent par <strong>__</strong> (double underscore):</p>
+<ul class="simple">
+<li>méthodes pour les opérateurs arithmétiques : __add__, __sub__, __mul__, __div__, __neg__, ...</li>
+<li>méthodes pour les opérateurs de comparaison : __eq__, __gt__, __lt__, ...</li>
+<li>méthodes pour les itérables : __iter__, __len__, ...</li>
+<li>autres méthodes __call__ pour (), __str__, ...</li>
+</ul>
+<p>Sans redéfinition des comportements par défaut:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>Le résultat  de la comparaison entre deux objets <em>Point</em> identiques est surprenant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">==</span> <span class="n">p2</span>
+<span class="go">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Et le résultat de l&#8217;impression pas très parlant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="go">&lt;__main__.Point object at 0x286e150&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Le remède :</p>
+<ul class="simple">
+<li>spécialisation de l&#8217;opérateur &#8220;==&#8221; (méthode <em>__eq__</em>)</li>
+<li>spécialisation de la méthode <em>__str__</em></li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">y</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;Point({0.x}, {0.y})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Les résultats sont différents:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">==</span> <span class="n">p2</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+<span class="go">Point(4, 5)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conventions-de-nommage">
+<h2>Conventions de nommage<a class="headerlink" href="#conventions-de-nommage" title="Permalink to this headline">¶</a></h2>
+<p>La <strong>PEP8</strong> préconise:</p>
+<ul class="simple">
+<li>Pour les <strong>noms des classes</strong>, la convention &#8220;CapWords&#8221; sera utilisée par défaut. La convention utilisée pour les fonctions peut s&#8217;appliquer pour certaines classes dont l&#8217;usage est basé principalement sur leur interface appelable (autrement dit, qui sont perçues par l&#8217;utilisateur comme des fonctions) <strong>NB:</strong> Cette convention ne s&#8217;applique pas aux builtins</li>
+<li>Les exceptions sont des classes (rappel) et leur nommage suit les mêmes règles.</li>
+<li>Toujours utiliser <strong>self</strong> en premier argument d&#8217;une méthode (d&#8217;instance) et <strong>cls</strong> en premier argument d&#8217;une méthode de classe (décorée &#64;classmethod)</li>
+<li>les noms des méthodes et des attributs suivent la même convention que les fonctions En plus :<ul>
+<li>les noms commençant par un underscore sont considérés, par convention, comme &#8220;internes&#8221; (weak “internal use” indicator)</li>
+<li>les noms commençant par deux underscores  seront littéralement remplacés à la compilation comme montré précédemment</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h2>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: chess.py
+
+Dans le jeu d&#39;échecs les cases sont identifiées par un couple lettre-chiffre, 
+la lettre étant dans la plage A-H et le chiffre dans la plage 1-8.
+
+On souhaite implémenter (partiellement) un modèle d&#39;objets pour représenter les
+pièces du jeu d&#39;échecs à partir de la classe &quot;abstraite&quot; Piece, fournie dans 
+l&#39;énoncé.
+
+a) En dérivant &quot;Piece&quot;, implémentez la classe fille de votre choix (King, 
+Queen, Rook, Bishop etc.). 
+
+Trouver et implémenter la ou les méthode(s) manquante(s) pour pouvoir 
+l&#39;instancier et exécuter la méthode move() sur l&#39;instance. On va faire 
+abstraction de la présence d&#39;autres pièces sur l&#39;échiquier.
+
+NB: si vous ne connaissez pas le mouvement des pièces sur l&#39;équiquier, en voici
+quelques exemples:
+
+King: se déplace d&#39;une case dans n&#39;importe quelle direction
+Queen: se déplace d&#39;un nombre indéterminé de cases dans n&#39;importe quelle direction
+Rook (la tour): se déplace d&#39;un nombre indéterminé de cases en ligne ou colonne
+Bishop (le fou) : se déplace d&#39;un nombre indéterminé de cases en diagonale
+
+
+Exemple d&#39;exécution, après avoir implémenté la classe King:
+
+&gt;&gt;&gt; k = King(&#39;B&#39;,3,&#39;black&#39;)
+&gt;&gt;&gt; k.show()
+piece: &lt;class &#39;echecs_sol.King&#39;&gt;
+position: B3
+&gt;&gt;&gt; k.move(&#39;G&#39;,8)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;echecs_sol.py&quot;, line 22, in move
+    raise ValueError(&#39;ilegal move&#39;)
+ValueError: ilegal move
+&gt;&gt;&gt; k.move(&#39;C&#39;,2)
+moved!
+&gt;&gt;&gt; k.show()
+piece: &lt;class &#39;echecs_sol.King&#39;&gt;
+position: C2
+&gt;&gt;&gt; 
+&quot;&quot;&quot;
+from __future__ import print_function
+
+class Piece(object):
+    &quot;&quot;&quot;
+    Abstract class Piece
+    &quot;&quot;&quot;
+    @staticmethod
+    def col_to_x(col):
+        &quot;a..h to 0..7 conversion&quot;
+        if col not in &#39;abcdefghABCDEFGH&#39;:
+            raise ValueError(&#39;col not in abcdefghABCDEFGH&#39;)
+        return ord(col.upper())-ord(&#39;A&#39;)
+    @staticmethod
+    def row_to_y(row):
+        &quot;1..8 to 0..7&quot;
+        if row &lt; 1 or row &gt; 8:
+            raise ValueError(&#39;row not in 1..8&#39;)
+        return row - 1
+    def __init__(self, col, row, color):
+        &quot;constructor&quot;
+        self.__x = Piece.col_to_x(col)
+        self.__y = Piece.row_to_y(row)
+        if color not in [&#39;black&#39;,&#39;white&#39;]:
+            raise ValueError(&quot;color not in [&#39;black&#39;,&#39;white&#39;]&quot;)
+        self.color = color
+    def move(self, new_col, new_row):
+        &quot;moves a piece on a new position&quot;
+        if not self.is_legal_move(new_col, new_row):
+            raise ValueError(&#39;ilegal move&#39;)
+        self.__x = Piece.col_to_x(new_col)
+        self.__y = Piece.row_to_y(new_row)
+        print(&quot;moved!&quot;)
+    def is_legal_move(self, col, row):
+        &quot;checks if the move is legal&quot;
+        raise NotImplementedError(&#39;is_legal_move&#39;)
+    def col(self):
+        &quot;get the column (as a letter)&quot;
+        return &#39;ABCDEFGH&#39;[self.__x]
+    def row(self):
+        &quot;get the row (as an 1..8 int)&quot;
+        return self.__y + 1
+    def x(self):
+        &quot;get the comlumn (0..7 internal value)&quot;
+        return self.__x
+    def y(self):
+        &quot;get the row (0..7 internal value)&quot;
+        return self.__y
+
+    def show(self):
+        &quot;show the piece features&quot;
+        print(&quot;piece: {}&quot;.format(type(self)))
+        print(&quot;position: {}{}&quot;.format(self.col(), self.row()))
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: chess_sol.py
+&quot;&quot;&quot;
+from chess import Piece
+
+class King(Piece):
+    &quot;King chess piece&quot;
+    def is_legal_move(self, new_col, new_row):
+        &quot;checks if the move is legal&quot;
+        new_x = Piece.col_to_x(new_col)
+        new_y = Piece.row_to_y(new_row)
+        if abs(new_x - self.x()) &gt;1 or abs(new_y - self.y())&gt;1:
+            return False
+        return True
+
+class Rook(Piece):
+    &quot;Rook chess piece&quot;
+    def is_legal_move(self, new_col, new_row):
+        &quot;checks if the move is legal&quot;
+        new_x = Piece.col_to_x(new_col)
+        new_y = Piece.row_to_y(new_row)
+        if new_x == self.x() or new_y == self.y():
+            return True
+        return False
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercice-suite">
+<h3>Exercice (suite)<a class="headerlink" href="#exercice-suite" title="Permalink to this headline">¶</a></h3>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: chess2.py
+
+a) En utilisant @property, modifier la classe Piece pour implémenter les
+attributs col, row, x et y en lecture seule.
+
+Modifiez, si nécessaire, les autres méthodes sur Piece et sa (ses) 
+classe(s) fille(s).
+
+Exemple d&#39;utilisation:
+
+&gt;&gt;&gt; k = King(&#39;B&#39;,3,&#39;black&#39;)
+&gt;&gt;&gt; k.x
+1
+&gt;&gt;&gt; k.y
+2
+&gt;&gt;&gt; k.x=5
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: can&#39;t set attribute
+
+b) redéfinir l&#39;opérateur == sur Piece pour répondre True si les pièces 
+comparées sont du même type et ont la même couleur 
+(Ex: deux tours noires sont &quot;égales&quot;)
+c) redéfinir __str__ sur la classe fille implémentée pour un 
+affichage plus parlant
+&quot;&quot;&quot;
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: chess_sol2.py
+&quot;&quot;&quot;
+from __future__ import print_function
+
+class Piece(object):
+    &quot;&quot;&quot;
+    Abstract class Piece
+    &quot;&quot;&quot;
+    @staticmethod
+    def col_to_x(col):
+        &quot;a..h to 0..7 conversion&quot;
+        if col not in &#39;abcdefghABCDEFGH&#39;:
+            raise ValueError(&#39;col not in abcdefghABCDEFGH&#39;)
+        return ord(col.upper())-ord(&#39;A&#39;)
+    @staticmethod
+    def row_to_y(row):
+        &quot;1..8 to 0..7&quot;
+        if row &lt; 1 or row &gt; 8:
+            raise ValueError(&#39;row not in 1..8&#39;)
+        return row - 1
+    def __init__(self, col, row, color):
+        &quot;constructor&quot;
+        self.__x = Piece.col_to_x(col)
+        self.__y = Piece.row_to_y(row)
+        if color not in [&#39;black&#39;,&#39;white&#39;]:
+            raise ValueError(&quot;color not in [&#39;black&#39;,&#39;white&#39;]&quot;)
+        self.color = color
+    def move(self, new_col, new_row):
+        &quot;moves a piece on a new position&quot;
+        if not self.is_legal_move(new_col, new_row):
+            raise ValueError(&#39;ilegal move&#39;)
+        self.__x = Piece.col_to_x(new_col)
+        self.__y = Piece.row_to_y(new_row)
+        print(&quot;moved!&quot;)
+    def is_legal_move(self, col, row):
+        &quot;checks if the move is legal&quot;
+        raise NotImplementedError(&#39;is_legal_move&#39;)
+    @property
+    def col(self):
+        &quot;get the column (as a letter)&quot;
+        return &#39;ABCDEFGH&#39;[self.__x]
+    @property
+    def row(self):
+        &quot;get the row (as an 1..8 int)&quot;
+        return self.__y + 1
+    @property
+    def x(self):
+        &quot;get the comlumn (0..7 internal value)&quot;
+        return self.__x
+    @property
+    def y(self):
+        &quot;get the row (0..7 internal value)&quot;
+        return self.__y
+    def show(self):
+        &quot;show the piece features&quot;
+        print(&quot;piece: {}&quot;.format(type(self)))
+        print(&quot;color: {}&quot;.format(self.color))
+        print(&quot;position: {}{}&quot;.format(self.col, self.row))
+    def __eq__(self, other):
+        &quot;equality of two chess pieces&quot;
+        if type(self) != type(other):
+            return False
+        return self.color == other.color
+
+
+
+class King(Piece):
+    &quot;King chess piece&quot;
+    def is_legal_move(self, new_col, new_row):
+        &quot;checks if the move is legal&quot;
+        new_x = Piece.col_to_x(new_col)
+        new_y = Piece.row_to_y(new_row)
+        if abs(new_x - self.x) &gt;1 or abs(new_y - self.y) &gt; 1:
+            return False
+        return True
+    def __str__(self):
+        &quot;object as a string&quot;
+        return &quot;{} king  at {}{}&quot;.format(self.color, self.col, self.row)
+
+
+
+class Rook(Piece):
+    &quot;Rook chess piece&quot;
+    def is_legal_move(self, new_col, new_row):
+        &quot;checks if the move is legal&quot;
+        new_x = Piece.col_to_x(new_col)
+        new_y = Piece.row_to_y(new_row)
+        if new_x == self.x or new_y == self.y:
+            return True
+        return False
+    def __str__(self):
+        &quot;object as a string&quot;
+        return &quot;{} rook at {}{}&quot;.format(self.color, self.col, self.row)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">L&#8217;approche objet</a><ul>
+<li><a class="reference internal" href="#classes-et-instances">Classes et instances</a></li>
+<li><a class="reference internal" href="#les-attributs">Les attributs</a></li>
+<li><a class="reference internal" href="#les-methodes">Les méthodes</a></li>
+<li><a class="reference internal" href="#la-methode-init">La méthode __init__()</a></li>
+<li><a class="reference internal" href="#la-documentation-des-classes">La documentation des classes</a></li>
+<li><a class="reference internal" href="#l-heritage">L&#8217;héritage</a></li>
+<li><a class="reference internal" href="#old-style-new-style-classes">Old style / New style classes</a></li>
+<li><a class="reference internal" href="#l-heritage-multiple">L&#8217;héritage multiple</a></li>
+<li><a class="reference internal" href="#polymorphisme">Polymorphisme</a></li>
+<li><a class="reference internal" href="#encapsulation">Encapsulation</a><ul>
+<li><a class="reference internal" href="#la-fonction-property">La fonction property()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#agregation-d-objets">Agrégation d&#8217;objets</a></li>
+<li><a class="reference internal" href="#methodes-de-classe">Méthodes de classe</a><ul>
+<li><a class="reference internal" href="#le-decorateur-staticmethod">Le décorateur &#64;staticmethod</a></li>
+<li><a class="reference internal" href="#le-decorateur-classmethod">Le décorateur &#64;classmethod</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#la-surcharge-des-operateurs">La surcharge des opérateurs</a></li>
+<li><a class="reference internal" href="#conventions-de-nommage">Conventions de nommage</a></li>
+<li><a class="reference internal" href="#exercice">Exercice</a><ul>
+<li><a class="reference internal" href="#exercice-suite">Exercice (suite)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="avances.html"
+                        title="previous chapter">Concepts avancés</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="libstd.html"
+                        title="next chapter">La bibliothèque standard en bref</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="libstd.html" title="La bibliothèque standard en bref"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="avances.html" title="Concepts avancés"
+             >previous</a> |</li>
+        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+      </ul>
+    </div>
+<div class="footer">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
+</div>
+   <script type="text/javascript">
+     function show_sol(obj,e){
+     if($(obj).attr('title')=='Show'){
+       $('#tohide'+e).show();
+       $(obj).attr('title','Hide');
+       $(obj).text('Cacher la solution');
+     } else {
+       $('#tohide'+e).hide();
+       $(obj).attr('title','Show');
+       $(obj).text('Voir la solution');
+
+     }
+     my_obj=obj;
+     
+     };
+     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+     $(".myexercice.container pre").css('background-color','#ffff66')
+     $(".tohide.container pre").css('background-color','#ffcc99')
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+     })();
+   </script>
+
+  </body>
+</html>

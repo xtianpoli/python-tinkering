@@ -1,0 +1,14 @@
+#######
+Licence
+#######
+
+.. image:: images/by-nc-nd.png
+   :target: http://creativecommons.org/licenses/by-nc-nd/3.0/fr/
+   :alt: Licence Creative Commons
+
+|
+
+**"Introduction à la programmation en Python"** de *Christian Poli* est mis à disposition selon les termes de la `licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France <http://creativecommons.org/licenses/by-nc-nd/3.0/fr/>`_
+
+
+
