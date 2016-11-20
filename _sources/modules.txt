@@ -144,7 +144,10 @@ Avec l'instruction from\.\.\.import\.\.\. on peut importer sélectivement des ob
    do something
    >>> _do_something_else()
    do something else
-   >>> 
+   >>> from simplemod import do_something as foobar
+   >>> foobar()
+   do something
+   >>>
 
 On peut aussi importer **tous** les noms (**sauf** ceux préfixés par un **_**) d'un module dans le contexte courant :
 
@@ -178,6 +181,8 @@ Recharger un module
 
 En mode interactif on peut avoir besoin de recharger un module après l'avoir modifié, mais une ré-exécution de l'import ne va pas recharger le module. On peut avoir recours à la fonction *reload()*.
 Néanmoins cela peut s'avérer insatisfaisant dans certains cas, étant donné que les instances des classes rechargées déjà présentes dans le contexte d'exécution ne seront pas impactées.
+
+**NB :** La primitive reload se trouve dans le module **importlib**  dans **Python >=3.4**, **imp* dans **Python <= 3.3** et dans l'espace **builtin** dans dans **Python 2.x**
 
 .. slide_mark_e
 

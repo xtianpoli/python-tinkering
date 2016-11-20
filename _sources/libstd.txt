@@ -8,6 +8,373 @@ Il s'agit d'un simple aperçu, partiel et partial, de quelques fonctions avec le
 
 .. slide_mark_e
 
+**********************************************
+Les outils pour la programmation fonctionnelle
+**********************************************
+
+
+Généralités
+===========
+
+La programmation fonctionnelle (P.F) est née du souhait de dépasser les limitations de la programmation impérative qui la rendent inadéquate à la manipulation des objets mathématiques.
+
+En effet, la (ré)affectation de variable, propre à la programmation impérative n'est pas compatible avec les exigences de la démarche mathématique pour laquelle les objets "mutables" n'ont aucun sens. Les variables, dans la programmation impérative, sont plus proches, conceptuellement, des cellules mémoire de l'architecture de Von Neumann que des variables mathématiques.
+
+Pour surmonter cet inconvénient, un paradigme différent s'impose. Un programme cesse d'être une suite d'instructions à exécuter pour devenir une expression à évaluer.
+
+Le fonctions occupent le rôle clé dans cette nouvelle approche (et inspirent son nom!).
+
+Sans effets de bord, elles ressemblent aux fonctions mathématiques. Elles sont des objets de "première classe". Des fonctions d'ordre supérieur ainsi que les appels récursif remplacent les structures de boucle.
+
+Ca va de soi, dans une telle approche, les changements d'état, les modifications de données sont bannis.
+
+.. slide_mark_b :Les outils pour la programmation fonctionnelle
+
+Les avantages revendiquées par ce paradigme (considéré au sens "strict", P.F. "pure") sont, principalement:
+
+* Prouvabilité formelle des programmes
+* Décomposabilité/Composabilité des programmes
+* Testing et mise au point facilités
+
+.. slide_mark_e
+.. slide_mark_b :Les outils pour la programmation fonctionnelle {tcnt_}   
+  
+Dans la pratique, on rencontre deux manières d'aborder la programmation fonctionnelle :
+
+* Dans un sens strict, correspondant aux langages fonctionnels "purs", dénués de variables et d'objets mutables ainsi que de structures de contrôle impératifs (sous-ensembles purement fonctionnels de OCaml, Haskell, Pure Lisp etc.)
+* Dans un sens plus libre, propre à certains langages multi-paradigme qui, sans bannir les idiomes des la programmation impérative, offrent les moyens d'écrire des programmes élégants avec des moyens apportés par paradigme fonctionnel (emploi des fonctions d'ordre supérieur pour remplacer des structures de contrôle impératifs etc.). Python s'inscrit dans ce deuxième courant.
+  
+.. slide_mark_e  
+.. slide_mark_b :Les outils pour la P.F. {tcnt_}
+
+   
+En effet, Python contient des éléments de langage propres à la programmation fonctionnelle :
+
+* les fonctions sont des objets de première classe
+* il permet la définition de fonctions d'ordre supérieur (fonctions qui manipulent d'autres fonctions)
+* il offre des mécanismes avancés pour le traitement des listes et des itérables en général:
+
+  * listes en intension et générateurs-expression
+  * des nombreuses fonctions d'ordre supérieur prédéfinies (module **functools**)
+  * une large palette de fonctions sur les itérateurs (module **itertools**)    
+  * d'autres primitives sur les itérables: *all()*, *any()*, *min()*, *max()*   
+
+.. slide_mark_e  
+.. slide_mark_b :Les outils de la P.F. {tcnt_}
+   
+Bien sûr, Python n'est pas un langage fonctionnel "pur" car :
+
+* il n'encourage pas l'utilisation de la récursivité à la place des structures de boucle *for* et *while*
+* par défaut, il n'empêche pas les effets de bord ni les données modifiables.
+
+  
+..  http://www.artima.com/weblogs/viewpost.jsp?thread=98196
+
+.. slide_mark_e
+
+Les fonctions d'ordre supérieur
+===============================
+
+
+
+En anglais "Higher-order functions" = HOF   
+
+Nous avons vu qu'en Python, les fonctions sont des objets de "première classe" i. e.  un objet fonction peut être affecté à une variable, passé en paramètre à une fonction ou retourné par une fonction.
+
+Les fonctions qui manipulent et/ou qui créent des objets fonctions sont appelées "fonctions d'ordre supérieur"=FOS, en anglais :  "Higher-order functions" = HOF.
+
+Entre autres, **les décorateurs en font partie**.
+
+Les trois fonctions suivantes, *map*, *filter* et *reduce*   sont "piliers" de la programmation fonctionnelle dans le sens où elles sont présentes  dans quasiment  tous les langages qui s'en revendiquent.
+
+Elles sont présentes également dans Python mais, dans la pratique, *map* et *filter* perdent du terrain en faveur des listes en intension et des générateurs-expression
+
+
+.. slide_mark_b :Les fonctions d'ordre supérieur
+
+* **map(f, iterable1, iterable2,...)** : applique la fonction *f* sur chaque item résultat d'une itération:
+
+  * le nombre d'arguments de la fonction doit correspondre avec le nombre d'itérables à traiter
+  * les itérables seront traités parallèlement : la fonction recevra en argument, lors d'une itération *i*, le i-ème élément de chaque
+  * le processus s'arrête lorsque la fin de l'itérable le plus court est atteinte
+
+* **filter(f, iterable_in)** : applique la fonction *f* à tous les éléments de *iterable_in* et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels *f* renvoie *True*
+* **reduce(f, iterable_in[,init])** : applique la fonction *f* (à deux arguments) à tous les items de *iterable_in* de manière cumulative, de gauche à droite:
+
+  * pour [1,2,3,4] le résultat sera équivalent à  ``f(f(f(1,2),3),4)`` 
+  * Si init est fourni, il sera utilisé dans le processus comme l'élément le plus à gauche. pour init=99 l'équivalent en terme de résultat sera ``f(f(f(f(99,1),2),3),4)``
+  * **NB:** En version 3, la fonction *reduce* a été déplacée dans le module *functools* (cf. http://docs.python.org/3.0/whatsnew/3.0.html)
+
+Le même document `WHATSNEW <http://docs.python.org/3.0/whatsnew/3.0.html>`_ préconise l'utilisation des listes en intension à la place de *map* et *filter* quand le résultat souhaité est une liste (car en version 3 ces deux fonctions fournissent des itérateurs en sortie)
+
+**NB :** Les fonctions *map()* et *filter()* renvoient une liste en version 2 et un itérateur en version 3.
+
+.. slide_mark_e
+
+
+Avant d'entrer dans les détails...
+----------------------------------
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion:Avant d'entrer dans les détails...
+
+On va mentionner l'existence du module **operator** qui peut être décrit en quelques mots: il rend accessible tous les opérateurs sous forme de fonction : ( "add" pour "+", "sub" pour "-", "mul" pour "*" etc.)
+
+
+
+.. slide_mark_e
+
+La fonction *map*
+-----------------
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion:La fonction *map*
+
+
+Illustrée via un exemple simple et mise en perspective avec une écriture équivalente avec des itérables en intension :   
+   
+.. literalinclude:: includes/simple_map2.py
+
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+
+                    
+::
+
+   >>> res = map(full_name,lst); list(res)
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>> # même traitement avec des listes en intension et générateurs-expression:
+   >>> [full_name(e) for e in lst]
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>> res = (full_name(e) for e in lst); list(res)
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>>
+   
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+
+Les fonctions anonymes sont souvent employées pour définir des transformations à appliquer sur tous les items d'un itérable, via une fonction d'ordre supérieur comme *map()* :
+
+::
+
+   >>> res = map(lambda x: "{0[gn]} {0[sn]}".format(x), lst); list(res)
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>> # même traitement avec des listes en intension (pas besoin de lambda):
+   >>> ["{0[gn]} {0[sn]}".format(e) for e in lst]
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>> # générateur-expression
+   >>> res = ("{0[gn]} {0[sn]}".format(x) for e in lst); list(res)
+   ['George Washington', 'John Adams', 'Thomas Jefferson']
+   >>>
+
+**Important :** Nous remarquerons dans l'exemple précédent que la fonction anonyme devient inutile dans l'écriture "en intension" !
+   
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+   
+   
+**Remarque:** *map()* permet de travailler en parallèle sur plusieurs itérables. Pour faire la même chose avec les itérables en intension on va utiliser la fonction **zip()**:
+
+
+.. literalinclude:: includes/double_map.py
+
+
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+
+                    
+::
+
+   >>> res = map(prod, lst1, lst2); list(res)
+   [7, 16, 27, 40, 55]
+   >>> # grace au module "operator" on évite d'écrire des fonctions superflues (comme "prod") :
+   >>> import operator
+   >>> res = map(operator.mul, lst1, lst2); list(res)
+   [7, 16, 27, 40, 55]
+   >>> # avec des listes en intension:
+   >>> [prod(x,y) for (x,y) in  zip(lst1, lst2)]
+   [7, 16, 27, 40, 55]
+   >>> # ou encore:
+   >>> [x*y for (x,y) in  zip(lst1, lst2)]
+   [7, 16, 27, 40, 55]
+   >>> # générateur-expression
+   >>> res = (prod(x,y) for (x,y) in  zip(lst1, lst2)); list(res)
+   [7, 16, 27, 40, 55]
+
+   
+.. slide_mark_e
+
+La fonction *filter*
+====================
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion:La fonction *filter*
+
+::
+
+   >>> lst = list(range(-5,8)); lst
+   [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
+   >>> res = filter(lambda x: x>0, lst); list(res)
+   [1, 2, 3, 4, 5, 6, 7]
+   >>> # avec des listes en intension:
+   >>> [x for x in lst if x>0]
+   [1, 2, 3, 4, 5, 6, 7]
+   >>>
+   
+.. slide_mark_e
+
+La fonction *reduce*
+====================
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion:La fonction *reduce*
+
+**Rappel :** cette fonction à été déplacée dans le module **functools** dans **Python 3.x**
+   
+::
+   >>> from functools import reduce # en Python 3.x
+   >>> list(range(1,5))
+   [1, 2, 3, 4]
+   >>> def sum(x,y):
+   ...     return x+y
+   ... 
+   >>> reduce(sum, range(1,5))
+   10
+   >>> # factorielle de 5:
+   >>> from functools import reduce
+   >>> reduce(lambda x,y:x*y, range(1,6)) 
+   120
+   >>>    
+
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+
+   
+La même chose, avec les fonctions du module *operator* :
+
+::
+   
+   >>> import operator
+   >>> reduce(operator.add, range(1, 5))
+   10
+   >>> reduce(operator.mul, range(1, 6))
+   120
+   >>> 
+
+.. slide_mark_e   
+   
+Autres fonctions d'ordre supérieur
+----------------------------------
+
+Les deux fonctions suivantes font également partie du module **functools** qui en contient bien d'autres.
+On les a choisi pour les présenter brièvement car elles sont un peu "emblématiques" pour la programmation fonctionnelle.
+
+L'application partielle d'une fonction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion: L'application partielle d'une fonction    
+
+
+**Exemple :** dans la fonction suivante, de variable **x** et paramètre **k** :
+
+.. math::
+
+   f_{k}(x) = kx^2 + (2k + 1)x + 5 
+
+on souhaite fixer le paramètre **k** à **3** pour obtenir :
+
+.. math::
+   
+   f_{3}(x) = 3x^2 + 7x + 5 
+
+::
+
+   >>> import functools
+   >>> 
+   >>> def fk(k, x):
+   ...     return k * x**2 + (2*k +1)*x + 5 
+   ... 
+   >>> f3 = functools.partial(fk, 3)
+   >>> f3(5)
+   115
+   >>> 
+
+.. slide_mark_e      
+   
+Fonctions génériques (single-dispatch generic functions)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}
+.. slide_insertion: Fonctions génériques (single-dispatch generic functions)
+
+.. literalinclude:: includes/generic_fun.py
+
+.. slide_mark_e
+.. slide_mark_b :Les fonctions d'ordre supérieur {tcnt_}   
+                    
+::
+
+   >>> fun(list("Python"))
+   i:  0  elt:  P
+   i:  1  elt:  y
+   i:  2  elt:  t
+   i:  3  elt:  h
+   i:  4  elt:  o
+   i:  5  elt:  n
+   >>> fun(dict(a=1, b=5, c=6))
+   key:  b  value:  5
+   key:  a  value:  1
+   key:  c  value:  6
+   >>> fun("abc")
+   What is this?  abc
+   >>>
+   
+.. slide_mark_e
+
+Le module *itertools*
+=====================
+
+.. slide_mark_b :Le module *itertools*
+
+
+`itertools <https://docs.python.org/3/library/itertools.html>`_ fournit des itérables très utiles, en programmation fonctionnelle ou impérative.
+
+
+Ils sont nombreux, l'utilisation de deux d'entre eux est illustrée ici sur un exemple. Soit le générateur suivant implémentant une série:
+
+.. literalinclude:: includes/exo_itertools.py
+
+.. slide_mark_e
+.. slide_mark_b :Le module *itertools* {tcnt_}   
+                    
+On souhaite implémenter un itérable "paresseux" qui fournit à chaque itération, le terme courant de la série et la somme des éléments déjà générés. On va utiliser:
+
+* **itertools.tee** qui produit **n** itérateurs indépendants à partir d'un itérable unique
+* **itertools.accumulate** renvoie les résultats partiels de l'opération fournie en 2ème position (par défaut, la somme) appliquée aux éléments de l'itérateur en entrée
+
+.. slide_mark_e
+.. slide_mark_b :Le module *itertools* {tcnt_}   
+  
+::
+
+   >>> from itertools import accumulate, tee
+   >>> crt, acc = tee(series(), n=2)
+   >>> crt_acc = zip(crt, accumulate(acc))
+   >>> for res, _ in zip(crt_acc, range(5)):
+   ...     print(res)
+   ... 
+   (-5, -5)
+   (4, -1)
+   (15, 14)
+   (28, 42)
+   (43, 85)
+   >>> 
+
+
+.. slide_mark_e
+
+   
 ****************************
 La manipulation des fichiers
 ****************************
@@ -40,7 +407,7 @@ En Python 2.7.x:
   * < 0 : taille par défaut prévue par le système (et comportement par défaut de la fonction)
 
 .. slide_mark_e
-.. slide_mark_b :La manipulation des fichiers *[2]*
+.. slide_mark_b :La manipulation des fichiers {tcnt_}
 
 En Python 3.x:
 
@@ -73,7 +440,7 @@ En Python 3.x:
 * opener : fonction utilisateur destiné à l'ouverture du fichier *(nouveauté Python 3.3)*
 
 .. slide_mark_e
-.. slide_mark_b :La manipulation des fichiers *[3]*
+.. slide_mark_b :La manipulation des fichiers {tcnt_}
 
 **Rappel:**
 
@@ -159,7 +526,7 @@ Le script suivant affiche les arguments de la ligne de commande:
    2: abc
 
 .. slide_mark_e
-.. slide_mark_b :Le module **sys** *[2]*
+.. slide_mark_b :Le module **sys** {tcnt_}
 
 Quelques autres attributs et fonctions de ce module, illustrés par des exemples:
 
@@ -193,137 +560,17 @@ L'interface avec le système d'exploitation
 
 .. slide_mark_b :L'interface avec le système d'exploitation
 
-
+.. _file_management:
+   
 Il s'agit des fonctionnalités souvent équivalentes aux commandes système usuelles. Elles se retrouvent dans plusieurs modules dont **os**, **shutil** et **glob**
 
 .. slide_mark_e
 
-Le module **os**
-================
-
-.. slide_mark_b :Le module **os**
-
-Ce module contient un grand nombre de fonctions permettant l'interaction avec le système d'exploitation.
-
-.. admonition:: Avertissement
-   :class: warning
-
-   Il est vivement déconseillé d'importer ce module par ``from os import *`` car la fonction *os.open()* va se substituer à la primitive *open()*, avec un comportement différent. L'utilisation de l'importation simple ``import os`` évite ce problème.
 
 
-Pour illustrer quelques unes des fonctionnalités de ce module, une mise en perspective  d'opérations équivalentes réalisés en *shell* (bash) et en Python:
+.. include:: _filestuff.RST
 
-Accès à l'environnement (variable *PATH*) en *bash*:
-
-::
-
-   $ echo $PATH
-   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games
-
-En Python:
-
-::
-
-   >>> os.environ['PATH']
-   '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games'
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os** *[2]*
-
-Manipulation de répertoires en bash:
-
-::
-
-   poli@host:~$ cd /tmp
-   poli@host:/tmp$ mkdir testpy
-   poli@host:/tmp$ cd testpy/
-   poli@host:/tmp/testpy$ pwd
-   /tmp/testpy
-   poli@host:/tmp/testpy$ cd ..
-   poli@host:/tmp$ pwd
-   /tmp
-   poli@host:/tmp$ rmdir testpy
-   poli@host:/tmp$
-
-
-
-
-L'équivalent en Python:
-
-::
-
-   >>> import os
-   >>> os.chdir('/tmp/') # 'cd /tmp'
-   >>> os.mkdir('testpy') # 'mkdir testpy'
-   >>> os.chdir('testpy') # 'cd testpy'
-   >>> os.getcwd()        # 'pwd'
-   '/tmp/testpy'          
-   >>> os.chdir('..')     # 'cd ..'
-   >>> os.getcwd()        # 'pwd'
-   '/tmp'
-   >>> os.rmdir('testpy') # 'rmdir testpy'
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os** *[3]*
-
-Autres manipulations simples sur des fichiers en bash :
-
-::
-
-   $ ls /tmp/
-   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy.txt
-   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
-   $ mv /tmp/testpy.txt /tmp/testpy2.txt
-   $ ls /tmp/
-   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy2.txt
-   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
-   $ rm /tmp/testpy2.txt 
-   $ ls /tmp/
-   keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log
-   plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
-
-Et leur équivalent en Python:
-
-::
-
-   >>> os.listdir("/tmp/") # 'ls /tmp/' ('ls' -A plus précisément)
-   ['RewriteLog.log', 'testpy.txt', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'pulse-2L9K88eMlGn7']
-   >>> os.rename("/tmp/testpy.txt", "/tmp/testpy2.txt") # 'mv /tmp/testpy.txt /tmp/testpy2.txt'
-   >>> os.listdir("/tmp/") # 'ls /tmp/'
-   ['RewriteLog.log', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'testpy2.txt', 'pulse-2L9K88eMlGn7']
-   >>> os.remove("/tmp/testpy2.txt") # 'rm /tmp/testpy2.txt'
-   >>> os.listdir("/tmp/")
-   ['RewriteLog.log', 'ssh-lPLxInqU2454', 'plugtmp', 'keyring-uCfKvw', 'pulse-PKdhtXMmr18n', 'pulse-2L9K88eMlGn7']
-
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os** *[4]*
-
-Autres fonctions utiles:
-
-::
-
-   os.makedirs("dir1/dir2/.../cible")
-
-L'effet de cette fonction est équivalent à celui de la commande (Linux/Unix) ``mkdir -p ...`` : elle crée le répertoire cible ainsi que tous les répertoires intermédiaires s'ils n'existent pas:
-
-::
-
-   >>> os.path.exists("/tmp/")
-   True
-   >>> os.path.exists("/tmp/dir1")
-   False
-   >>> os.makedirs("/tmp/dir1/dir2/cible")
-   >>> os.path.exists("/tmp/dir1")
-   True
-   >>> os.path.exists("/tmp/dir1/dir2")
-   True
-   >>> os.path.exists("/tmp/dir1/dir2/cible")
-   True
-   >>> 
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os** *[5]*
+.. slide_mark_b :Le module **os** {tcnt_}
 
 ::
 
@@ -347,7 +594,7 @@ Les options:
 * followlinks : suivi des liens symboliques (si *True*). Peut provoquer une récursion infinie en cas de liens cycliques
 
 .. slide_mark_e
-.. slide_mark_b :Le module **os** *[6]*
+.. slide_mark_b :Le module **os** {tcnt_}
 
 Exemples:
 
@@ -380,7 +627,7 @@ Exemples:
 
 
 .. slide_mark_e
-.. slide_mark_b :Le module **os** *[7]*
+.. slide_mark_b :Le module **os** {tcnt_}
 
 
 .. admonition:: A manipuler avec précaution
@@ -391,125 +638,7 @@ Exemples:
 
 .. slide_mark_e
 
-Le module **os.path**
-=====================
-
-.. slide_mark_b :Le module **os.path**
-
-Ce module est dédié à la manipulation des chemins dans le système de fichiers.
-
-::
-
-   >>> import os
-   >>> os.getcwd()
-   '/usr/lib/python2.7'
-   >>> import os.path
-   >>> os.path.abspath("code.py") # construit le chemin absolue en fonction de l'emplacement courant
-   '/usr/lib/python2.7/code.py'
-   >>> os.path.basename('/usr/lib/python2.7/code.py') # ~ basename cmd
-   'code.py'
-   >>> os.path.dirname('/usr/lib/python2.7/code.py') # ~ dirname cmd
-   '/usr/lib/python2.7'
-   >>> os.path.split('/usr/lib/python2.7/code.py') # (dirname, basename)
-   ('/usr/lib/python2.7', 'code.py')
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os.path** *[2]*
-
-Les fonction suivantes permettent de tester le type d'objet (répertoire, fichier, lien etc.) désigné par un chemin:
-
-::
-
-   >>> os.path.exists('/usr/lib/python2.7/code.py')
-   True
-   >>> os.path.exists('/usr/lib/python2.7/foobar.py')
-   False
-   >>> os.path.isfile('/usr/lib/python2.7/code.py')
-   True
-   >>> os.path.isdir('/usr/lib/python2.7/code.py')
-   False
-   >>> os.path.isdir('/usr/lib/python2.7')
-   True
-   >>> os.path.islink('/usr/lib/python2.7/code.py')
-   False
-   >>> 
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os.path** *[3]*
-
-Pour la portabilité, il est préférable d'utiliser *os.path.join(...)* pour construire des chemins:
-
-::
-
-   >>> os.path.join('/tmp','foo','bar')
-   '/tmp/foo/bar'
-
-.. admonition:: Attention
-   :class: warning
-
-   Si un chemin absolu est fourni, tous les éléments qui le précédent sont ignorés silencieusement:
-
-
-::
-
-   >>> os.path.join('tmp','/foo','bar')
-   '/foo/bar'
-   >>> os.path.join('/tmp','/foo','bar')
-   '/foo/bar'
-   >>> 
-
-.. slide_mark_e
-.. slide_mark_b :Le module **os.path** *[4]*
-
-La fonction ``os.path.normpath()`` élimine les redondances pour ramener le chemin au format "canonique":
-
-::
-
-   >>> os.path.normpath('/usr/../usr/lib//python2.7/./code.py')
-   '/usr/lib/python2.7/code.py'
-   >>>
-
-**NB:** Sous Windows cette fonction transforme les **/** en **\\**. Pour les OS "case insesitive" la fonction *os.path.normcase()* permet de passer les noms en minuscules.
-
-.. slide_mark_e
- 
-Utilisation du caractère "joker"
-================================
-
-.. slide_mark_b :Utilisation du caractère "joker"
-
-La fonction *glob.glob()* permet de lister le contenu d'un répertoire avec un filtre:
-
-::
-
-   >>> import glob
-   >>> glob.glob("/usr/lib/python2.7/b*py")
-   ['/usr/lib/python2.7/binhex.py', '/usr/lib/python2.7/bdb.py', '/usr/lib/python2.7/base64.py', '/usr/lib/python2.7/bisect.py']
-
-.. slide_mark_e
-
-Des fonctions de plus haut niveau
-=================================
-
-.. slide_mark_b :Des fonctions de plus haut niveau
-
-Le module *shutil* fournit des fonctions de manipulation de fichiers (copie, suppression) d'un niveau d'abstraction plus proche des commandes système.
-
-+------------------------------+------------------------------------------------------------------------+
-| Fonction                     |Description                                                             |
-+==============================+========================================================================+
-| shutil.copy(src, dst)        | Copie un fichier avec les permissions. *dst* peut être un répertoire   |
-+------------------------------+------------------------------------------------------------------------+
-| shutil.copymode(src, dst)    | Copie les permissions **seules** entre *src* et *dst*                  |
-+------------------------------+------------------------------------------------------------------------+
-| shutil.copystat(src, dst)    | Copie les permissions+infos temps(dernier accès/modification)+flags    |
-+------------------------------+------------------------------------------------------------------------+
-| shutil.copy2(src, dst)       | Équivalent copy() + copystat()                                         |
-+------------------------------+------------------------------------------------------------------------+
-
-**NB:** shutil contient d'autres fonctions puissantes, permettant la copie et la suppression d'arborescences de fichiers, à manipuler avec précaution.
-
-.. slide_mark_e
+.. include:: _filestuff2.RST   
 
 *******************
 Les (sous)processus
@@ -544,7 +673,7 @@ Cette fonction:
 * renvoie le code de retour système
 
 .. slide_mark_e
-.. slide_mark_b :Les (sous)processus *[2]*
+.. slide_mark_b :Les (sous)processus {tcnt_}
 
 ::
 
@@ -564,7 +693,7 @@ Cette fonction:
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Les (sous)processus *[3]*
+.. slide_mark_b :Les (sous)processus {tcnt_}
 
 ::
 
@@ -584,7 +713,7 @@ Effectue le même traitement que *subprocess.call()* mais lève une exception si
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Les (sous)processus *[4]*
+.. slide_mark_b :Les (sous)processus {tcnt_}
 
 ::
 
@@ -628,12 +757,13 @@ L'accès à Internet en http
 
 .. slide_mark_b :L'accès à Internet en http
 
-Un module simple permettant de faire des requêtes *http* est *urllib2*. Pour une utilisation basique il suffit de passer une *url* en argument à la fonction *urlopen()* qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:
+Un module simple permettant de faire des requêtes *http* est *urllib.request* (*urllib2* en *Python 2.7.x*). Pour une utilisation basique il suffit de passer une *url* en argument à la fonction *urlopen()* qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:
 
 ::
 
-   >>> import urllib2
-   >>> i = urllib2.urlopen("http://example.org")
+   >>> from urllib.request import urlopen # for Python 3.x
+   >>> #from import urllib2 import urlopen # for Python 2.7.x
+   >>> i = urlopen("http://example.org")
    >>> next(i)
    '<!doctype html>\n'
    >>> next(i)
@@ -646,7 +776,7 @@ On peut également récupérer le résultat d'un coup:
 
 ::
 
-   >>> urllib2.urlopen("http://example.org").read()
+   >>> urlopen("http://example.org").read()
    '<!doctype html>\n<html>\n<head>\n ...
 
 .. slide_mark_e
@@ -666,12 +796,12 @@ Les formats courants sont supportés:
 * zipfile 
 * tarfile
 
-Illustration, avec une belle citation de *Boby Lapointe* :
+Illustration  :
 
 ::
 
    >>> import zlib
-   >>> citation = "Davantage d'avantages avantagent davantage."
+   >>> citation = b"Davantage d'avantages avantagent davantage." # Boby Lapointe
    >>> len(citation)
    43
    >>> zipped = zlib.compress(citation)
@@ -720,7 +850,7 @@ Résultat :
    logs = /var/log/mysrv
 
 .. slide_mark_e
-.. slide_mark_b :**ConfigParser** *[2]*
+.. slide_mark_b :**ConfigParser** {tcnt_}
 
 Pour parser le fichier de configuration précédent:
 

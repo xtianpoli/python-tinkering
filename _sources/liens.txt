@@ -4,52 +4,62 @@ Quelques liens utiles
 
 .. slide_mark_b :Quelques liens utiles
 
-Il y a beaucoup d'information utiles sur https://www.python.org/documentation/ et en particulier:
+Il y a beaucoup d'information utiles sur https://www.python.org/doc/ et en particulier:
 
 * The Python Language Reference:
 
-  * version 2 : http://docs.python.org/2/reference/
   * version 3 : http://docs.python.org/3/reference/
+  * version 2 : http://docs.python.org/2/reference/
 * Les tutoriels et les FAQs de la "Python Software Foundation" :
 
-  * version 2 : http://docs.python.org/2/tutorial/
   * version 3 : http://docs.python.org/3/tutorial/
+  * version 2 : http://docs.python.org/2/tutorial/
+
 
 Un cours introductif en français : 
 
 * http://perso.limsi.fr/pointal/python:courspython3
 
 .. slide_mark_e
-.. slide_mark_b :Quelques liens utiles *[2]*
+.. slide_mark_b :Quelques liens utiles {tcnt_}
 
 "Think Python" ou "How to Think Like a Computer Scientist" by Allen B. Downey :
 
-* http://www.greenteapress.com/thinkpython/thinkpython.html
+* http://greenteapress.com/wp/think-python-2e/  
+  
+.. Les ressources didactiques Gérard Swinnen :
 
-  
-  
-  
-Les ressources didactiques Gérard Swinnen :
-
-* http://inforef.be/swi/python.htm
+.. * http ://inforef.be/swi/python.htm # 2012
 
 L'Association Francophone Python :
 
 * http://www.afpy.org/
 
 .. slide_mark_e
-.. slide_mark_b :Quelques liens utiles *[3]*
+.. slide_mark_b :Quelques liens utiles {tcnt_}
 
-"Dive Into Python 3" by  Mark Pilgrim :
+.. "Dive Into Python 3" by  Mark Pilgrim :
 
-* http://www.diveintopython3.net/
+.. * http ://www.diveintopython3.net/ #2011?
 
-Des nombreuses ressources aussi sur :
+.. Des nombreuses ressources aussi sur :
 
-* http://pythonbooks.revolunet.com/
+.. * http ://pythonbooks.revolunet.com/
 
+.. "Think Python: How to Think Like a Computer Scientist" by Allen B. Downey
+.. * http ://greenteapress.com/thinkpython2/html/index.html
+.. http: //anandology.com/
+   
+"How to Make Mistakes in Python" by Mike Pirnat
+
+* http://www.oreilly.com/programming/free/files/how-to-make-mistakes-in-python.pdf
+  
+"Functional Programming in Python" by David Mertz
+
+* http://www.oreilly.com/programming/free/files/functional-programming-python.pdf
+  
 .. slide_mark_e
-.. slide_mark_b :Quelques liens utiles *[4]*
+.. slide_mark_b :Quelques liens utiles {tcnt_}
   
 Pour découvrir les bibliothèques pour le calcul scientifique:
 
@@ -58,4 +68,24 @@ Pour découvrir les bibliothèques pour le calcul scientifique:
 * Formation à Python scientifique - ENS Paris
   http://python-prepa.github.io/index.html
     
+.. slide_mark_e
+.. slide_mark_b :Quelques liens utiles {tcnt_}
+  
+Quelques blogs :
+
+* Nouvelles du SED, Billets de veille
+  https://sed.saclay.inria.fr/topic_veille.html
+* Sebastian Raschka's Blog
+  http://sebastianraschka.com/blog/index.html
+* Laurent Luce's Blog
+  http://www.laurentluce.com/
+
+
+Python en ligne :
+
+* Brython
+  https://brython.info/
+* repl.it
+  https://repl.it/languages/python3
+  
 .. slide_mark_e

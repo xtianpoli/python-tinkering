@@ -37,7 +37,7 @@ Python en quelques phrases
 
 .. slide_mark_b :Python en quelques phrases
 
-Les langages sont souvent classifiés en fonction de leux expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :
+Les langages sont souvent classifiés en fonction de leur expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :
 
 * **"bas niveau"** expressivité faible, grande dépendance par rapport à l'architecture de la machine (assembleur,...)
 * **"haut niveau"** bonne expressivité mais une certaine dépendance rapport  à la couche matérielle subsiste (la majeure partie des langages)
@@ -64,13 +64,18 @@ Python est également:
 * Existe sur différents OS, supporte bien l'intégration avec d'autres langages et fait l'objet de plusieurs implémentations:
 
   * **Cpython:** implémentation de référence (en **C**), la plus répandue
-  * **Pypy:** projet *R&D* visant une implémentation haute performance 
+  * **PyPy:** projet *R&D* visant une implémentation haute performance 
   * **Jython:** implémentation exécutable sur la machine virtuelle **Java(TM)**
   * **IronPython:** implémentation pour **.NET**
   * **Stackless Python:** variante de **Python**, implémentant des **micro-threads**
+  * **MicroPython:** pour micro-contrôleurs
+  * **Brython, PyPy.js, Skulpt:** implémentations en **JavaScript**
 
-* Son typage est fort, mais dynamique (**duck typing**)
-  
+* Il est typé, mais son typage est dynamique (**duck typing**)
+
+.. slide_mark_e
+.. slide_mark_b :Duck typing
+
 .. admonition:: Duck typing
    :class: note
 
@@ -88,8 +93,8 @@ Python est également:
 
 * Les usages de Python sont diverses:
 
+  * Calcul scientifique (avec des bibliothèques comme numpy, scipy, Pandas, scikit-learn)
   * Programmation système: utilisation de Python en tant que "super-shell"
-  * Calcul numérique (numpy, scipy)
   * Développement réseau et web (twisted, django, flask, pyramid)
 
 * Son évolution est gérée par la Python Software Fundation (PSF)
@@ -165,7 +170,7 @@ Depuis 2008 on assiste à la coexistence de deux versions : la version 3 fait so
 .. slide_mark_b :Depuis 2008, deux versions...
 
 * Python 2.6 - octobre 2008
-* Python 2.7 - juillet 2010
+* Python 2.7 - juillet 2010, **fin annoncé pour 2020** (cf. `PEP 373 <https://www.python.org/dev/peps/pep-0373/>`_)
 
 * Python 3.0 - décembre 2008
 
@@ -173,7 +178,8 @@ Depuis 2008 on assiste à la coexistence de deux versions : la version 3 fait so
   * Python 3.2 - février 2011
   * Python 3.3 - septembre 2012
   * Python 3.4 - mars 2014
-  * Python 3.5 - septembre 2015    
+  * Python 3.5 - septembre 2015
+  * Python 3.6.0b4 - novembre 2016     
 
 Pour prendre en compte cette situation de fait, le présent support met en perspective les deux versions.
 
@@ -201,12 +207,12 @@ Malgré leurs syntaxes très différentes, les similarités entre les deux langa
 
 * **Compilation :** Les deux langages sont compilés vers un "bytecode", mais la compilation de Python (contrairement à celle de Java) n'est pas distincte de l'exécution. Entre autres, il n'y a pas de notion de "directive de compilation" dans Python.
 
-* **Typage :** Les deux langages sont fortement typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n'est pas un langage non typé!
+* **Typage :** Les deux langages sont typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n'est pas un langage non typé!
 
 .. slide_mark_e
-.. slide_mark_b :Python et Java(2)
+.. slide_mark_b :Python et Java {tcnt_}
 
-* **Affectation, passage d'arguments, retour des fonctions :** Les deux langages implémentent la sémantique par *référence uniforme*, mais :
+* **Affectation, passage d'arguments, retour des fonctions :** Les deux langages implémentent l'approche `sémantique par référence uniforme <http://dept-info.labri.fr/ENSEIGNEMENT/INITINFO/initinfo/supports/book/node64.html>`_, mais :
 
   * partiellement en Java, où les types numériques disposent également d'une représentation alternative, non-objet, pour les entiers et les flottants
   * intégralement  dans Python où tout est objet de première classe (y compris les entiers, les fonctions etc.)
@@ -214,7 +220,7 @@ Malgré leurs syntaxes très différentes, les similarités entre les deux langa
 * **Gestion de la mémoire :** les deux disposent d'un garbage collector (ramassage de miettes)
 
 .. slide_mark_e
-.. slide_mark_b :Python et Java(3)
+.. slide_mark_b :Python et Java {tcnt_}
 
 * **Modèle objet :** 
 
@@ -228,12 +234,29 @@ Malgré leurs syntaxes très différentes, les similarités entre les deux langa
 
 .. slide_mark_e
 
+Python et C
+===========
+
+.. slide_mark_b :Python et C
+
+Les similarités dans la forme (syntaxe, typage etc.) sont peu nombreuses...
+
+Pourtant les deux langages sont assez proches dans leurs "esprits" respectifs. En effet, "l'esprit du C" tel qu'il a été défini dans le `standard du langage <http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf>`_  se retrouve en grande partie dans Python. Il a été résumé par les auteurs en  quelques phrases : 
+
+* Trust the programmer. 
+* Don’t prevent the programmer from doing what needs to be done. 
+* Keep the language small and simple. 
+* Provide only one way to do an operation.  
+* Make it fast, even if it is not guaranteed to be portable.
+
+.. slide_mark_e
+
 Python et C++
 =============
 
 .. slide_mark_b :Python et C++
 
-Les similarités entre Python et C++ sont moins nombreuses, mais elles méritent d'être soulignées :
+Les similarités entre Python et C++  méritent aussi d'être soulignées :
 
  * Les deux langages sont multi-paradigme
  * Python, tout comme le C++, supporte la surcharge des opérateurs, à l'exception de celle de l'opérateur d'affectation (non supportée par Python).
@@ -247,9 +270,28 @@ Python et Bash
 .. slide_mark_b :Python et Bash
 
 * Les deux langages ont en commun la possibilité d'être utilisés en mode interactif
-* Certains aspects de la syntaxe de *Python* rappellent le *Bash* et le langages de script en général : par exemple, les instructions Python se terminent par un retour à la ligne, comme les instructions *Bash*.
+* Certains aspects de la syntaxe de *Python* rappellent le *Bash* et le langages de script en général : l'esprit du langage encourage l'écriture d'une instruction par ligne ("Sparse is better than dense (le Zen)"), les instructions Python se terminent par un retour à la ligne, comme les instructions *Bash*.
 * Python, comme Bash, exécute les instructions présentes dans un script au chargement, sans faire intervenir une fonction spéciale, comme la fonction  "main" présente en  C/C++)
 
+.. slide_mark_e
+
+Python et R
+===========
+
+.. slide_mark_b :Python et R
+
+Similitudes:
+
+* Les deux langages sont de "très haut niveau" (prennent en charge la gestion de la mémoire, ont des types numériques indépendants de l'architecture matérielle etc.)
+* Ont des facilités pour la manipulation des vecteurs (syntaxe pour le "slicing", types prédéfinis)
+* Bénéficient de bibliothèques de calcul scientifique riches.
+* Les deux langage sont orientés objets avec héritage multiple (modèle dit **"S4"** dans **R**)
+
+Différences :
+
+* Dans **Python** les copies d'objets sont toujours explicites (car "Explicit is better than implicit." cf. le Zen), alors que dans **R** on dispose de mécanismes de copie "paresseuse" (copy on write)
+* Le premier index d'un tableau en Python est **0** comme en **C**, alors qu'en **R** est **1**.
+  
 .. slide_mark_e
 
 
@@ -259,7 +301,7 @@ Découverte de l'interpréteur, premiers programmes
 
 .. slide_mark_b :Découverte de l'interpréteur...
 
-Comme dans bien d'autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique.
+Comme dans bien d'autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique (Exemple: les fonctions sont des objets, qui à leur tour contiennent des méthodes qui sont des fonctions...).
 
 Pour cette raison, avant d'aller plus loin, on va introduire provisoirement, de manière informelle et simplifiée, quelques notions indispensables, sachant que sur la plupart de ces notions on va revenir d'une manière plus rigoureuse dans la suite de ce document.
 
@@ -302,7 +344,7 @@ Afin de permettre le travail en mode interactif, l'interpréteur est prévu d'un
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Exécution interactive(2)
+.. slide_mark_b :Exécution interactive {tcnt_}
 
 En mode interactif une expression est évaluée après le retour à la ligne. Si elle n'apparaît pas dans une affectation (à droite du signe "="), le résultat de l'évaluation est affiché.
 
@@ -351,7 +393,7 @@ Avec **ipython** on bénéficiera de l'auto-complétion et on aura accès aux co
 .. slide_mark_e
 .. slide_mark_b :Exécution interactive, Python3
 
-A l'heure actuelle (fin 2015) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut.
+A l'heure actuelle (fin 2016) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut (`PEP 394 <https://www.python.org/dev/peps/pep-0394/>`_).
 
 
 ::
@@ -367,7 +409,7 @@ A l'heure actuelle (fin 2015) les principales distributions Linux intègrent tou
 
 Dans l'exemple on rencontre une première incompatibilité entre les versions 2 et 3 de Python ; l'instruction "print" devient une fonction dans la version 3: 
 
-.. slide_mark_b :Exécution interactive, Python3(2)
+.. slide_mark_b :Exécution interactive, Python3 {tcnt_}
 .. slide_insertion:L'instruction "print" devient une fonction dans la version 3
 
 ::
@@ -407,7 +449,7 @@ L'indentation détermine les blocs d'instructions, au même titre que les accola
 
 ::
 
-   >>> #tentative d'écrire une boucle sans indentation:
+   >>> # tentative d'écrire une boucle sans indentation:
    ... for x in [1,2,3]:
    ... print(x)
    File "<stdin>", line 3
@@ -416,11 +458,12 @@ L'indentation détermine les blocs d'instructions, au même titre que les accola
    IndentationError: expected an indented block
 
 .. slide_mark_e
-.. slide_mark_b :Le rôle de l'indentation(2)
+.. slide_mark_b :Le rôle de l'indentation {tcnt_}
 
 ::
 
    >>> #...et avec indentation:
+   >>> # "Readability counts." (le Zen)      
    ... for x in [1,2,3]:
    ...     print(x)
    ... 
@@ -449,7 +492,7 @@ Le code source contenu dans un fichier est exécuté s'il est présent sur la li
 
 
 .. slide_mark_e
-.. slide_mark_b :Exécution à partir d'un fichier source[2]
+.. slide_mark_b :Exécution à partir d'un fichier source {tcnt_}
 
 **Sous Linux**, ou tout autre environnement "UNIX-like", on peut rendre le fichier directement exécutable (sans avoir à le passer en argument à l'exécutable *python*):
 

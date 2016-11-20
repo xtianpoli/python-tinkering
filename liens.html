@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -60,16 +62,16 @@
             
   <div class="section" id="quelques-liens-utiles">
 <h1>Quelques liens utiles<a class="headerlink" href="#quelques-liens-utiles" title="Permalink to this headline">¶</a></h1>
-<p>Il y a beaucoup d&#8217;information utiles sur <a class="reference external" href="https://www.python.org/documentation/">https://www.python.org/documentation/</a> et en particulier:</p>
+<p>Il y a beaucoup d&#8217;information utiles sur <a class="reference external" href="https://www.python.org/doc/">https://www.python.org/doc/</a> et en particulier:</p>
 <ul class="simple">
 <li>The Python Language Reference:<ul>
-<li>version 2 : <a class="reference external" href="http://docs.python.org/2/reference/">http://docs.python.org/2/reference/</a></li>
 <li>version 3 : <a class="reference external" href="http://docs.python.org/3/reference/">http://docs.python.org/3/reference/</a></li>
+<li>version 2 : <a class="reference external" href="http://docs.python.org/2/reference/">http://docs.python.org/2/reference/</a></li>
 </ul>
 </li>
 <li>Les tutoriels et les FAQs de la &#8220;Python Software Foundation&#8221; :<ul>
-<li>version 2 : <a class="reference external" href="http://docs.python.org/2/tutorial/">http://docs.python.org/2/tutorial/</a></li>
 <li>version 3 : <a class="reference external" href="http://docs.python.org/3/tutorial/">http://docs.python.org/3/tutorial/</a></li>
+<li>version 2 : <a class="reference external" href="http://docs.python.org/2/tutorial/">http://docs.python.org/2/tutorial/</a></li>
 </ul>
 </li>
 </ul>
@@ -79,23 +81,19 @@
 </ul>
 <p>&#8220;Think Python&#8221; ou &#8220;How to Think Like a Computer Scientist&#8221; by Allen B. Downey :</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.greenteapress.com/thinkpython/thinkpython.html">http://www.greenteapress.com/thinkpython/thinkpython.html</a></li>
-</ul>
-<p>Les ressources didactiques Gérard Swinnen :</p>
-<ul class="simple">
-<li><a class="reference external" href="http://inforef.be/swi/python.htm">http://inforef.be/swi/python.htm</a></li>
+<li><a class="reference external" href="http://greenteapress.com/wp/think-python-2e/">http://greenteapress.com/wp/think-python-2e/</a></li>
 </ul>
 <p>L&#8217;Association Francophone Python :</p>
 <ul class="simple">
 <li><a class="reference external" href="http://www.afpy.org/">http://www.afpy.org/</a></li>
 </ul>
-<p>&#8220;Dive Into Python 3&#8221; by  Mark Pilgrim :</p>
+<p>&#8220;How to Make Mistakes in Python&#8221; by Mike Pirnat</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.diveintopython3.net/">http://www.diveintopython3.net/</a></li>
+<li><a class="reference external" href="http://www.oreilly.com/programming/free/files/how-to-make-mistakes-in-python.pdf">http://www.oreilly.com/programming/free/files/how-to-make-mistakes-in-python.pdf</a></li>
 </ul>
-<p>Des nombreuses ressources aussi sur :</p>
+<p>&#8220;Functional Programming in Python&#8221; by David Mertz</p>
 <ul class="simple">
-<li><a class="reference external" href="http://pythonbooks.revolunet.com/">http://pythonbooks.revolunet.com/</a></li>
+<li><a class="reference external" href="http://www.oreilly.com/programming/free/files/functional-programming-python.pdf">http://www.oreilly.com/programming/free/files/functional-programming-python.pdf</a></li>
 </ul>
 <p>Pour découvrir les bibliothèques pour le calcul scientifique:</p>
 <ul class="simple">
@@ -103,6 +101,22 @@
 <a class="reference external" href="http://www.scipy-lectures.org/">http://www.scipy-lectures.org/</a></li>
 <li>Formation à Python scientifique - ENS Paris
 <a class="reference external" href="http://python-prepa.github.io/index.html">http://python-prepa.github.io/index.html</a></li>
+</ul>
+<p>Quelques blogs :</p>
+<ul class="simple">
+<li>Nouvelles du SED, Billets de veille
+<a class="reference external" href="https://sed.saclay.inria.fr/topic_veille.html">https://sed.saclay.inria.fr/topic_veille.html</a></li>
+<li>Sebastian Raschka&#8217;s Blog
+<a class="reference external" href="http://sebastianraschka.com/blog/index.html">http://sebastianraschka.com/blog/index.html</a></li>
+<li>Laurent Luce&#8217;s Blog
+<a class="reference external" href="http://www.laurentluce.com/">http://www.laurentluce.com/</a></li>
+</ul>
+<p>Python en ligne :</p>
+<ul class="simple">
+<li>Brython
+<a class="reference external" href="https://brython.info/">https://brython.info/</a></li>
+<li>repl.it
+<a class="reference external" href="https://repl.it/languages/python3">https://repl.it/languages/python3</a></li>
 </ul>
 </div>
 
@@ -150,29 +164,127 @@
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

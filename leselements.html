@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -62,10 +64,10 @@
 <h1>Les éléments du langage<a class="headerlink" href="#les-elements-du-langage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="une-vue-d-ensemble">
 <h2>Une vue d&#8217;ensemble<a class="headerlink" href="#une-vue-d-ensemble" title="Permalink to this headline">¶</a></h2>
-<p>L&#8217;objectif de cette section est d&#8217;introduire de manière succincte et parfois intuitive certaines notions qui seront précisées dans les chapitres suivants.</p>
+<p>L&#8217;objectif de cette section est d&#8217;introduire de manière succincte et parfois juste intuitive certaines notions qui seront précisées dans les chapitres suivants.</p>
 <div class="section" id="les-objets">
 <h3>Les objets<a class="headerlink" href="#les-objets" title="Permalink to this headline">¶</a></h3>
-<p>A ce stade on va se contenter de décrire les objets  <em>Python</em> d&#8217;une manière très simplifiée et souvent partielle, description sur laquelle on va revenir ultérieurement pour la parfaire.</p>
+<p>A ce stade on va se contenter de décrire les objets  <em>Python</em> d&#8217;une manière simplifiée et partielle, description sur laquelle on va revenir ultérieurement pour la parfaire.</p>
 <p>On va considérer pour l&#8217;instant l&#8217;objet comme une entité ayant une structure composé de:</p>
 <ul class="simple">
 <li>données accessibles par des noms appelés <strong>attributs</strong> (Notation: <em>objet.attribut</em> )</li>
@@ -119,19 +121,19 @@
 </div>
 </div>
 </div>
-<div class="section" id="la-reference-uniforme-en-python">
-<h3>La référence uniforme en Python<a class="headerlink" href="#la-reference-uniforme-en-python" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="le-modele-reference-uniforme-en-python">
+<h3>Le modèle référence uniforme en Python<a class="headerlink" href="#le-modele-reference-uniforme-en-python" title="Permalink to this headline">¶</a></h3>
 <p>En Python, tout est objet de &#8220;première classe&#8221;, du simple entier jusqu&#8217;à la fonction.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Un objet de première classe (&#8220;first class object&#8221;) est un objet qui peut être affecté à une variable, passé en paramètre à une fonction ou retourné par une fonction (cf. Raphael Finkel)</p>
 </div>
-<p>Les langages de programmation peuvent manipuler les données de deux manières:</p>
+<p>Les langages de programmation peuvent manipuler les données de <a class="reference external" href="http://dept-info.labri.fr/ENSEIGNEMENT/INITINFO/initinfo/supports/book/node64.html">deux manières</a> :</p>
 <ul class="simple">
-<li>par valeur (par exemple, les entiers dans le langage <strong>C</strong>)</li>
-<li>par référence (Java, C++).</li>
+<li>par valeur ou par copie (par exemple, les entiers (<strong>int</strong>) dans le langage <strong>C</strong>, <strong>Java</strong>). On parle aussi de &#8220;sémantique valeur&#8221; ou &#8220;sémantique par copie&#8221;.</li>
+<li>par référence, en préservant l&#8217;identité de l&#8217;objet(par exemple, les objets en Java). Appelée aussi &#8220;sémantique par référence uniforme&#8221;.</li>
 </ul>
-<p>En Python, toute donnée, même très simple, étant représentée sous forme d&#8217;objet, sa manipulation se fait toujours par référence, jamais par valeur, ce qui correspond à la sémantique de <strong>référence uniforme</strong>.</p>
+<p>En Python, toute donnée, même très simple, étant représentée sous forme d&#8217;objet, sa manipulation se fait toujours par référence, jamais par valeur, ce qui correspond à une <strong>sémantique par référence uniforme</strong>.</p>
 </div>
 <div class="section" id="les-variables">
 <h3>Les variables<a class="headerlink" href="#les-variables" title="Permalink to this headline">¶</a></h3>
@@ -239,10 +241,6 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <span class="go">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">*</span><span class="mi">2</span>
 <span class="go">4</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="mi">5</span><span class="o">/</span><span class="mi">3</span>
-<span class="go">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mf">5.0</span><span class="o">/</span><span class="mi">3</span>
 <span class="go">1.6666666666666667</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -296,7 +294,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <h4>Opérateurs logiques<a class="headerlink" href="#operateurs-logiques" title="Permalink to this headline">¶</a></h4>
 <p>En Python, les expressions suivante sont logiquement fausses: 0,&#8217;&#8216;,&#8221;&#8221;,[],(),{}, False</p>
 <p>Les opérateurs logiques sont: <strong>and</strong>, <strong>or</strong>, <strong>not</strong></p>
-<p>Les fonctions : any(c), all(c) appliquent <strong>or</strong> et <strong>and</strong>
+<p>Les fonctions : <strong>any(c)</strong>, <strong>all(c)</strong> appliquent <strong>or</strong> et <strong>and</strong>
 aux elements du conteneur <strong>c</strong> (par exemple, les éléments d&#8217;une liste):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="go">True</span>
@@ -338,6 +336,7 @@ aux elements du conteneur <strong>c</strong> (par exemple, les éléments d&#821
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;Simple is better than complex.&quot; (le Zen)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">a</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
 <span class="go">2</span>
@@ -348,7 +347,7 @@ aux elements du conteneur <strong>c</strong> (par exemple, les éléments d&#821
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p><strong>NB:</strong> Cette écriture fait intervenir le type <strong>tuple</strong> qui sera évoqué plus loin.</p>
+<p><strong>NB:</strong> Cette écriture (appelée aussi <strong>&#8220;unpacking&#8221;</strong>) fait intervenir le type <strong>tuple</strong> qui sera évoqué plus loin.</p>
 <p>Une autre écriture qu&#8217;on peut qualifier d&#8217;affectation multiple:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
@@ -359,6 +358,46 @@ aux elements du conteneur <strong>c</strong> (par exemple, les éléments d&#821
 </pre></div>
 </div>
 <p>Pour en savoir plus: <a class="reference external" href="http://docs.python.org/3/reference/simple_stmts.html">http://docs.python.org/3/reference/simple_stmts.html</a></p>
+<p><strong>Exercice</strong></p>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: references.py</span>
+
+<span class="sd">Soit deux listes d&#39;entiers a = [1, 2]  et b = [3, 4] ainsi que x, la liste des des deux premières :</span>
+
+<span class="sd">&gt;&gt;&gt; a = [1, 2]</span>
+<span class="sd">&gt;&gt;&gt; b = [3, 4]</span>
+<span class="sd">&gt;&gt;&gt; x = [a, b]</span>
+<span class="sd">&gt;&gt;&gt; print(x)</span>
+<span class="sd">[[1, 2], [3, 4]]</span>
+
+<span class="sd">Sans réaffecter x (sans le faire apparaître à la gauche du signe égal</span>
+<span class="sd">i.e. sans &quot;x = ...&quot; ou &quot;x[...] = ...&quot;), faites les affectations nécessaires</span>
+<span class="sd">(uniquement des affectations!) pour que print(x) affiche [[3, 4], [1, 2]]</span>
+<span class="sd">NB: seulement 2 affectations sont suffisantes !</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: references_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># initialisation :</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c"># solution :</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+<span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="les-instructions-composees">
 <h4>Les instructions composées<a class="headerlink" href="#les-instructions-composees" title="Permalink to this headline">¶</a></h4>
@@ -434,7 +473,7 @@ $ ./echo2.py
 ça va?
 </pre></div>
 </div>
-<p><strong>Exemple en Python 3.4.x</strong></p>
+<p><strong>Exemple en Python 3.x</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>$ cat echo3.py
 #!/usr/bin/env python3
 
@@ -449,6 +488,111 @@ $ ./echo3.py
 </div>
 <div class="section" id="les-structures-de-controle">
 <h2>Les structures de contrôle<a class="headerlink" href="#les-structures-de-controle" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generalites">
+<h3>Généralités<a class="headerlink" href="#generalites" title="Permalink to this headline">¶</a></h3>
+<p>Les structures de contrôle de <strong>Python</strong> sont essentiellement les mêmes que dans la plupart des langages de programmation actuels (C/C++, Java etc.) à quelques détails près.</p>
+<p>Comme dans d&#8217;autres langages, chaque structure de contrôle est identifiée par un groupe de mots clé et peut contenir un ou plusieurs blocs d&#8217;instructions.</p>
+<p>La principale particularité syntaxique des structures de contrôle <strong>Python</strong> est le rôle joué par l&#8217;indentation du code qui est est obligatoire.</p>
+<p>Pendant que dans d&#8217;autres langages les blocs d&#8217;instructions sont délimités par des accolades ou autres parenthèses, dans Python le bloc est identifié par un niveau d&#8217;indentation supérieur à celui de la ligne précédant le bloc (cette ligne, qui introduit le bloc, commence <strong>toujours</strong> par <strong>un mot clé</strong> et se termine <strong>toujours</strong> par <strong>&#8221;:&#8221;</strong> (deux points).</p>
+<p><strong>Ilustration :</strong></p>
+<div class="highlight-c"><div class="highlight"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="cm">/**</span>
+<span class="cm">   Exemple simple en C</span>
+<span class="cm">*/</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">(){</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+      <span class="n">acc</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Sum: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-c"><div class="highlight"><pre><span class="cp">#</span>
+<span class="cp"># Le même exemple en R</span>
+<span class="cp">#</span>
+
+<span class="n">acc</span> <span class="o">&lt;-</span> <span class="mi">0</span>
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="mi">0</span><span class="o">:</span><span class="mi">9</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">%%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+      <span class="n">acc</span> <span class="o">&lt;-</span> <span class="n">acc</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="n">print</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="s">&quot;Sum: &quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#</span>
+<span class="c"># Le même exemple en Python</span>
+<span class="c">#</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sum: </span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">acc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Exercice</strong></p>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: simplex.py</span>
+
+<span class="sd">A première vue, Python présente-t-il des ressemblances avec votre langage favori?</span>
+
+<span class="sd">Pouvez-vous écrire, en vous inspirant de l&#39;ilustration précédente, un programme simple</span>
+<span class="sd">qui affiche les 12 premiers termes d&#39;une suite de nombres dont chaque terme</span>
+<span class="sd">est égal à la somme des deux précédents (i.e. une suite de Fibonacci).</span>
+
+<span class="sd">Utilisez l&#39;initialisation suivante:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">first</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">second</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: simplex_sol.py</span>
+<span class="sd">Solution naïve :</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">first</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">second</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="n">second</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">second</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">tmp</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: simplex_sol.py</span>
+<span class="sd">En utilisant l&#39;affectation multiple :</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">first</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">second</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">second</span><span class="p">,</span> <span class="n">first</span> <span class="o">+</span> <span class="n">second</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">second</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="structures-alternatives-if-elif-else">
 <h3>Structures alternatives (if-elif-else)<a class="headerlink" href="#structures-alternatives-if-elif-else" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre>if &lt;expr-0&gt;:
@@ -470,7 +614,7 @@ else: #optionnel
     &lt;statement&gt;
 </pre></div>
 </div>
-<p>Les blocs sont définis par l&#8217;indentation. Pour illustration, un exemple (artificiellement compliqué), qui implique deux niveaux de <strong>if-elif-else</strong> :</p>
+<p>Pour illustration, un exemple (artificiellement compliqué), qui implique deux niveaux de <strong>if-elif-else</strong> :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;x=&quot;</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">&quot;y=&quot;</span><span class="p">))</span>
 <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -520,9 +664,12 @@ Python permet d&#8217;écrire la même chose avec une syntaxe différente : <tt 
 </div>
 <div class="section" id="exceptions">
 <h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h3>
+<p><em>&#8220;Errors should never pass silently. (le Zen)&#8221;</em></p>
 <p>Contrairement aux erreurs de syntaxe qui sont détectées avant le début de l&#8217;exécution, les anomalies détectées pendant l&#8217;exécution activent des mécanismes spécifiques qui modifient le cours de l&#8217;exécution, qui ne peut pas se dérouler normalement.</p>
 <p>On va parler dans ce cas d&#8217;<strong>exceptions</strong> :</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; &quot;Python&quot;+3
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; # In the face of ambiguity,
+&gt;&gt;&gt; # refuse the temptation to guess. (le Zen)
+&gt;&gt;&gt; &quot;Python&quot;+3
 Traceback (most recent call last):
 File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 TypeError: cannot concatenate &#39;str&#39; and &#39;int&#39; objects
@@ -643,7 +790,47 @@ except (TypeError, ZeroDivisionError) [as err]:
 <div class="section" id="definir-des-exceptions">
 <h4>Définir des exceptions<a class="headerlink" href="#definir-des-exceptions" title="Permalink to this headline">¶</a></h4>
 <p>Les exceptions sont des classes héritant directement ou indirectement de la classe prédéfinie <em>Exception</em>. Le chapitre sur le modèle objet de Python expliquera en détail comment définir ses propres classes.</p>
-<p>Néanmoins, il convient de préciser que les exceptions prédéfinies sont déjà nombreuses et elles couvrent la plupart des situations pratiques. Plus de détails : <a class="reference external" href="http://docs.python.org/3.4/library/exceptions.html#exception-hierarchy">http://docs.python.org/3.4/library/exceptions.html#exception-hierarchy</a></p>
+<p>Néanmoins, il convient de préciser que les exceptions prédéfinies sont déjà nombreuses et elles couvrent la plupart des situations pratiques. Plus de détails : <a class="reference external" href="http://docs.python.org/3.5/library/exceptions.html#exception-hierarchy">http://docs.python.org/3.5/library/exceptions.html#exception-hierarchy</a></p>
+</div>
+<div class="section" id="exercice">
+<h4>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: interval.py</span>
+
+<span class="sd">Ecrire un petit programme qui :</span>
+
+<span class="sd">a) demande la saisie d&#39;un entier compris dans [-10, 10]</span>
+<span class="sd">b) convertit le résultat de la saisie avec int() ET il  traite l&#39;exception</span>
+<span class="sd">   ValueError en cas de saisie incorrecte en affichant un message approprié.</span>
+<span class="sd">   En cas de saisie incorrecte l&#39;exécution s&#39;arrête, sinon :</span>
+<span class="sd">c) vérifie si la valeur saisie est dans l&#39;intervale  [-10,10] et</span>
+<span class="sd">   affiche le résultat de ce test.</span>
+<span class="sd">&quot;&quot;&quot;</span>   
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: interval_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;Get an integer in [-10,10]&quot;</span>
+<span class="n">num_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_str</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">num_str</span><span class="p">,</span> <span class="s">&quot; is not a number&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span> <span class="c"># try..else</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">10</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; is NOT in  [-10,10]&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; IS in  [-10,10]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="la-structure-with">
@@ -673,7 +860,7 @@ except (TypeError, ZeroDivisionError) [as err]:
 </div>
 <ol class="arabic simple">
 <li><em>expression</em> est évaluée, le résultat étant un objet <strong>context manager</strong></li>
-<li>la méthode <em>__enter__()</em> est invoquée (sur l&#8217;objet  <strong>context manager</strong>). Elle peut effectuer, par exemple, l&#8217;ouverture d&#8217;un fichier, socket, connexion DB etc. Le retour de <em>__enter__()</em> est affecté à la variable <strong>var</strong> si elle est fournie (i.e. la partie &#8220;[as var]&#8221; est présente).</li>
+<li>la méthode <em>__enter__()</em> est invoquée (sur l&#8217;objet  <strong>context manager</strong>). Le retour de <em>__enter__()</em> est affecté à la variable <strong>var</strong> si elle est fournie (i.e. la partie &#8220;[as var]&#8221; est présente).</li>
 <li>le <strong>code</strong> est exécuté dans un bloc <strong>try-except-finally</strong></li>
 <li>la méthode <strong>__exit__()</strong> est appelée. En cas d&#8217;exception levée à l&#8217;exécution de <em>code</em> (3) l&#8217;appel contiendra trois informations décrivant l&#8217;exception: type, valeur, traceback. Dans ce cas, <em>__exit__()</em> peut retourner:<ul>
 <li><strong>False</strong> pour provoquer la propagation de l&#8217;exception par l&#8217;appelant</li>
@@ -744,6 +931,56 @@ else: # optionnel
 </pre></div>
 </div>
 </div>
+<div class="section" id="id1">
+<h4>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: loop.py</span>
+
+<span class="sd">Ecrire un petit programme qui, en utilisant une boucle infinie ainsi que la</span>
+<span class="sd">séquence de code développée pour l&#39;exercice précédent (interval.py) :</span>
+
+<span class="sd">a) demande la saisie d&#39;un entier compris dans [-10,10]</span>
+
+<span class="sd">b) si la chaîne saisie est vide il quitte la boucle, sinon il</span>
+<span class="sd">   convertit le résultat de la saisie avec int() ET il  traite l&#39;exception</span>
+<span class="sd">   ValueError en cas de saisie incorrecte en affichant un message approprié </span>
+<span class="sd">   suivi du retour à (a). </span>
+
+<span class="sd">c) vérifie si la valeur saisie est dans l&#39;intervale  [-10,10] et</span>
+<span class="sd">   affiche le résultat de ce test, puis retour à (a)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: loop2_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;Get an integer in [-10,10]&quot;</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">num_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">num_str</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_str</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num_str</span><span class="p">,</span> <span class="s">&quot; is not a number&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">10</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; is NOT in  [-10,10]&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; IS in  [-10,10]&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;next loop&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="la-structure-for-in">
 <h4>La structure <strong>for-in</strong><a class="headerlink" href="#la-structure-for-in" title="Permalink to this headline">¶</a></h4>
 <p>La forme générale :</p>
@@ -763,7 +1000,7 @@ else: # optionnel
 <p>On appelle <strong>&#8220;itérable&#8221;</strong> un objet qui permet l&#8217;accès séquentiel à un ensemble d&#8217;autres objets qui le composent ou qu&#8217;il crée à la demande, autrement dit un objet qui supporte l&#8217;itération.</p>
 <p>C&#8217;est le cas de tous les objets <strong>conteneurs</strong>, autrement dit des objets contenant d&#8217;autres objets (listes, chaînes etc.), mais pas seulement (plus de détails dans la section sur le <strong>générateurs</strong>).</p>
 <ul class="simple">
-<li>Un objet <strong>itérable</strong> doit implémenter la méthode magique <em>__iter__()</em>. Cette méthode sera exécutée à chaque invocation de la primitive <em>iter()</em> pour retourner un <strong>itérateur</strong> qui est une sorte d&#8216;&#8220;objet-curseur&#8221;.</li>
+<li>Un objet <strong>itérable</strong> doit implémenter la méthode magique <em>__iter__()</em>. Cette méthode sera exécutée à chaque invocation de la primitive <em>iter()</em> pour retourner un <strong>itérateur</strong> qui est une sorte d&#8216;&#8220;objet-curseur&#8221;. A chaque appel de la méthode <em>__iter__()</em> sur un <strong>itérable</strong>, un <strong>itérateur</strong> nouveau est retourné.</li>
 <li>Un <strong>itérateur</strong> doit implémenter :<ul>
 <li><em>next()</em> (renommée en  <strong>__next__()</strong> en Python 3) qui renvoie à chaque appel l&#8217;élément &#8220;suivant&#8221;, s&#8217;il y en a un, ou lève l&#8217;exception <strong>StopIteration</strong> dans le cas contraire.</li>
 </ul>
@@ -771,7 +1008,7 @@ else: # optionnel
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Accessoirement, les itérateurs implémentent également  <em>__iter__()</em> qui renvoie l&#8217;itérateur lui même (seulement pour assurer un comportement homogène entre itérateurs et itérables)</p>
+<p class="last">Les itérateurs implémentent également  <em>__iter__()</em> qui renvoie l&#8217;itérateur lui même (et non pas un objet nouveau à chaque appel, comme pour les itérables!). Cela assure une interface commune itérateurs - itérables, mais avec un comportement</p>
 </div>
 <p>Illustration:</p>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; l=[1,2,3]
@@ -792,13 +1029,89 @@ StopIteration
 </pre></div>
 </div>
 <p><strong>NB:</strong> Dans l&#8217;exemple précédent <em>next(i)</em> est une primitive du langage (la même dans les deux versions) qui se chargera de l&#8217;appel de <em>i.next()</em> (Python 2.x) ou de <em>i.__next__()</em> (Python 3.x).</p>
-<p>Ainsi, l&#8217;instruction:</p>
+<p><strong>Exercice</strong></p>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: iter_next.py</span>
+
+<span class="sd">Soit la liste :</span>
+
+<span class="sd">lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span>
+
+<span class="sd">A) Appeler la primitive iter() sur la liste pour obtenir</span>
+<span class="sd">un itérateur:</span>
+
+<span class="sd">iterator1 = iter(lst)</span>
+
+<span class="sd">B) Appelez next() 2-3 fois avec iterator1 et observer à chaque fois le résultat</span>
+<span class="sd">next(iterator1)</span>
+<span class="sd">next(iterator1)</span>
+
+<span class="sd">C) répéter (A) pour obtenir :</span>
+<span class="sd">iterator2 = iter(lst)</span>
+<span class="sd">D) répéter (B) sur iterator2</span>
+
+<span class="sd">Qu&#39;est-ce que vous observez ?</span>
+
+<span class="sd">E) appeler maintenant iter() une nouvelle fois mais avec iterator1 (ou avec iterator2, au choix) :</span>
+
+<span class="sd">iterator3 = iter(iterator1)</span>
+
+<span class="sd">F) Appelez next() plusieurs fois avec iterator3</span>
+
+<span class="sd">next(iterator3)</span>
+<span class="sd">next(iterator3)</span>
+
+<span class="sd">Qu&#39;est-ce que vous observez ?</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
+fichier: iter_next_sol.py
+&quot;&quot;&quot;
+
+&gt;&gt;&gt; lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+&gt;&gt;&gt; iterator1 = iter(lst)
+&gt;&gt;&gt; next(iterator1) # parcours à partir du 1er elt.
+1
+&gt;&gt;&gt; next(iterator1)
+2
+&gt;&gt;&gt; next(iterator1)
+3
+&gt;&gt;&gt; iterator2 = iter(lst)
+&gt;&gt;&gt; next(iterator2) #iterator2 reprends depuis le début
+1
+&gt;&gt;&gt; next(iterator2)
+2
+&gt;&gt;&gt; next(iterator2)
+3
+&gt;&gt;&gt; iterator3 = iter(iterator1) #itérateur d&#39;un itérateur...
+&gt;&gt;&gt; next(iterator3) # iterator3 continue la séquence de iterator1
+4
+&gt;&gt;&gt; next(iterator3)
+5
+&gt;&gt;&gt; next(iterator3)
+6
+&gt;&gt;&gt; id(iterator1) # car iterator1
+140672911907976
+&gt;&gt;&gt; id(iterator2)
+140672911908088
+&gt;&gt;&gt; id(iterator3) # et iterator3, c&#39;est la même chose
+140672911907976
+&gt;&gt;&gt; 
+</pre></div>
+</div>
+</div>
+<p>Pour revenir à l&#8217;instruction <strong>for</strong> :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
    <span class="o">...</span> <span class="c"># bloc</span>
    <span class="o">...</span> <span class="c"># d&#39;instructions</span>
 </pre></div>
 </div>
-<p>est équivalente à:</p>
+<p>elle est, dans les grandes lignes, équivalente à:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">i</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
    <span class="k">try</span><span class="p">:</span>
@@ -824,33 +1137,29 @@ StopIteration
 <p class="last">Python ne possède pas d&#8217;instruction équivalente à <tt class="docutils literal"><span class="pre">for(i=0;i&lt;max;i++){\...}</span></tt> présente dans le langage <em>C</em>  et dans bien d&#8217;autres. Dans la section suivante on va voir un idiome qui permet une écriture équivalente.</p>
 </div>
 </div>
-<div class="section" id="exercice">
-<h4>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Exercice<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">fichier: loop.py</span>
+<span class="sd">fichier: loop2.py</span>
 
-<span class="sd">Ecrire un petit programme qui, en utilisant une boucle infinie:</span>
+<span class="sd">Modifier le programme de l&#39;exercice &quot;loop.py&quot; pour qu&#39;il :</span>
 
-<span class="sd">a) demande la saisie d&#39;un entier compris dans [-10,10]</span>
+<span class="sd">a) [inchangé] demande la saisie d&#39;un entier compris dans [-10,10] </span>
 
-<span class="sd">b) convertit le résultat de la saisie avec int(saisie) et </span>
-<span class="sd">   traite l&#39;exception ValueError en cas de saisie incorrecte </span>
-<span class="sd">   en affichant un message approprié suivi du retour à (a).</span>
-<span class="sd">   Sinon:</span>
+<span class="sd">b) [inchangé] si la chaîne saisie est vide il quitte la boucle, sinon</span>
+<span class="sd">   il convertit le résultat de la saisie avec int() ET il  traite l&#39;exception</span>
+<span class="sd">   ValueError en cas de saisie incorrecte en affichant un message approprié</span>
+<span class="sd">   suivi du retour à (a). </span>
 
-<span class="sd">c) vérifie que la valeur saisie est dans l&#39;intervale  [-10,10] et affiche </span>
-<span class="sd">   un message approprié dans le cas contraire, suivi du retour à (a). </span>
-<span class="sd">Sinon:</span>
+<span class="sd">c) [à modifier] vérifie que la valeur saisie est dans l&#39;intervale  [-10,10] et</span>
+<span class="sd">   affiche un message approprié suivi du retour à (a), sinon :</span>
 
-<span class="sd">d) La liste lst contient plusieurs sous-listes à 2 éléments définissant des </span>
-<span class="sd">   intervales. Vérifier l&#39;appartenance de la valeur saisie à un des intervales.</span>
-<span class="sd">   Affichez un message approprié en cas de succès, un autre en cas d&#39;échec, </span>
-<span class="sd">   puis retour à (a) . Utiliser la clause else du for pour traiter le cas de la</span>
-<span class="sd">   recherche infructueuse</span>
-
-<span class="sd">Si vous êtes en evironnement Unix/Linux, rendre le fichier de votre programme </span>
-<span class="sd">exécutable directement en ligne de commande.</span>
+<span class="sd">d) [à implémenter] la liste L contient plusieurs sous-listes à 2 éléments</span>
+<span class="sd">   définissant des intervales. Vérifier l&#39;appartenance de la valeur saisie à un</span>
+<span class="sd">   des intervales. Affichez un message approprié en cas de succès, un autre en</span>
+<span class="sd">   cas d&#39;échec, puis retour à (a) . Utiliser la clause else du for pour traiter</span>
+<span class="sd">   le cas de la recherche infructueuse.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]</span>
@@ -859,28 +1168,33 @@ StopIteration
 </div>
 <div class="tohide container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">fichier: loop_sol.py</span>
+<span class="sd">fichier: loop2_sol.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]</span>
+
 <span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;Get an integer in [-10,10]&quot;</span>
+
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
     <span class="n">num_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">num_str</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_str</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="n">num_str</span><span class="p">,</span> <span class="s">&quot; is not a number&quot;</span><span class="p">)</span>
         <span class="k">continue</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">10</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; not in  [-10,10]&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; is NOT in  [-10,10]&quot;</span><span class="p">)</span>
         <span class="k">continue</span>
     <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;=</span> <span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; found in &quot;</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot;found in [&quot;</span><span class="p">,</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
             <span class="k">break</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c"># for..else</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;interval not found for &quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;next loop&quot;</span><span class="p">)</span>
 </pre></div>
@@ -889,28 +1203,33 @@ StopIteration
 <p>Une écriture légèrement différente, plus &#8220;pythonique&#8221;:</p>
 <div class="tohide container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">fichier: loop_sol2.py</span>
+<span class="sd">fichier: loop2_sol2.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]</span>
+
 <span class="n">prompt</span> <span class="o">=</span> <span class="s">&quot;Get an integer in [-10,10]&quot;</span>
+
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
     <span class="n">num_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">num_str</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_str</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">num_str</span><span class="p">,</span> <span class="s">&quot;is not a number&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num_str</span><span class="p">,</span> <span class="s">&quot; is not a number&quot;</span><span class="p">)</span>
         <span class="k">continue</span>
     <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">10</span> <span class="ow">or</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot;not in  [-10,10]&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot; is NOT in  [-10,10]&quot;</span><span class="p">)</span>
         <span class="k">continue</span>
     <span class="k">for</span> <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;=</span> <span class="n">min_</span> <span class="ow">and</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="n">max_</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot;found in&quot;</span><span class="p">,</span> <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="s">&quot;found in [&quot;</span><span class="p">,</span> <span class="n">min_</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="n">max_</span><span class="p">,</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
             <span class="k">break</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c"># for..else</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;interval not found for &quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;next loop&quot;</span><span class="p">)</span>
 </pre></div>
@@ -952,7 +1271,7 @@ StopIteration
 </pre></div>
 </div>
 <p>En <strong>Python 3</strong> il y a un type unique pour les entiers:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Python 3.4.x</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Python 3.x</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="go">&lt;class &#39;int&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">9223372036854775808</span><span class="p">)</span>
@@ -975,7 +1294,7 @@ StopIteration
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; # Python 3.4
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; # Python 3.*
 ...
 &gt;&gt;&gt; isinstance(1, int)
 True
@@ -1033,7 +1352,10 @@ NameError: name &#39;long&#39; is not defined
 <div class="section" id="les-nombres-complexes">
 <h4>Les nombres complexes<a class="headerlink" href="#les-nombres-complexes" title="Permalink to this headline">¶</a></h4>
 <p>Les nombres complexes sont représentés par une paire de flottants pour les parties réelle et imaginaire. La partie imaginaire est suffixée par la lettre <strong>j</strong> ou <strong>J</strong> .</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="o">+</span><span class="mi">4j</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="o">+</span><span class="mi">4j</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
+<span class="go">(3+4j)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
 <span class="go">(3+4j)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
@@ -1219,8 +1541,8 @@ IndexError: string index out of range
 &gt;&gt;&gt;
 </pre></div>
 </div>
-<div class="section" id="id1">
-<h4>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4>Exercice<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: slicing.py</span>
@@ -1352,7 +1674,7 @@ pendant que <em>sorted(seq,...)</em> laisse <em>seq</em> inchangé et renvoie un
 <p><strong>Astuce:</strong> Pour obtenir une copie (superficielle) d&#8217;une liste <strong>lst</strong>, on peut utiliser le slicing: <strong>lst[:]</strong></p>
 <div class="section" id="les-listes-en-intension-ou-comprehension">
 <h5>Les listes en intension (ou compréhension)<a class="headerlink" href="#les-listes-en-intension-ou-comprehension" title="Permalink to this headline">¶</a></h5>
-<p>Un problème récurent en programmation est la construction d&#8217;une liste à partir d&#8217;une liste existante (ou de tout autre ensemble d&#8217;objets existant). On souhaite souvent obtenir :</p>
+<p>Un problème récurent en programmation est la construction d&#8217;une liste à partir d&#8217;une liste existante (ou de tout autre collection d&#8217;objets existante). On souhaite souvent obtenir :</p>
 <ol class="arabic simple">
 <li>une nouvelle liste de la même taille que la liste en entrée (Ex: la liste des carrés d&#8217;une liste d&#8217;entiers fournie)</li>
 <li>une liste avec filtrage (Ex: liste des carrés des entiers impaires se trouvant dans la liste fournie)</li>
@@ -1381,7 +1703,8 @@ pendant que <em>sorted(seq,...)</em> laisse <em>seq</em> inchangé et renvoie un
 </div>
 <p>Python propose en plus, une écriture plus concise, plus élégante aussi : c&#8217;est la construction de listes dites &#8220;en compréhension&#8221; ou &#8220;en intension&#8221; (antonyme du mot &#8220;extension&#8221;) inspirée des notations utilisées dans la théorie des ensembles.</p>
 <p>Avec cette notation, le premier cas (sans filtre) s&#8217;écrit ainsi:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;Beautiful is better than ugly. (le Zen)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span>
 <span class="go">[1, 4, 9]</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -1412,8 +1735,8 @@ pendant que <em>sorted(seq,...)</em> laisse <em>seq</em> inchangé et renvoie un
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h4>Exercice<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id4">
+<h4>Exercice<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: comprehension.py</span>
@@ -1500,6 +1823,8 @@ TypeError: &#39;tuple&#39; object does not support item assignment
 &gt;&gt;&gt;
 </pre></div>
 </div>
+<div class="section" id="unpacking">
+<h5>Unpacking<a class="headerlink" href="#unpacking" title="Permalink to this headline">¶</a></h5>
 <p>Une séquence contenant des variables, et en particulier un tuple peut être lvalue dans une affectation:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="s">&quot;y&quot;</span><span class="p">]</span> <span class="c"># ou (&quot;x&quot;, &quot;y&quot;) ou &quot;xy&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
@@ -1530,6 +1855,33 @@ TypeError: &#39;tuple&#39; object does not support item assignment
 </pre></div>
 </div>
 <p>qu&#8217;on a appelé précédemment &#8220;affectation multiple&#8221;.</p>
+<p>NB: A droite du signe &#8220;égal&#8221; peut se trouver tout itérable de la bonne taille.</p>
+</div>
+<div class="section" id="unpacking-etendu-python-3-x-seulement">
+<h5>Unpacking étendu (Python 3.x seulement)<a class="headerlink" href="#unpacking-etendu-python-3-x-seulement" title="Permalink to this headline">¶</a></h5>
+<p>Parfois il peut être pratique d&#8217;affecter seulement une partie de l&#8217;itérable se trouvant à droite du signe &#8220;égal&#8221;. A partir de Python 3.x cela est possible (cf. <a class="reference external" href="https://www.python.org/dev/peps/pep-3132/">PEP 3132</a>).</p>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; a, b = [1, 2, 3, 4, 5]
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+ValueError: too many values to unpack (expected 2)
+&gt;&gt;&gt; a, b, *t = [1, 2, 3, 4, 5]
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+2
+&gt;&gt;&gt; t
+[3, 4, 5]
+&gt;&gt;&gt; a, *t, b = [1, 2, 3, 4, 5]
+&gt;&gt;&gt; a
+1
+&gt;&gt;&gt; b
+5
+&gt;&gt;&gt; t
+[2, 3, 4]
+&gt;&gt;&gt;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="les-chaines-de-caracteres-str-mais-aussi-bytes-et-unicode">
 <h4>Les chaînes de caractères  (<strong>str</strong>, mais aussi <strong>bytes</strong> et <strong>unicode</strong>)<a class="headerlink" href="#les-chaines-de-caracteres-str-mais-aussi-bytes-et-unicode" title="Permalink to this headline">¶</a></h4>
@@ -1632,8 +1984,8 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 </ul>
 <p>Pour savoir plus sur ces méthodes, consulter: <a class="reference external" href="http://docs.python.org/2/library/stdtypes.html#string-methods">http://docs.python.org/2/library/stdtypes.html#string-methods</a></p>
 </div>
-<div class="section" id="id3">
-<h4>Exercice<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id5">
+<h4>Exercice<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: lcd.py</span>
@@ -1723,10 +2075,53 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 </pre></div>
 </div>
 </div>
+<p><strong>Construction itérative des chaînes de caractères</strong></p>
+<p>Les objets <strong>str</strong> étant non modifiables, la construction itérative d&#8217;une chaîne par concaténation d&#8217;un grand nombre d&#8217;autres chaînes (par exemple, des lignes lues dans un fichier) est extrèmement inéfficace en raison du grand nombre de recopies :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">On lit un fichier .csv dans une string en faisant un traitement ligne par ligne</span>
+<span class="sd">Cette solution est inefficace  en raison du grand nombre de recopies d&#39;objets!</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;afile.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une solution améliorée, mais pas optimale, consisterait à passer par la construction d&#8217;une liste intermédiaire, ce qui n&#8217;est pas très naturel :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">acc</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;afile.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>        
+        <span class="n">acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+<span class="n">res</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Enfin, la bibliothèque standard propose la classe <strong>StringIO</strong> (module <strong>io</strong> en <strong>Python 3.x</strong>, module <strong>StringIO</strong> en <strong>Python 2.x</strong>) qui permet de construire des &#8220;flots&#8221; (streams) en mémoire :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;afile.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">acc</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">))</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="n">acc</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># close StringIO object and discard memory buffer</span>
+<span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><strong>Le formatage des chaînes de caractères</strong></p>
 <p>Depuis la version <strong>2.6</strong> les chaînes peuvent être formatées en utilisant la méthode <em>format()</em> et un &#8220;mini-langage&#8221; puissant de description des formats. Précédemment, le formatage était fait grâce à l&#8217;opérateur d&#8217;interpolation, expliqué plus loin.</p>
 <p>Le spécificateur de substitution le plus simple est <strong>{}</strong> :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;Langage: {}, version: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;Langage: {}, version: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">&#39;Langage: Python, version: 3&#39;</span>
 </pre></div>
 </div>
@@ -1764,7 +2159,7 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 <span class="go">&#39;Python 2.7.3&#39;</span>
 </pre></div>
 </div>
-<p>Dans les exemples précédents, les arguments de <em>format()</em> sont identifiés par leur position à l&#8217;appel, mais on peut également utiliser des arguments nommés.</p>
+<p>Dans les exemples précédents, les arguments de <em>format()</em> sont identifiés par leur position à l&#8217;appel, mais on peut également utiliser des arguments nommés (<strong>keyword args</strong>).</p>
 <p>Les exemples précédents peuvent être réécrits ainsi:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;Langage: {langage}, version: {version}&quot;</span><span class="o">.</span>\
 <span class="gp">... </span><span class="n">format</span><span class="p">(</span><span class="n">langage</span><span class="o">=</span><span class="s">&quot;Python&quot;</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -1801,7 +2196,7 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 </pre></div>
 </div>
 <p><strong>NB:</strong> Dans les cas précédents, les formats n&#8217;étant pas spécifiés, les arguments sont convertis en <strong>str</strong> avec la conversion par défaut.</p>
-<p>En général les syntaxes suivantes sont correctes:</p>
+<p>Les syntaxes suivantes sont correctes:</p>
 <ul class="simple">
 <li><strong>{}</strong> : (voir les cas précédents)</li>
 <li><strong>{id}</strong> : (voir les cas précédents)</li>
@@ -1875,16 +2270,12 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 <p>Pour en savoir plus : <a class="reference external" href="https://docs.python.org/3/library/string.html#format-specification-mini-language">https://docs.python.org/3/library/string.html#format-specification-mini-language</a></p>
 <p><strong>Exemples:</strong></p>
 <p>Alignements :</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;|{:&lt;20}|{:^20}|{:&gt;20}|&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;gauche&#39;</span><span class="p">,</span> <span class="s">&#39;centre&#39;</span><span class="p">,</span> <span class="s">&#39;droite&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;|{:&lt;20}|{:^20}|{:&gt;20}|&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;gauche&#39;</span><span class="p">,</span> <span class="s">&#39;centre&#39;</span><span class="p">,</span> <span class="s">&#39;droite&#39;</span><span class="p">)</span>
 <span class="go">&#39;|gauche              |       centre       |              droite|&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;|{:_&lt;20}|{:=^20}|{:-&gt;20}|&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;gauche&#39;</span><span class="p">,</span> <span class="s">&#39;centre&#39;</span><span class="p">,</span> <span class="s">&#39;droite&#39;</span><span class="p">)</span>
 <span class="go">&#39;|gauche______________|=======centre=======|--------------droite|&#39;</span>
 </pre></div>
 </div>
-</dd>
-</dl>
 <p>Affichage de flottants:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">math</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
@@ -2302,8 +2693,8 @@ TypeError: unhashable type: &#39;list&#39;
 <p>En dehors des fonctionnalités communes à tous les conteneurs, les dictionnaires disposent de plusieurs méthodes spécifiques intéressantes:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="18%" />
-<col width="82%" />
+<col width="21%" />
+<col width="79%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Méthode</th>
@@ -2323,7 +2714,7 @@ TypeError: unhashable type: &#39;list&#39;
 <tr class="row-odd"><td>get(cle,defaut)</td>
 <td>fournit la valeur associée à la clé si la clé est présente, sinon renvoie defaut</td>
 </tr>
-<tr class="row-even"><td>has_key(cle)</td>
+<tr class="row-even"><td><span class="strike">has_key(cle)</span></td>
 <td>teste la présence d&#8217;une clé (<strong>supprimée dans la version 3</strong>)</td>
 </tr>
 <tr class="row-odd"><td>copy()</td>
@@ -2363,41 +2754,49 @@ TypeError: unhashable type: &#39;list&#39;
 </pre></div>
 </div>
 <p>au lieu de :</p>
+<div class="nogood container">
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">account</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;login&#39;</span><span class="p">):</span>
     <span class="n">val</span> <span class="o">=</span> <span class="n">account</span><span class="p">[</span><span class="s">&#39;login&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
+</div>
 <p>ou de:</p>
+<div class="nogood container">
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="s">&#39;login&#39;</span> <span class="ow">in</span> <span class="n">account</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="n">val</span> <span class="o">=</span> <span class="n">account</span><span class="p">[</span><span class="s">&#39;login&#39;</span><span class="p">]</span>
 </pre></div>
+</div>
 </div>
 <p>Ecrire:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="hll"><span class="n">val</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;login&quot;</span><span class="p">,</span><span class="s">&quot;anonymous&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>au lieu de :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="hll"><span class="k">if</span> <span class="s">&#39;login&#39;</span> <span class="ow">in</span> <span class="n">account</span><span class="p">:</span>
-</span>    <span class="n">val</span> <span class="o">=</span> <span class="n">account</span><span class="p">[</span><span class="s">&#39;login&#39;</span><span class="p">]</span>
+<div class="nogood container">
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="s">&#39;login&#39;</span> <span class="ow">in</span> <span class="n">account</span><span class="p">:</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">account</span><span class="p">[</span><span class="s">&#39;login&#39;</span><span class="p">]</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">val</span> <span class="o">=</span> <span class="s">&quot;anonymous&quot;</span>
 </pre></div>
 </div>
+</div>
 <p>Dans un traitement nécessitant aussi bien la présence des clés que celles des valeurs associées, éviter d&#8217;écrire (même si ce n&#8217;est pas incorrect):</p>
+<div class="nogood container">
 <div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">account</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">account</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 </pre></div>
+</div>
 </div>
 <p>écrire plutôt:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">account</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><strong>Dictionnaires et listes:</strong></p>
-<p>La méthode <em>items()</em>, employée dans l&#8217;exemple précédent, fournit  une liste de tuples correspondant aux paires clé-valeur du dictionnaire:</p>
+<p><strong>Dictionnaires et autres itérables:</strong></p>
+<p>La méthode <em>items()</em>, employée dans l&#8217;exemple précédent, fournit  un itérable (liste en Python2) de tuples correspondant aux paires clé-valeur du dictionnaire:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">account</span>
 <span class="go">{&#39;uid&#39;: 1000, &#39;gid&#39;: 1000, &#39;sn&#39;: &#39;Poli&#39;, &#39;groups&#39;: [1005, 1007], &#39;gn&#39;: &#39;Christian&#39;, &#39;login&#39;: &#39;cpoli&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 <span class="go">[(&#39;uid&#39;, 1000), (&#39;gid&#39;, 1000), (&#39;sn&#39;, &#39;Poli&#39;), (&#39;groups&#39;, [1005, 1007]), (&#39;gn&#39;, &#39;Christian&#39;), (&#39;login&#39;, &#39;cpoli&#39;)]</span>
 </pre></div>
 </div>
@@ -2406,11 +2805,11 @@ TypeError: unhashable type: &#39;list&#39;
 <span class="go">[&#39;uid&#39;, &#39;gid&#39;, &#39;sn&#39;, &#39;groups&#39;, &#39;gn&#39;, &#39;login&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">account_values</span>
 <span class="go">[1000, 1000, &#39;Poli&#39;, [1005, 1007], &#39;Christian&#39;, &#39;cpoli&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">zip</span><span class="p">(</span><span class="n">account_keys</span><span class="p">,</span><span class="n">account_values</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">account_keys</span><span class="p">,</span><span class="n">account_values</span><span class="p">))</span>
 <span class="go">[(&#39;uid&#39;, 1000), (&#39;gid&#39;, 1000), (&#39;sn&#39;, &#39;Poli&#39;), (&#39;groups&#39;, [1005, 1007]), (&#39;gn&#39;, &#39;Christian&#39;), (&#39;login&#39;, &#39;cpoli&#39;)]</span>
 </pre></div>
 </div>
-<p>A partir d&#8217;une liste de paires on peut construire un dictionnaire:</p>
+<p>A partir d&#8217;une liste (ou autre itérable) de paires on peut construire un dictionnaire:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">zipped</span>
 <span class="go">[(&#39;uid&#39;, 1000), (&#39;gid&#39;, 1000), (&#39;sn&#39;, &#39;Poli&#39;), (&#39;groups&#39;, [1005, 1007]), (&#39;gn&#39;, &#39;Christian&#39;), (&#39;login&#39;, &#39;cpoli&#39;)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">zipped</span><span class="p">)</span>
@@ -2422,8 +2821,8 @@ TypeError: unhashable type: &#39;list&#39;
 <span class="go">{&#39;h&#39;: 104, &#39;o&#39;: 111, &#39;n&#39;: 110, &#39;P&#39;: 80, &#39;t&#39;: 116, &#39;y&#39;: 121}</span>
 </pre></div>
 </div>
-<div class="section" id="id4">
-<h4>Exercice<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4>Exercice<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: week_dict.py</span>
@@ -2637,6 +3036,111 @@ TypeError: unhashable type: &#39;list&#39;
 <p class="last">On peut personnaliser la copie des objets sur une classe en définissant les méthodes <strong>__copy__()</strong> et <strong>__deepcopy__()</strong></p>
 </div>
 </div>
+</div>
+<div class="section" id="exercices">
+<h2>Exercices<a class="headerlink" href="#exercices" title="Permalink to this headline">¶</a></h2>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: sharedrefs.py</span>
+
+<span class="sd">On souhaite réaliser des copies des objets suivants de manière à être</span>
+<span class="sd">sûr que toute modification sur la copie sera sans effet l&#39;objet d&#39;origine</span>
+<span class="sd">et réciproquement. Préciser pour chaque cas l&#39;opération la moins coûteuse pour</span>
+<span class="sd">réaliser la copie sachant que:</span>
+<span class="sd">    &quot;=&quot; &lt; copy.copy() &lt; copy.deepcopy()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">obj_a</span> <span class="o">=</span> <span class="s">&quot;Python&quot;</span>
+<span class="n">obj_b</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">obj_c</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="n">obj_b</span><span class="p">}</span>
+<span class="n">obj_d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:(</span><span class="s">&#39;x&#39;</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">)),</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">obj_e</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">)):[</span><span class="mi">7</span><span class="p">],</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">obj_f</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">obj_g</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">obj_d</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]]</span>
+<span class="n">obj_h</span> <span class="o">=</span> <span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: sharedrefs_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">obj_a</span> <span class="o">=</span> <span class="s">&quot;Python&quot;</span>
+<span class="n">copy_a</span> <span class="o">=</span> <span class="n">obj_a</span>
+
+<span class="n">obj_b</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">copy_b</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">obj_b</span><span class="p">)</span>
+
+<span class="n">obj_c</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="n">obj_b</span><span class="p">}</span>
+<span class="n">copy_c</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">obj_c</span><span class="p">)</span>
+
+<span class="n">obj_d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:(</span><span class="s">&#39;x&#39;</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">)),</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">copy_d</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">obj_d</span><span class="p">)</span>
+
+<span class="n">obj_e</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">)):[</span><span class="mi">7</span><span class="p">],</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">copy_e</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">obj_e</span><span class="p">)</span>
+
+<span class="n">obj_f</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">copy_f</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">obj_f</span><span class="p">)</span>
+
+<span class="n">obj_g</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">obj_d</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]]</span>
+<span class="n">copy_g</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">obj_g</span><span class="p">)</span>
+
+<span class="n">obj_h</span> <span class="o">=</span> <span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">copy_h</span> <span class="o">=</span> <span class="n">obj_h</span>
+</pre></div>
+</div>
+</div>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: whichcopy.py</span>
+
+<span class="sd">Ecrire un test pour décider comment copier une liste quelconque de manière</span>
+<span class="sd">à être sûr que toute modification sur la copie sera sans effet la liste</span>
+<span class="sd">d&#39;origine et réciproquement.</span>
+
+<span class="sd">Le test doit indiquer la méthode la moins coûteuse avec un print(&quot;copy&quot;) ou</span>
+<span class="sd">print(&quot;deepcopy&quot;)</span>
+
+<span class="sd">Les éléments de la liste peuvent avoir une complexité quelconque.</span>
+
+<span class="sd">Astuce : utiliser une fonction primitive évoquée dans la section sur les</span>
+<span class="sd">dictionnaires.</span>
+
+<span class="sd">Exemples :</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">lst1</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+<span class="n">lst2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])))]</span>
+<span class="n">lst3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))))]</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: whichcopy_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">lst1</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Python&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+<span class="n">lst2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])))]</span>
+<span class="n">lst3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))))]</span>
+
+
+<span class="k">for</span> <span class="n">lst</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">,</span> <span class="n">lst3</span><span class="p">]:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Test for:&quot;</span><span class="p">,</span> <span class="n">lst</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;deepcopy&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;copy&quot;</span><span class="p">)</span>
+
+        
+</pre></div>
+</div>
+</div>
 <div class="section" id="les-ensembles">
 <h3>Les ensembles<a class="headerlink" href="#les-ensembles" title="Permalink to this headline">¶</a></h3>
 <p>Il s&#8217;agit d&#8217;objets représentant  la notion d&#8217;ensemble au sens mathématique:</p>
@@ -2681,6 +3185,7 @@ AttributeError: &#39;frozenset&#39; object has no attribute &#39;add&#39;
 &gt;&gt;&gt;
 </pre></div>
 </div>
+<p><strong>NB :</strong> La notation <strong>{}</strong> ne désigne pas l&#8217;ensemble vide, mais un dictionnaire vide. Pour l&#8217;ensemble vide, utiliser <strong>set()</strong></p>
 <div class="section" id="le-type-range-xrange">
 <h4>Le type <strong>range/xrange</strong><a class="headerlink" href="#le-type-range-xrange" title="Permalink to this headline">¶</a></h4>
 <p>Le type appelé <strong>range</strong> en <em>Python 3</em>, pré-existant sous le nom <strong>xrange</strong> en <em>Python 2.x (x&gt;=6)</em> est un type de séquence très simple supportant seulement:</p>
@@ -2795,8 +3300,8 @@ StopIteration
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h4>Exercice<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id7">
+<h4>Exercice<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: week_dict2.py</span>
@@ -2916,7 +3421,7 @@ StopIteration
 </div>
 <div class="section" id="le-type-file">
 <h4>Le type <strong>file</strong><a class="headerlink" href="#le-type-file" title="Permalink to this headline">¶</a></h4>
-<p>Sans surprise, il intervient dans les opérations sur des fichiers. Il a été brièvement évoqué avec l&#8217;instruction <strong>with</strong> et sera détaillé dans le chapitre sur la bibliothèque standard.</p>
+<p id="id8">Sans surprise, il intervient dans les opérations sur des fichiers. Il a été brièvement évoqué avec l&#8217;instruction <strong>with</strong> et sera détaillé dans le chapitre sur la bibliothèque standard.</p>
 <p>On va juste souligner ici son comportement en tant que type itérable:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ cat abc.txt
 aaa
@@ -2937,6 +3442,192 @@ ccc
 </div>
 <p><strong>NB:</strong> On notera que, même si le constructeur <tt class="docutils literal"><span class="pre">file()</span></tt> existe, il est préférable d&#8217;utiliser la primitive <tt class="docutils literal"><span class="pre">open()</span></tt> pour les créations de fichiers.</p>
 </div>
+</div>
+<div class="section" id="travailler-des-fichiers">
+<h3>Travailler  des fichiers ...<a class="headerlink" href="#travailler-des-fichiers" title="Permalink to this headline">¶</a></h3>
+<p>La bibliothèque standard dispose d&#8217;un ensemble des outils nécessaires à la manipulation des fichiers qui seront évoqués <a class="reference internal" href="libstd.html#file-management"><em>plus loin</em></a>.</p>
+<p>On va passer en revue brièvement ici quelques fonctionnalités fournies par les modules <strong>os</strong>, <strong>os.path</strong>, <strong>glob</strong>, <strong>shutil</strong> :</p>
+</div>
+<div class="section" id="le-module-os">
+<h3>Le module <strong>os</strong><a class="headerlink" href="#le-module-os" title="Permalink to this headline">¶</a></h3>
+<p>Ce module contient un grand nombre de fonctions permettant l&#8217;interaction avec le système d&#8217;exploitation.</p>
+<div class="warning admonition">
+<p class="first admonition-title">Avertissement</p>
+<p class="last">Il est vivement déconseillé d&#8217;importer ce module par <tt class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></tt> car la fonction <em>os.open()</em> va se substituer à la primitive <em>open()</em>, avec un comportement différent. L&#8217;utilisation de l&#8217;importation simple <tt class="docutils literal"><span class="pre">import</span> <span class="pre">os</span></tt> évite ce problème.</p>
+</div>
+<p>Pour illustrer quelques unes des fonctionnalités de ce module, une mise en perspective  d&#8217;opérations équivalentes réalisés en <em>shell</em> (bash) et en Python:</p>
+<p>Accès à l&#8217;environnement (variable <em>PATH</em>) en <em>bash</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games
+</pre></div>
+</div>
+<p>En Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PATH&#39;</span><span class="p">]</span>
+<span class="go">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games&#39;</span>
+</pre></div>
+</div>
+<p>Manipulation de répertoires en bash:</p>
+<div class="highlight-python"><div class="highlight"><pre>poli@host:~$ cd /tmp
+poli@host:/tmp$ mkdir testpy
+poli@host:/tmp$ cd testpy/
+poli@host:/tmp/testpy$ pwd
+/tmp/testpy
+poli@host:/tmp/testpy$ cd ..
+poli@host:/tmp$ pwd
+/tmp
+poli@host:/tmp$ rmdir testpy
+poli@host:/tmp$
+</pre></div>
+</div>
+<p>L&#8217;équivalent en Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;/tmp/&#39;</span><span class="p">)</span> <span class="c"># &#39;cd /tmp&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;mkdir testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;cd testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c"># &#39;pwd&#39;</span>
+<span class="go">&#39;/tmp/testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">)</span>     <span class="c"># &#39;cd ..&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c"># &#39;pwd&#39;</span>
+<span class="go">&#39;/tmp&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;rmdir testpy&#39;</span>
+</pre></div>
+</div>
+<p>Autres manipulations simples sur des fichiers en bash :</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls /tmp/test/
+testpy.txt
+$ mv /tmp/test/testpy.txt /tmp/test/testpy2.txt
+$ ls /tmp/test/
+testpy2.txt
+$ rm /tmp/test/testpy2.txt
+$ ls /tmp/test/
+</pre></div>
+</div>
+<p>Et leur équivalent en Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39; (&#39;ls&#39; -A plus précisément)</span>
+<span class="go">[&#39;testpy.txt&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy.txt&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;mv /tmp/test/testpy.txt /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39;</span>
+<span class="go">&#39;testpy2.txt&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;rm /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>Autres fonctions utiles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">&quot;dir1/dir2/.../cible&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>L&#8217;effet de cette fonction est équivalent à celui de la commande (Linux/Unix) <tt class="docutils literal"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">...</span></tt> : elle crée le répertoire cible ainsi que tous les répertoires intermédiaires s&#8217;ils n&#8217;existent pas:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-module-os-path">
+<h3>Le module <strong>os.path</strong><a class="headerlink" href="#le-module-os-path" title="Permalink to this headline">¶</a></h3>
+<p>Ce module est dédié à la manipulation des chemins dans le système de fichiers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="go">&#39;/usr/lib/python2.7&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os.path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&quot;code.py&quot;</span><span class="p">)</span> <span class="c"># construit le chemin absolue en fonction de l&#39;emplacement courant</span>
+<span class="go">&#39;/usr/lib/python2.7/code.py&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># ~ basename cmd</span>
+<span class="go">&#39;code.py&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># ~ dirname cmd</span>
+<span class="go">&#39;/usr/lib/python2.7&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># (dirname, basename)</span>
+<span class="go">(&#39;/usr/lib/python2.7&#39;, &#39;code.py&#39;)</span>
+</pre></div>
+</div>
+<p>Les fonction suivantes permettent de tester le type d&#8217;objet (répertoire, fichier, lien etc.) désigné par un chemin:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/foobar.py&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Pour la portabilité, il est préférable d&#8217;utiliser <em>os.path.join(...)</em> pour construire des chemins:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">,</span><span class="s">&#39;foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<span class="go">&#39;/tmp/foo/bar&#39;</span>
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="first admonition-title">Attention</p>
+<p class="last">Si un chemin absolu est fourni, tous les éléments qui le précédent sont ignorés silencieusement:</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;tmp&#39;</span><span class="p">,</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<span class="go">&#39;/foo/bar&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">,</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<span class="go">&#39;/foo/bar&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>La fonction <tt class="docutils literal"><span class="pre">os.path.normpath()</span></tt> élimine les redondances pour ramener le chemin au format &#8220;canonique&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s">&#39;/usr/../usr/lib//python2.7/./code.py&#39;</span><span class="p">)</span>
+<span class="go">&#39;/usr/lib/python2.7/code.py&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>NB:</strong> Sous Windows cette fonction transforme les <strong>/</strong> en <strong>\</strong>. Pour les OS &#8220;case insesitive&#8221; la fonction <em>os.path.normcase()</em> permet de passer les noms en minuscules.</p>
+</div>
+<div class="section" id="utilisation-du-caractere-joker">
+<h3>Utilisation du caractère &#8220;joker&#8221;<a class="headerlink" href="#utilisation-du-caractere-joker" title="Permalink to this headline">¶</a></h3>
+<p>La fonction <em>glob.glob()</em> permet de lister le contenu d&#8217;un répertoire avec un filtre:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;/usr/lib/python2.7/b*py&quot;</span><span class="p">)</span>
+<span class="go">[&#39;/usr/lib/python2.7/binhex.py&#39;, &#39;/usr/lib/python2.7/bdb.py&#39;, &#39;/usr/lib/python2.7/base64.py&#39;, &#39;/usr/lib/python2.7/bisect.py&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="le-module-shutil">
+<h3>Le module <em>shutil</em><a class="headerlink" href="#le-module-shutil" title="Permalink to this headline">¶</a></h3>
+<p>Le module <em>shutil</em> fournit des fonctions de manipulation de fichiers (copie, suppression) d&#8217;un niveau d&#8217;abstraction plus proche des commandes système.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Fonction</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>shutil.copy(src, dst)</td>
+<td>Copie un fichier avec les permissions. <em>dst</em> peut être un répertoire</td>
+</tr>
+<tr class="row-odd"><td>shutil.copymode(src, dst)</td>
+<td>Copie les permissions <strong>seules</strong> entre <em>src</em> et <em>dst</em></td>
+</tr>
+<tr class="row-even"><td>shutil.copystat(src, dst)</td>
+<td>Copie les permissions+infos temps(dernier accès/modification)+flags</td>
+</tr>
+<tr class="row-odd"><td>shutil.copy2(src, dst)</td>
+<td>Équivalent copy() + copystat()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NB:</strong> shutil contient d&#8217;autres fonctions puissantes, permettant la copie et la suppression d&#8217;arborescences de fichiers, à manipuler avec précaution.</p>
 </div>
 </div>
 <div class="section" id="les-conventions-de-codage">
@@ -2981,7 +3672,7 @@ ccc
 </li>
 </ul>
 </li>
-<li><p class="first">Si on utilise des opérateurs de priorité différentes dans une expression, prévoir des espaces (seulement) autour de opérateurs de priorité moindre. Exemple <tt class="docutils literal"><span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b*y</span></tt></p>
+<li><p class="first">Si on utilise des opérateurs de priorités différentes dans une expression, prévoir des espaces (seulement) autour de opérateurs de priorité moindre. Exemple <tt class="docutils literal"><span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b*y</span></tt></p>
 </li>
 </ul>
 <p><strong>NB:</strong> Ne pas hésiter à utiliser l&#8217;utilitaire <strong>pylint</strong> pour auditer son code par rapport aux préconisations de la PEP8:</p>
@@ -3014,8 +3705,8 @@ ccc
 <p>Le prochains chapitres vont apporter plus des précision sur les conventions de nommage spécifiques aux notions qui seront introduites.</p>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>Exercice<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>Exercice<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: coauteurs.py</span>
@@ -3121,7 +3812,7 @@ ccc
 <li><a class="reference internal" href="#quelques-objets">Quelques objets...</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#la-reference-uniforme-en-python">La référence uniforme en Python</a></li>
+<li><a class="reference internal" href="#le-modele-reference-uniforme-en-python">Le modèle référence uniforme en Python</a></li>
 <li><a class="reference internal" href="#les-variables">Les variables</a></li>
 <li><a class="reference internal" href="#les-operateurs">Les opérateurs</a><ul>
 <li><a class="reference internal" href="#operateurs-de-base">Opérateurs de base (+,-,*,**,/,//,%)</a></li>
@@ -3143,6 +3834,7 @@ ccc
 </ul>
 </li>
 <li><a class="reference internal" href="#les-structures-de-controle">Les structures de contrôle</a><ul>
+<li><a class="reference internal" href="#generalites">Généralités</a></li>
 <li><a class="reference internal" href="#structures-alternatives-if-elif-else">Structures alternatives (if-elif-else)</a><ul>
 <li><a class="reference internal" href="#expressions-ternaires">Expressions ternaires</a></li>
 </ul>
@@ -3152,13 +3844,15 @@ ccc
 <li><a class="reference internal" href="#traitement-des-exceptions">Traitement des exceptions</a></li>
 <li><a class="reference internal" href="#lever-des-exceptions">Lever des exceptions</a></li>
 <li><a class="reference internal" href="#definir-des-exceptions">Définir des exceptions</a></li>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#la-structure-with">La structure <strong>with</strong></a></li>
 <li><a class="reference internal" href="#structure-repetitives-while-else-for-else">Structure répétitives (<strong>while-else</strong>, <strong>for-else</strong>)</a><ul>
 <li><a class="reference internal" href="#la-structure-while-else">La structure <strong>while-else</strong></a></li>
+<li><a class="reference internal" href="#id1">Exercice</a></li>
 <li><a class="reference internal" href="#la-structure-for-in">La structure <strong>for-in</strong></a></li>
-<li><a class="reference internal" href="#exercice">Exercice</a></li>
+<li><a class="reference internal" href="#id2">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -3173,29 +3867,36 @@ ccc
 </li>
 <li><a class="reference internal" href="#les-iterables-predefinis">Les itérables prédéfinis</a></li>
 <li><a class="reference internal" href="#les-sequences">Les séquences</a><ul>
-<li><a class="reference internal" href="#id1">Exercice</a></li>
+<li><a class="reference internal" href="#id3">Exercice</a></li>
 <li><a class="reference internal" href="#les-sequences-modifiables-list-et-bytearray">Les séquences modifiables ( <strong>list</strong> et bytearray )</a><ul>
 <li><a class="reference internal" href="#les-listes-en-intension-ou-comprehension">Les listes en intension (ou compréhension)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">Exercice</a></li>
+<li><a class="reference internal" href="#id4">Exercice</a></li>
 <li><a class="reference internal" href="#les-sequences-immuables">Les séquences immuables</a></li>
-<li><a class="reference internal" href="#les-tuples">Les <strong>tuples</strong></a></li>
+<li><a class="reference internal" href="#les-tuples">Les <strong>tuples</strong></a><ul>
+<li><a class="reference internal" href="#unpacking">Unpacking</a></li>
+<li><a class="reference internal" href="#unpacking-etendu-python-3-x-seulement">Unpacking étendu (Python 3.x seulement)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#les-chaines-de-caracteres-str-mais-aussi-bytes-et-unicode">Les chaînes de caractères  (<strong>str</strong>, mais aussi <strong>bytes</strong> et <strong>unicode</strong>)</a></li>
-<li><a class="reference internal" href="#id3">Exercice</a></li>
+<li><a class="reference internal" href="#id5">Exercice</a></li>
 <li><a class="reference internal" href="#les-chaines-de-caracteres-en-python-2">Les chaînes de caractères en Python 2</a></li>
 <li><a class="reference internal" href="#les-chaines-de-caracteres-en-python-3">Les chaînes de caractères en Python 3</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#les-dictionnaires">Les dictionnaires</a><ul>
-<li><a class="reference internal" href="#id4">Exercice</a></li>
+<li><a class="reference internal" href="#id6">Exercice</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#objets-partages-copie-d-objets">Objets partagés, copie d&#8217;objets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercices">Exercices</a><ul>
 <li><a class="reference internal" href="#les-ensembles">Les ensembles</a><ul>
 <li><a class="reference internal" href="#le-type-range-xrange">Le type <strong>range/xrange</strong></a></li>
 <li><a class="reference internal" href="#le-type-enumerate">Le type <strong>enumerate</strong></a></li>
-<li><a class="reference internal" href="#id5">Exercice</a></li>
+<li><a class="reference internal" href="#id7">Exercice</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#les-types-des-constantes-nommees">Les types des constantes nommées</a><ul>
@@ -3204,6 +3905,11 @@ ccc
 <li><a class="reference internal" href="#le-type-file">Le type <strong>file</strong></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#travailler-des-fichiers">Travailler  des fichiers ...</a></li>
+<li><a class="reference internal" href="#le-module-os">Le module <strong>os</strong></a></li>
+<li><a class="reference internal" href="#le-module-os-path">Le module <strong>os.path</strong></a></li>
+<li><a class="reference internal" href="#utilisation-du-caractere-joker">Utilisation du caractère &#8220;joker&#8221;</a></li>
+<li><a class="reference internal" href="#le-module-shutil">Le module <em>shutil</em></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#les-conventions-de-codage">Les conventions de codage</a><ul>
@@ -3211,7 +3917,7 @@ ccc
 <li><a class="reference internal" href="#convention-generales-de-nommage">Convention générales de nommage</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">Exercice</a></li>
+<li><a class="reference internal" href="#id9">Exercice</a></li>
 </ul>
 </li>
 </ul>
@@ -3254,29 +3960,127 @@ ccc
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -485,6 +487,103 @@ NotImplementedError
 </pre></div>
 </div>
 </div>
+<div class="section" id="exercice">
+<h2>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h2>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: lsp.py
+
+Etant donnée la classe Rectangle implémentée ici, et partant du principe que
+un carré est un rectangle, on a implémenté une classe Square héritant de la
+classe Rectangle.
+
+Analyser l&#39;implémentation de la classe Square, testez-la et expliquez si, et
+pourquoi elle vous semble correcte ou pas.
+&quot;&quot;&quot;
+
+
+class Rectangle(object):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    def set_width(self, width):
+        self.width = width
+    def set_height(self, height):
+        self.height = height
+    def get_width(self):
+        return self.width
+    def get_height(self):
+        return self.height
+    def is_valid(self):
+        return self.width &gt; 0 and self.height &gt; 0
+
+class Square(Rectangle):
+    def __init__(self, size):
+        self.width = size
+        self.height = size
+    def set_width(self, size):
+        super().set_width(size)
+        super().set_height(size)        
+    def set_height(self, size):
+        self.set_width(size)
+    def is_valid(self):
+        return super().is_valid() and self.width == self.height
+    
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>fichier: lsp_sol.py
+
+En effet, cette utilisation de l&#39;héritage est incorrecte car elle induit des anomalies (voir la fonction test_area()).
+
+Plus généralement elle contredit une règle importante dans la conception objet,
+connue comme le &quot;Principe de substitution de Liskov&quot; (Liskov Substitution
+Principle = LSP) qui s&#39;ennonce ainsi:
+
+&quot;What is wanted here is something like the following substitution property:
+If for each object o1 of type S there is an object o2 of type T such that for
+all programs P defined in terms of T, the behavior of P is unchanged when o1
+is substituted for o2 then S is a subtype of T.&quot;
+Barbara Liskov, Data Abstraction and Hierarchy, SIGPLAN Notices, 23,5 (1988).
+( http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.12.819&amp;rep=rep1&amp;type=pdf )
+Autrement dit, pour qu&#39;un type S soit un sous-type d&#39;un autre type T toute
+instance de S doit pouvoir se substituer à une instance de T partout dans un
+programme où le type de base T est utilisé.
+
+Vu sous l&#39;angle de la programmation par contrat (la classe étant considérée en
+tant que contrat), le repect du LSP suppose que dans le sous-type S:
+
+a) les préconditions de T ne peuvent être que diminuées
+b) les postconditions ne peuvent être que augmentées.
+
+Manifestement le type Square en tant que sous-type de Rectangle ne respecte
+pas ce principe. Illustration:
+
+def test_area(rectangle):
+    &quot;&quot;&quot;
+    Postcondition garantie par Rectangle : la longueur la hauteur peuvent être
+    modifiées indépendamment.
+    Cela n&#39;est plus assurée par Square, ce qui contredit (b)
+    &quot;&quot;&quot;
+    rectangle.set_width(3)
+    rectangle.set_height(4)
+    assert rectangle.get_width() * rectangle.get_height() == 12
+
+&gt;&gt;&gt; r = Rectangle(4,5)
+&gt;&gt;&gt; test_area(r)
+&gt;&gt;&gt; s = Square(6)
+&gt;&gt;&gt; test_area(s)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File [...]
+    assert rectangle.get_width() * rectangle.get_height() == 12
+AssertionError
+&gt;&gt;&gt; 
+&quot;&quot;&quot;
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="encapsulation">
 <h2>Encapsulation<a class="headerlink" href="#encapsulation" title="Permalink to this headline">¶</a></h2>
 <p>Python ne dispose pas d&#8217;un mécanisme d&#8217;encapsulation au sens strict, comme C++ et Java. Il propose en échange une convention de nommage qui assure une forme de &#8220;pseudo-encapsulation&#8221;:</p>
@@ -795,8 +894,8 @@ Pour résoudre ce problème, Python propose deux décorateurs apportant deux sol
 </li>
 </ul>
 </div>
-<div class="section" id="exercice">
-<h2>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre>fichier: chess.py
 
@@ -1075,6 +1174,7 @@ class Rook(Piece):
 <li><a class="reference internal" href="#old-style-new-style-classes">Old style / New style classes</a></li>
 <li><a class="reference internal" href="#l-heritage-multiple">L&#8217;héritage multiple</a></li>
 <li><a class="reference internal" href="#polymorphisme">Polymorphisme</a></li>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
 <li><a class="reference internal" href="#encapsulation">Encapsulation</a><ul>
 <li><a class="reference internal" href="#la-fonction-property">La fonction property()</a></li>
 </ul>
@@ -1087,7 +1187,7 @@ class Rook(Piece):
 </li>
 <li><a class="reference internal" href="#la-surcharge-des-operateurs">La surcharge des opérateurs</a></li>
 <li><a class="reference internal" href="#conventions-de-nommage">Conventions de nommage</a></li>
-<li><a class="reference internal" href="#exercice">Exercice</a><ul>
+<li><a class="reference internal" href="#id1">Exercice</a><ul>
 <li><a class="reference internal" href="#exercice-suite">Exercice (suite)</a></li>
 </ul>
 </li>
@@ -1133,29 +1233,127 @@ class Rook(Piece):
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

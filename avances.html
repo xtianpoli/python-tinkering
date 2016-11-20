@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -62,7 +64,7 @@
 <h1>Concepts avancés<a class="headerlink" href="#concepts-avances" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="les-fermetures-closures">
 <h2>Les fermetures (closures)<a class="headerlink" href="#les-fermetures-closures" title="Permalink to this headline">¶</a></h2>
-<p><strong>Rappel:</strong> En Python, les fonctions sont des objets de &#8220;premier ordre&#8221;. Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :</p>
+<p><strong>Rappel:</strong> En Python, les fonctions sont des objets de &#8220;première classe&#8221;. Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fa</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">123</span>
 <span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;je suis fa(), je renvoie fb&quot;</span><span class="p">)</span>
@@ -82,11 +84,11 @@
 <li>la fonction <em>fa()</em> est appelée et elle retourne l&#8217;objet-fonction <em>fb</em> qui est affecté à la variable <em>func_fb</em>. A ce stade, <em>fb</em> n&#8217;a pas été exécutée, mais seulement définie (par <em>def</em>).</li>
 <li>ensuite, en exécutant <em>func_fb()</em> (par l&#8217;application de <em>()</em> à la variable <em>func_fb</em>) la fonction <em>fb</em> s&#8217;exécute enfin.</li>
 </ol>
-<p>De manière informelle, le terme de <strong>fermeture</strong> (ou <em>closure</em> en anglais) désigne une fonction (considérée en tant qu&#8217;objet) accomapgnée de son contexte de définition. Ce contexte est représenté par l&#8217;ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.</p>
+<p>De manière informelle, le terme de <strong>fermeture</strong> (ou <em>closure</em> en anglais) désigne une fonction (considérée en tant qu&#8217;objet) accompagnée de son contexte de définition. Ce contexte est représenté par l&#8217;ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.</p>
 <p>Autrement dit, dans l&#8217;exemple précédent, <em>func_fb</em> (qui référence l&#8217;objet-fonction <em>fb</em>, retourné lors de l&#8217;appel de <em>fa()</em>) se &#8220;rappelle&#8221; que <tt class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">123</span></tt> alors que cette information provient du contexte d&#8217;exécution de <em>fa()</em>, terminé depuis.</p>
 <p><strong>NB:</strong> On va parler de <em>fermeture</em> seulement pour les fonctions définies à l&#8217;intérieur d&#8217;autres fonctions, les seules disposant d&#8217;un contexte non local).</p>
 <p>Pour une illustration plus complète, voici une utilisation possible des fonctions imbriquées et du principe de fermeture.</p>
-<p><strong>Scénario :</strong> Dans une organisation, les utilisateurs peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.</p>
+<p><strong>Scénario :</strong> Dans une organisation, les utilisateurs des moyens informatiques peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.</p>
 <p><strong>Solution :</strong> Nous allons définir un &#8220;générateur de profils&#8221; concrétisé par la fonction <strong>make_profile()</strong> qui a le rôle de &#8220;fabriquer&#8221; les fonctions créatrices de comptes souhaitées (implémentation factice qui renvoie un dictionnaire).</p>
 <p>A chaque appel <em>make_profile(groups, protocols)</em> produira une fonction capable de créer des utilisateurs ayant un profil donné :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">protocols</span><span class="p">):</span>
@@ -368,6 +370,7 @@
     <span class="k">return</span> <span class="n">simple_wrapper</span>
 </pre></div>
 </div>
+<p>Quelques exemples : <a class="reference external" href="https://wiki.python.org/moin/PythonDecoratorLibrary">https://wiki.python.org/moin/PythonDecoratorLibrary</a></p>
 <div class="section" id="id1">
 <h3>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="myexercice container">
@@ -836,6 +839,57 @@ StopIteration
 </pre></div>
 </div>
 </div>
+<div class="section" id="les-generateurs-a-l-oeuvre">
+<h3>Les générateurs à l&#8217;oeuvre ...<a class="headerlink" href="#les-generateurs-a-l-oeuvre" title="Permalink to this headline">¶</a></h3>
+<p>Cette fonction appartenant au module <strong>os</strong> de la <strong>bibliothèque standard</strong> permet de parcourir une arborescence de fichiers ayant pour racine le répertoire <em>top</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">top</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">onerror</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">followlinks</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Elle retourne un générateur qui fournit à chaque itération un triplet de valeurs contenant:</p>
+<ul class="simple">
+<li>le nom du répertoire courant</li>
+<li>la liste des sous-répertoires directs</li>
+<li>la liste des fichiers membres</li>
+</ul>
+<p>Les options:</p>
+<ul class="simple">
+<li>topdown :<ul>
+<li>True : l&#8217;itération se fait à partir de la racine (valeur par défaut)</li>
+<li>False: l&#8217;itération se fait à partir des &#8220;feuilles&#8221;</li>
+</ul>
+</li>
+<li>onerror : None (par défaut) ou une fonction utilisateur qui sera appelée en cas d&#8217;erreur.</li>
+<li>followlinks : suivi des liens symboliques (si <em>True</em>). Peut provoquer une récursion infinie en cas de liens cycliques</li>
+</ul>
+<p>Exemples:</p>
+<ul>
+<li><p class="first">top-down :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">&lt;type &#39;generator&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/&#39;, [&#39;django_http_proxy-0.3.2-py2.7.egg&#39;, &#39;django_guardian-1.0.4-py2.7.egg&#39;, &#39;Whoosh-2.4.1-py2.7.egg&#39;, &#39;vnc2flv&#39;, &#39;codenode-0.02-py2.7.egg&#39;, &#39;django&#39;, &#39;easy_thumbnails-1.0.3-py2.7.egg&#39;, &#39;Twisted-12.3.0-py2.7-linux-x86_64.egg&#39;, &#39;django_userena-1.1.2-py2.7.egg&#39;, &#39;django_compress-1.0.1-py2.7.egg&#39;, &#39;django_passwords-0.2.0-py2.7.egg&#39;], [&#39;vnc2flv-20100207.egg-info&#39;, &#39;flvscreen.so&#39;, &#39;Django-1.5.4.egg-info&#39;, &#39;easy-install.pth&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg&#39;, [&#39;EGG-INFO&#39;, &#39;httpproxy&#39;], [])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># etc...</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">bottom-up :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">,</span><span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/httpproxy&#39;, [], [&#39;views.pyc&#39;, &#39;settings.pyc&#39;, &#39;recorder.py&#39;, &#39;__init__.py&#39;, &#39;exceptions.pyc&#39;, &#39;views.py&#39;, &#39;settings.py&#39;, &#39;decorators.py&#39;, &#39;models.pyc&#39;, &#39;recorder.pyc&#39;, &#39;models.py&#39;, &#39;admin.py&#39;, &#39;__init__.pyc&#39;, &#39;admin.pyc&#39;, &#39;decorators.pyc&#39;, &#39;exceptions.py&#39;])</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 <div class="section" id="id3">
 <h3>Exercice<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="myexercice container">
@@ -923,177 +977,6 @@ RuntimeError: maximum recursion depth exceeded in comparison
 </pre></div>
 </div>
 </div>
-<div class="section" id="python-et-la-programmation-fonctionnelle">
-<h2>Python et la programmation fonctionnelle<a class="headerlink" href="#python-et-la-programmation-fonctionnelle" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="rappel">
-<h3>Rappel<a class="headerlink" href="#rappel" title="Permalink to this headline">¶</a></h3>
-<p>La programmation fonctionnelle est une paradigme qui aborde le calcul en tant qu&#8217;évaluation des fonctions sans effet de bord, sur le modèle des fonctions mathématiques.</p>
-<p><strong>Corollaire:</strong> dans une telle approche, les changements d&#8217;état, les modifications de données sont bannis.</p>
-<p>Les avantages revendiquées par ce paradigme sont, principalement:</p>
-<ul class="simple">
-<li>Prouvabilité formelle des programmes</li>
-<li>Décomposabilité/Composabilité des programmes</li>
-<li>Testing et mise au point facilités</li>
-</ul>
-<p>Langage multi-paradigme, Python contient des éléments de langage propices à la programmation fonctionnelle :</p>
-<ul class="simple">
-<li>les fonctions sont des objets de première classe</li>
-<li>il offre des mécanismes avancés pour le traitement des listes et des itérables en général:<ul>
-<li>listes en intension et générateurs-expression</li>
-<li>une large palette de fonctions sur les itérateurs (module <strong>itertools</strong>)</li>
-<li>les primitives &#8220;historiques&#8221; de la programmation fonctionnelle <em>map()</em>, <em>reduce()</em>, <em>filter()</em></li>
-<li>d&#8217;autres primitives sur les itérables: <em>all()</em>, <em>any()</em>, <em>min()</em>, <em>max()</em></li>
-</ul>
-</li>
-<li>il permet la définition de fonctions d&#8217;ordre supérieur (fonctions qui manipulent d&#8217;autres fonctions, comme les décorateurs)</li>
-</ul>
-<p>Pourtant, Python n&#8217;est pas un langage fonctionnel &#8220;pur&#8221; car :</p>
-<ul class="simple">
-<li>il n&#8217;encourage pas l&#8217;utilisation de la récursivité</li>
-<li>par défaut, il n&#8217;empêche pas les effets de bord (sauf dans les fonctions anonymes) ni les données modifiables</li>
-</ul>
-<p>Les trois fonctions &#8220;historiques&#8221; de la programmation fonctionnelle (<em>map</em>, <em>filter</em>, <em>reduce</em>) sont présentes dans le langage, mais, dans la pratique les deux premières perdent du terrain en faveur des listes en intension et des générateurs-expression</p>
-<ul class="simple">
-<li><strong>map(f, iterable1, iterable2,...)</strong> : applique la fonction <em>f</em> sur chaque item résultat d&#8217;une itération:<ul>
-<li>le nombre d&#8217;arguments de la fonction doit correspondre avec le nombre d&#8217;itérables à traiter</li>
-<li>les itérables seront traités parallèlement : la fonction recevra en argument, lors d&#8217;une itération <em>i</em>, le i-ème élément de chaque</li>
-<li>le processus s&#8217;arrête lorsque la fin de l&#8217;itérable le plus court est atteinte</li>
-</ul>
-</li>
-<li><strong>filter(f, iterable_in)</strong> : applique la fonction <em>f</em> à tous les éléments de <em>iterable_in</em> et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels <em>f</em> renvoie <em>True</em></li>
-<li><strong>reduce(f, iterable_in[,init)</strong> : applique la fonction <em>f</em> (à deux arguments) à tous les items de <em>iterable_in</em> de manière cumulative, de gauche à droite:<ul>
-<li>pour [1,2,3,4] le résultat sera équivalent à  <tt class="docutils literal"><span class="pre">f(f(f(1,2),3),4)</span></tt></li>
-<li>Si init est fourni, il sera utilisé dans le processus comme l&#8217;élément le plus à gauche. pour init=99 l&#8217;équivalent en terme de résultat sera <tt class="docutils literal"><span class="pre">f(f(f(f(99,1),2),3),4)</span></tt></li>
-<li><strong>NB:</strong> En version 3, la fonction <em>reduce</em> a été déplacée dans le module <em>functools</em> (cf. <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">http://docs.python.org/3.0/whatsnew/3.0.html</a>)</li>
-</ul>
-</li>
-</ul>
-<p>Le même document <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">WHATSNEW</a> préconise l&#8217;utilisation des listes en intension à la place de <em>map</em> et <em>filter</em> quand le résultat souhaité est une liste (car en version 3 ces deux fonctions fournissent des itérateurs en sortie)</p>
-<p><strong>NB :</strong> Les fonctions <em>map()</em> et <em>filter()</em> renvoient une liste en version 2 et un itérateur en version 3.</p>
-</div>
-<div class="section" id="la-fonction-map">
-<h3>La fonction <em>map</em><a class="headerlink" href="#la-fonction-map" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">lst</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}</span>
-    <span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    nom prénom</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span><span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension et générateurs-expression:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-<p>Les fonctions anonymes ont le mérite de ne jamais provoquer des effets de bord, ce qui est une exigence de première importance dans la programmation fonctionnelle:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">],</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension (pas besoin de lambda):</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;gn&#39;</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">e</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-<p><strong>Remarque:</strong> <em>map()</em> permet de travailler en parallèle sur plusieurs itérables, alors qu&#8217;avec les listes en intension on doit recourir à une astuce, l&#8217;utilisation de <strong>zip()</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
-
-<span class="n">lst1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">lst2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">prod</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
-<span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ou encore:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
-<span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">));</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[7, 16, 27, 40, 55]</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="la-fonction-filter">
-<h3>La fonction <em>filter</em><a class="headerlink" href="#la-fonction-filter" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span> <span class="n">lst</span>
-<span class="go">[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
-<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="la-fonction-reduce">
-<h3>La fonction <em>reduce</em><a class="headerlink" href="#la-fonction-reduce" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="go">[1, 2, 3, 4]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># factorielle de 5:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="go">120</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="le-module-itertools">
-<h3>Le module <em>itertools</em><a class="headerlink" href="#le-module-itertools" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://docs.python.org/3/library/itertools.html">itertools</a> fournit des itérables très utiles, en programmation fonctionnelle ou impérative, illustré ici sur un exemple. Soit le générateur suivant implémentant une série:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">series</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n illimité</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">yield</span> <span class="n">u</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
-        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">yield</span> <span class="n">u</span>
-</pre></div>
-</div>
-<p>On souhaite implémenter un itérable &#8220;paresseux&#8221; qui fournit à chaque itération, le terme courant de la série et la somme des éléments déjà générés</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">tee</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">crt</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">series</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">crt_acc</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt</span><span class="p">,</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">acc</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt_acc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="go">(-5, -5)</span>
-<span class="go">(4, -1)</span>
-<span class="go">(15, 14)</span>
-<span class="go">(28, 42)</span>
-<span class="go">(43, 85)</span>
-<span class="go">&gt;&gt;&gt;</span>
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 
 
@@ -1117,18 +1000,11 @@ RuntimeError: maximum recursion depth exceeded in comparison
 </li>
 <li><a class="reference internal" href="#les-generateurs">Les générateurs</a><ul>
 <li><a class="reference internal" href="#les-generateurs-expression">Les générateurs &#8220;expression&#8221;</a></li>
+<li><a class="reference internal" href="#les-generateurs-a-l-oeuvre">Les générateurs à l&#8217;oeuvre ...</a></li>
 <li><a class="reference internal" href="#id3">Exercice</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#fonctions-recursives">Fonctions récursives</a></li>
-<li><a class="reference internal" href="#python-et-la-programmation-fonctionnelle">Python et la programmation fonctionnelle</a><ul>
-<li><a class="reference internal" href="#rappel">Rappel</a></li>
-<li><a class="reference internal" href="#la-fonction-map">La fonction <em>map</em></a></li>
-<li><a class="reference internal" href="#la-fonction-filter">La fonction <em>filter</em></a></li>
-<li><a class="reference internal" href="#la-fonction-reduce">La fonction <em>reduce</em></a></li>
-<li><a class="reference internal" href="#le-module-itertools">Le module <em>itertools</em></a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -1171,29 +1047,127 @@ RuntimeError: maximum recursion depth exceeded in comparison
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

@@ -11,4 +11,8 @@ Licence
 **"Introduction à la programmation en Python"** de *Christian Poli* est mis à disposition selon les termes de la `licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France <http://creativecommons.org/licenses/by-nc-nd/3.0/fr/>`_
 
 
+#############
+Remerciements
+#############
 
+Merci à **Soraya Arias** pour le soin qu'elle a apporté à la relecture de ce texte, pour ses corrections et pour ses suggestions et remarques judicieuses.

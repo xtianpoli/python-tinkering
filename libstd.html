@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -61,6 +63,288 @@
   <div class="section" id="la-bibliotheque-standard-en-bref">
 <h1>La bibliothèque standard en bref<a class="headerlink" href="#la-bibliotheque-standard-en-bref" title="Permalink to this headline">¶</a></h1>
 <p>Il s&#8217;agit d&#8217;un simple aperçu, partiel et partial, de quelques fonctions avec les paramètres les plus courants dans le but de donner un avant goût des possibilités de cette bibliothèque, très riche. Il est donc fortement conseillé de consulter constamment la documentation de référence pour une utilisation correcte de la bibliothèque standard dans le processus de développement.</p>
+<div class="section" id="les-outils-pour-la-programmation-fonctionnelle">
+<h2>Les outils pour la programmation fonctionnelle<a class="headerlink" href="#les-outils-pour-la-programmation-fonctionnelle" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generalites">
+<h3>Généralités<a class="headerlink" href="#generalites" title="Permalink to this headline">¶</a></h3>
+<p>La programmation fonctionnelle (P.F) est née du souhait de dépasser les limitations de la programmation impérative qui la rendent inadéquate à la manipulation des objets mathématiques.</p>
+<p>En effet, la (ré)affectation de variable, propre à la programmation impérative n&#8217;est pas compatible avec les exigences de la démarche mathématique pour laquelle les objets &#8220;mutables&#8221; n&#8217;ont aucun sens. Les variables, dans la programmation impérative, sont plus proches, conceptuellement, des cellules mémoire de l&#8217;architecture de Von Neumann que des variables mathématiques.</p>
+<p>Pour surmonter cet inconvénient, un paradigme différent s&#8217;impose. Un programme cesse d&#8217;être une suite d&#8217;instructions à exécuter pour devenir une expression à évaluer.</p>
+<p>Le fonctions occupent le rôle clé dans cette nouvelle approche (et inspirent son nom!).</p>
+<p>Sans effets de bord, elles ressemblent aux fonctions mathématiques. Elles sont des objets de &#8220;première classe&#8221;. Des fonctions d&#8217;ordre supérieur ainsi que les appels récursif remplacent les structures de boucle.</p>
+<p>Ca va de soi, dans une telle approche, les changements d&#8217;état, les modifications de données sont bannis.</p>
+<p>Les avantages revendiquées par ce paradigme (considéré au sens &#8220;strict&#8221;, P.F. &#8220;pure&#8221;) sont, principalement:</p>
+<ul class="simple">
+<li>Prouvabilité formelle des programmes</li>
+<li>Décomposabilité/Composabilité des programmes</li>
+<li>Testing et mise au point facilités</li>
+</ul>
+<p>Dans la pratique, on rencontre deux manières d&#8217;aborder la programmation fonctionnelle :</p>
+<ul class="simple">
+<li>Dans un sens strict, correspondant aux langages fonctionnels &#8220;purs&#8221;, dénués de variables et d&#8217;objets mutables ainsi que de structures de contrôle impératifs (sous-ensembles purement fonctionnels de OCaml, Haskell, Pure Lisp etc.)</li>
+<li>Dans un sens plus libre, propre à certains langages multi-paradigme qui, sans bannir les idiomes des la programmation impérative, offrent les moyens d&#8217;écrire des programmes élégants avec des moyens apportés par paradigme fonctionnel (emploi des fonctions d&#8217;ordre supérieur pour remplacer des structures de contrôle impératifs etc.). Python s&#8217;inscrit dans ce deuxième courant.</li>
+</ul>
+<p>En effet, Python contient des éléments de langage propres à la programmation fonctionnelle :</p>
+<ul class="simple">
+<li>les fonctions sont des objets de première classe</li>
+<li>il permet la définition de fonctions d&#8217;ordre supérieur (fonctions qui manipulent d&#8217;autres fonctions)</li>
+<li>il offre des mécanismes avancés pour le traitement des listes et des itérables en général:<ul>
+<li>listes en intension et générateurs-expression</li>
+<li>des nombreuses fonctions d&#8217;ordre supérieur prédéfinies (module <strong>functools</strong>)</li>
+<li>une large palette de fonctions sur les itérateurs (module <strong>itertools</strong>)</li>
+<li>d&#8217;autres primitives sur les itérables: <em>all()</em>, <em>any()</em>, <em>min()</em>, <em>max()</em></li>
+</ul>
+</li>
+</ul>
+<p>Bien sûr, Python n&#8217;est pas un langage fonctionnel &#8220;pur&#8221; car :</p>
+<ul class="simple">
+<li>il n&#8217;encourage pas l&#8217;utilisation de la récursivité à la place des structures de boucle <em>for</em> et <em>while</em></li>
+<li>par défaut, il n&#8217;empêche pas les effets de bord ni les données modifiables.</li>
+</ul>
+</div>
+<div class="section" id="les-fonctions-d-ordre-superieur">
+<h3>Les fonctions d&#8217;ordre supérieur<a class="headerlink" href="#les-fonctions-d-ordre-superieur" title="Permalink to this headline">¶</a></h3>
+<p>En anglais &#8220;Higher-order functions&#8221; = HOF</p>
+<p>Nous avons vu qu&#8217;en Python, les fonctions sont des objets de &#8220;première classe&#8221; i. e.  un objet fonction peut être affecté à une variable, passé en paramètre à une fonction ou retourné par une fonction.</p>
+<p>Les fonctions qui manipulent et/ou qui créent des objets fonctions sont appelées &#8220;fonctions d&#8217;ordre supérieur&#8221;=FOS, en anglais :  &#8220;Higher-order functions&#8221; = HOF.</p>
+<p>Entre autres, <strong>les décorateurs en font partie</strong>.</p>
+<p>Les trois fonctions suivantes, <em>map</em>, <em>filter</em> et <em>reduce</em>   sont &#8220;piliers&#8221; de la programmation fonctionnelle dans le sens où elles sont présentes  dans quasiment  tous les langages qui s&#8217;en revendiquent.</p>
+<p>Elles sont présentes également dans Python mais, dans la pratique, <em>map</em> et <em>filter</em> perdent du terrain en faveur des listes en intension et des générateurs-expression</p>
+<ul class="simple">
+<li><strong>map(f, iterable1, iterable2,...)</strong> : applique la fonction <em>f</em> sur chaque item résultat d&#8217;une itération:<ul>
+<li>le nombre d&#8217;arguments de la fonction doit correspondre avec le nombre d&#8217;itérables à traiter</li>
+<li>les itérables seront traités parallèlement : la fonction recevra en argument, lors d&#8217;une itération <em>i</em>, le i-ème élément de chaque</li>
+<li>le processus s&#8217;arrête lorsque la fin de l&#8217;itérable le plus court est atteinte</li>
+</ul>
+</li>
+<li><strong>filter(f, iterable_in)</strong> : applique la fonction <em>f</em> à tous les éléments de <em>iterable_in</em> et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels <em>f</em> renvoie <em>True</em></li>
+<li><strong>reduce(f, iterable_in[,init])</strong> : applique la fonction <em>f</em> (à deux arguments) à tous les items de <em>iterable_in</em> de manière cumulative, de gauche à droite:<ul>
+<li>pour [1,2,3,4] le résultat sera équivalent à  <tt class="docutils literal"><span class="pre">f(f(f(1,2),3),4)</span></tt></li>
+<li>Si init est fourni, il sera utilisé dans le processus comme l&#8217;élément le plus à gauche. pour init=99 l&#8217;équivalent en terme de résultat sera <tt class="docutils literal"><span class="pre">f(f(f(f(99,1),2),3),4)</span></tt></li>
+<li><strong>NB:</strong> En version 3, la fonction <em>reduce</em> a été déplacée dans le module <em>functools</em> (cf. <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">http://docs.python.org/3.0/whatsnew/3.0.html</a>)</li>
+</ul>
+</li>
+</ul>
+<p>Le même document <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">WHATSNEW</a> préconise l&#8217;utilisation des listes en intension à la place de <em>map</em> et <em>filter</em> quand le résultat souhaité est une liste (car en version 3 ces deux fonctions fournissent des itérateurs en sortie)</p>
+<p><strong>NB :</strong> Les fonctions <em>map()</em> et <em>filter()</em> renvoient une liste en version 2 et un itérateur en version 3.</p>
+<div class="section" id="avant-d-entrer-dans-les-details">
+<h4>Avant d&#8217;entrer dans les détails...<a class="headerlink" href="#avant-d-entrer-dans-les-details" title="Permalink to this headline">¶</a></h4>
+<p>On va mentionner l&#8217;existence du module <strong>operator</strong> qui peut être décrit en quelques mots: il rend accessible tous les opérateurs sous forme de fonction : ( &#8220;add&#8221; pour &#8220;+&#8221;, &#8220;sub&#8221; pour &#8220;-&#8221;, &#8220;mul&#8221; pour &#8220;*&#8221; etc.)</p>
+</div>
+<div class="section" id="la-fonction-map">
+<h4>La fonction <em>map</em><a class="headerlink" href="#la-fonction-map" title="Permalink to this headline">¶</a></h4>
+<p>Illustrée via un exemple simple et mise en perspective avec une écriture équivalente avec des itérables en intension :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lst</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    nom prénom</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span><span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension et générateurs-expression:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Les fonctions anonymes sont souvent employées pour définir des transformations à appliquer sur tous les items d&#8217;un itérable, via une fonction d&#8217;ordre supérieur comme <em>map()</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension (pas besoin de lambda):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p><strong>Important :</strong> Nous remarquerons dans l&#8217;exemple précédent que la fonction anonyme devient inutile dans l&#8217;écriture &#8220;en intension&#8221; !</p>
+<p><strong>Remarque:</strong> <em>map()</em> permet de travailler en parallèle sur plusieurs itérables. Pour faire la même chose avec les itérables en intension on va utiliser la fonction <strong>zip()</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+
+<span class="n">lst1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">lst2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">prod</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># grace au module &quot;operator&quot; on évite d&#39;écrire des fonctions superflues (comme &quot;prod&quot;) :</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># ou encore:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">));</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[7, 16, 27, 40, 55]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="la-fonction-filter">
+<h3>La fonction <em>filter</em><a class="headerlink" href="#la-fonction-filter" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">));</span> <span class="n">lst</span>
+<span class="go">[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="la-fonction-reduce">
+<h3>La fonction <em>reduce</em><a class="headerlink" href="#la-fonction-reduce" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rappel :</strong> cette fonction à été déplacée dans le module <strong>functools</strong> dans <strong>Python 3.x</strong></p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span> <span class="c"># en Python 3.x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">[1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># factorielle de 5:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="go">120</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>La même chose, avec les fonctions du module <em>operator</em> :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="go">120</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="autres-fonctions-d-ordre-superieur">
+<h4>Autres fonctions d&#8217;ordre supérieur<a class="headerlink" href="#autres-fonctions-d-ordre-superieur" title="Permalink to this headline">¶</a></h4>
+<p>Les deux fonctions suivantes font également partie du module <strong>functools</strong> qui en contient bien d&#8217;autres.
+On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emblématiques&#8221; pour la programmation fonctionnelle.</p>
+<div class="section" id="l-application-partielle-d-une-fonction">
+<h5>L&#8217;application partielle d&#8217;une fonction<a class="headerlink" href="#l-application-partielle-d-une-fonction" title="Permalink to this headline">¶</a></h5>
+<p><strong>Exemple :</strong> dans la fonction suivante, de variable <strong>x</strong> et paramètre <strong>k</strong> :</p>
+<div class="math">
+\[f_{k}(x) = kx^2 + (2k + 1)x + 5\]</div>
+<p>on souhaite fixer le paramètre <strong>k</strong> à <strong>3</strong> pour obtenir :</p>
+<div class="math">
+\[f_{3}(x) = 3x^2 + 7x + 5\]</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fk</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">k</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f3</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">fk</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f3</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">115</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fonctions-generiques-single-dispatch-generic-functions">
+<h5>Fonctions génériques (single-dispatch generic functions)<a class="headerlink" href="#fonctions-generiques-single-dispatch-generic-functions" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+
+<span class="nd">@singledispatch</span>
+<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;What is this? &quot;</span><span class="p">,</span><span class="n">arg</span> <span class="p">)</span>
+
+<span class="nd">@fun.register</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;i: &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot; elt: &quot;</span><span class="p">,</span> <span class="n">elt</span><span class="p">)</span>
+
+<span class="nd">@fun.register</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;key: &quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s">&quot; value: &quot;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+<span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">))</span>
+
+<span class="n">fun</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">))</span>
+<span class="go">i:  0  elt:  P</span>
+<span class="go">i:  1  elt:  y</span>
+<span class="go">i:  2  elt:  t</span>
+<span class="go">i:  3  elt:  h</span>
+<span class="go">i:  4  elt:  o</span>
+<span class="go">i:  5  elt:  n</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
+<span class="go">key:  b  value:  5</span>
+<span class="go">key:  a  value:  1</span>
+<span class="go">key:  c  value:  6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="go">What is this?  abc</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="le-module-itertools">
+<h3>Le module <em>itertools</em><a class="headerlink" href="#le-module-itertools" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/library/itertools.html">itertools</a> fournit des itérables très utiles, en programmation fonctionnelle ou impérative.</p>
+<p>Ils sont nombreux, l&#8217;utilisation de deux d&#8217;entre eux est illustrée ici sur un exemple. Soit le générateur suivant implémentant une série:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">series</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    U0=-5 et Un+1=Un + 2*n+9 pour n illimité</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">yield</span> <span class="n">u</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span><span class="mi">9</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">yield</span> <span class="n">u</span>
+</pre></div>
+</div>
+<p>On souhaite implémenter un itérable &#8220;paresseux&#8221; qui fournit à chaque itération, le terme courant de la série et la somme des éléments déjà générés. On va utiliser:</p>
+<ul class="simple">
+<li><strong>itertools.tee</strong> qui produit <strong>n</strong> itérateurs indépendants à partir d&#8217;un itérable unique</li>
+<li><strong>itertools.accumulate</strong> renvoie les résultats partiels de l&#8217;opération fournie en 2ème position (par défaut, la somme) appliquée aux éléments de l&#8217;itérateur en entrée</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">tee</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crt</span><span class="p">,</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">tee</span><span class="p">(</span><span class="n">series</span><span class="p">(),</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crt_acc</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt</span><span class="p">,</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">acc</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">crt_acc</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(-5, -5)</span>
+<span class="go">(4, -1)</span>
+<span class="go">(15, 14)</span>
+<span class="go">(28, 42)</span>
+<span class="go">(43, 85)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="la-manipulation-des-fichiers">
 <h2>La manipulation des fichiers<a class="headerlink" href="#la-manipulation-des-fichiers" title="Permalink to this headline">¶</a></h2>
 <p>Le type <strong>file</strong> est un des types prédéfinis en Python, déjà évoqué précédemment pour illustrer la structure <strong>with</strong>. Pour ouvrir un fichier, on utilise le plus souvent la fonction prédéfinie <em>open()</em>  à la place du constructeur <em>file()</em>. Il y a des différences notables entre les versions 2 et 3 au niveau de la signature de <em>open()</em>.</p>
@@ -214,7 +498,7 @@
 </div>
 <div class="section" id="l-interface-avec-le-systeme-d-exploitation">
 <h2>L&#8217;interface avec le système d&#8217;exploitation<a class="headerlink" href="#l-interface-avec-le-systeme-d-exploitation" title="Permalink to this headline">¶</a></h2>
-<p>Il s&#8217;agit des fonctionnalités souvent équivalentes aux commandes système usuelles. Elles se retrouvent dans plusieurs modules dont <strong>os</strong>, <strong>shutil</strong> et <strong>glob</strong></p>
+<p id="file-management">Il s&#8217;agit des fonctionnalités souvent équivalentes aux commandes système usuelles. Elles se retrouvent dans plusieurs modules dont <strong>os</strong>, <strong>shutil</strong> et <strong>glob</strong></p>
 <div class="section" id="le-module-os">
 <h3>Le module <strong>os</strong><a class="headerlink" href="#le-module-os" title="Permalink to this headline">¶</a></h3>
 <p>Ce module contient un grand nombre de fonctions permettant l&#8217;interaction avec le système d&#8217;exploitation.</p>
@@ -260,28 +544,24 @@ poli@host:/tmp$
 </pre></div>
 </div>
 <p>Autres manipulations simples sur des fichiers en bash :</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ls /tmp/
-keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy.txt
-plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
-$ mv /tmp/testpy.txt /tmp/testpy2.txt
-$ ls /tmp/
-keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log    testpy2.txt
-plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
-$ rm /tmp/testpy2.txt
-$ ls /tmp/
-keyring-uCfKvw  pulse-2L9K88eMlGn7  RewriteLog.log
-plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
+<div class="highlight-python"><div class="highlight"><pre>$ ls /tmp/test/
+testpy.txt
+$ mv /tmp/test/testpy.txt /tmp/test/testpy2.txt
+$ ls /tmp/test/
+testpy2.txt
+$ rm /tmp/test/testpy2.txt
+$ ls /tmp/test/
 </pre></div>
 </div>
 <p>Et leur équivalent en Python:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/&#39; (&#39;ls&#39; -A plus précisément)</span>
-<span class="go">[&#39;RewriteLog.log&#39;, &#39;testpy.txt&#39;, &#39;ssh-lPLxInqU2454&#39;, &#39;plugtmp&#39;, &#39;keyring-uCfKvw&#39;, &#39;pulse-PKdhtXMmr18n&#39;, &#39;pulse-2L9K88eMlGn7&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s">&quot;/tmp/testpy.txt&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;mv /tmp/testpy.txt /tmp/testpy2.txt&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/&#39;</span>
-<span class="go">[&#39;RewriteLog.log&#39;, &#39;ssh-lPLxInqU2454&#39;, &#39;plugtmp&#39;, &#39;keyring-uCfKvw&#39;, &#39;pulse-PKdhtXMmr18n&#39;, &#39;testpy2.txt&#39;, &#39;pulse-2L9K88eMlGn7&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&quot;/tmp/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;rm /tmp/testpy2.txt&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="p">)</span>
-<span class="go">[&#39;RewriteLog.log&#39;, &#39;ssh-lPLxInqU2454&#39;, &#39;plugtmp&#39;, &#39;keyring-uCfKvw&#39;, &#39;pulse-PKdhtXMmr18n&#39;, &#39;pulse-2L9K88eMlGn7&#39;]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39; (&#39;ls&#39; -A plus précisément)</span>
+<span class="go">[&#39;testpy.txt&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy.txt&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;mv /tmp/test/testpy.txt /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39;</span>
+<span class="go">&#39;testpy2.txt&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;rm /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span>
+<span class="go">[]</span>
 </pre></div>
 </div>
 <p>Autres fonctions utiles:</p>
@@ -426,8 +706,8 @@ plugtmp         pulse-PKdhtXMmr18n  ssh-lPLxInqU2454
 </pre></div>
 </div>
 </div>
-<div class="section" id="des-fonctions-de-plus-haut-niveau">
-<h3>Des fonctions de plus haut niveau<a class="headerlink" href="#des-fonctions-de-plus-haut-niveau" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="le-module-shutil">
+<h3>Le module <em>shutil</em><a class="headerlink" href="#le-module-shutil" title="Permalink to this headline">¶</a></h3>
 <p>Le module <em>shutil</em> fournit des fonctions de manipulation de fichiers (copie, suppression) d&#8217;un niveau d&#8217;abstraction plus proche des commandes système.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -539,9 +819,10 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 </div>
 <div class="section" id="l-acces-a-internet-en-http">
 <h2>L&#8217;accès à Internet en http<a class="headerlink" href="#l-acces-a-internet-en-http" title="Permalink to this headline">¶</a></h2>
-<p>Un module simple permettant de faire des requêtes <em>http</em> est <em>urllib2</em>. Pour une utilisation basique il suffit de passer une <em>url</em> en argument à la fonction <em>urlopen()</em> qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span>
+<p>Un module simple permettant de faire des requêtes <em>http</em> est <em>urllib.request</em> (<em>urllib2</em> en <em>Python 2.7.x</em>). Pour une utilisation basique il suffit de passer une <em>url</em> en argument à la fonction <em>urlopen()</em> qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span> <span class="c"># for Python 3.x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c">#from import urllib2 import urlopen # for Python 2.7.x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="go">&#39;&lt;!doctype html&gt;\n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
@@ -552,7 +833,7 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 </pre></div>
 </div>
 <p>On peut également récupérer le résultat d&#8217;un coup:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;&lt;!doctype html&gt;\n&lt;html&gt;\n&lt;head&gt;\n ...</span>
 </pre></div>
 </div>
@@ -567,9 +848,9 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 <li>zipfile</li>
 <li>tarfile</li>
 </ul>
-<p>Illustration, avec une belle citation de <em>Boby Lapointe</em> :</p>
+<p>Illustration  :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">zlib</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">citation</span> <span class="o">=</span> <span class="s">&quot;Davantage d&#39;avantages avantagent davantage.&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">citation</span> <span class="o">=</span> <span class="n">b</span><span class="s">&quot;Davantage d&#39;avantages avantagent davantage.&quot;</span> <span class="c"># Boby Lapointe</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span>
 <span class="go">43</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">zipped</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span>
@@ -714,6 +995,25 @@ logs = /var/log/mysrv
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">La bibliothèque standard en bref</a><ul>
+<li><a class="reference internal" href="#les-outils-pour-la-programmation-fonctionnelle">Les outils pour la programmation fonctionnelle</a><ul>
+<li><a class="reference internal" href="#generalites">Généralités</a></li>
+<li><a class="reference internal" href="#les-fonctions-d-ordre-superieur">Les fonctions d&#8217;ordre supérieur</a><ul>
+<li><a class="reference internal" href="#avant-d-entrer-dans-les-details">Avant d&#8217;entrer dans les détails...</a></li>
+<li><a class="reference internal" href="#la-fonction-map">La fonction <em>map</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#la-fonction-filter">La fonction <em>filter</em></a></li>
+<li><a class="reference internal" href="#la-fonction-reduce">La fonction <em>reduce</em></a><ul>
+<li><a class="reference internal" href="#autres-fonctions-d-ordre-superieur">Autres fonctions d&#8217;ordre supérieur</a><ul>
+<li><a class="reference internal" href="#l-application-partielle-d-une-fonction">L&#8217;application partielle d&#8217;une fonction</a></li>
+<li><a class="reference internal" href="#fonctions-generiques-single-dispatch-generic-functions">Fonctions génériques (single-dispatch generic functions)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#le-module-itertools">Le module <em>itertools</em></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#la-manipulation-des-fichiers">La manipulation des fichiers</a><ul>
 <li><a class="reference internal" href="#les-autres-methodes-sur-les-fichiers">Les autres méthodes sur les fichiers</a></li>
 </ul>
@@ -723,7 +1023,7 @@ logs = /var/log/mysrv
 <li><a class="reference internal" href="#le-module-os">Le module <strong>os</strong></a></li>
 <li><a class="reference internal" href="#le-module-os-path">Le module <strong>os.path</strong></a></li>
 <li><a class="reference internal" href="#utilisation-du-caractere-joker">Utilisation du caractère &#8220;joker&#8221;</a></li>
-<li><a class="reference internal" href="#des-fonctions-de-plus-haut-niveau">Des fonctions de plus haut niveau</a></li>
+<li><a class="reference internal" href="#le-module-shutil">Le module <em>shutil</em></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#les-sous-processus">Les (sous)processus</a></li>
@@ -777,29 +1077,127 @@ logs = /var/log/mysrv
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

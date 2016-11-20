@@ -566,6 +566,27 @@ Par contre, ses sous-classes :
 
 .. slide_mark_e
 
+
+********
+Exercice
+********
+
+.. slide_mark_b :Exercice
+
+.. container:: myexercice
+
+   .. literalinclude:: exercices/lsp.py
+      :lines: 10-
+	
+
+.. container:: tohide
+
+   .. literalinclude:: exercices/lsp_sol.py
+      :lines: 10-
+
+.. slide_mark_e
+   
+   
 *************
 Encapsulation
 *************

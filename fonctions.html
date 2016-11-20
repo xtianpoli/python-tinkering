@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -97,7 +99,7 @@ NameError: name &#39;res&#39; is not defined
 Hi Mom!
 &gt;&gt;&gt; res # existe bien maintenant (plus d&#39;erreur)!
 &gt;&gt;&gt;
-&gt;&gt;&gt; res==None
+&gt;&gt;&gt; res is None
 True
 </pre></div>
 </div>
@@ -111,7 +113,7 @@ True
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p><strong>Astuce:</strong> Si la valeur de retour est un tuple, le résultat retourné peut être récupéré directement dans plusieurs variables (qui forment un tuple aussi) :</p>
+<p><strong>Astuce:</strong> Si la valeur de retour est une séquence (tuple, liste etc.), le résultat retourné peut être récupéré directement dans plusieurs variables (par <strong>unpacking</strong>) :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="c"># ...</span>
 <span class="gp">... </span>    <span class="c"># ...</span>
@@ -127,6 +129,67 @@ True
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
+<div class="section" id="exercice">
+<h4>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
+fichier: complexnum.py
+
+Ecrire une fonction qui accepte comme arguments deux listes de réels list_r et
+list_j ayant la même longueur N :
+
+def complexfun(list_r, list_j):
+    ....
+
+et fournit en sortie (voir l&#39;exemple d&#39;utilisation) deux autres listes
+de longueur N :
+    
+1) une liste de N nombres complexes exprimés en coordonnées cartésiennes,
+chaque élément [i] de cette liste ayant comme partie réelle l&#39;élément [i] de la
+liste &quot;list_r&quot; et comme partie imaginaire l&#39;élément [i]  de la liste &quot;list_j&quot;.
+2) une liste de paires (r, phi) représentant les coordonnées polaires des
+nombres complexes de la liste précédente.
+
+Rappel:
+    &gt;&gt;&gt; c = complex(3, 4)
+    &gt;&gt;&gt; c   
+    (3+4j)
+
+NB: Vous pouvez utiliser la bibliothèque cmath documentée en ligne:
+    https://docs.python.org/3/library/cmath.html
+
+&quot;&quot;&quot;
+import cmath
+
+def complexfun(lr, lj):
+    # à implémenter
+
+# Exemple d&#39;utilisation:
+
+re_list = [1.0, 2.4, 7.8]
+im_list = [3.4, 1.2, 4.1]
+
+rect_res, polar_res = complexfun(re_list, im_list)
+
+print(rect_res)
+print(polar_res)
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: complexnum_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">cmath</span>
+
+<span class="k">def</span> <span class="nf">complexfun</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">lj</span><span class="p">):</span>
+    <span class="n">l_rect</span> <span class="o">=</span> <span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">lj</span><span class="p">)]</span>
+    <span class="n">l_polar</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmath</span><span class="o">.</span><span class="n">polar</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">l_rect</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">l_rect</span><span class="p">,</span> <span class="n">l_polar</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="les-fonctions-imbriquees">
 <h3>Les fonctions imbriquées<a class="headerlink" href="#les-fonctions-imbriquees" title="Permalink to this headline">¶</a></h3>
@@ -141,7 +204,7 @@ True
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>Dans les chapitres suivants on va rencontrer des utilisations plus pertinentes de cette propriété très puissante...</p>
+<p>Dans les chapitres suivants on va rencontrer des utilisations plus pertinentes de cette propriété ...</p>
 </div>
 </div>
 <div class="section" id="la-portee-des-variables">
@@ -185,7 +248,8 @@ L&#8217;exemple suivant illustre ce comportement avec une boucle <em>for</em> da
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
-<span class="go">values in f() context: x=3, y=2, i=2</span>
+<span class="go">values in the context of f(): x=3, y=2, i=2</span>
+<span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
 <span class="go">5</span>
 </pre></div>
@@ -362,27 +426,126 @@ global: y=2
 <p>Cette instruction à été introduite avec la version 3 pour répondre au besoin illustré précédemment.</p>
 <p>La résolution des noms, aussi bien pour l&#8217;affectation que pour le référencement, se fait suivant l&#8217;étape 2 (seulement) du processus décrit précédemment pour le référencement des variables locales.</p>
 <p>Ainsi, si la variable n&#8217;est pas trouvée dans un des blocs <strong>def</strong> qui englobent la fonction contenant la déclaration <strong>nonlocal</strong>, une erreur de syntaxe se produit (même si la variable existe dans le contexte global!)</p>
+<div class="section" id="id1">
+<h4>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: varscope.py</span>
+
+<span class="sd">Observez l&#39;évolution de la variable v suite à l&#39;exécution des fonctions f1()</span>
+<span class="sd">et f2() en exécutant la séquence de code suivante.</span>
+<span class="sd">Enlevez &quot;global v&quot; dans f1() et observez le résultat de l&#39;exécution.</span>
+<span class="sd">Faites la même chose pour f2()</span>
+<span class="sd">Expliquez les résultats.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c">#</span>
+<span class="c"># Cas 1</span>
+<span class="c">#</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">f1</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">v</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;abc&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
+<span class="n">f1</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
+    
+
+<span class="c">#</span>
+<span class="c"># Cas 2</span>
+<span class="c">#</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">f2</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">v</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
+<span class="n">f2</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: varscope_sol.py</span>
+
+<span class="sd">L&#39;explication est immédiate si on s&#39;intéresse à l&#39;identifiant de l&#39;objet</span>
+<span class="sd">référencé par la variable v :</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c">#</span>
+<span class="c"># Cas 1</span>
+<span class="c">#</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">f1</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">v</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;abc&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
+<span class="n">f1</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
+    
+
+<span class="c">#</span>
+<span class="c"># Cas 2</span>
+<span class="c">#</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">f2</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">v</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
+<span class="n">f2</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="signatures-des-fonctions">
 <h2>Signatures des fonctions<a class="headerlink" href="#signatures-des-fonctions" title="Permalink to this headline">¶</a></h2>
-<p>La signature d&#8217;une fonction est composée du nom de la fonction suivi, entre parenthèses, par l&#8217;ensemble de ses paramètres (ensemble qui peut être vide). Elle représente la première partie de l&#8217;instruction <strong>def</strong> et est suivie par <strong>&#8221;:&#8221;</strong>.</p>
+<p>La signature d&#8217;une fonction est composée du nom de la fonction suivi, entre parenthèses, par la liste de ses paramètres (ensemble qui peut être vide). Elle représente la première partie de l&#8217;instruction <strong>def</strong> et est suivie par <strong>&#8221;:&#8221;</strong>.</p>
 <p>La forme générale d&#8217;une signature est:</p>
 <p><em>def</em> <strong>nom_fonction(p1, p2, ...)</strong> <em>:</em></p>
 <p>les paramètres <em>p1</em>, <em>p2</em>,... pouvant prendre plusieurs formes.</p>
 <div class="note admonition">
 <p class="first admonition-title"><strong>Vocabulaire</strong></p>
 <p>On va appeler :</p>
-<ul class="simple">
-<li><strong>&#8220;paramètres&#8221;</strong> les entités nommées (<em>p1</em>, <em>p2</em>, ...), faisant partie de la <strong>signature</strong> de la fonction.</li>
+<ul class="last simple">
+<li><strong>&#8220;paramètres&#8221;</strong> les entités appelées  <em>p1</em>, <em>p2</em>, ..., faisant partie de la <strong>signature</strong> de la fonction.</li>
 <li><strong>&#8220;arguments&#8221;</strong> les valeurs concrètes (références, en fait) passées à la fonction lors des <strong>appels</strong> .</li>
-<li><strong>&#8220;paramètres mono-valués&#8221;</strong> les paramètres recevant un seul argument (maximum) lors des appels de la fonction.</li>
-<li><strong>&#8220;paramètres multi-valués&#8221;</strong> les paramètres pouvant recevoir un nombre indéterminé (0..N) d&#8217;arguments lors des appels de la fonction.</li>
 </ul>
-<p class="last"><strong>NB :</strong> On a utilisé des noms de la forme <em>arg_x</em>, <em>args</em>, <em>kwargs</em> pour nommer des paramètres afin de mieux identifier leur rôle.</p>
 </div>
+<p>On va distinguer :</p>
+<ul class="simple">
+<li><strong>paramètres simples</strong> ou (mono-valués) : les paramètres recevant un seul argument (maximum) lors des appels de la fonction. Ils peuvent être :<ul>
+<li>à argument <strong>obligatoire</strong> : ils doivent recevoir un (et un seul) argument à l&#8217;appel de la fonction</li>
+<li>à argument <strong>facultatif</strong> : ayant une valeur par défaut qui s&#8217;applique en absence d&#8217;un argument à l&#8217;appel</li>
+</ul>
+</li>
+<li><strong>paramètres variadiques</strong> (multi-valués) les paramètres pouvant recevoir un nombre indéterminé (0..N) d&#8217;arguments lors des appels de la fonction. Leur rôle est assez similaire à celui du paramètre <strong>&#8221;...&#8221;</strong> présent dans d&#8217;autres langages (<strong>C</strong>, <strong>R</strong>, ...). Ils peuvent être, à leur tour:<ul>
+<li>à arguments <strong>positionnels</strong> ou <strong>non-keyword</strong> qu&#8217;on va appeler par la suite <strong>&#8220;paramètre étoile&#8221;</strong></li>
+<li>à arguments <strong>nommés</strong> ou <strong>keyword</strong> qu&#8217;on va appeler ici <strong>&#8220;paramètre double-étoile&#8221;</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><strong>NB :</strong> On a utilisé des noms de la forme <em>arg_x</em>, <em>args</em>, <em>kwargs</em> pour nommer des paramètres afin de mieux identifier leur rôle.</div></blockquote>
 <p>On va voir que, dans le cas le plus général, <strong>il n&#8217;y a pas de bijection paramètre&lt;=&gt;argument</strong>.</p>
-<p>Dans une signature de fonction, trois catégories de paramètres peuvent être présentes, toutes optionnelles :</p>
+<p>La double dichotomie précédente donne quatre catégories de paramètres :</p>
 <div class="highlight-python"><div class="highlight"><pre>#
 # définition de la fonction avec ses paramètres
 #
@@ -393,43 +556,34 @@ def func(arg_1, arg_2, ..., arg_i-1, arg_i=def_val_i, ..., arg_n=def_val_n, *arg
                       ^                           ^              |              +------+      
                       |                           |              |              |
            +--------------------+       +--------------------+   |    +--------------------+ 
-           | params mono-valués |       | params mono-valués |   |    | param multi-valué  | 
-           |       SANS         |       |       AVEC         |   |    | &quot;clés - valeurs&quot;   |
-	   | valeur par défaut  |       | valeur par défaut  |   |    |       (C)          |
-	   |       (A-1)        |       |       (A-2)        |   |    +--------------------+ 
+           |  params simples    |       |  params simples    |   |    | param variadique   | 
+           |  arg. OBLIGATOIRE  |       |  arg. FACULTATIF   |   |    | à valeurs NOMMEES  |
+           |                    |       |   (avec valeur     |   |    | ou &quot;keyword&quot;       | 
+	   |                    |       |   par défaut)      |   |    |       (N)          |
+	   |       (O)          |       |       (F)          |   |    +--------------------+ 
            +--------------------+       +--------------------+   |
                                                           +--------------------+ 
-                                                          | param multi-valué  | 
-                                                          | à valeurs simples  | 
-	                                                  |        (B)         | 
+                                                          | param variadique   | 
+                                                          | à valeurs          |
+                                                          | POSITIONNELLES  ou |
+                                                          |   &quot;non-keyword&quot;    |
+                                                          |        (P)         | 
                                                           +--------------------+ 
 </pre></div>
 </div>
-<ul>
-<li><p class="first"><strong>0..n</strong> paramètres mono-valués <strong>(A)</strong> , notés dans la suite <strong>arg_1</strong>,..., <strong>arg_n</strong>, qui peuvent prendre deux formes :</p>
-<ul>
-<li><p class="first"><em>variable</em> : à l&#8217;appel, cette variable <strong>(A-1)</strong> recevra un argument, qui devra <strong>toujours</strong> être fourni.</p>
-</li>
-<li><p class="first"><em>variable = valeur_par_defaut</em> : à l&#8217;appel, l&#8217;argument correspondant au paramètre  <strong>(A-2)</strong> peut manquer, et dans ce cas la valeur par défaut sera utilisée. Cette notation (<em>nom=valeur</em>) est connue sous le nom de &#8220;syntaxe <strong>keyword</strong>&#8221; en jargon Python. Dans la suite, on va l&#8217;appeler parfois &#8220;syntaxe <strong>clé-valeur</strong>&#8221;.</p>
-<p><strong>NB :</strong> Tous les paramètres suivant un paramètre à valeur par défaut doivent avoir aussi une valeur par défaut.</p>
-</li>
+<ul class="simple">
+<li>paramètres <strong>simples</strong> à argument <strong>obligatoire</strong> : syntaxiquement, ce sont des variables regroupés à gauche dans la signature ( <strong>arg_1</strong>,..., <strong>arg_i-1</strong>). A l&#8217;appel de la fonction, chaque variable de ce groupe (<strong>(O)</strong> sur le schéma) recevra obligatoirement un argument (et un seul).</li>
+<li>paramètres <strong>simples</strong> à argument <strong>facultatif</strong> (syntaxe : <em>variable=valeur_par_defaut</em> ) représentés par <strong>arg_1</strong>,..., <strong>arg_i-1</strong>, groupe <strong>(F)</strong> sur le schéma. A l&#8217;appel de la fonction, les valeurs par défaut s&#8217;appliquent, si nécessaire, à la place des arguments manquants correspondants. Cette notation (<em>nom=valeur</em>) est connue sous le nom de &#8220;syntaxe <strong>keyword</strong>&#8221; en jargon Python. Dans la suite, on va l&#8217;appeler parfois aussi &#8220;syntaxe <strong>clé-valeur</strong>&#8221;.
+<strong>NB :</strong> Tous les paramètres suivant un paramètre à valeur par défaut doivent avoir aussi une valeur par défaut.</li>
+<li>paramètre <strong>variadique</strong> à valeurs <strong>positionnelles</strong> (syntaxe <strong>*nom</strong> ), groupe <strong>(P)</strong> sur le schéma reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments sous la forme d&#8217;un tuple (noté <strong>*args</strong> dans la suite), l&#8217;ordre des arguments à l&#8217;appel étant respectée dans le tuple.</li>
+<li>paramètre <strong>variadique</strong> à valeurs <strong>nommées</strong> (syntaxe <strong>**nom</strong> )  reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments &#8220;clé-valeur&#8221; sous la forme d&#8217;un dictionnaire (noté <strong>**kwargs</strong> dans la suite)</li>
 </ul>
-</li>
-<li><p class="first"><strong>0..1</strong> paramètre multi-valué à valeurs simples <strong>(B)</strong> : reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments sous la forme d&#8217;un tuple (noté <strong>*args</strong> dans la suite), l&#8217;ordre des arguments à l&#8217;appel étant respectée dans le tuple.</p>
-</li>
-<li><p class="first"><strong>0..1</strong> paramètre multi-valué à valeurs nommées <strong>(C)</strong> (syntaxe <em>clé-valeur</em>): reçoit, à l&#8217;appel, un nombre arbitraire (0..*) d&#8217;arguments &#8220;clé-valeur&#8221; sous la forme d&#8217;un dictionnaire (noté <strong>**kwargs</strong> dans la suite)</p>
-</li>
-</ul>
-<p>Si présents, ces trois types de paramètres apparaissent dans la signature dans cet ordre:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg_1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">arg_n</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-   <span class="o">...</span>
+<p>Si présents, les différents paramètres évoqués apparaissent dans la signature dans cet ordre:</p>
+<div class="highlight-python"><div class="highlight"><pre>def func(arg_1, ..., arg_i-1, arg_i, ..., arg_n, *args, **kwargs):
+   ...
 </pre></div>
 </div>
-<p>Les seuls appels de fonctions permettant aux trois catégories de paramètres de recevoir des arguments sont ceux qui:</p>
-<ul class="simple">
-<li>fournissent les arguments destinés aux paramètres mono-valués sous forme de valeurs simples (non-nommées) dans l&#8217;ordre des paramètres. On va parler d&#8217;<strong>arguments positionnels</strong> (on va voir que ce n&#8217;est pas la seule manière pour passer des arguments à une fonction).</li>
-<li>fournissent à l&#8217;appel <strong>tous</strong> les arguments correspondants aux paramètres mono-valués  (pas d&#8217;utilisation des valeurs par défaut)</li>
-</ul>
+<p><strong>Remarque :</strong> La seule manière d&#8216;&#8220;alimenter&#8221; le  paramètre <strong>*args</strong> lors de l&#8217;appel de <strong>func()</strong> (par exemple avec <strong>m</strong> &gt; 0 arguments) est de fournir lors de l&#8217;appel <strong>n + m</strong> arguments positionnels. Il s&#8217;agit donc de fournir des arguments explicites pour <strong>tous</strong> les paramètres simples, y compris pour ceux qui ont une valeur par défaut, même si la valeur par défaut est bien celle souhaitée.</p>
 <p>Dans cette situation, la correspondance entre les paramètres de la signature et les arguments à l&#8217;appel se présente ainsi :</p>
 <div class="highlight-python"><div class="highlight"><pre>#
 # correspondance paramètres &lt;=&gt; arguments
@@ -447,21 +601,22 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
            \_____________________/   \_____________/   \___________________________/
                       ^                     ^                       ^
                       |                     |                       |
-             +----------------+      +--------------+         +--------------+
-             |args =&gt; params  |      |args =&gt; params|         |args =&gt; params|
-             | mono-valués    |      |multi-valués  |         | multi-valués |
-             |                |      |   simples    |         |   nommés     |
-             +----------------+      +--------------+         +--------------+
+             +----------------+      +----------------+         +-------------------+
+             |args non-keyword|      |args non-keyword|         | args keyword      |
+             |     =&gt;         |      |      =&gt;        |         |     =&gt;            |
+             | params simples |      |param variadique|         |param variadique   |
+             |(oblig. ou pas) |      |  &quot;étoile&quot; (*)  |         |&quot;double étoile&quot;(**)|
+             +----------------+      +----------------+         +-------------------+
 </pre></div>
 </div>
-<div class="section" id="les-parametres-mono-values">
-<h3>Les paramètres mono-valués<a class="headerlink" href="#les-parametres-mono-values" title="Permalink to this headline">¶</a></h3>
-<p>Représentés précédemment par <em>arg_1,...,arg_n</em>. On rappelle qu&#8217;un paramètre mono-valué peut se présenter sous une des deux formes:</p>
+<div class="section" id="les-parametres-simples">
+<h3>Les paramètres simples<a class="headerlink" href="#les-parametres-simples" title="Permalink to this headline">¶</a></h3>
+<p>Représentés précédemment par <em>arg_1,...,arg_n</em>. On rappelle qu&#8217;un paramètre simple peut être:</p>
 <ul class="simple">
-<li>Paramètre simple  (<em>variable</em>) : à l&#8217;appel, il référencera un argument, qui devra <strong>toujours</strong> être présent.</li>
-<li>Paramètre clé-valeur (<em>variable=valeur_par_défaut</em>) : à l&#8217;appel, l&#8217;argument correspondant au paramètre peut manquer, et dans ce cas la valeur par défaut sera utilisée.</li>
+<li>obligatoire  (syntaxe : <em>une variable</em>) : à l&#8217;appel, il recevra obligatoirement un argument (et un seul).</li>
+<li>facultatif (syntaxe : <em>variable=valeur_par_défaut</em>) : à l&#8217;appel, l&#8217;argument correspondant au paramètre peut manquer, et dans ce cas la valeur par défaut sera utilisée.</li>
 </ul>
-<p>On va rappeler également  qu&#8217;un paramètre à valeur par défaut ne peut pas être suivi, dans la signature, par un paramètre simple (sans valeur par défaut).</p>
+<p>On va rappeler également  qu&#8217;un paramètre facultatif ne peut pas être suivi, dans la signature, par un paramètre obligatoire.</p>
 <p><strong>Exemple</strong></p>
 <p>Une fonction de division avec une option de division tronquée:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">trunc</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -475,6 +630,8 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
 <span class="go">0.4166666666666667</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">0</span>
+<span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <div class="warning admonition">
@@ -495,7 +652,7 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 </pre></div>
 </div>
 <p>Une précaution particulière s&#8217;impose quand les valeurs par défaut sont des objets modifiables.</p>
-<p><strong>Exemple</strong> à ne pas suivre :</p>
+<p><strong>Exemple</strong> de <strong>piège</strong> :</p>
 <p>Supposons que la fonction <em>create_user()</em> est destiné à la création de comptes informatiques (dans cette implémentation factice, elle retourne simplement un dictionnaire):</p>
 <ul class="simple">
 <li>Par défaut, en absence d&#8217;argument <em>groups</em> explicite, l&#8217;utilisateur créé sera associé au groupe &#8216;lambda&#8217;, le groupe de &#8220;tout le monde&#8221;.</li>
@@ -524,7 +681,7 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <p><strong>Explication:</strong></p>
 <ul class="simple">
 <li>le premier appel se passe comme prévu, un utilisateur sans privilèges est créé</li>
-<li>le deuxième appel produit également le résultat attendu (l&#8217;utilisateur créé, administrateur, a les bons groupes) mais la liste <em>groups</em> est altérée.</li>
+<li>le deuxième appel produit également le résultat attendu (l&#8217;utilisateur créé, administrateur, a les bons groupes) mais la liste <em>groups</em> (valeur par défaut dans la signature) est altérée.</li>
 <li>le troisième appel donne un résultat erroné (alors que les arguments sont corrects) et potentiellement dangereux: un utilisateur &#8216;lambda&#8217; se retrouve avec des privilèges &#8216;admin&#8217;</li>
 </ul>
 <div class="section" id="arguments-positionnels-et-arguments-nommes-keyword-args">
@@ -545,11 +702,11 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 </div>
 </div>
 </div>
-<div class="section" id="le-parametre-multi-value-a-valeurs-simples-ou-positionnelles">
-<h3>Le paramètre multi-valué à valeurs simples (ou &#8220;positionnelles&#8221;)<a class="headerlink" href="#le-parametre-multi-value-a-valeurs-simples-ou-positionnelles" title="Permalink to this headline">¶</a></h3>
-<p>Ce paramètre optionnel succède au dernier paramètre mono-valué dans la signature (s&#8217;il y en a).</p>
-<p>Il est unique et son nom est précédé par une étoile (&#8220;<strong>*</strong>&#8221;).</p>
-<p>Il permet d&#8217;inclure dans un appel, à la suite des arguments positionnels correspondants aux paramètres mono-valués, un nombre arbitraire d&#8217;arguments simples (positionnels aussi) qui seront accessibles, dans le bon ordre, en tant que membres d&#8217;un tuple désigné par la variable dont le nom est précédée par &#8220;*&#8221;:</p>
+<div class="section" id="le-parametre-variadique-a-valeurs-positionnelles-parametre-etoile">
+<h3>Le paramètre variadique à valeurs positionnelles (paramètre &#8220;étoile&#8221;)<a class="headerlink" href="#le-parametre-variadique-a-valeurs-positionnelles-parametre-etoile" title="Permalink to this headline">¶</a></h3>
+<p>Ce paramètre, quand il est présent, succède, le cas échéant, au dernier paramètre simple dans la signature et son nom est précédé par une étoile (&#8220;<strong>*</strong>&#8221;).</p>
+<p><strong>NB :</strong> Dans une signature de fonction il existe (au plus) un seul paramètre &#8220;étoile&#8221;.</p>
+<p>Il permet d&#8217;inclure dans un appel, à la suite des arguments positionnels correspondants aux paramètres simples, un nombre arbitraire d&#8217;arguments (toujours positionnels) qui seront accessibles, dans le bon ordre, en tant que membres d&#8217;un tuple désigné par la variable dont le nom est précédée par &#8220;*&#8221;:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
@@ -580,20 +737,20 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Pour pouvoir utiliser ce paramètre multi-valué il faut:</p>
+<p>Pour pouvoir passer des arguments au paramètre &#8220;étoile&#8221; il faut:</p>
 <ul class="last simple">
-<li>Utiliser uniquement des arguments positionnels pour renseigner les paramètres mono-valués qui le précèdent.</li>
-<li>Fournir des valeurs pour <strong>tous</strong> les paramètres mono-valués, même pour ceux pourvus de valeurs par défaut.</li>
+<li>Utiliser uniquement des arguments positionnels pour renseigner les paramètres simples qui le précèdent.</li>
+<li>Fournir des valeurs explicites pour <strong>tous</strong> ces paramètres simples, qu&#8217;ils soient obligatoires ou facultatifs.</li>
 </ul>
 </div>
-<p><strong>NB:</strong> Ce paramètre est similaire au paramètre dit &#8220;elliptique&#8221; (...) présent dans la signature de la fonction <strong>printf</strong> et des autres fonctions dites &#8220;multivariadiques&#8221;, présentes dans certaines bibliothèques du langage <strong>C</strong> .</p>
+<p><strong>NB:</strong> Ce paramètre est similaire au paramètre dit &#8220;elliptique&#8221; (...) présent dans la signature de la fonction <strong>printf</strong> et des autres fonctions dites &#8220;variadiques&#8221;, présentes dans certaines bibliothèques du langage <strong>C</strong>, du <strong>R</strong> etc.</p>
 </div>
-<div class="section" id="le-parametre-multi-value-a-valeurs-nommees">
-<h3>Le paramètre multi-valué à valeurs nommées<a class="headerlink" href="#le-parametre-multi-value-a-valeurs-nommees" title="Permalink to this headline">¶</a></h3>
-<p>Ce paramètre optionnel et quand il est présent, il est toujours le dernier paramètre de la signature.</p>
-<p>Il est unique et son nom est précédé par deux étoiles (&#8220;<strong>**</strong>&#8221;).</p>
+<div class="section" id="le-parametre-variadique-a-valeurs-nommees-double-etoile">
+<h3>Le paramètre variadique à valeurs nommées (double étoile)<a class="headerlink" href="#le-parametre-variadique-a-valeurs-nommees-double-etoile" title="Permalink to this headline">¶</a></h3>
+<p>Ce paramètre optionnel et quand il est présent, il est toujours le dernier paramètre de la signature et son nom est précédé par deux étoiles (&#8220;<strong>**</strong>&#8221;).</p>
+<p><strong>NB :</strong> Dans une signature de fonction il existe (au plus) un seul paramètre &#8220;double étoile&#8221;.</p>
 <p>Il permet d&#8217;inclure dans un appel un nombre arbitraire d&#8217;arguments &#8220;nom=valeur&#8221; (keyword args).</p>
-<p>Les noms des variables correspondant aux paramètres mono-valués ne peuvent pas servir de clé pour ces arguments.</p>
+<p>Les noms des variables correspondant aux paramètres simples qui le précèdent dans la signature ne peuvent pas servir de clé pour ses arguments pour des raisons évidentes.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
@@ -617,8 +774,55 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>Dans le dernier exemple on voit que les arguments &#8220;nom=valeur&#8221; correspondant au paramètres mono-valués se mélangent sans restriction avec les arguments &#8220;nom=valeur&#8221; du paramètre <tt class="docutils literal"><span class="pre">kwargs</span></tt>.</p>
+<p>Dans le dernier exemple on voit que les arguments &#8220;nom=valeur&#8221; correspondant au paramètres simples se mélangent sans restriction avec les arguments &#8220;nom=valeur&#8221; du paramètre <tt class="docutils literal"><span class="pre">kwargs</span></tt>.</p>
 <p><strong>NB:</strong> La fonction dict(**kwargs), déjà utilisée précédemment pour définir des dictionnaires, est un exemple d&#8217;utilisation de ce paramètre.</p>
+</div>
+<div class="section" id="arguments-exclusivement-nommes-keyword-only-args-python3-x-seulement">
+<h3>Arguments exclusivement nommés (keyword-only args, Python3.x seulement)<a class="headerlink" href="#arguments-exclusivement-nommes-keyword-only-args-python3-x-seulement" title="Permalink to this headline">¶</a></h3>
+<p>Dans certains cas, on peut souhaiter que certains arguments soient toujours nommées pour que les appels de fonctions restent lisibles (par exemple, quand le nombre d&#8217;argument est élevé ce qui rend difficile leur identification par la position)</p>
+<p>En <strong>Python 2.x</strong> cela se fait via le paramètre double-étoile mais cela nécessite du code supplémentaire pour récupérer les arguments un par un à partir du dictionnaire (<em>kwargs</em> dans l&#8217;exemple précédent) ce qui est un peu fastidieux et nuit à la lisibilité mais a le &#8220;mérite&#8221; de fonctionner dans Python 2.x et 3.x.</p>
+<p>En <strong>Python 3.x</strong> (seulement) on peut définir des paramètres simples à la suite du paramètre &#8220;étoile&#8221; <a class="reference external" href="https://www.python.org/dev/peps/pep-3102/">PEP 3102</a>. Ces paramètres accepteront exclusivement des arguments nommés (keyword args) lors des appels et ils peuvent être obligatoires ou facultatifs (avec valeur par défaut).</p>
+<div class="highlight-python"><div class="highlight"><pre>def f(a,b,c=0,*args, x, y=7):
+    print(&quot;a:{}&quot;.format(a))
+    print(&quot;b:{}&quot;.format(b))
+    print(&quot;c:{}&quot;.format(c))
+    print(&quot;args:{}&quot;.format(args))
+    print(&quot;x:{}&quot;.format(x))
+    print(&quot;y:{}&quot;.format(y))    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,[],</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">a:1</span>
+<span class="go">b:2</span>
+<span class="go">c:3</span>
+<span class="go">args:([], 4, 5)</span>
+<span class="go">x:11</span>
+<span class="go">y:12</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Que faire si on souhaite un nombre fixe d&#8217;arguments positionnels (i.e. pas de <strong>*args</strong>) ? On utilise une étoile simple :</p>
+<div class="highlight-python"><div class="highlight"><pre>def f(a,b,c=0,*, x, y=7):
+    print(&quot;a:{}&quot;.format(a))
+    print(&quot;b:{}&quot;.format(b))
+    print(&quot;c:{}&quot;.format(c))
+    print(&quot;x:{}&quot;.format(x))
+    print(&quot;y:{}&quot;.format(y))    
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; f(1,2,3,[],4,5,x=11,y=12)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: f() takes from 2 to 3 positional arguments but 6 positional arguments (and 2 keyword-only arguments) were given
+&gt;&gt;&gt; f(1,2,x=11,y=12)
+a:1
+b:2
+c:0
+x:11
+y:12
+&gt;&gt;&gt;
+</pre></div>
+</div>
 </div>
 <div class="section" id="les-var-et-var-dans-les-appels-de-fonctions">
 <h3>Les *var et **var dans les appels de fonctions<a class="headerlink" href="#les-var-et-var-dans-les-appels-de-fonctions" title="Permalink to this headline">¶</a></h3>
@@ -666,8 +870,279 @@ TypeError: f() takes exactly 4 arguments (1 given)
 </pre></div>
 </div>
 <p>Les expressions *nom **nom (appelées &#8220;varargs&#8221; en jargon Python) sont utiles pour construire des appels de fonctions dynamiquement, par programme.</p>
-<div class="section" id="exercice">
-<h4>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Exercice<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
+fichier: stats.py
+
+En utilisant le module &quot;statistics&quot; de la bibliothèque standard de Python
+https://docs.python.org/3/library/statistics.html
+implémenter une fonction qui calcule sélectivement, selon les options :
+moyenne, variance, valeur médiane et écart type d&#39;une liste de valeurs
+numériques :
+
+def get_stats(data,
+              population=True,
+              mean=True,
+              variance=False,
+              stdev=False,
+              median=False)
+
+- Le paramètre &quot;data&quot; est obligatoire et représente une liste de
+valeurs numériques
+- &quot;population&quot; est un booléen indiquant si les données représentent une
+population ou un échantillon 
+- tous les autres paramètres sont des booléens et indiquent les calculs à
+effectuer
+La valeur retournée est un dictionnaire :
+    {&#39;data&#39;:data, &#39;population&#39;:population, ...}
+
+    où les ... correspondent aux valeurs calculées.
+    Exemple :
+&quot;&quot;&quot;
+&gt;&gt;&gt; get_stats([1.0, 2.0, 3.0])
+{&#39;data&#39;: [1.0, 2.0, 3.0], &#39;population&#39;: True, &#39;mean&#39;: 2.0}
+&gt;&gt;&gt; 
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: stats_sol.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">statistics</span> <span class="kn">as</span> <span class="nn">st</span>
+
+<span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+              <span class="n">population</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+              <span class="n">mean</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+              <span class="n">variance</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+              <span class="n">stdev</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+              <span class="n">median</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercice-suite">
+<h4>Exercice (suite)<a class="headerlink" href="#exercice-suite" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: stats2.py</span>
+
+<span class="sd">L&#39;implémentation précédente de la fonction get_stats() n&#39;est pas entièrement</span>
+<span class="sd">satisfaisante car elle autorise des appels avec des arguments positionnels,</span>
+<span class="sd">qui, lorsque les paramètres optionnels sont nombreux, peuvent être illisibles</span>
+<span class="sd">et sources d&#39;erreurs.</span>
+
+<span class="sd">Par exemple, pour demander le calcul de la valeur médiane, l&#39;appel suivant avec</span>
+<span class="sd">des arguments positionnels est autorisé alors qu&#39;il est peu lisible:</span>
+<span class="sd">    </span>
+<span class="sd">    get_stats(data, True, False, False, False, True) # illisible!</span>
+
+<span class="sd">alors que l&#39;appel avec des arguments nommés (autorisé aussi):</span>
+
+<span class="sd">    get_stats(data, median=True)</span>
+
+<span class="sd">est beaucoup plus clair.</span>
+
+<span class="sd">Modifier l&#39;implémentation précédente (y compris la signature de la fonction,</span>
+<span class="sd">si nécessaire) afin d&#39;autoriser exclusivement les appels avec arguments nommés</span>
+<span class="sd">pour les paramètres booléens. Le premier paramètre (data) conservera son statut</span>
+<span class="sd">précédent.</span>
+
+<span class="sd">Réalisez deux variantes: une première qui tire profit des apports de Python 3,</span>
+<span class="sd">une autre supportée dans les deux versions de Python.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: stats_sol2.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">statistics</span> <span class="kn">as</span> <span class="nn">st</span>
+
+<span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;population&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="s">&#39;median&#39;</span><span class="p">}</span>
+    <span class="n">kwargs_kwset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">)))</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
+fichier: stats_sol2b.py
+&quot;&quot;&quot;
+import statistics as st
+
+def get_stats(data,
+              *,
+              population=True,
+              mean=True,
+              variance=False,
+              stdev=False,
+              median=False):
+    &quot;&quot;&quot;
+    Solution non-compatible avec Python 2.x
+    car elle utilise les &quot;keyword-only args&quot;
+    introduits en Python 3.x (PEP 3102)
+    &quot;&quot;&quot;
+    res = {&#39;data&#39;:data, &#39;population&#39;:population}
+    if mean:
+        res[&#39;mean&#39;] = st.mean(data)
+    if variance:
+        res[&#39;variance&#39;] = st.pvariance(data) if population else st.variance(data) 
+    if stdev:
+        res[&#39;stdev&#39;] = st.pstdev(data) if population else st.stdev(data) 
+    if median:
+        res[&#39;median&#39;] = st.median(data)
+    return res
+
+get_stats([1.0, 2.0, 3.0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>Exercice (suite)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="myexercice container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: stats3.py</span>
+
+
+<span class="sd">Après avoir modifié l&#39;implémentation initiale afin d&#39;autoriser exclusivement les</span>
+<span class="sd">appels avec arguments nommés pour les paramètres booléens on va s&#39;intéresser au</span>
+<span class="sd">(seul) paramètre obligatoire de la fonction &quot;data&quot;.</span>
+
+<span class="sd">Pour l&#39;instant, il supporte les deux modes de passage des arguments: positionnel et nommé.</span>
+
+<span class="sd">&gt;&gt;&gt; get_stats([1.0, 2.0, 3.0],variance=True, population=False)</span>
+<span class="sd">{&#39;data&#39;: [1.0, 2.0, 3.0], &#39;mean&#39;: 2.0, &#39;variance&#39;: 1.0, &#39;population&#39;: False}</span>
+<span class="sd">&gt;&gt;&gt; get_stats(variance=True, data=[1.0, 2.0, 3.0], population=False)</span>
+<span class="sd">{&#39;data&#39;: [1.0, 2.0, 3.0], &#39;mean&#39;: 2.0, &#39;variance&#39;: 1.0, &#39;population&#39;: False}</span>
+<span class="sd">&gt;&gt;&gt;</span>
+
+<span class="sd">Modifiez l&#39;implémentation précédente (ou une des deux, le cas echéant) pour</span>
+<span class="sd">faire en sorte que l&#39;argument correspondant aux données soit exclusivement</span>
+<span class="sd">positionnel.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">fichier: stats_sol3.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">statistics</span> <span class="kn">as</span> <span class="nn">st</span>
+
+<span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot read data argument&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;population&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="s">&#39;median&#39;</span><span class="p">}</span>
+    <span class="n">kwargs_kwset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">)))</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+    <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="tohide container">
+<div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
+fichier: stats_sol3b.py
+&quot;&quot;&quot;
+import statistics as st
+
+def get_stats(*args,
+              population=True,
+              mean=True,
+              variance=False,
+              stdev=False,
+              median=False):
+    &quot;&quot;&quot;
+    Solution non-compatible avec Python 2.x
+    car elle utilise les &quot;keyword-only args&quot;
+    introduits en Python 3.x (PEP 3102)
+    &quot;&quot;&quot;
+    data = args[0]
+    auth_kwset = {&#39;population&#39;, &#39;mean&#39;, &#39;variance&#39;, &#39;stdev&#39;, &#39;median&#39;}    
+    res = {&#39;data&#39;:data, &#39;population&#39;:population}
+    if mean:
+        res[&#39;mean&#39;] = st.mean(data)
+    if variance:
+        res[&#39;variance&#39;] = st.pvariance(data) if population else st.variance(data) 
+    if stdev:
+        res[&#39;stdev&#39;] = st.pstdev(data) if population else st.stdev(data) 
+    if median:
+        res[&#39;median&#39;] = st.median(data)
+    return res
+
+get_stats([1.0, 2.0, 3.0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="exercice-2">
+<h4>Exercice [2]<a class="headerlink" href="#exercice-2" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: print_table.py</span>
@@ -793,7 +1268,7 @@ TypeError: f() takes exactly 4 arguments (1 given)
 <div class="note admonition">
 <p class="first admonition-title">Important</p>
 <blockquote class="last">
-<div><p>L&#8217;écriture <tt class="docutils literal"><span class="pre">moyenne</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">a,b:</span> <span class="pre">(a+b)/2.0</span></tt> a été utilisée dans l&#8217;illustration précédente seulement pour &#8220;prouver&#8221; que <em>moyenne</em> est bien une fonction.</p>
+<div><p>L&#8217;écriture <tt class="docutils literal"><span class="pre">moyenne</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">a,b:</span> <span class="pre">(a+b)/2.0</span></tt> a été utilisée dans l&#8217;illustration précédente seulement pour montrer que <em>moyenne</em> est bien une fonction.</p>
 <p>Dans le développement, les écritures de la forme <tt class="docutils literal"><span class="pre">foo</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">x,y:...</span></tt> sont bannies par la <strong>PEP8</strong> et sans intérêt pratique. Si on a besoin  d&#8217;une &#8220;fonction-expression&#8221;, non-anonyme, l&#8217;écriture préconisée (pour l&#8217;illustration précédente) est <tt class="docutils literal"><span class="pre">def</span> <span class="pre">moyenne(a,</span> <span class="pre">b):</span>&nbsp; <span class="pre">return</span> <span class="pre">(a+b)/2.0</span></tt>.</p>
 </div></blockquote>
 </div>
@@ -805,7 +1280,7 @@ TypeError: f() takes exactly 4 arguments (1 given)
 </ul>
 <div class="warning admonition">
 <p class="first admonition-title">Quand utiliser des fonctions anonymes</p>
-<p class="last">Quand cela améliore la lisibilité du code. En règle générale, une fonction classique trop simple est un moindre mal qu&#8217;une fonction anonyme trop complexe :)</p>
+<p class="last">Quand cela améliore la lisibilité du code. En règle générale, une fonction classique &#8220;trop simple&#8221; est préférable à fonction anonyme trop complexe :)</p>
 </div>
 </div>
 <div class="section" id="conventions-de-nommage">
@@ -896,7 +1371,7 @@ sequence.sorted([key][, reverse])
 <h4>Ce qui change:<a class="headerlink" href="#ce-qui-change" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>les fonctions <strong>cmp</strong> ne sont plus supportées. La bibliothèque standard fournit la fonction <strong>functools.cmp_to_key()</strong> qui est un outil de transition entre les versions.</li>
-<li>les paramètres optionnels (key, reverse) exigent des arguments keyword à l&#8217;appel</li>
+<li>les paramètres facultatifs (key, reverse) exigent des arguments keyword à l&#8217;appel</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">functools</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">functools</span><span class="o">.</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">cmp_sn</span><span class="p">))</span>
@@ -921,7 +1396,10 @@ sequence.sorted([key][, reverse])
 <li><a class="reference internal" href="#">Les fonctions</a><ul>
 <li><a class="reference internal" href="#une-vue-d-ensemble">Une vue d&#8217;ensemble</a><ul>
 <li><a class="reference internal" href="#une-fonction-tres-simple">Une fonction très simple</a></li>
-<li><a class="reference internal" href="#l-instruction-return">L&#8217;instruction <strong>return</strong></a></li>
+<li><a class="reference internal" href="#l-instruction-return">L&#8217;instruction <strong>return</strong></a><ul>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#les-fonctions-imbriquees">Les fonctions imbriquées</a></li>
 </ul>
 </li>
@@ -929,18 +1407,25 @@ sequence.sorted([key][, reverse])
 <li><a class="reference internal" href="#que-se-passe-t-il-en-cas-de-conflit">Que se passe-t-il en cas de conflit?</a></li>
 <li><a class="reference internal" href="#l-instruction-global">L&#8217;instruction <strong>global</strong></a></li>
 <li><a class="reference internal" href="#la-resolution-des-noms">La résolution des noms</a></li>
-<li><a class="reference internal" href="#l-instruction-nonlocal">L&#8217;instruction <strong>nonlocal</strong></a></li>
+<li><a class="reference internal" href="#l-instruction-nonlocal">L&#8217;instruction <strong>nonlocal</strong></a><ul>
+<li><a class="reference internal" href="#id1">Exercice</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#signatures-des-fonctions">Signatures des fonctions</a><ul>
-<li><a class="reference internal" href="#les-parametres-mono-values">Les paramètres mono-valués</a><ul>
+<li><a class="reference internal" href="#les-parametres-simples">Les paramètres simples</a><ul>
 <li><a class="reference internal" href="#arguments-positionnels-et-arguments-nommes-keyword-args">Arguments positionnels et arguments nommés (<em>keyword args</em>)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#le-parametre-multi-value-a-valeurs-simples-ou-positionnelles">Le paramètre multi-valué à valeurs simples (ou &#8220;positionnelles&#8221;)</a></li>
-<li><a class="reference internal" href="#le-parametre-multi-value-a-valeurs-nommees">Le paramètre multi-valué à valeurs nommées</a></li>
+<li><a class="reference internal" href="#le-parametre-variadique-a-valeurs-positionnelles-parametre-etoile">Le paramètre variadique à valeurs positionnelles (paramètre &#8220;étoile&#8221;)</a></li>
+<li><a class="reference internal" href="#le-parametre-variadique-a-valeurs-nommees-double-etoile">Le paramètre variadique à valeurs nommées (double étoile)</a></li>
+<li><a class="reference internal" href="#arguments-exclusivement-nommes-keyword-only-args-python3-x-seulement">Arguments exclusivement nommés (keyword-only args, Python3.x seulement)</a></li>
 <li><a class="reference internal" href="#les-var-et-var-dans-les-appels-de-fonctions">Les *var et **var dans les appels de fonctions</a><ul>
-<li><a class="reference internal" href="#exercice">Exercice</a></li>
+<li><a class="reference internal" href="#id2">Exercice</a></li>
+<li><a class="reference internal" href="#exercice-suite">Exercice (suite)</a></li>
+<li><a class="reference internal" href="#id3">Exercice (suite)</a></li>
+<li><a class="reference internal" href="#exercice-2">Exercice [2]</a></li>
 </ul>
 </li>
 </ul>
@@ -1000,29 +1485,127 @@ sequence.sorted([key][, reverse])
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>

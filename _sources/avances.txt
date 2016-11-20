@@ -16,7 +16,7 @@ Les fermetures (closures)
 
 .. slide_mark_b :Les fermetures (closures)
 
-**Rappel:** En Python, les fonctions sont des objets de "premier ordre". Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :
+**Rappel:** En Python, les fonctions sont des objets de "première classe". Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :
 
 ::
 
@@ -40,20 +40,20 @@ Dans cet exemple:
 #. ensuite, en exécutant *func_fb()* (par l'application de *()* à la variable *func_fb*) la fonction *fb* s'exécute enfin.
 
 .. slide_mark_e
-.. slide_mark_b :Les fermetures *[2]*
+.. slide_mark_b :Les fermetures {tcnt_}
 
-De manière informelle, le terme de **fermeture** (ou *closure* en anglais) désigne une fonction (considérée en tant qu'objet) accomapgnée de son contexte de définition. Ce contexte est représenté par l'ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.
+De manière informelle, le terme de **fermeture** (ou *closure* en anglais) désigne une fonction (considérée en tant qu'objet) accompagnée de son contexte de définition. Ce contexte est représenté par l'ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.
 
 Autrement dit, dans l'exemple précédent, *func_fb* (qui référence l'objet-fonction *fb*, retourné lors de l'appel de *fa()*) se "rappelle" que ``x = 123`` alors que cette information provient du contexte d'exécution de *fa()*, terminé depuis.
 
 **NB:** On va parler de *fermeture* seulement pour les fonctions définies à l'intérieur d'autres fonctions, les seules disposant d'un contexte non local).
 
 .. slide_mark_e
-.. slide_mark_b :Les fermetures *[3]*
+.. slide_mark_b :Les fermetures {tcnt_}
 
 Pour une illustration plus complète, voici une utilisation possible des fonctions imbriquées et du principe de fermeture. 
 
-**Scénario :** Dans une organisation, les utilisateurs peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.
+**Scénario :** Dans une organisation, les utilisateurs des moyens informatiques peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.
 
 
 **Solution :** Nous allons définir un "générateur de profils" concrétisé par la fonction **make_profile()** qui a le rôle de "fabriquer" les fonctions créatrices de comptes souhaitées (implémentation factice qui renvoie un dictionnaire).
@@ -61,7 +61,7 @@ Pour une illustration plus complète, voici une utilisation possible des fonctio
 A chaque appel *make_profile(groups, protocols)* produira une fonction capable de créer des utilisateurs ayant un profil donné :
 
 .. slide_mark_e
-.. slide_mark_b :Les fermetures *[4]*
+.. slide_mark_b :Les fermetures {tcnt_}
 
 .. literalinclude:: includes/closure2.py
    :lines: 3-
@@ -90,7 +90,7 @@ Utilisation:
 
 
 .. slide_mark_e
-.. slide_mark_b :Les fermetures *[5]*
+.. slide_mark_b :Les fermetures {tcnt_}
 
 **Question légitime:** Comment les fonctions créées (*add_guest()*, *add_staff()*, *add_admin()*) ont mémorisé les valeurs de *groups*, *protocols* et *organisation* alors que ces variables ne font pas partie de leurs contextes locaux respectifs, mais du contexte d'une fonction englobante (*make_profile()*) dont l'exécution est terminée et, par conséquent, son contexte aussi?
 
@@ -178,7 +178,7 @@ Enfin, on appelera **"décorateur"** la fonction qui fait l'assemblage des deux 
 .. Par exemple, dans une application web, certaines fonctions peuvent exiger que l'utilisateur soit authentifié. Plutôt que de rajouter cette vérification dans chaque fonction, on va préférer "décorer" les fonctions nécessitant authentification.
 
 .. slide_mark_e
-.. slide_mark_b :Les décorateurs de fonctions *[2]*
+.. slide_mark_b :Les décorateurs de fonctions {tcnt_}
  
 Les décorateurs de fonctions sont applications directes du mécanisme de **fermeture** :
 
@@ -195,7 +195,7 @@ Les décorateurs de fonctions sont applications directes du mécanisme de **ferm
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Les décorateurs de fonctions *[3]*
+.. slide_mark_b :Les décorateurs de fonctions {tcnt_}
 
 L'application du décorateur aux deux fonctions:
 
@@ -220,7 +220,7 @@ Exécution après décoration:
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Les décorateurs de fonctions *[4]*
+.. slide_mark_b :Les décorateurs de fonctions {tcnt_}
 
 
 Python propose une syntaxe simplifiée pour appliquer un décorateur:
@@ -245,6 +245,8 @@ Pour y remédier, la bibliothèque standard propose un outil qui copie les infor
 
 .. literalinclude:: includes/decorator_with_functool_wraps.py
 
+Quelques exemples : https://wiki.python.org/moin/PythonDecoratorLibrary            
+                    
 
 .. slide_mark_e
 
@@ -315,7 +317,7 @@ Les avantages des générateurs par rapport aux conteneurs classiques:
 * Solution en cas d'impossibilité d'utiliser les conteneurs (quand le nombre d'occurrences n'est pas prévisible à l'avance).
 
 .. slide_mark_e
-.. slide_mark_b :Les générateurs *[2]*
+.. slide_mark_b :Les générateurs {tcnt_}
 
 Syntaxiquement, un générateur se définit avec l'instruction **def**, comme une fonction classique. 
 
@@ -327,7 +329,7 @@ Sur le fond, la différence entre une fonction classique et une fonction-génér
 * la fonction-générateur (où "générateur", tout court), au lieu de construire une liste d'éléments, produit et délivre les éléments un par un, à la demande, par l'instruction *yield*. Après chaque valeur délivrée, le générateur suspende son exécution tout en conservant l'état courant (les valeurs courantes des variables locales) lui permettant de reprendre l'exécution lors de la prochaine demande de nouvelle valeur.
 
 .. slide_mark_e
-.. slide_mark_b :Les générateurs *[3]*
+.. slide_mark_b :Les générateurs {tcnt_}
 
 Comme tout **itérateur**, un générateur implémente le protocole d'itération, déjà discuté précédemment.
 
@@ -340,7 +342,7 @@ On rappelle que, pour supporter ce protocole, un objet doit:
 L'exécution de l'instruction *return* (explicite ou implicite) par une fonction-générateur provoque la levée de l'exception *StopIteration*. 
 
 .. slide_mark_e
-.. slide_mark_b :Les générateurs *[4]*
+.. slide_mark_b :Les générateurs {tcnt_}
 
 Pour illustration, un exemple simple de générateur, produisant les premiers *n* entiers au cube:
 
@@ -371,7 +373,7 @@ Pour illustration, un exemple simple de générateur, produisant les premiers *n
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Les générateurs *[5]*
+.. slide_mark_b :Les générateurs {tcnt_}
 
 Le même exemple en version "sans fin" :
 
@@ -421,6 +423,74 @@ Les expressions faisant office de générateurs ont une syntaxe très proche des
 
 .. slide_mark_e
 
+
+   
+   
+Les générateurs à l'oeuvre ...
+==============================
+
+.. slide_mark_b :Les générateurs à l'oeuvre ...
+
+Cette fonction appartenant au module **os** de la **bibliothèque standard** permet de parcourir une arborescence de fichiers ayant pour racine le répertoire *top* :
+   
+::
+
+    os.walk(top, topdown=True, onerror=None, followlinks=False)
+
+Elle retourne un générateur qui fournit à chaque itération un triplet de valeurs contenant:
+
+* le nom du répertoire courant
+* la liste des sous-répertoires directs
+* la liste des fichiers membres
+
+Les options:
+
+* topdown : 
+  
+  * True : l'itération se fait à partir de la racine (valeur par défaut)
+  * False: l'itération se fait à partir des "feuilles"
+
+* onerror : None (par défaut) ou une fonction utilisateur qui sera appelée en cas d'erreur.
+
+* followlinks : suivi des liens symboliques (si *True*). Peut provoquer une récursion infinie en cas de liens cycliques
+
+.. slide_mark_e
+.. slide_mark_b :Les générateurs à l'oeuvre {tcnt_}
+
+Exemples:
+
+* top-down :
+
+  ::
+
+     >>> import os
+     >>> g=os.walk("/usr/local/lib/python2.7/dist-packages/")
+     >>> type(g)
+     <type 'generator'>
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/', ['django_http_proxy-0.3.2-py2.7.egg', 'django_guardian-1.0.4-py2.7.egg', 'Whoosh-2.4.1-py2.7.egg', 'vnc2flv', 'codenode-0.02-py2.7.egg', 'django', 'easy_thumbnails-1.0.3-py2.7.egg', 'Twisted-12.3.0-py2.7-linux-x86_64.egg', 'django_userena-1.1.2-py2.7.egg', 'django_compress-1.0.1-py2.7.egg', 'django_passwords-0.2.0-py2.7.egg'], ['vnc2flv-20100207.egg-info', 'flvscreen.so', 'Django-1.5.4.egg-info', 'easy-install.pth'])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg', ['EGG-INFO', 'httpproxy'], [])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO', [], ['zip-safe', 'SOURCES.txt', 'PKG-INFO', 'dependency_links.txt', 'top_level.txt'])
+     >>> # etc...
+
+* bottom-up :
+
+  ::
+
+     >>> g=os.walk("/usr/local/lib/python2.7/dist-packages/",topdown=False)
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO', [], ['zip-safe', 'SOURCES.txt', 'PKG-INFO', 'dependency_links.txt', 'top_level.txt'])
+     >>> next(g)
+     ('/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/httpproxy', [], ['views.pyc', 'settings.pyc', 'recorder.py', '__init__.py', 'exceptions.pyc', 'views.py', 'settings.py', 'decorators.py', 'models.pyc', 'recorder.pyc', 'models.py', 'admin.py', '__init__.pyc', 'admin.pyc', 'decorators.pyc', 'exceptions.py'])
+     >>> 
+
+
+.. slide_mark_e
+   
+
+
 Exercice
 ========
 
@@ -457,7 +527,7 @@ En Python, comme dans d'autres langages, une fonction peut s'appeler elle-même,
    >>> 
 
 .. slide_mark_e
-.. slide_mark_b :Fonctions récursives *[2]*
+.. slide_mark_b :Fonctions récursives {tcnt_}
 
 Contrairement à d'autres langages qui accordent une place importante à la récursion (OCaml, Prolog), Python n'optimise pas la récursion terminale (tail recursion). La profondeur de la récursion est configurée par défaut à une valeur assez contraignante :
 
@@ -480,225 +550,3 @@ Contrairement à d'autres langages qui accordent une place importante à la réc
 
 .. http://neopythonic.blogspot.fr/2009/04/tail-recursion-elimination.html
 .. http://stackoverflow.com/questions/3323001/maximum-recursion-depth
-
-****************************************
-Python et la programmation fonctionnelle
-****************************************
-
-.. slide_mark_b :Python et la programmation fonctionnelle
-
-Rappel
-======
-
-La programmation fonctionnelle est une paradigme qui aborde le calcul en tant qu'évaluation des fonctions sans effet de bord, sur le modèle des fonctions mathématiques.
-
-**Corollaire:** dans une telle approche, les changements d'état, les modifications de données sont bannis.
-
-Les avantages revendiquées par ce paradigme sont, principalement:
-
-* Prouvabilité formelle des programmes
-* Décomposabilité/Composabilité des programmes
-* Testing et mise au point facilités
-
-.. slide_mark_e  
-.. slide_mark_b :Python et la P.F. *[2]*
-   
-Langage multi-paradigme, Python contient des éléments de langage propices à la programmation fonctionnelle :
-
-* les fonctions sont des objets de première classe
-* il offre des mécanismes avancés pour le traitement des listes et des itérables en général:
-  
-  * listes en intension et générateurs-expression
-  * une large palette de fonctions sur les itérateurs (module **itertools**)
-  * les primitives "historiques" de la programmation fonctionnelle *map()*, *reduce()*, *filter()*
-  * d'autres primitives sur les itérables: *all()*, *any()*, *min()*, *max()*   
-* il permet la définition de fonctions d'ordre supérieur (fonctions qui manipulent d'autres fonctions, comme les décorateurs)
-
-Pourtant, Python n'est pas un langage fonctionnel "pur" car :
-
-* il n'encourage pas l'utilisation de la récursivité
-* par défaut, il n'empêche pas les effets de bord (sauf dans les fonctions anonymes) ni les données modifiables
-
-  
-..  http://www.artima.com/weblogs/viewpost.jsp?thread=98196
-
-.. slide_mark_e  
-.. slide_mark_b :Python et la P.F. *[2]*
-
-Les trois fonctions "historiques" de la programmation fonctionnelle (*map*, *filter*, *reduce*) sont présentes dans le langage, mais, dans la pratique les deux premières perdent du terrain en faveur des listes en intension et des générateurs-expression
-
-.. sli_de_mark_e  
-.. sli_de_mark_b :Outils pour la P.F. *[3]*
-
-* **map(f, iterable1, iterable2,...)** : applique la fonction *f* sur chaque item résultat d'une itération:
-
-  * le nombre d'arguments de la fonction doit correspondre avec le nombre d'itérables à traiter
-  * les itérables seront traités parallèlement : la fonction recevra en argument, lors d'une itération *i*, le i-ème élément de chaque
-  * le processus s'arrête lorsque la fin de l'itérable le plus court est atteinte
-
-* **filter(f, iterable_in)** : applique la fonction *f* à tous les éléments de *iterable_in* et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels *f* renvoie *True*
-* **reduce(f, iterable_in[,init)** : applique la fonction *f* (à deux arguments) à tous les items de *iterable_in* de manière cumulative, de gauche à droite:
-
-  * pour [1,2,3,4] le résultat sera équivalent à  ``f(f(f(1,2),3),4)`` 
-  * Si init est fourni, il sera utilisé dans le processus comme l'élément le plus à gauche. pour init=99 l'équivalent en terme de résultat sera ``f(f(f(f(99,1),2),3),4)``
-  * **NB:** En version 3, la fonction *reduce* a été déplacée dans le module *functools* (cf. http://docs.python.org/3.0/whatsnew/3.0.html)
-
-Le même document `WHATSNEW <http://docs.python.org/3.0/whatsnew/3.0.html>`_ préconise l'utilisation des listes en intension à la place de *map* et *filter* quand le résultat souhaité est une liste (car en version 3 ces deux fonctions fournissent des itérateurs en sortie)
-
-**NB :** Les fonctions *map()* et *filter()* renvoient une liste en version 2 et un itérateur en version 3.
-
-.. slide_mark_e
-
-
-La fonction *map*
-=================
-
-.. slide_mark_b :Python et la P.F. *[4]*
-.. slide_insertion:La fonction *map*
-
-.. En principe, elle peut être utilisée pour deux raisons:
-
-.. xxx* pour construire un nouvel objet, fourni en retour:
-
-.. literalinclude:: includes/simple_map2.py
-
-::
-
-   >>> res = map(full_name,lst); list(res)
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>> # même traitement avec des listes en intension et générateurs-expression:
-   >>> [full_name(e) for e in lst]
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>> res = (full_name(e) for e in lst); list(res)
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>>
-   
-.. slide_mark_e
-.. slide_mark_b :Python et la P.F. *[5]*
-
-Les fonctions anonymes ont le mérite de ne jamais provoquer des effets de bord, ce qui est une exigence de première importance dans la programmation fonctionnelle:
-
-::
-
-   >>> res = map(lambda x: x['gn']+' '+x['sn'], lst); list(res)
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>> # même traitement avec des listes en intension (pas besoin de lambda):
-   >>> [e['gn']+' '+e['sn']for e in lst]
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>> # générateur-expression
-   >>> res = (e['gn']+' '+e['sn']for e in lst); list(res)
-   ['George Washington', 'John Adams', 'Thomas Jefferson']
-   >>>
-            
-.. x* pour l'effet de bord provoqué par l'exécution de la fonction sur le (ou les) itérables fourni(s) en argument.
-
-.. x  .. literalinclude:: includes/simple_map.py
-  
-..  ::
-
-.. x     >>> list(map(upper_sn,lst)) # la valeur de retour n'est pas intéressante
-.. x     [None, None, None]
-.. x     >>> lst # l'éffet de bord est la modification de la liste initiale
-.. x     [{'gn': 'George', 'sn': 'WASHINGTON'}, {'gn': 'John', 'sn': 'ADAMS'}, {'gn': 'Thomas', 'sn': 'JEFFERSON'}]
-.. x     >>> 
-
-.. Cette deuxième utilisation est, généralement, une assez mauvaise idée. Une écriture avec une boucle *for* classique sera toujours plus claire dans ce cas.
-
-.. slide_mark_e
-.. slide_mark_b :Python et la P.F. *[6]*
-   
-   
-**Remarque:** *map()* permet de travailler en parallèle sur plusieurs itérables, alors qu'avec les listes en intension on doit recourir à une astuce, l'utilisation de **zip()**:
-
-
-.. literalinclude:: includes/double_map.py
-
-::
-
-   >>> res = map(prod, lst1, lst2); list(res)
-   [7, 16, 27, 40, 55]
-   >>> # avec des listes en intension:
-   >>> [prod(x,y) for (x,y) in  zip(lst1, lst2)]
-   [7, 16, 27, 40, 55]
-   >>> # ou encore:
-   >>> [x*y for (x,y) in  zip(lst1, lst2)]
-   [7, 16, 27, 40, 55]
-   >>> # générateur-expression
-   >>> res = (prod(x,y) for (x,y) in  zip(lst1, lst2)); list(res)
-   [7, 16, 27, 40, 55]
-   >>>
-   
-.. slide_mark_e
-
-La fonction *filter*
-====================
-
-.. slide_mark_b :Python et la P.F. *[7]*
-.. slide_insertion:La fonction *filter*
-
-::
-
-   >>> lst = list(range(-5,8)); lst
-   [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
-   >>> res = filter(lambda x: x>0, lst); list(res)
-   [1, 2, 3, 4, 5, 6, 7]
-   >>> # avec des listes en intension:
-   >>> [x for x in lst if x>0]
-   [1, 2, 3, 4, 5, 6, 7]
-   >>>
-   
-.. slide_mark_e
-
-La fonction *reduce*
-====================
-
-.. slide_mark_b :Python et la P.F. *[8]*
-.. slide_insertion:La fonction *reduce*
-
-::
-
-   >>> list(range(1,5))
-   [1, 2, 3, 4]
-   >>> def sum(x,y):
-   ...     return x+y
-   ... 
-   >>> reduce(sum, range(1,5))
-   10
-   >>> # factorielle de 5:
-   >>> from functools import reduce
-   >>> reduce(lambda x,y:x*y, range(1,6)) 
-   120
-   >>>    
-
-.. slide_mark_e
-
-Le module *itertools*
-=====================
-
-.. slide_mark_b :Python et la P.F. *[8]*
-.. slide_insertion:Le module *itertools*
-
-
-`itertools <https://docs.python.org/3/library/itertools.html>`_ fournit des itérables très utiles, en programmation fonctionnelle ou impérative, illustré ici sur un exemple. Soit le générateur suivant implémentant une série:
-
-.. literalinclude:: includes/exo_itertools.py
-
-On souhaite implémenter un itérable "paresseux" qui fournit à chaque itération, le terme courant de la série et la somme des éléments déjà générés                    
-
-::
-
-   >>> from itertools import accumulate, tee
-   >>> crt, acc = tee(series())
-   >>> crt_acc = zip(crt, accumulate(acc))
-   >>> for res, _ in zip(crt_acc, range(5)):
-   ...     print(res)
-   ... 
-   (-5, -5)
-   (4, -1)
-   (15, 14)
-   (28, 42)
-   (43, 85)
-   >>> 
-
-
-.. slide_mark_e

@@ -1,0 +1,14 @@
+.strike {
+  text-decoration: line-through;
+}
+.redstrike {
+  text-decoration: line-through;color: red;
+}
+
+
+.nogood pre {
+    /*background-image: url('xred.png');
+    background-repeat: no-repeat;*/
+    background-color: #FFCCCC;
+    text-decoration: line-through;
+}

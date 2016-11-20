@@ -8,6 +8,7 @@ Outils divers
 .. slide_insertion:* Les environnements virtuels
 .. slide_insertion:* Le débogueur pdb
 .. slide_insertion:* Le module __future__
+.. slide_insertion:* Le module six
 
 .. slide_mark_e
 
@@ -447,6 +448,71 @@ Illustration:
 
 .. slide_mark_e
 
+
+*****************
+Le module **six**
+*****************
+
+.. slide_mark_b :Le module **six**
+
+C'est un module qui propose des fonctions et des constantes utiles pour écrire du code compatible *Python 2* et *Python 3*
+
+Nous avons déjà évoqué l'incompatibilité suivante:
+
+::
+
+   >>> # Python 2.7
+   ... 
+   >>> isinstance(1, int)
+   True
+   >>> isinstance(2**63, int)
+   False
+   >>> isinstance(2**63, long)
+   True
+   >>>
+
+::
+   
+   >>> # Python 3.4
+   ... 
+   >>> isinstance(1, int)
+   True
+   >>> isinstance(2**63, int)
+   True
+   >>> isinstance(2**63, long)
+   Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   NameError: name 'long' is not defined
+   >>> 
+
+Avec **six**:
+
+::
+
+    >>> # Python 2.7
+    >>> import six
+    >>> six.integer_types
+    (<type 'int'>, <type 'long'>)
+    >>> isinstance(1, six.integer_types)
+    True
+    >>> isinstance(2**63,six.integer_types)
+    True
+    >>>
+
+::
+
+   >>> import six
+   >>> six.integer_types
+   (<class 'int'>,)
+   >>> isinstance(1, six.integer_types)
+   True
+   >>> isinstance(2**63,six.integer_types)
+   True
+   >>> 
+
+Pour en savoir plus : https://pythonhosted.org/six/
+
+.. slide_mark_e   
 .. slide_mark_b :Fin
 
 .. slide_insertion:* **Merci!**

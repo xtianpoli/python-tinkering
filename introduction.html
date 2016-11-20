@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -30,7 +31,8 @@
   </head>
   <body>
    <!--  add javascript -->
-    
+   
+   <script src="clipboard.min.js"></script>
    <script type="text/javascript">
      (function(){
 
@@ -75,7 +77,7 @@
 <p>C&#8217;est pour cette raison, entre autres, que la pratique l&#8217;un autre langage facilite grandement l&#8217;utilisation efficace de ce support.</p>
 <div class="section" id="python-en-quelques-phrases">
 <h2>Python en quelques phrases<a class="headerlink" href="#python-en-quelques-phrases" title="Permalink to this headline">¶</a></h2>
-<p>Les langages sont souvent classifiés en fonction de leux expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :</p>
+<p>Les langages sont souvent classifiés en fonction de leur expressivité et de leur indépendance par rapport à la couche matérielle. Ainsi on parle de langages de :</p>
 <ul class="simple">
 <li><strong>&#8220;bas niveau&#8221;</strong> expressivité faible, grande dépendance par rapport à l&#8217;architecture de la machine (assembleur,...)</li>
 <li><strong>&#8220;haut niveau&#8221;</strong> bonne expressivité mais une certaine dépendance rapport  à la couche matérielle subsiste (la majeure partie des langages)</li>
@@ -93,13 +95,15 @@
 <li>Disponible sous licence open source (<strong>Python Software Foundation License</strong>), compatible avec la <strong>GPL</strong> pour les versions <a class="reference external" href="http://opensource.org/licenses/Python-2.0">&gt;=2.0 de Python</a></li>
 <li>Existe sur différents OS, supporte bien l&#8217;intégration avec d&#8217;autres langages et fait l&#8217;objet de plusieurs implémentations:<ul>
 <li><strong>Cpython:</strong> implémentation de référence (en <strong>C</strong>), la plus répandue</li>
-<li><strong>Pypy:</strong> projet <em>R&amp;D</em> visant une implémentation haute performance</li>
+<li><strong>PyPy:</strong> projet <em>R&amp;D</em> visant une implémentation haute performance</li>
 <li><strong>Jython:</strong> implémentation exécutable sur la machine virtuelle <strong>Java(TM)</strong></li>
 <li><strong>IronPython:</strong> implémentation pour <strong>.NET</strong></li>
 <li><strong>Stackless Python:</strong> variante de <strong>Python</strong>, implémentant des <strong>micro-threads</strong></li>
+<li><strong>MicroPython:</strong> pour micro-contrôleurs</li>
+<li><strong>Brython, PyPy.js, Skulpt:</strong> implémentations en <strong>JavaScript</strong></li>
 </ul>
 </li>
-<li>Son typage est fort, mais dynamique (<strong>duck typing</strong>)</li>
+<li>Il est typé, mais son typage est dynamique (<strong>duck typing</strong>)</li>
 </ul>
 <div class="note admonition">
 <p class="first admonition-title">Duck typing</p>
@@ -113,8 +117,8 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 </div>
 <ul class="simple">
 <li>Les usages de Python sont diverses:<ul>
+<li>Calcul scientifique (avec des bibliothèques comme numpy, scipy, Pandas, scikit-learn)</li>
 <li>Programmation système: utilisation de Python en tant que &#8220;super-shell&#8221;</li>
-<li>Calcul numérique (numpy, scipy)</li>
 <li>Développement réseau et web (twisted, django, flask, pyramid)</li>
 </ul>
 </li>
@@ -165,13 +169,14 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <p>Depuis 2008 on assiste à la coexistence de deux versions : la version 3 fait son apparition alors que la version 2 continue d&#8217;évoluer jusqu&#8217;en 2010. La 2.7 est encore présente sur le terrain malgré les progrès réels de portage des principales bibliothèques et frameworks en V3.</p>
 <ul class="simple">
 <li>Python 2.6 - octobre 2008</li>
-<li>Python 2.7 - juillet 2010</li>
+<li>Python 2.7 - juillet 2010, <strong>fin annoncé pour 2020</strong> (cf. <a class="reference external" href="https://www.python.org/dev/peps/pep-0373/">PEP 373</a>)</li>
 <li>Python 3.0 - décembre 2008<ul>
 <li>Python 3.1 - juin 2009</li>
 <li>Python 3.2 - février 2011</li>
 <li>Python 3.3 - septembre 2012</li>
 <li>Python 3.4 - mars 2014</li>
 <li>Python 3.5 - septembre 2015</li>
+<li>Python 3.6.0b4 - novembre 2016</li>
 </ul>
 </li>
 </ul>
@@ -189,10 +194,10 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <p>Malgré leurs syntaxes très différentes, les similarités entre les deux langages sont importantes mais avec quelques nuances.</p>
 <ul class="simple">
 <li><strong>Compilation :</strong> Les deux langages sont compilés vers un &#8220;bytecode&#8221;, mais la compilation de Python (contrairement à celle de Java) n&#8217;est pas distincte de l&#8217;exécution. Entre autres, il n&#8217;y a pas de notion de &#8220;directive de compilation&#8221; dans Python.</li>
-<li><strong>Typage :</strong> Les deux langages sont fortement typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n&#8217;est pas un langage non typé!</li>
+<li><strong>Typage :</strong> Les deux langages sont typés, seulement: le typage dans Python est dynamique. Contrairement à une idée reçue, Python n&#8217;est pas un langage non typé!</li>
 </ul>
 <ul class="simple">
-<li><strong>Affectation, passage d&#8217;arguments, retour des fonctions :</strong> Les deux langages implémentent la sémantique par <em>référence uniforme</em>, mais :<ul>
+<li><strong>Affectation, passage d&#8217;arguments, retour des fonctions :</strong> Les deux langages implémentent l&#8217;approche <a class="reference external" href="http://dept-info.labri.fr/ENSEIGNEMENT/INITINFO/initinfo/supports/book/node64.html">sémantique par référence uniforme</a>, mais :<ul>
 <li>partiellement en Java, où les types numériques disposent également d&#8217;une représentation alternative, non-objet, pour les entiers et les flottants</li>
 <li>intégralement  dans Python où tout est objet de première classe (y compris les entiers, les fonctions etc.)</li>
 </ul>
@@ -212,8 +217,20 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 </ul>
 </div>
 <div class="section" id="python-et-c">
-<h3>Python et C++<a class="headerlink" href="#python-et-c" title="Permalink to this headline">¶</a></h3>
-<p>Les similarités entre Python et C++ sont moins nombreuses, mais elles méritent d&#8217;être soulignées :</p>
+<h3>Python et C<a class="headerlink" href="#python-et-c" title="Permalink to this headline">¶</a></h3>
+<p>Les similarités dans la forme (syntaxe, typage etc.) sont peu nombreuses...</p>
+<p>Pourtant les deux langages sont assez proches dans leurs &#8220;esprits&#8221; respectifs. En effet, &#8220;l&#8217;esprit du C&#8221; tel qu&#8217;il a été défini dans le <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg14/www/C99RationaleV5.10.pdf">standard du langage</a>  se retrouve en grande partie dans Python. Il a été résumé par les auteurs en  quelques phrases :</p>
+<ul class="simple">
+<li>Trust the programmer.</li>
+<li>Don’t prevent the programmer from doing what needs to be done.</li>
+<li>Keep the language small and simple.</li>
+<li>Provide only one way to do an operation.</li>
+<li>Make it fast, even if it is not guaranteed to be portable.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h3>Python et C++<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Les similarités entre Python et C++  méritent aussi d&#8217;être soulignées :</p>
 <blockquote>
 <div><ul class="simple">
 <li>Les deux langages sont multi-paradigme</li>
@@ -226,14 +243,29 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <h3>Python et Bash<a class="headerlink" href="#python-et-bash" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Les deux langages ont en commun la possibilité d&#8217;être utilisés en mode interactif</li>
-<li>Certains aspects de la syntaxe de <em>Python</em> rappellent le <em>Bash</em> et le langages de script en général : par exemple, les instructions Python se terminent par un retour à la ligne, comme les instructions <em>Bash</em>.</li>
+<li>Certains aspects de la syntaxe de <em>Python</em> rappellent le <em>Bash</em> et le langages de script en général : l&#8217;esprit du langage encourage l&#8217;écriture d&#8217;une instruction par ligne (&#8220;Sparse is better than dense (le Zen)&#8221;), les instructions Python se terminent par un retour à la ligne, comme les instructions <em>Bash</em>.</li>
 <li>Python, comme Bash, exécute les instructions présentes dans un script au chargement, sans faire intervenir une fonction spéciale, comme la fonction  &#8220;main&#8221; présente en  C/C++)</li>
+</ul>
+</div>
+<div class="section" id="python-et-r">
+<h3>Python et R<a class="headerlink" href="#python-et-r" title="Permalink to this headline">¶</a></h3>
+<p>Similitudes:</p>
+<ul class="simple">
+<li>Les deux langages sont de &#8220;très haut niveau&#8221; (prennent en charge la gestion de la mémoire, ont des types numériques indépendants de l&#8217;architecture matérielle etc.)</li>
+<li>Ont des facilités pour la manipulation des vecteurs (syntaxe pour le &#8220;slicing&#8221;, types prédéfinis)</li>
+<li>Bénéficient de bibliothèques de calcul scientifique riches.</li>
+<li>Les deux langage sont orientés objets avec héritage multiple (modèle dit <strong>&#8220;S4&#8221;</strong> dans <strong>R</strong>)</li>
+</ul>
+<p>Différences :</p>
+<ul class="simple">
+<li>Dans <strong>Python</strong> les copies d&#8217;objets sont toujours explicites (car &#8220;Explicit is better than implicit.&#8221; cf. le Zen), alors que dans <strong>R</strong> on dispose de mécanismes de copie &#8220;paresseuse&#8221; (copy on write)</li>
+<li>Le premier index d&#8217;un tableau en Python est <strong>0</strong> comme en <strong>C</strong>, alors qu&#8217;en <strong>R</strong> est <strong>1</strong>.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="decouverte-de-l-interpreteur-premiers-programmes">
 <h2>Découverte de l&#8217;interpréteur, premiers programmes<a class="headerlink" href="#decouverte-de-l-interpreteur-premiers-programmes" title="Permalink to this headline">¶</a></h2>
-<p>Comme dans bien d&#8217;autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique.</p>
+<p>Comme dans bien d&#8217;autres langages, les concepts de base de Python  dépendent parfois les uns des autres, de manière cyclique (Exemple: les fonctions sont des objets, qui à leur tour contiennent des méthodes qui sont des fonctions...).</p>
 <p>Pour cette raison, avant d&#8217;aller plus loin, on va introduire provisoirement, de manière informelle et simplifiée, quelques notions indispensables, sachant que sur la plupart de ces notions on va revenir d&#8217;une manière plus rigoureuse dans la suite de ce document.</p>
 <p>Dans l&#8217;immédiat on parlera de <strong>variable</strong>, <strong>expression</strong> et de <strong>fonction</strong> avec les significations rencontrées dans la pratique de tout autre langage. Dans les chapitres suivants ces notions seront précisées pour le cas de Python.</p>
 <p>Un <strong>module</strong>, désignera dans ce chapitre un fichier contenant des fonctions ayant vocation à être utilisées localement (appels dans le même fichier) ou dans un autre contexte, après chargement (ou importation) par l&#8217;interpréteur du dit module. C&#8217;est une notion qui sera également traitée plus en détail par la suite.</p>
@@ -285,7 +317,7 @@ Hello world!
 In [2]:
 </pre></div>
 </div>
-<p>A l&#8217;heure actuelle (fin 2015) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut.</p>
+<p>A l&#8217;heure actuelle (fin 2016) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut (<a class="reference external" href="https://www.python.org/dev/peps/pep-0394/">PEP 394</a>).</p>
 <div class="highlight-python"><div class="highlight"><pre>$ python3
 Python 3.4.2 (default, Jul  9 2015, 17:24:30)
 [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux
@@ -320,7 +352,7 @@ Hello world!
 <div class="section" id="le-role-de-l-indentation">
 <h3>Le rôle de l&#8217;indentation<a class="headerlink" href="#le-role-de-l-indentation" title="Permalink to this headline">¶</a></h3>
 <p>L&#8217;indentation détermine les blocs d&#8217;instructions, au même titre que les accolades en Java et C/C++. Par exemple, une tentative d&#8217;écrire une boucle sans indentation se soldera par une erreur :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c">#tentative d&#39;écrire une boucle sans indentation:</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># tentative d&#39;écrire une boucle sans indentation:</span>
 <span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
 <span class="gp">... </span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">File &quot;&lt;stdin&gt;&quot;, line 3</span>
@@ -330,6 +362,7 @@ Hello world!
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c">#...et avec indentation:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;Readability counts.&quot; (le Zen)</span>
 <span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
 <span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">...</span>
@@ -378,8 +411,10 @@ $
 <li><a class="reference internal" href="#une-courte-histoire-de-python">Une courte histoire de Python</a></li>
 <li><a class="reference internal" href="#python-et-les-autres-langages">Python et les autres langages</a><ul>
 <li><a class="reference internal" href="#python-et-java">Python et Java</a></li>
-<li><a class="reference internal" href="#python-et-c">Python et C++</a></li>
+<li><a class="reference internal" href="#python-et-c">Python et C</a></li>
+<li><a class="reference internal" href="#id1">Python et C++</a></li>
 <li><a class="reference internal" href="#python-et-bash">Python et Bash</a></li>
+<li><a class="reference internal" href="#python-et-r">Python et R</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#decouverte-de-l-interpreteur-premiers-programmes">Découverte de l&#8217;interpréteur, premiers programmes</a><ul>
@@ -430,29 +465,127 @@ $
         <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
-<div class="footer">
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>"Introduction à la programmation en Python"</b> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Christian Poli</span> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 France</a>.
-</div>
-   <script type="text/javascript">
-     function show_sol(obj,e){
-     if($(obj).attr('title')=='Show'){
-       $('#tohide'+e).show();
-       $(obj).attr('title','Hide');
-       $(obj).text('Cacher la solution');
-     } else {
-       $('#tohide'+e).hide();
-       $(obj).attr('title','Show');
-       $(obj).text('Voir la solution');
+<div class="footer" style="max-height: 10px">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/fr/80x15.png" /></a><br /><b>Ce document est mis à disposition selon les termes de la </b><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/">licence Creative Commons</a>.
+<br/>
 
-     }
-     my_obj=obj;
+</div>
+<script type="text/javascript">
+  if($(".sphinxsidebar").length){
+  console.log("slides_mode=false");
+  slides_mode = false;
+  } else {
+  console.log("slides_mode=true");
+  slides_mode = true;
+  }
+  
+  function show_sol(obj,e){
+  if($(obj).attr('title')=='Show'){
+  $('#tohide'+e).show();
+  $(obj).attr('title','Hide');
+  $(obj).text('Cacher la solution');
+  } else {
+  $('#tohide'+e).hide();
+  $(obj).attr('title','Show');
+  $(obj).text('Voir la solution');
+  
+  }
      
-     };
-     (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+  my_obj=obj;
+  
+  };
+  function show_py(obj,e){
+  if($(obj).attr('title')=='Show'){
+      if(! $("#pyterm"+e).length){
+  //$("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src=http://brython.info/console.html width=800 height=350></iframe><div>");
+  $("#pybtn"+e).after("<div id='pyterm"+e+"' ><iframe src='brython/www/console.html' width=800 height=350></iframe><div>");
+      } else {
+          $('#pyterm'+e).show();
+      }
+      $(obj).attr('title','Hide');
+      $(obj).text('Cacher la console');
+   } else {
+      $('#pyterm'+e).hide();
+      $(obj).attr('title','Show');
+      $(obj).text('Console');
+   }
+  }
+
+
+      ///////////////////
+          function hasPrompts(e){
+          return $("#pycode"+e+" pre span.gp").length >0;
+          }
+          function hasDollars(e){
+             return $("#pycode"+e).text().contains('$');
+          }
+         function showHidePrompts(obj, i){
+         if($(obj).attr('title')=='Show'){
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).show()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).show()});
+         $(obj).attr('title','Hide');
+         $(obj).html('<del>&gt;&gt;&gt;</del>');         
+         
+         } else {
+         $("#pycode"+i+" pre span.gp").each(function(j){$(this).hide()});
+         $("#pycode"+i+" pre span.go").each(function(j){$(this).hide()});         
+         $(obj).attr('title','Show');
+         $(obj).html('&gt;&gt;&gt;');
+         }
+         }
+         ////////////////////
+          (function(){//websafe palette http://som.csudh.edu/fac/lpress/471/links/color/websafecolor.htm
+          //$(".nogood.container pre").css("backgroundImage","url('_static/xrouge.jpg')");
+          //$(".nogood.container pre").css({"background-color":"#eeffcc", "background-image":"url('_static/xrouge.png')", "background-repeat":"no-repeat"});
+     if(slides_mode) {
+     $(".myexercice.container pre").css('background-color','#F0FFFF'); //#ffff66
+     $(".tohide.container pre").css('background-color','#FFE4E1'); //#ffcc99
+     $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
+         } else {
      $(".myexercice.container pre").css('background-color','#ffff66')
      $(".tohide.container pre").css('background-color','#ffcc99')
      $(".tohide.container").hide().each(function(e){$(this).attr("id","tohide"+e);$(this).before("<button title='Show' class='sollink' onclick='show_sol(this,"+e+")'>Voir la solution</button><br/>");})
-     })();
+
+         }
+
+
+          $(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);
+          if(hasDollars(e)) return;
+      var buttons = (hasPrompts(e) ? "<button title='Hide' class='sollink'  onclick=\"showHidePrompts(this, '"+e+"')\"><del>&gt;&gt;&gt;</del></button>" : "") +
+      "<button class='btn' data-clipboard-action='copy' data-clipboard-target='#pycode"+e+"'>Copy</button>"+
+      "<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>";
+             $(this).after(buttons);/*$("#pyterm"+e).hide()*/});       
+      //$(".highlight-python").each(function(e){$(this).attr("id","pycode"+e);$(this).after("<button title='Show' class='sollink' id='pybtn"+e+"' onclick='show_py(this,"+e+")'>Console</button>");});                      
+     /*setTimeout(function(){
+     $(".highlight-python").each(function(e){$("#pyterm"+e).hide()})},500);
+     */
+     if(slides_mode){        
+     $('body').keydown(function(e){
+     var code=e.keyCode? e.keyCode : e.charCode;
+     console.log(code);
+     if(code==33){
+      console.log($("link[rel='prev']").attr('href'))
+     window.location.href =$("link[rel='prev']").attr('href');
+      } else if(code==34){
+      console.log($("link[rel='next']").attr('href'))
+     window.location.href =$("link[rel='next']").attr('href');
+      }
+             });//keydown
+             }
+     var min_h = parseInt(window.innerHeight*0.85)+'px';
+     $('div.body').css('min-height',min_h);
+             })();
+
+    var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+          
    </script>
 
   </body>
