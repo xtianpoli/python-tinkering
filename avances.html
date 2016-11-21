@@ -1099,7 +1099,7 @@ RuntimeError: maximum recursion depth exceeded in comparison
           return $("#pycode"+e+" pre span.gp").length >0;
           }
           function hasDollars(e){
-             return $("#pycode"+e).text().contains('$');
+             return $("#pycode"+e).text().indexOf('$')>=0;
           }
          function showHidePrompts(obj, i){
          if($(obj).attr('title')=='Show'){
