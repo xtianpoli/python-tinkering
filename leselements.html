@@ -1995,7 +1995,7 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 <span class="sd">à la manière des affichages LCD en utilisant la liste </span>
 <span class="sd">&#39;LCD&#39; fournie plus bas.</span>
 <span class="sd">NB: Si besoin, on pourra utiliser la primitive </span>
-<span class="sd">range(n) qui retourne la liste [0,1,...,n-1]</span>
+<span class="sd">range(n) qui retourne la séquence 0, 1, ..., n-1</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">LCD</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&quot;+--+&quot;</span><span class="p">,</span>
@@ -2118,6 +2118,7 @@ s.encode      s.index       s.isspace     s.lower       s.rindex      s.split   
 <span class="k">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
+<p><strong>NB :</strong> En Python 3.x (seulement) la classe <strong>io.StringIO</strong> implémente le protocole <strong>Context Manager</strong> et peut être avec la structure <strong>with</strong>.</p>
 <p><strong>Le formatage des chaînes de caractères</strong></p>
 <p>Depuis la version <strong>2.6</strong> les chaînes peuvent être formatées en utilisant la méthode <em>format()</em> et un &#8220;mini-langage&#8221; puissant de description des formats. Précédemment, le formatage était fait grâce à l&#8217;opérateur d&#8217;interpolation, expliqué plus loin.</p>
 <p>Le spécificateur de substitution le plus simple est <strong>{}</strong> :</p>
@@ -2739,9 +2740,9 @@ TypeError: unhashable type: &#39;list&#39;
 <span class="go">[&#39;Poli&#39;, &#39;Christian&#39;, 1000, [1005, 1007], &#39;cpoli&#39;, 1000]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="go">[(&#39;sn&#39;, &#39;Poli&#39;), (&#39;gn&#39;, &#39;Christian&#39;), (&#39;gid&#39;, 1000), (&#39;groups&#39;, [1005, 1007]), (&#39;login&#39;, &#39;cpoli&#39;), (&#39;uid&#39;, 1000)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;gid&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;gid&quot;</span> <span class="ow">in</span> <span class="n">account</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&quot;email&quot;</span> <span class="ow">in</span> <span class="n">account</span>
 <span class="go">False</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">account</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">,</span><span class="s">&quot;inconnu&quot;</span><span class="p">)</span>
 <span class="go">&#39;inconnu&#39;</span>
@@ -2931,7 +2932,7 @@ TypeError: unhashable type: &#39;list&#39;
 </pre></div>
 </div>
 </div>
-<p>Une solution légèrement différente:</p>
+<p>Une solution légèrement différente, expression de la démarche dite &#8220;EAFP&#8221; (Easier to ask for forgiveness than permission)</p>
 <div class="tohide container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: week_dict_sol2.py</span>
@@ -3507,7 +3508,7 @@ $ ls /tmp/test/
 <span class="go">[&#39;testpy.txt&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy.txt&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;mv /tmp/test/testpy.txt /tmp/test/testpy2.txt&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39;</span>
-<span class="go">&#39;testpy2.txt&#39;]</span>
+<span class="go">[&#39;testpy2.txt&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;rm /tmp/test/testpy2.txt&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span>
 <span class="go">[]</span>
