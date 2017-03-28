@@ -176,7 +176,7 @@
 </pre></div>
 </div>
 <img alt="_images/var_refs3_cut.jpg" src="_images/var_refs3_cut.jpg" />
-<p>Avec la perte de la dernière référence, l&#8217;objet sera purgé par le &#8220;garbage collector&#8221; (ramassage des miettes):</p>
+<p>Avec la perte de la dernière référence, l&#8217;objet sera purgé par le &#8220;garbage collector&#8221; (ramasse-miettes):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">lst</span>
 </pre></div>
 </div>
@@ -295,7 +295,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <p>En Python, les expressions suivante sont logiquement fausses: 0,&#8217;&#8216;,&#8221;&#8221;,[],(),{}, False</p>
 <p>Les opérateurs logiques sont: <strong>and</strong>, <strong>or</strong>, <strong>not</strong></p>
 <p>Les fonctions : <strong>any(c)</strong>, <strong>all(c)</strong> appliquent <strong>or</strong> et <strong>and</strong>
-aux elements du conteneur <strong>c</strong> (par exemple, les éléments d&#8217;une liste):</p>
+aux éléments du conteneur <strong>c</strong> (par exemple, les éléments d&#8217;une liste):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,{}])</span>
@@ -848,7 +848,7 @@ except (TypeError, ZeroDivisionError) [as err]:
 <span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>L&#8217;utilisateur peut définir ses propres objets <em>&#8220;with  compatibles&#8221;</em> appelés &#8220;gestionnaires de context&#8221; (<strong>context managers</strong>), à condition de définir deux méthodes &#8220;magiques&#8221; (qui n&#8217;ont pas vocation à être appelées dans le programme, car en principe destinées aux mécanismes internes de l&#8217;interpréteur):</p>
+<p>L&#8217;utilisateur peut définir ses propres objets <em>&#8220;with  compatibles&#8221;</em> appelés &#8220;gestionnaires de contexte&#8221; (<strong>context managers</strong>), à condition de définir deux méthodes &#8220;magiques&#8221; (qui n&#8217;ont pas vocation à être appelées dans le programme, car en principe destinées aux mécanismes internes de l&#8217;interpréteur):</p>
 <ul class="simple">
 <li><em>__enter__()</em></li>
 <li><em>__exit__()</em></li>
@@ -1458,7 +1458,7 @@ Ils sont, pour la plupart, des <strong>conteneurs</strong>, autrement dit des ob
 <li>accès aux objets contenus un par un, autrement dit ils sont utilisables par l&#8217;instruction <strong>for</strong> (<em>for elt in conteneur:</em>...)</li>
 <li>test d&#8217;appartenance d&#8217;un objet au conteneur, utilisable par l&#8217;instruction <strong>if</strong> (<em>if elt in conteneur</em>)</li>
 <li>nombre d&#8217;éléments du conteneur (ou sa longueur, i.e. <strong>len(conteneur)</strong>). Exception: <em>enumerate</em></li>
-<li>le plus petit et le plus grand élément du conteneur (si une relation d&#8217;ordre existe entre les éléments). Optionellement, la relation d&#8217;ordre peut être définie par une fonction particulière (plus de détails au chapitre sur les <strong>fonctions</strong>)</li>
+<li>le plus petit et le plus grand élément du conteneur (si une relation d&#8217;ordre existe entre les éléments). Optionnellement, la relation d&#8217;ordre peut être définie par une fonction particulière (plus de détails au chapitre sur les <strong>fonctions</strong>)</li>
 </ul>
 <p class="graphviz">
 <img src="_images/graphviz-d04f3732c3883d2daa88d9541c457504a4b9c637.png" alt="graph conteneurs_g {
@@ -1574,8 +1574,8 @@ IndexError: string index out of range
 </div>
 <p>Toutes les séquences supportent les  méthodes:</p>
 <ul class="simple">
-<li><em>seq.index(elt,[first,[last]])</em> # index de la première occurence de <em>elt</em></li>
-<li><em>seq.count(elt)</em> # nombre d&#8217;occurences de <em>elt</em></li>
+<li><em>seq.index(elt,[first,[last]])</em> # index de la première occurrence de <em>elt</em></li>
+<li><em>seq.count(elt)</em> # nombre d&#8217;occurrences de <em>elt</em></li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1888,7 +1888,7 @@ ValueError: too many values to unpack (expected 2)
 <p>On est obligé d&#8217;évoquer trois types (<em>str</em>, <em>bytes</em> et <em>unicode</em>) pour expliquer le propriétés des chaînes de caractères en Python.</p>
 <p>Il convient de préciser que c&#8217;est le type <strong>str</strong> qui représente, par défaut, les chaînes de caractères en Python. Les deux autres, <em>bytes</em> et <em>unicode</em>, ont joué et jouent encore un rôle de transition, pour aider à la prise en charge des mutations que le type <strong>str</strong> a subi entre les versions 2 et 3 du langage.</p>
 <p>Dans les explications qui vont suivre il s&#8217;agit du type <strong>str</strong> implicitement. Les références ponctuelles aux deux autres types seront explicites.</p>
-<p>Les chaînes de caractères sont des séquences destinées à manipuler du texte. En Python, plusieurs syntaxes sont acceptées. Un peut utiliser les simples et les doubles quotes :</p>
+<p>Les chaînes de caractères sont des séquences destinées à manipuler du texte. En Python, plusieurs syntaxes sont acceptées. Un peut utiliser les simples et les doubles guillemets :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&#39;un texte&#39;</span><span class="p">)</span>
 <span class="go">un texte</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&quot;un texte&quot;</span><span class="p">)</span>
@@ -1927,7 +1927,7 @@ ValueError: too many values to unpack (expected 2)
 </div>
 </li>
 </ul>
-<p>Dans certaines situations, l&#8217;interprétation des séquences d&#8217;échappement (\n, \r etc.) n&#8217;est pas souhaitable, par exemple, dans les expressions rationnelles (regular expressions). Dans ce cas, on peut utiliser les chaînes brutes (raw strings), introduites par le préfixe <strong>&#8220;r&#8221;</strong> :</p>
+<p>Dans certaines situations, l&#8217;interprétation des séquences d&#8217;échappement (\n, \r etc.) n&#8217;est pas souhaitable, par exemple, dans les expressions rationnelles (&#8220;regular expressions&#8221;). Dans ce cas, on peut utiliser les chaînes brutes (raw strings), introduites par le préfixe <strong>&#8220;r&#8221;</strong> :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">r&quot;première ligne \n deuxième ligne&quot;</span><span class="p">)</span>
 <span class="go">première ligne \n deuxième ligne</span>
 </pre></div>
@@ -2512,7 +2512,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 <li><p class="first">Il n&#8217;y a pas de bijection entre chaque caractère et une position dans la séquence</p>
 </li>
 </ul>
-<p><strong>Explication:</strong> La longueur affichée est de 5 au lieu de 4 car l&#8217;entrée standard utilise l&#8217;encodage du sytème d&#8217;exploitation qui est (dans ce cas) <cite>UTF-8</cite>. Le caractère <strong>é</strong> est encodé par les deux octets <tt class="docutils literal"><span class="pre">\xc3\xa9</span></tt>. Sur un système basé sur un autre encodage, le résultat pourrait être différent...</p>
+<p><strong>Explication:</strong> La longueur affichée est de 5 au lieu de 4 car l&#8217;entrée standard utilise l&#8217;encodage du système d&#8217;exploitation qui est (dans ce cas) <cite>UTF-8</cite>. Le caractère <strong>é</strong> est encodé par les deux octets <tt class="docutils literal"><span class="pre">\xc3\xa9</span></tt>. Sur un système basé sur un autre encodage, le résultat pourrait être différent...</p>
 <p>Pour rétablir la bijection <cite>caractère &lt;=&gt; donnée</cite> il faut décoder la chaîne pour obtenir une séquence <em>Unicode</em>. Cette opération nous réserve une nouvelle surprise:</p>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; s=&quot;Café&quot;
 &gt;&gt;&gt; s.decode()
@@ -2658,7 +2658,7 @@ Propriétés:</p>
 <p class="first admonition-title">Note</p>
 <p class="last">Pour garantir la cohérence des dictionnaires, seulement les objets immuables peuvent servir de clés.</p>
 </div>
-<p>L&#8217;implémentation des dictionnaires est basée sur des &#8220;hash tables&#8221; (tableaux associatifs) et les objets faisant office de clés doivent disposer d&#8217;une fonction de hashage, implémentée seulement par les objets immuables. Ainsi, par exemple, une chaîne de caractères peut servir de clé mais une liste ne le peut pas car:</p>
+<p>L&#8217;implémentation des dictionnaires est basée sur des &#8220;hash tables&#8221; (tableaux associatifs) et les objets faisant office de clés doivent disposer d&#8217;une fonction de hachage, implémentée seulement par les objets immuables. Ainsi, par exemple, une chaîne de caractères peut servir de clé mais une liste ne le peut pas car:</p>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; hash(&quot;Café&quot;)
 7319500004332556263
 &gt;&gt;&gt; hash([1,2,3])
@@ -2801,7 +2801,7 @@ TypeError: unhashable type: &#39;list&#39;
 <span class="go">[(&#39;uid&#39;, 1000), (&#39;gid&#39;, 1000), (&#39;sn&#39;, &#39;Poli&#39;), (&#39;groups&#39;, [1005, 1007]), (&#39;gn&#39;, &#39;Christian&#39;), (&#39;login&#39;, &#39;cpoli&#39;)]</span>
 </pre></div>
 </div>
-<p>On peut également réunir les éléments de deux ou plusieurs sequences distinctes en une séquence (liste en Python2, itérateur en Python 3) de tuples avec la fonction <em>zip()</em>:</p>
+<p>On peut également réunir les éléments de deux ou plusieurs séquences distinctes en une séquence (liste en Python2, itérateur en Python 3) de tuples avec la fonction <em>zip()</em>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">account_keys</span>
 <span class="go">[&#39;uid&#39;, &#39;gid&#39;, &#39;sn&#39;, &#39;groups&#39;, &#39;gn&#39;, &#39;login&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">account_values</span>
@@ -3003,7 +3003,7 @@ TypeError: unhashable type: &#39;list&#39;
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,[</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lst2</span> <span class="o">=</span> <span class="n">lst</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;X&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lst2</span> <span class="c"># lst2 est affectée par l&#39;op.précédente</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lst2</span> <span class="c"># lst2 est affectée par l&#39;opération précédente</span>
 <span class="go">[&#39;a&#39;, &#39;X&#39;, [&#39;c&#39;, &#39;d&#39;]]</span>
 </pre></div>
 </div>
@@ -3144,7 +3144,7 @@ TypeError: unhashable type: &#39;list&#39;
 </div>
 <div class="section" id="les-ensembles">
 <h3>Les ensembles<a class="headerlink" href="#les-ensembles" title="Permalink to this headline">¶</a></h3>
-<p>Il s&#8217;agit d&#8217;objets représentant  la notion d&#8217;ensemble au sens mathématique:</p>
+<p>Il s&#8217;agit d&#8217;objets représentant la notion d&#8217;ensemble au sens mathématique:</p>
 <ul class="simple">
 <li>les éléments sont uniques</li>
 <li>il n&#8217;y a pas de notion d&#8217;ordre entre les éléments.</li>
@@ -3154,8 +3154,8 @@ TypeError: unhashable type: &#39;list&#39;
 <li><strong>set</strong> : ensembles modifiables</li>
 <li><strong>frozenset</strong> : ensembles immuables</li>
 </ul>
-<p>Les éléments d&#8217;un ensemble (set ou frozenset) sont des objets hashables donc immuables.</p>
-<p>On peut ajouter/retirer des éléments sur un ensemble <em>set</em> après sa création, mais pas sur un ensemble <em>frozenset</em>. L&#8217;intérêt de ce dernier et d&#8217;entre hashable à son tour, donc utilisable comme clé dans un dictionnaire ou comme élément d&#8217;un autre ensemble.</p>
+<p>Les éléments d&#8217;un ensemble (set ou frozenset) sont des objets hachables donc immuables.</p>
+<p>On peut ajouter/retirer des éléments sur un ensemble <em>set</em> après sa création, mais pas sur un ensemble <em>frozenset</em>. L&#8217;intérêt de ce dernier et d&#8217;être hachable à son tour, donc utilisable comme clé dans un dictionnaire ou comme élément d&#8217;un autre ensemble.</p>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; {1, &#39;a&#39;}  # premier format (à privilégier)
 set([&#39;a&#39;, 1])
 &gt;&gt;&gt; set([1,&quot;a&quot;]) # création avec le constructeur
@@ -3189,7 +3189,7 @@ AttributeError: &#39;frozenset&#39; object has no attribute &#39;add&#39;
 <p><strong>NB :</strong> La notation <strong>{}</strong> ne désigne pas l&#8217;ensemble vide, mais un dictionnaire vide. Pour l&#8217;ensemble vide, utiliser <strong>set()</strong></p>
 <div class="section" id="le-type-range-xrange">
 <h4>Le type <strong>range/xrange</strong><a class="headerlink" href="#le-type-range-xrange" title="Permalink to this headline">¶</a></h4>
-<p>Le type appelé <strong>range</strong> en <em>Python 3</em>, pré-existant sous le nom <strong>xrange</strong> en <em>Python 2.x (x&gt;=6)</em> est un type de séquence très simple supportant seulement:</p>
+<p>Le type appelé <strong>range</strong> en <em>Python 3</em>, préexistant sous le nom <strong>xrange</strong> en <em>Python 2.x (x&gt;=6)</em> est un type de séquence très simple supportant seulement:</p>
 <ul class="simple">
 <li>l&#8217;itération</li>
 <li>la fonction <em>len()</em></li>
@@ -3310,7 +3310,7 @@ StopIteration
 <span class="sd">En utilisant les listes week_fr et week_en fournies:</span>
 
 <span class="sd">a) Ecrire une programme interactif qui demande la saisie d&#39;au moins 3 lettres. </span>
-<span class="sd">   En utilisant la méthode startwith() retrouver l&#39;élément qui commence avec</span>
+<span class="sd">   En utilisant la méthode startswith() retrouver l&#39;élément qui commence avec</span>
 <span class="sd">   les groupe de lettres saisies dans week_fr, puis, en cas d&#39;échec, dans</span>
 <span class="sd">   week_en (utiliser, si c&#39;est pertinent, la clause &quot;else&quot; pour les boucles).</span>
 <span class="sd">   Si le mot est trouvé dans une des deux listes, afficher la position dans</span>
@@ -3467,7 +3467,7 @@ ccc
 <span class="go">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games&#39;</span>
 </pre></div>
 </div>
-<p>Manipulation de répertoires en bash:</p>
+<p>Manipulation de répertoires en <em>bash</em>:</p>
 <div class="highlight-python"><div class="highlight"><pre>poli@host:~$ cd /tmp
 poli@host:/tmp$ mkdir testpy
 poli@host:/tmp$ cd testpy/
@@ -3493,7 +3493,7 @@ poli@host:/tmp$
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;rmdir testpy&#39;</span>
 </pre></div>
 </div>
-<p>Autres manipulations simples sur des fichiers en bash :</p>
+<p>Autres manipulations simples sur des fichiers en <em>bash</em> :</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ls /tmp/test/
 testpy.txt
 $ mv /tmp/test/testpy.txt /tmp/test/testpy2.txt
@@ -3589,7 +3589,7 @@ $ ls /tmp/test/
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p><strong>NB:</strong> Sous Windows cette fonction transforme les <strong>/</strong> en <strong>\</strong>. Pour les OS &#8220;case insesitive&#8221; la fonction <em>os.path.normcase()</em> permet de passer les noms en minuscules.</p>
+<p><strong>NB:</strong> Sous Windows cette fonction transforme les <strong>/</strong> en <strong>\</strong>. Pour les OS &#8220;case insensitive&#8221; la fonction <em>os.path.normcase()</em> permet de passer les noms en minuscules.</p>
 </div>
 <div class="section" id="utilisation-du-caractere-joker">
 <h3>Utilisation du caractère &#8220;joker&#8221;<a class="headerlink" href="#utilisation-du-caractere-joker" title="Permalink to this headline">¶</a></h3>
@@ -3624,7 +3624,7 @@ $ ls /tmp/test/
 <td>Copie les permissions+infos temps(dernier accès/modification)+flags</td>
 </tr>
 <tr class="row-odd"><td>shutil.copy2(src, dst)</td>
-<td>Équivalent copy() + copystat()</td>
+<td>Equivalent copy() + copystat()</td>
 </tr>
 </tbody>
 </table>

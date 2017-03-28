@@ -131,10 +131,10 @@ Fabric==1.3.2
 <h2>Les environnements virtuels<a class="headerlink" href="#les-environnements-virtuels" title="Permalink to this headline">¶</a></h2>
 <p>Nous avons parfois besoin d&#8217;expérimenter des logiciels qui ont des dépendances particulières (par exemple, des versions très récentes et pas encore stables de certaines bibliothèques).</p>
 <p>Plusieurs projets gérés en parallèle peuvent utiliser des  bibliothèques incompatibles entre elles. Faire ces installations dans l&#8217;environnement standard peut être dangereux (risque de rendre le système instable) voire impossible.</p>
-<p>Pour faire face à ce problème, une des solutions passe par la création des environnements virtuels. Même si Python3.3 possède une solution integrée (<strong>venv</strong>) la solution la plus répandue reste, pour l&#8217;instant (début 2014), <strong>virtualenv</strong> .</p>
+<p>Pour faire face à ce problème, une des solutions passe par la création des environnements virtuels. Même si Python3.3 possède une solution intégrée (<strong>venv</strong>) la solution la plus répandue reste, pour l&#8217;instant (début 2014), <strong>virtualenv</strong> .</p>
 <div class="section" id="installer-virtualenv">
 <h3>Installer <strong>virtualenv</strong><a class="headerlink" href="#installer-virtualenv" title="Permalink to this headline">¶</a></h3>
-<p>On peut installer <em>virtualenv</em> à partir de la distribution système, par exemple, pour ubuntu:</p>
+<p>On peut installer <em>virtualenv</em> à partir de la distribution système, par exemple, pour Ubuntu:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ sudo apt-get install python-virtualenv
 </pre></div>
 </div>
@@ -206,7 +206,7 @@ Successfully installed web.py
 Cleaning up...
 </pre></div>
 </div>
-<p>Desactivation de l&#8217;environnement (pour revenir à l&#8217;environnement de départ):</p>
+<p>Désactivation de l&#8217;environnement (pour revenir à l&#8217;environnement de départ):</p>
 <div class="highlight-python"><div class="highlight"><pre>(virt_env_1) $ deactivate
 </pre></div>
 </div>
@@ -235,7 +235,7 @@ Cleaning up...
 <li>définition de points d&#8217;arrêt</li>
 <li>...</li>
 </ul>
-<p>Dans la suite on utilisera le script suivant pour illustrer l&#8217;utilisation de pdb :</p>
+<p>Dans la suite on utilisera le script suivant pour illustrer l&#8217;utilisation de <em>pdb</em> :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span> <span class="o">=</span> <span class="n">val</span>
@@ -263,14 +263,15 @@ Cleaning up...
 </ul>
 <div class="section" id="pdb-en-ligne-de-commande">
 <h3>pdb en ligne de commande<a class="headerlink" href="#pdb-en-ligne-de-commande" title="Permalink to this headline">¶</a></h3>
-<p>Il s&#8217;agit d&#8217;exécuter <strong>pdb</strong> en lui passant en argument le script à déboguer.</p>
+<p>Il s&#8217;agit d&#8217;exécuter <em>pdb</em> en lui passant en argument le script à déboguer.</p>
 <div class="highlight-python"><div class="highlight"><pre>$ python -m pdb ./pdb_sample.py
 &gt; /home/poli/mypython-course/source/includes/pdb_sample.py(1)&lt;module&gt;()
 -&gt; class DummyClass(object):
 (Pdb)
+
+L&#39;exécution de *pdb* aura comme effet le chargement du code source. L&#39;exécution s&#39;arrête sur la première instruction présente dans le fichier et *pdb* se met en attente des commandes utilisateur.
 </pre></div>
 </div>
-<p>L&#8217;exécution de pdb aura comme effet le chargement du code source. L&#8217;exécution s&#8217;arrête sur la première instruction présente dans le fichier et <em>pdb</em> se met en attente des commandes utilisateur.</p>
 </div>
 <div class="section" id="pdb-lance-dans-une-session-interactive">
 <h3>pdb lancé dans une session interactive<a class="headerlink" href="#pdb-lance-dans-une-session-interactive" title="Permalink to this headline">¶</a></h3>
@@ -295,7 +296,7 @@ Cleaning up...
 </ul>
 </div>
 <div class="section" id="pdb-lance-a-partir-du-programme">
-<h3>pdb lancé à partir du programme<a class="headerlink" href="#pdb-lance-a-partir-du-programme" title="Permalink to this headline">¶</a></h3>
+<h3><em>pdb</em> lancé à partir du programme<a class="headerlink" href="#pdb-lance-a-partir-du-programme" title="Permalink to this headline">¶</a></h3>
 <p>Cette possibilité est utile quand on souhaite déclencher <em>pdb</em> le plus tard possible, par exemple en cas d&#8217;exécution longue avant l&#8217;apparition du problème à déboguer.</p>
 <p>La mise en oeuvre se fait en appelant la fonction <em>pdb.set_trace()</em> :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pdb</span>
@@ -463,7 +464,7 @@ NameError: name &#39;long&#39; is not defined
 <li><a class="reference internal" href="#le-debogueur-pdb">Le débogueur <strong>pdb</strong></a><ul>
 <li><a class="reference internal" href="#pdb-en-ligne-de-commande">pdb en ligne de commande</a></li>
 <li><a class="reference internal" href="#pdb-lance-dans-une-session-interactive">pdb lancé dans une session interactive</a></li>
-<li><a class="reference internal" href="#pdb-lance-a-partir-du-programme">pdb lancé à partir du programme</a></li>
+<li><a class="reference internal" href="#pdb-lance-a-partir-du-programme"><em>pdb</em> lancé à partir du programme</a></li>
 <li><a class="reference internal" href="#debogue-post-mortem">débogue  &#8220;post mortem&#8221;</a></li>
 </ul>
 </li>

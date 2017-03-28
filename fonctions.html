@@ -653,7 +653,7 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 </div>
 <p>Une précaution particulière s&#8217;impose quand les valeurs par défaut sont des objets modifiables.</p>
 <p><strong>Exemple</strong> de <strong>piège</strong> :</p>
-<p>Supposons que la fonction <em>create_user()</em> est destiné à la création de comptes informatiques (dans cette implémentation factice, elle retourne simplement un dictionnaire):</p>
+<p>Supposons que la fonction <em>create_user()</em> est destinée à la création de comptes informatiques (dans cette implémentation factice, elle retourne simplement un dictionnaire):</p>
 <ul class="simple">
 <li>Par défaut, en absence d&#8217;argument <em>groups</em> explicite, l&#8217;utilisateur créé sera associé au groupe &#8216;lambda&#8217;, le groupe de &#8220;tout le monde&#8221;.</li>
 <li>Si l&#8217;argument is_admin est vrai, l&#8217;utilisateur sera associé en plus au groupe &#8216;admin&#8217; qui donne des privilèges élevés. Ce groupe sera ajouté à la liste des groupes, qu&#8217;elle soit implicite ou explicite.</li>
@@ -1226,7 +1226,7 @@ get_stats([1.0, 2.0, 3.0])
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c"># en V3, inutile de convertir a en float</span>
 </pre></div>
 </div>
-<p>Tous le formats string sont acceptés, le plus courant étant le format multi-ligne (triple quote).</p>
+<p>Tous le formats string sont acceptés, le plus courant étant le format multi-ligne (triple guillemet).</p>
 <p>La docstring est accessible par programme à travers l&#8217;attribut <em>__doc__</em> ou à travers la fonction <em>help()</em>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="o">.</span><span class="n">__doc__</span>
 <span class="go">&#39;\n    Cette fonction divise a par b,....\n    &#39;</span>
@@ -1293,7 +1293,7 @@ get_stats([1.0, 2.0, 3.0])
 <h3>Rappel<a class="headerlink" href="#rappel" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Tout itérable peut être trié</li>
-<li>les <strong>séquences modifiables</strong> (<em>list</em>, <em>bytearray</em>) disposent d&#8217;une méthode <strong>sort()</strong> qui trie la sequence en la modifiant et retourne <strong>None</strong></li>
+<li>les <strong>séquences modifiables</strong> (<em>list</em>, <em>bytearray</em>) disposent d&#8217;une méthode <strong>sort()</strong> qui trie la séquence en la modifiant et retourne <strong>None</strong></li>
 <li><strong>tous les itérables</strong> peuvent être triées avec la fonction <strong>sorted()</strong> qui ne modifie pas l&#8217;objet à trier et qui retourne un nouvel objet qui est le résultat du tri.</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>

@@ -150,7 +150,7 @@ Les comportements propres aux objets (l&#8217;exécution des <em>méthodes</em>)
 <span class="go">100.0</span>
 </pre></div>
 </div>
-<p>Le mécanisme de résolution pour les variables, présenté au chapitre sur les fonctions, s&#8217;applique également entre la classe et ses instances. Tout comme dans les fonctions imbriquées, le contexte de la classe se comporte comme étant nonlocal par rapport au contexte de ses instances.</p>
+<p>Le mécanisme de résolution pour les variables, présenté au chapitre sur les fonctions, s&#8217;applique également entre la classe et ses instances. Tout comme dans les fonctions imbriquées, le contexte de la classe se comporte comme étant &#8220;nonlocal&#8221; par rapport au contexte de ses instances.</p>
 <p>La résolution (en référencement ) de <em>p.x</em> se fait dans l&#8217;ordre suivant:</p>
 <ol class="arabic simple">
 <li>dans le contexte de <strong>p</strong></li>
@@ -166,7 +166,7 @@ Les comportements propres aux objets (l&#8217;exécution des <em>méthodes</em>)
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>L&#8217;affectation de <em>x</em> se fera dans le contexte local (celui de l&#8217;instance) et va &#8220;cacher&#8221; la définition non-locale, existante au niveau de la classe.</p>
+<p>L&#8217;affectation de <em>x</em> se fera dans le contexte local (celui de l&#8217;instance) et va &#8220;cacher&#8221; la définition &#8220;non-locale&#8221;, existante au niveau de la classe.</p>
 <p>Réciproquement, après une affectation de <em>x</em> au niveau de l&#8217;instance, un changement de valeur (nouvelle affectation) de <em>x</em> au niveau de la classe sera sans effets sur l&#8217;instance ayant déjà affecté <em>x</em> localement:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Point</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mf">150.0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
@@ -366,7 +366,7 @@ qui peut faire passer sous silence une erreur de nom d&#8217;attribut.</p>
 <li>recherche en profondeur d&#8217;abord pour les classes &#8220;old style&#8221;</li>
 <li>résolution selon l&#8217;algorithme le <a class="reference external" href="https://www.python.org/download/releases/2.3/mro/">linéarisation C3</a> (à partir de la version 2.3)</li>
 </ul>
-<p>Le modèle &#8220;new style&#8221; permet de connaître l&#8217;ordre de résolution de l&#8217;interpréteur en appelant la méthode <tt class="docutils literal"><span class="pre">mro()</span></tt> (method resolution order).</p>
+<p>Le modèle &#8220;new style&#8221; permet de connaître l&#8217;ordre de résolution de l&#8217;interpréteur en appelant la méthode <tt class="docutils literal"><span class="pre">mro()</span></tt> (&#8220;method resolution order&#8221;).</p>
 <p>Exemple pour le diagramme dit &#8220;en diamant&#8221;:</p>
 <div class="highlight-python"><div class="highlight"><pre>           +---+
            | A |
@@ -661,7 +661,7 @@ AttributeError: &#39;FrozenPoint&#39; object has no attribute &#39;__x&#39;
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; c = Circle(4,5,15)
 &gt;&gt;&gt; c.ray # consultation
 15
-&gt;&gt;&gt; c.ray=-7 # tentative d&#39;affectation avec une valeur illegale
+&gt;&gt;&gt; c.ray=-7 # tentative d&#39;affectation avec une valeur illégale
 Traceback (most recent call last):
 File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 File &quot;&lt;stdin&gt;&quot;, line 10, in set_ray
@@ -884,15 +884,18 @@ Pour résoudre ce problème, Python propose deux décorateurs apportant deux sol
 <h2>Conventions de nommage<a class="headerlink" href="#conventions-de-nommage" title="Permalink to this headline">¶</a></h2>
 <p>La <strong>PEP8</strong> préconise:</p>
 <ul class="simple">
-<li>Pour les <strong>noms des classes</strong>, la convention &#8220;CapWords&#8221; sera utilisée par défaut. La convention utilisée pour les fonctions peut s&#8217;appliquer pour certaines classes dont l&#8217;usage est basé principalement sur leur interface appelable (autrement dit, qui sont perçues par l&#8217;utilisateur comme des fonctions) <strong>NB:</strong> Cette convention ne s&#8217;applique pas aux builtins</li>
-<li>Les exceptions sont des classes (rappel) et leur nommage suit les mêmes règles.</li>
-<li>Toujours utiliser <strong>self</strong> en premier argument d&#8217;une méthode (d&#8217;instance) et <strong>cls</strong> en premier argument d&#8217;une méthode de classe (décorée &#64;classmethod)</li>
-<li>les noms des méthodes et des attributs suivent la même convention que les fonctions En plus :<ul>
-<li>les noms commençant par un underscore sont considérés, par convention, comme &#8220;internes&#8221; (weak “internal use” indicator)</li>
+<li>Pour les <strong>noms des classes</strong>, la convention &#8220;CapWords&#8221; sera utilisée par défaut. La convention utilisée pour les fonctions peut s&#8217;appliquer pour certaines classes dont l&#8217;usage est basé principalement sur leur interface appelable (autrement dit, qui sont perçues par l&#8217;utilisateur comme des fonctions)</li>
+</ul>
+<p><strong>NB:</strong> Cette convention ne s&#8217;applique pas aux builtins
+* Les exceptions sont des classes (rappel) et leur nommage suit les mêmes règles.
+* Toujours utiliser <strong>self</strong> en premier argument d&#8217;une méthode (d&#8217;instance) et <strong>cls</strong> en premier argument d&#8217;une méthode de classe (décorée &#64;classmethod)
+* les noms des méthodes et des attributs suivent la même convention que les fonctions En plus :</p>
+<blockquote>
+<div><ul class="simple">
+<li>les noms commençant par un underscore sont considérés, par convention, comme &#8220;internes&#8221; (&#8220;weak internal use&#8221; indicator)</li>
 <li>les noms commençant par deux underscores  seront littéralement remplacés à la compilation comme montré précédemment</li>
 </ul>
-</li>
-</ul>
+</div></blockquote>
 </div>
 <div class="section" id="id1">
 <h2>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>

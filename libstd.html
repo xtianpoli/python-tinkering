@@ -353,13 +353,13 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 </pre></div>
 </div>
 <ul class="simple">
-<li>name : nom du fichier (absolut ou relatif au répertoire courant)</li>
+<li>name : nom du fichier (absolu ou relatif au répertoire courant)</li>
 <li>mode :<ul>
 <li><strong>r</strong> : lecture (par défaut)</li>
 <li><strong>w</strong> : écriture (en début du fichier). <strong>Avertissement:</strong> Si le fichier existe le contenu courant sera perdu.</li>
 <li><strong>a</strong> : ajout (append) L&#8217;écriture se fera à la fin du fichier, s&#8217;il existe, sinon il sera créé.</li>
 <li><strong>r+</strong>, <strong>w+</strong>, <strong>a+</strong> : ouverture en mise à jour(lecture/écriture). <strong>Avertissement:</strong> tout comme le <em>w</em>, le <em>w+</em> tronque le fichier, le contenu existant sera perdu.</li>
-<li><strong>b</strong> : il s&#8217;additionne à un des flags précédents (ex: <em>rb</em>) et il signifie <em>binary</em> pour les systèmes qui en font la distinction par rapport au mode text.</li>
+<li><strong>b</strong> : il s&#8217;additionne à un des flags précédents (ex: <em>rb</em>) et il signifie <em>binary</em> pour les systèmes qui en font la distinction par rapport au mode texte.</li>
 </ul>
 </li>
 <li>buffering : gestion de la zone mémoire &#8220;tampon&#8221;:<ul>
@@ -394,7 +394,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <li>&#8216;replace&#8217; remplace les caractères en erreur par un marqueur (&#8216;?&#8217;)</li>
 <li>&#8216;surrogateescape&#8217; représente les octets non reconnus par un point code dans la plage U+DC80 - U+DCFF</li>
 <li>&#8216;xmlcharrefreplace&#8217; remplace les caractères non supportés  par l&#8217;encodage avec l&#8217;entité XML <em>&amp;#nn;</em> (en écriture seulement)</li>
-<li>&#8216;backslashreplace&#8217;  remplace les caractères non supportés  par l&#8217;encodage avec les séquence d&#8217;échapement nnn</li>
+<li>&#8216;backslashreplace&#8217;  remplace les caractères non supportés  par l&#8217;encodage avec les séquence d&#8217;échappement nnn</li>
 </ul>
 </li>
 <li>newline : valeurs possibles None, &#8216;&#8217;, &#8216;\n&#8217;, &#8216;\r&#8217;, et &#8216;\r\n&#8217;</li>
@@ -517,7 +517,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <span class="go">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games&#39;</span>
 </pre></div>
 </div>
-<p>Manipulation de répertoires en bash:</p>
+<p>Manipulation de répertoires en <em>bash</em>:</p>
 <div class="highlight-python"><div class="highlight"><pre>poli@host:~$ cd /tmp
 poli@host:/tmp$ mkdir testpy
 poli@host:/tmp$ cd testpy/
@@ -543,7 +543,7 @@ poli@host:/tmp$
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;rmdir testpy&#39;</span>
 </pre></div>
 </div>
-<p>Autres manipulations simples sur des fichiers en bash :</p>
+<p>Autres manipulations simples sur des fichiers en <em>bash</em> :</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ls /tmp/test/
 testpy.txt
 $ mv /tmp/test/testpy.txt /tmp/test/testpy2.txt
@@ -695,7 +695,7 @@ $ ls /tmp/test/
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p><strong>NB:</strong> Sous Windows cette fonction transforme les <strong>/</strong> en <strong>\</strong>. Pour les OS &#8220;case insesitive&#8221; la fonction <em>os.path.normcase()</em> permet de passer les noms en minuscules.</p>
+<p><strong>NB:</strong> Sous Windows cette fonction transforme les <strong>/</strong> en <strong>\</strong>. Pour les OS &#8220;case insensitive&#8221; la fonction <em>os.path.normcase()</em> permet de passer les noms en minuscules.</p>
 </div>
 <div class="section" id="utilisation-du-caractere-joker">
 <h3>Utilisation du caractère &#8220;joker&#8221;<a class="headerlink" href="#utilisation-du-caractere-joker" title="Permalink to this headline">¶</a></h3>
@@ -730,7 +730,7 @@ $ ls /tmp/test/
 <td>Copie les permissions+infos temps(dernier accès/modification)+flags</td>
 </tr>
 <tr class="row-odd"><td>shutil.copy2(src, dst)</td>
-<td>Équivalent copy() + copystat()</td>
+<td>Equivalent copy() + copystat()</td>
 </tr>
 </tbody>
 </table>

@@ -62,7 +62,7 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Cette introduction au langage Python s&#8217;adresse à un public pratiquant déjà autre langage de programmation (Java, C/C++, perl etc.).</p>
+<p>Cette introduction au langage Python s&#8217;adresse à un public pratiquant déjà un autre langage de programmation (Java, C/C++, Perl etc.).</p>
 <p>Tout en s&#8217;appuyant sur les points communs entre Python et les autres langages, on se propose ici de faire ressortir les spécificités de Python et d&#8217;introduire, aussi tôt que possible au cours de l&#8217;exposé, les idiomes et les bonnes pratiques permettant d&#8217;écrire des programmes lisibles et efficaces, correspondant à l&#8217;esprit de ce langage.</p>
 <p>Connaître déjà un langage de programmation est un atout certain pour en apprendre un nouveau, au moindre coût.</p>
 <p>Par contre, la tentation peut être grande (surtout quand on est obligé d&#8217;aller vite) d&#8217;écrire du code dans le nouveau langage en faisant confiance au réflexes acquises avec les langages déjà pratiqués.</p>
@@ -87,7 +87,7 @@
 <ul class="simple">
 <li>Il est expressif, modulaire, multi-paradigme (impératif, objet, fonctionnel)</li>
 <li>Encourage l&#8217;écriture d&#8217;un code de qualité, lisible et compact (indentation obligatoire, mécanismes de documentation intégrés au langage)</li>
-<li>Il prend en charge les aspects &#8220;bas niveau&#8221; de la programmation, disposant d&#8217;un ramasse miettes (<em>garbage collector</em>), et de types prédéfinis de haut niveau (entiers de taille arbitraire, listes, dictionnaires, ensembles etc.)</li>
+<li>Il prend en charge les aspects &#8220;bas niveau&#8221; de la programmation, disposant d&#8217;un ramasse-miettes (<em>garbage collector</em>), et de types prédéfinis de haut niveau (entiers de taille arbitraire, listes, dictionnaires, ensembles etc.)</li>
 <li>Met en oeuvre des mécanismes favorisant l&#8217;abstraction : décorateurs, générateurs (détaillés dans la suite du présent document).</li>
 </ul>
 <p>Python est également:</p>
@@ -131,7 +131,7 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <h2>L&#8217;esprit Python<a class="headerlink" href="#l-esprit-python" title="Permalink to this headline">¶</a></h2>
 <p>Tim Peters, un des pionniers du langage, a formulé un ensemble d&#8217;aphorismes qui définissent, selon certains, de manière humoristique, cet esprit.</p>
 <p>Et, comme l&#8217;humour est parfois l&#8217;expression d&#8217;une sagesse, ces 19 aphorismes, regroupés sous le nom de &#8220;The Zen of Python&#8221;, ont fait l&#8217;objet de la  <strong>PEP 20</strong> (PEP: document normatif, acronyme de <em>Python Enhancement Proposals</em>)</p>
-<p><em>The Zen of python</em> est même accessible dans l&#8217;interpréteur interactif :</p>
+<p><em>The Zen of Python</em> est même accessible dans l&#8217;interpréteur interactif :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">this</span>
 <span class="go">The Zen of Python, by Tim Peters</span>
 
@@ -202,7 +202,7 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <li>intégralement  dans Python où tout est objet de première classe (y compris les entiers, les fonctions etc.)</li>
 </ul>
 </li>
-<li><strong>Gestion de la mémoire :</strong> les deux disposent d&#8217;un garbage collector (ramassage de miettes)</li>
+<li><strong>Gestion de la mémoire :</strong> les deux disposent d&#8217;un garbage collector (ramasse-miettes)</li>
 </ul>
 <ul class="simple">
 <li><strong>Modèle objet :</strong><ul>
@@ -317,7 +317,7 @@ Hello world!
 In [2]:
 </pre></div>
 </div>
-<p>A l&#8217;heure actuelle (fin 2016) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les packages python3 et ipython3 qui peuvent cohabiter avec la version par défaut (<a class="reference external" href="https://www.python.org/dev/peps/pep-0394/">PEP 394</a>).</p>
+<p>A l&#8217;heure actuelle (fin 2016) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les paquets python3 et ipython3 qui peuvent cohabiter avec la version par défaut (<a class="reference external" href="https://www.python.org/dev/peps/pep-0394/">PEP 394</a>).</p>
 <div class="highlight-python"><div class="highlight"><pre>$ python3
 Python 3.4.2 (default, Jul  9 2015, 17:24:30)
 [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux
