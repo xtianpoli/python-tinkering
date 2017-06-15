@@ -8,7 +8,7 @@
     
     <title>Outils divers &mdash; Introduction à la programmation en Python</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
@@ -24,11 +24,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
     <link rel="prev" title="Les tests" href="tests.html" /> 
   </head>
-  <body>
+  <body role="document">
    <!--  add javascript -->
    
    <script src="clipboard.min.js"></script>
@@ -38,7 +38,7 @@
      })();
    </script>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -47,14 +47,14 @@
         <li class="right" >
           <a href="tests.html" title="Les tests"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="outils-divers">
 <h1>Outils divers<a class="headerlink" href="#outils-divers" title="Permalink to this headline">¶</a></h1>
@@ -77,7 +77,7 @@
 <ul class="simple">
 <li>télécharger le bonne version</li>
 <li>décompresser, désarchiver</li>
-<li>dans le répertoire pip-xxx (désarchivé) exécuter <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt></li>
+<li>dans le répertoire pip-xxx (désarchivé) exécuter <code class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></li>
 </ul>
 </li>
 <li><p class="first">utiliser <em>easy_install</em>:</p>
@@ -184,7 +184,7 @@ $ source bin/activate
 (virt_env_1) $
 </pre></div>
 </div>
-<p><strong>NB:</strong> Le prompt modifié <tt class="docutils literal"><span class="pre">(virt_env_1)</span> <span class="pre">$</span></tt> indique l&#8217;environnement courant</p>
+<p><strong>NB:</strong> Le prompt modifié <code class="docutils literal"><span class="pre">(virt_env_1)</span> <span class="pre">$</span></code> indique l&#8217;environnement courant</p>
 <p>Toute installation faite avec <strong>pip</strong> dans un environnement activé sera locale à cet environnement, sans interférence avec l&#8217;environnement standard.</p>
 <p>L&#8217;interpréteur lancé dans cet environnement aura accès aux modules installés localement.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
@@ -241,16 +241,16 @@ Cleaning up...
         <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span> <span class="o">=</span> <span class="n">val</span>
         
     <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
+        <span class="n">alphabet</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
         <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span><span class="p">;</span>
         <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
         <span class="n">alpha_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">))</span>
         <span class="n">alpha_zip</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alpha_range</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">tpl</span> <span class="ow">in</span> <span class="n">alpha_zip</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">DummyClass</span><span class="p">(</span><span class="mi">514</span><span class="p">)</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
 </pre></div>
@@ -275,10 +275,10 @@ L&#39;exécution de *pdb* aura comme effet le chargement du code source. L&#39;e
 </div>
 <div class="section" id="pdb-lance-dans-une-session-interactive">
 <h3>pdb lancé dans une session interactive<a class="headerlink" href="#pdb-lance-dans-une-session-interactive" title="Permalink to this headline">¶</a></h3>
-<p>Il s&#8217;agit d&#8217;importer le module à déboguer ainsi que le module pdb ensuite exécuter <tt class="docutils literal"><span class="pre">pdb.run()</span></tt>:</p>
+<p>Il s&#8217;agit d&#8217;importer le module à déboguer ainsi que le module pdb ensuite exécuter <code class="docutils literal"><span class="pre">pdb.run()</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb_sample</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pdb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s">&#39;pdb_sample.DummyClass(514).do_something()&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;pdb_sample.DummyClass(514).do_something()&#39;</span><span class="p">)</span>
 <span class="go">&gt; &lt;string&gt;(1)&lt;module&gt;()</span>
 <span class="go">(Pdb)</span>
 </pre></div>
@@ -305,16 +305,16 @@ L&#39;exécution de *pdb* aura comme effet le chargement du code source. L&#39;e
         <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span> <span class="o">=</span> <span class="n">val</span>
         
     <span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">alphabet</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
+        <span class="n">alphabet</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopqrstuvxyzw&quot;</span>
         <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_val</span><span class="p">;</span>
         <span class="n">last</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
         <span class="n">alpha_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">))</span>
         <span class="n">alpha_zip</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">alphabet</span><span class="p">,</span> <span class="n">alpha_range</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">tpl</span> <span class="ow">in</span> <span class="n">alpha_zip</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0[0]}:{0[1]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tpl</span><span class="p">))</span>
             <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">DummyClass</span><span class="p">(</span><span class="mi">514</span><span class="p">)</span>
     <span class="n">obj</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
 </pre></div>
@@ -330,7 +330,7 @@ a:514
 </div>
 <div class="section" id="debogue-post-mortem">
 <h3>débogue  &#8220;post mortem&#8221;<a class="headerlink" href="#debogue-post-mortem" title="Permalink to this headline">¶</a></h3>
-<p>Il s&#8217;agit de déboguer en programme qui s&#8217;est déjà terminé par une exception. Dans l&#8217;exemple initial, appelant le constructeur <em>DummyClass()</em> avec une chaîne en argument l&#8217;exécution se terminera avec une exception <em>TypeError</em>. On peut ensuite, en utilisant la fonction <tt class="docutils literal"><span class="pre">pdb.pm()</span></tt> ou <tt class="docutils literal"><span class="pre">pdb.post_mortem()</span></tt> retrouver le contexte d&#8217;exécution au moment où l&#8217;erreur s&#8217;est produite:</p>
+<p>Il s&#8217;agit de déboguer en programme qui s&#8217;est déjà terminé par une exception. Dans l&#8217;exemple initial, appelant le constructeur <em>DummyClass()</em> avec une chaîne en argument l&#8217;exécution se terminera avec une exception <em>TypeError</em>. On peut ensuite, en utilisant la fonction <code class="docutils literal"><span class="pre">pdb.pm()</span></code> ou <code class="docutils literal"><span class="pre">pdb.post_mortem()</span></code> retrouver le contexte d&#8217;exécution au moment où l&#8217;erreur s&#8217;est produite:</p>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; import pdb_sample
 &gt;&gt;&gt; import pdb
 &gt;&gt;&gt; pdb_sample.DummyClass(&quot;abc&quot;).do_something()
@@ -388,7 +388,7 @@ TypeError: cannot concatenate &#39;str&#39; and &#39;int&#39; objects
 <h2>Le module <strong>six</strong><a class="headerlink" href="#le-module-six" title="Permalink to this headline">¶</a></h2>
 <p>C&#8217;est un module qui propose des fonctions et des constantes utiles pour écrire du code compatible <em>Python 2</em> et <em>Python 3</em></p>
 <p>Nous avons déjà évoqué l&#8217;incompatibilité suivante:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Python 2.7</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Python 2.7</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 <span class="go">True</span>
@@ -413,7 +413,7 @@ NameError: name &#39;long&#39; is not defined
 </pre></div>
 </div>
 <p>Avec <strong>six</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Python 2.7</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Python 2.7</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">six</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">six</span><span class="o">.</span><span class="n">integer_types</span>
 <span class="go">(&lt;type &#39;int&#39;&gt;, &lt;type &#39;long&#39;&gt;)</span>
@@ -442,7 +442,7 @@ NameError: name &#39;long&#39; is not defined
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -477,7 +477,7 @@ NameError: name &#39;long&#39; is not defined
   <h4>Previous topic</h4>
   <p class="topless"><a href="tests.html"
                         title="previous chapter">Les tests</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -494,7 +494,7 @@ NameError: name &#39;long&#39; is not defined
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -503,7 +503,7 @@ NameError: name &#39;long&#39; is not defined
         <li class="right" >
           <a href="tests.html" title="Les tests"
              >previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
 <div class="footer" style="max-height: 10px">

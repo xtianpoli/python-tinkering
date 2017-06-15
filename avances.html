@@ -8,7 +8,7 @@
     
     <title>Concepts avancés &mdash; Introduction à la programmation en Python</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
     <link rel="next" title="L’approche objet" href="objet.html" />
     <link rel="prev" title="Les fonctions" href="fonctions.html" /> 
   </head>
-  <body>
+  <body role="document">
    <!--  add javascript -->
    
    <script src="clipboard.min.js"></script>
@@ -39,7 +39,7 @@
      })();
    </script>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -51,14 +51,14 @@
         <li class="right" >
           <a href="fonctions.html" title="Les fonctions"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="concepts-avances">
 <h1>Concepts avancés<a class="headerlink" href="#concepts-avances" title="Permalink to this headline">¶</a></h1>
@@ -67,9 +67,9 @@
 <p><strong>Rappel:</strong> En Python, les fonctions sont des objets de &#8220;première classe&#8221;. Entre autres, un objet-fonction peut être passé en argument ou être retourné par une autre fonction :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">fa</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">123</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;je suis fa(), je renvoie fb&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;je suis fa(), je renvoie fb&quot;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">fb</span><span class="p">():</span>
-<span class="gp">... </span>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;je suis fb() et je connais x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">... </span>            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;je suis fb() et je connais x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">fb</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">func_fb</span> <span class="o">=</span> <span class="n">fa</span><span class="p">()</span>
@@ -85,7 +85,7 @@
 <li>ensuite, en exécutant <em>func_fb()</em> (par l&#8217;application de <em>()</em> à la variable <em>func_fb</em>) la fonction <em>fb</em> s&#8217;exécute enfin.</li>
 </ol>
 <p>De manière informelle, le terme de <strong>fermeture</strong> (ou <em>closure</em> en anglais) désigne une fonction (considérée en tant qu&#8217;objet) accompagnée de son contexte de définition. Ce contexte est représenté par l&#8217;ensemble des valeurs des variables non locales à la fonction, référencées dans son code, au moment de sa définition.</p>
-<p>Autrement dit, dans l&#8217;exemple précédent, <em>func_fb</em> (qui référence l&#8217;objet-fonction <em>fb</em>, retourné lors de l&#8217;appel de <em>fa()</em>) se &#8220;rappelle&#8221; que <tt class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">123</span></tt> alors que cette information provient du contexte d&#8217;exécution de <em>fa()</em>, terminé depuis.</p>
+<p>Autrement dit, dans l&#8217;exemple précédent, <em>func_fb</em> (qui référence l&#8217;objet-fonction <em>fb</em>, retourné lors de l&#8217;appel de <em>fa()</em>) se &#8220;rappelle&#8221; que <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">123</span></code> alors que cette information provient du contexte d&#8217;exécution de <em>fa()</em>, terminé depuis.</p>
 <p><strong>NB:</strong> On va parler de <em>fermeture</em> seulement pour les fonctions définies à l&#8217;intérieur d&#8217;autres fonctions, les seules disposant d&#8217;un contexte non local).</p>
 <p>Pour une illustration plus complète, voici une utilisation possible des fonctions imbriquées et du principe de fermeture.</p>
 <p><strong>Scénario :</strong> Dans une organisation, les utilisateurs des moyens informatiques peuvent avoir plusieurs profils prédéfinis, chaque profil définissant une liste de groups et une liste de protocoles autorisés.   On souhaite disposer de plusieurs fonctions permettant de créer des comptes utilisateur, une fonction pour chaque profil.</p>
@@ -96,7 +96,7 @@
 <span class="sd">    retourne des fonctions permettant de créer des comptes utilisateur</span>
 <span class="sd">    avec un profil donné</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">organisation</span> <span class="o">=</span> <span class="s">&#39;Example.org&#39;</span>
+    <span class="n">organisation</span> <span class="o">=</span> <span class="s1">&#39;Example.org&#39;</span>
     <span class="k">def</span> <span class="nf">add_user</span><span class="p">(</span><span class="n">login</span><span class="p">,</span> <span class="n">cn</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        dans une vraie implémentation, crée le compte</span>
@@ -108,18 +108,18 @@
 </pre></div>
 </div>
 <p>On va utiliser cette fonction pour &#8220;fabriquer&#8221; des fonctions utilisables pour créer des comptes :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;guests&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">,</span><span class="s">&#39;imap&#39;</span><span class="p">,</span><span class="s">&#39;smtp&#39;</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;adm&#39;</span><span class="p">,</span> <span class="s">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;http&#39;</span><span class="p">,</span><span class="s">&#39;imap&#39;</span><span class="p">,</span>\
-<span class="gp">... </span><span class="s">&#39;smtp&#39;</span><span class="p">,</span><span class="s">&#39;ssh&#39;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;guests&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;http&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;http&#39;</span><span class="p">,</span><span class="s1">&#39;imap&#39;</span><span class="p">,</span><span class="s1">&#39;smtp&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span> <span class="o">=</span> <span class="n">make_profile</span><span class="p">(</span><span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;adm&#39;</span><span class="p">,</span> <span class="s1">&#39;staff&#39;</span><span class="p">],</span><span class="n">protocols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;http&#39;</span><span class="p">,</span><span class="s1">&#39;imap&#39;</span><span class="p">,</span>\
+<span class="gp">... </span><span class="s1">&#39;smtp&#39;</span><span class="p">,</span><span class="s1">&#39;ssh&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Utilisation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="p">(</span><span class="s">&#39;alex&#39;</span><span class="p">,</span><span class="s">&#39;Alex Terrieur&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">add_guest</span><span class="p">(</span><span class="s1">&#39;alex&#39;</span><span class="p">,</span><span class="s1">&#39;Alex Terrieur&#39;</span><span class="p">)</span>
 <span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;alex&#39;, &#39;protocols&#39;: [&#39;http&#39;], &#39;groups&#39;: [&#39;guests&#39;], &#39;cn&#39;: &#39;Alex Terrieur&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span><span class="p">(</span><span class="s">&#39;alain&#39;</span><span class="p">,</span><span class="s">&#39;Alain Terrieur&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_staff</span><span class="p">(</span><span class="s1">&#39;alain&#39;</span><span class="p">,</span><span class="s1">&#39;Alain Terrieur&#39;</span><span class="p">)</span>
 <span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;alain&#39;, &#39;protocols&#39;: [&#39;http&#39;, &#39;imap&#39;, &#39;smtp&#39;], &#39;groups&#39;: [&#39;staff&#39;], &#39;cn&#39;: &#39;Alain Terrieur&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span><span class="p">(</span><span class="s">&#39;cpoli&#39;</span><span class="p">,</span><span class="s">&#39;Christian Poli&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">add_admin</span><span class="p">(</span><span class="s1">&#39;cpoli&#39;</span><span class="p">,</span><span class="s1">&#39;Christian Poli&#39;</span><span class="p">)</span>
 <span class="go">{&#39;org&#39;: &#39;Example.org&#39;, &#39;login&#39;: &#39;cpoli&#39;, &#39;protocols&#39;: [&#39;http&#39;, &#39;imap&#39;, &#39;smtp&#39;, &#39;ssh&#39;], &#39;groups&#39;: [&#39;adm&#39;, &#39;staff&#39;], &#39;cn&#39;: &#39;Christian Poli&#39;}</span>
 </pre></div>
 </div>
@@ -258,9 +258,9 @@
 <span class="sd">        Cette fonction constitue</span>
 <span class="sd">        la décoration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="k">return</span> <span class="n">simple_wrapper</span>
 
@@ -270,19 +270,20 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    une méthode à décorer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
 
 <span class="k">def</span> <span class="nf">do_something_else</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    une autre méthode à décorer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># exécution sans décoration:</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1"># exécution sans décoration:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">do_something</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">fait qq chose (x=1,y=2)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s">&quot;g&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="s">&quot;e&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
 <span class="go">fait qq chose d&#39;autre (a=g,b=r,c=e)</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -297,7 +298,7 @@
 <span class="go">action avant do_something()</span>
 <span class="go">fait qq chose (x=1,y=2)</span>
 <span class="go">action après do_something()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s">&quot;g&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="s">&quot;e&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">do_something_else</span><span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="s2">&quot;e&quot;</span><span class="p">)</span>
 <span class="go">action avant do_something_else()</span>
 <span class="go">fait qq chose d&#39;autre (a=g,b=r,c=e)</span>
 <span class="go">action après do_something_else()</span>
@@ -317,9 +318,9 @@
 <span class="sd">        Cette fonction constitue</span>
 <span class="sd">        la décoration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="k">return</span> <span class="n">simple_wrapper</span>
 
@@ -329,14 +330,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    une méthode à décorer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;fait qq chose (x={},y={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
 
 <span class="nd">@simple_decorator</span>
 <span class="k">def</span> <span class="nf">do_something_else</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    une autre méthode à décorer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;fait qq chose d&#39;autre (a={},b={},c={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+
 </pre></div>
 </div>
 <p>Le décorateur présenté ici illustre bien le principe, mais il est encore imparfait. Par exemple, la <em>docstring</em> de la fonction décorée n&#8217;est pas correcte:</p>
@@ -363,11 +365,13 @@
 <span class="sd">        Cette fonction constitue</span>
 <span class="sd">        la décoration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c"># &quot;to_decorate&quot; fait partie de la fermeture</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action avant {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># &quot;to_decorate&quot; fait partie de la fermeture</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;action après {}()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="k">return</span> <span class="n">simple_wrapper</span>
+
+
 </pre></div>
 </div>
 <p>Quelques exemples : <a class="reference external" href="https://wiki.python.org/moin/PythonDecoratorLibrary">https://wiki.python.org/moin/PythonDecoratorLibrary</a></p>
@@ -415,45 +419,45 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="c">#</span>
-<span class="c"># La bibliothèque</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># La bibliothèque</span>
+<span class="c1">#</span>
 
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;triangle area&quot;</span>
+    <span class="s2">&quot;triangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
 
 <span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="s2">&quot;rectangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="s2">&quot;trapezoid area&quot;</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
-    <span class="s">&quot;circle area&quot;</span>
+    <span class="s2">&quot;circle area&quot;</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
 
-<span class="c"># ...</span>
-<span class="c"># ...</span>
+<span class="c1"># ...</span>
+<span class="c1"># ...</span>
 
 
-<span class="c">#</span>
-<span class="c"># PS: Les solutions naïves - A EVITER!</span>
-<span class="c"># (elle sont là juste à titre d&#39;exemple négatif!)</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># PS: Les solutions naïves - A EVITER!</span>
+<span class="c1"># (elle sont là juste à titre d&#39;exemple négatif!)</span>
+<span class="c1">#</span>
 
 <span class="k">def</span> <span class="nf">triangle_area_modified</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    N1) solution naïve I</span>
 <span class="sd">    triangle_area() modifiée pour intégrer le dialogue</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Your value ?&quot;</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Your value ?&quot;</span><span class="p">)</span>
     <span class="n">calc</span> <span class="o">=</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">calc</span>
 
 <span class="k">def</span> <span class="nf">triangle_area_wrapper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
@@ -461,10 +465,12 @@
 <span class="sd">    N2) solution naïve II</span>
 <span class="sd">    wrapper dédié à triangle_area()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">&quot;Your value ?&quot;</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Your value ?&quot;</span><span class="p">)</span>
     <span class="n">calc</span> <span class="o">=</span> <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">calc</span>
+
+
 </pre></div>
 </div>
 </div>
@@ -486,40 +492,40 @@
 <span class="sd">        Cette fonction constitue</span>
 <span class="sd">        la décoration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="s">&quot;Your answer is?&quot;</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="s2">&quot;Your answer is?&quot;</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
         <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
-        <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture!</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+        <span class="c1"># NB: &quot;to_decorate&quot; fait partie de la fermeture!</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">calc</span>
     <span class="k">return</span> <span class="n">simple_wrapper</span>
 
 <span class="nd">@simple_dialog</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;triangle area&quot;</span>
+    <span class="s2">&quot;triangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
 
 <span class="nd">@simple_dialog</span>
 <span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="s2">&quot;rectangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="nd">@simple_dialog</span>
 <span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="s2">&quot;trapezoid area&quot;</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="kn">import</span> <span class="nn">math</span>
 
 <span class="nd">@simple_dialog</span>
 <span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
-    <span class="s">&quot;circle area&quot;</span>
+    <span class="s2">&quot;circle area&quot;</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span> 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
     <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
     <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -541,23 +547,23 @@
 <span class="sd">NB: Pour simplifier, on va considérer que le décorateur sera appliqué </span>
 <span class="sd">systématiquement avec l&#39;opérateur&quot;()&quot; de la manière suivante:</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="c">#</span>
-<span class="c"># avec message personnalisé:</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># avec message personnalisé:</span>
+<span class="c1">#</span>
 
-<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area?&quot;</span><span class="p">)</span>
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;Triangle area?&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;...&quot;</span>
-    <span class="k">pass</span> <span class="c"># ...</span>
+    <span class="s2">&quot;...&quot;</span>
+    <span class="k">pass</span> <span class="c1"># ...</span>
 
-<span class="c">#</span>
-<span class="c"># sans message personnalisé:</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># sans message personnalisé:</span>
+<span class="c1">#</span>
 
 <span class="nd">@dialog_with_args</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;...&quot;</span>
-    <span class="k">pass</span> <span class="c"># ...</span>
+    <span class="s2">&quot;...&quot;</span>
+    <span class="k">pass</span> <span class="c1"># ...</span>
 </pre></div>
 </div>
 </div>
@@ -568,7 +574,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
 
-<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Your value ?&quot;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;Your value ?&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    cette fonction permet d&#39;introduire la variable &#39;question&#39; dans la fermeture</span>
 <span class="sd">    du décorateur</span>
@@ -588,25 +594,25 @@
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
             <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
-            <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+            <span class="c1"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Your value: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">calc</span>
         <span class="k">return</span> <span class="n">simple_wrapper</span>
     <span class="k">return</span> <span class="n">simple_dialog</span>
 
-<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area is?&quot;</span><span class="p">)</span>
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;Triangle area is?&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;triangle area&quot;</span>
+    <span class="s2">&quot;triangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
 
 <span class="nd">@dialog_with_args</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="s2">&quot;rectangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="nd">@dialog_with_args</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="s2">&quot;trapezoid area&quot;</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
 
 
@@ -614,13 +620,13 @@
 
 <span class="nd">@dialog_with_args</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
-    <span class="s">&quot;circle area&quot;</span>
+    <span class="s2">&quot;circle area&quot;</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
     <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
     <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -635,17 +641,17 @@
 <span class="sd">Comment faire pour éviter l&#39;opérateur &quot;()&quot; quand on n&#39;a pas d&#39;option de décoration à passer?</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c">#</span>
-<span class="c"># avec message personnalisé et &quot;()&quot;:</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># avec message personnalisé et &quot;()&quot;:</span>
+<span class="c1">#</span>
 
-<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area?&quot;</span><span class="p">)</span>
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;Triangle area?&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
     <span class="o">...</span>
 
-<span class="c">#</span>
-<span class="c"># sans message personnalisé et SANS &quot;()&quot;:</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># sans message personnalisé et SANS &quot;()&quot;:</span>
+<span class="c1">#</span>
 
 <span class="nd">@dialog_with_args</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
@@ -660,7 +666,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
 
-<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="s">&quot;Your answer is?&quot;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dialog_with_args</span><span class="p">(</span><span class="n">to_decorate</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">question</span><span class="o">=</span><span class="s2">&quot;Your answer is?&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    cette fonction permet d&#39;introduire la variable &#39;question&#39; dans la fermeture</span>
 <span class="sd">    du décorateur</span>
@@ -680,39 +686,39 @@
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="n">resp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span> <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">raw_input</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
             <span class="n">calc</span> <span class="o">=</span> <span class="n">to_decorate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
-            <span class="c"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
+            <span class="c1"># NB: &quot;to_decorate&quot; fait partie de la fermeture</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Your answer: {}, calculated value: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">calc</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">calc</span>
         <span class="k">return</span> <span class="n">simple_wrapper</span>
     <span class="k">if</span> <span class="n">to_decorate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> 
-        <span class="c"># appel avec options, du style:</span>
-        <span class="c"># @dialog_with_args(question=&quot;Triangle area?&quot;)</span>
-        <span class="c"># En clair:</span>
-        <span class="c"># triangle_area = dialog_with_args(question=&quot;Triangle area?&quot;)(triangle_area)</span>
-        <span class="c"># dialog_with_args() n&#39;est pas appelée en tant que décorateur mais en tant que</span>
-        <span class="c"># fonction retournant le décorateur donc:</span>
+        <span class="c1"># appel avec options, du style:</span>
+        <span class="c1"># @dialog_with_args(question=&quot;Triangle area?&quot;)</span>
+        <span class="c1"># En clair:</span>
+        <span class="c1"># triangle_area = dialog_with_args(question=&quot;Triangle area?&quot;)(triangle_area)</span>
+        <span class="c1"># dialog_with_args() n&#39;est pas appelée en tant que décorateur mais en tant que</span>
+        <span class="c1"># fonction retournant le décorateur donc:</span>
         <span class="k">return</span> <span class="n">simple_dialog</span>
-    <span class="c"># appel sans options, du style:</span>
-    <span class="c"># @dialog_with_args</span>
-    <span class="c"># en clair triangle_area = dialog_with_args(triangle_area)</span>
-    <span class="c"># dialog_with_args() est  appelée en tant que décorateur!</span>
-    <span class="c"># elle doit donc relayer l&#39;appel au vrai décorateur</span>
-    <span class="c"># et retourner le résultat</span>
+    <span class="c1"># appel sans options, du style:</span>
+    <span class="c1"># @dialog_with_args</span>
+    <span class="c1"># en clair triangle_area = dialog_with_args(triangle_area)</span>
+    <span class="c1"># dialog_with_args() est  appelée en tant que décorateur!</span>
+    <span class="c1"># elle doit donc relayer l&#39;appel au vrai décorateur</span>
+    <span class="c1"># et retourner le résultat</span>
     <span class="k">return</span> <span class="n">simple_dialog</span><span class="p">(</span><span class="n">to_decorate</span><span class="p">)</span>
 
-<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s">&quot;Triangle area is?&quot;</span><span class="p">)</span>
+<span class="nd">@dialog_with_args</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;Triangle area is?&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;triangle area&quot;</span>
+    <span class="s2">&quot;triangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mf">0.5</span>
 
 <span class="nd">@dialog_with_args</span>
 <span class="k">def</span> <span class="nf">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;rectangle area&quot;</span>
+    <span class="s2">&quot;rectangle area&quot;</span>
     <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">height</span>
 
 <span class="nd">@dialog_with_args</span>
 <span class="k">def</span> <span class="nf">trapezoid_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">base2</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-    <span class="s">&quot;trapezoid area&quot;</span>
+    <span class="s2">&quot;trapezoid area&quot;</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">base</span> <span class="o">+</span> <span class="n">base2</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
 
 
@@ -720,17 +726,17 @@
 
 <span class="nd">@dialog_with_args</span>
 <span class="k">def</span> <span class="nf">circle_area</span><span class="p">(</span><span class="n">ray</span><span class="p">):</span>
-    <span class="s">&quot;circle area&quot;</span>
+    <span class="s2">&quot;circle area&quot;</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ray</span> <span class="o">**</span> <span class="mi">2</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">base</span> <span class="o">=</span> <span class="mi">5</span>
     <span class="n">height</span> <span class="o">=</span> <span class="mi">4</span> 
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Compute the area of a triangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
     <span class="n">triangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
     <span class="n">base</span> <span class="o">=</span> <span class="mi">7</span>
     <span class="n">height</span> <span class="o">=</span> <span class="mi">6</span> 
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Compute the area of a rectangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Compute the area of a rectangle (given: base={}, height={})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
     <span class="n">rectangle_area</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -770,6 +776,10 @@
     <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
         <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">yield</span> <span class="n">i</span> <span class="o">**</span> <span class="mi">3</span>
+
+
+
+
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>&gt;&gt;&gt; gen = gen_cube_n(3)
@@ -865,7 +875,7 @@ StopIteration
 <ul>
 <li><p class="first">top-down :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">&lt;type &#39;generator&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
@@ -874,12 +884,12 @@ StopIteration
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg&#39;, [&#39;EGG-INFO&#39;, &#39;httpproxy&#39;], [])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># etc...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># etc...</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">bottom-up :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">,</span><span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">,</span><span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
@@ -983,7 +993,7 @@ RuntimeError: maximum recursion depth exceeded in comparison
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -1015,7 +1025,7 @@ RuntimeError: maximum recursion depth exceeded in comparison
   <h4>Next topic</h4>
   <p class="topless"><a href="objet.html"
                         title="next chapter">L&#8217;approche objet</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1032,7 +1042,7 @@ RuntimeError: maximum recursion depth exceeded in comparison
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1044,7 +1054,7 @@ RuntimeError: maximum recursion depth exceeded in comparison
         <li class="right" >
           <a href="fonctions.html" title="Les fonctions"
              >previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
 <div class="footer" style="max-height: 10px">

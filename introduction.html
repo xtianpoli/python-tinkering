@@ -8,7 +8,7 @@
     
     <title>Introduction &mdash; Introduction à la programmation en Python</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
     <link rel="next" title="Quelques liens utiles" href="liens.html" />
     <link rel="prev" title="Licence" href="license.html" /> 
   </head>
-  <body>
+  <body role="document">
    <!--  add javascript -->
    
    <script src="clipboard.min.js"></script>
@@ -39,7 +39,7 @@
      })();
    </script>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -51,14 +51,14 @@
         <li class="right" >
           <a href="license.html" title="Licence"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
@@ -176,7 +176,7 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <li>Python 3.3 - septembre 2012</li>
 <li>Python 3.4 - mars 2014</li>
 <li>Python 3.5 - septembre 2015</li>
-<li>Python 3.6.0b4 - novembre 2016</li>
+<li>Python 3.6 - décembre 2016</li>
 </ul>
 </li>
 </ul>
@@ -270,8 +270,8 @@ canard et cancaner comme un canard, j&#8217;appelle cet oiseau un canard&#8221;
 <p>Dans l&#8217;immédiat on parlera de <strong>variable</strong>, <strong>expression</strong> et de <strong>fonction</strong> avec les significations rencontrées dans la pratique de tout autre langage. Dans les chapitres suivants ces notions seront précisées pour le cas de Python.</p>
 <p>Un <strong>module</strong>, désignera dans ce chapitre un fichier contenant des fonctions ayant vocation à être utilisées localement (appels dans le même fichier) ou dans un autre contexte, après chargement (ou importation) par l&#8217;interpréteur du dit module. C&#8217;est une notion qui sera également traitée plus en détail par la suite.</p>
 <p><strong>Le commentaire</strong> en Python est une chaîne de caractères tenant sur une ligne et préfixée par un dièse.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#ligne complète de commentaire</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c">#une affectation: commentaire en fin de ligne</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1">#ligne complète de commentaire</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#une affectation: commentaire en fin de ligne</span>
 </pre></div>
 </div>
 <p><strong>NB:</strong> Le commentaire multi-ligne n&#8217;existe pas en Python</p>
@@ -317,7 +317,7 @@ Hello world!
 In [2]:
 </pre></div>
 </div>
-<p>A l&#8217;heure actuelle (fin 2016) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les paquets python3 et ipython3 qui peuvent cohabiter avec la version par défaut (<a class="reference external" href="https://www.python.org/dev/peps/pep-0394/">PEP 394</a>).</p>
+<p>A l&#8217;heure actuelle (juin 2017) les principales distributions Linux intègrent toujours Python 2.7.x préinstallé mais proposent en option les paquets python3 et ipython3 qui peuvent cohabiter avec la version par défaut (<a class="reference external" href="https://www.python.org/dev/peps/pep-0394/">PEP 394</a>).</p>
 <div class="highlight-python"><div class="highlight"><pre>$ python3
 Python 3.4.2 (default, Jul  9 2015, 17:24:30)
 [GCC 5.1.1 20150618 (Red Hat 5.1.1-4)] on linux
@@ -352,7 +352,7 @@ Hello world!
 <div class="section" id="le-role-de-l-indentation">
 <h3>Le rôle de l&#8217;indentation<a class="headerlink" href="#le-role-de-l-indentation" title="Permalink to this headline">¶</a></h3>
 <p>L&#8217;indentation détermine les blocs d&#8217;instructions, au même titre que les accolades en Java et C/C++. Par exemple, une tentative d&#8217;écrire une boucle sans indentation se soldera par une erreur :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># tentative d&#39;écrire une boucle sans indentation:</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1"># tentative d&#39;écrire une boucle sans indentation:</span>
 <span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
 <span class="gp">... </span><span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="go">File &quot;&lt;stdin&gt;&quot;, line 3</span>
@@ -361,8 +361,8 @@ Hello world!
 <span class="go">IndentationError: expected an indented block</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c">#...et avec indentation:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># &quot;Readability counts.&quot; (le Zen)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1">#...et avec indentation:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;Readability counts.&quot; (le Zen)</span>
 <span class="gp">... </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]:</span>
 <span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">...</span>
@@ -386,7 +386,7 @@ $
 </div>
 <p><strong>Sous Linux</strong>, ou tout autre environnement &#8220;UNIX-like&#8221;, on peut rendre le fichier directement exécutable (sans avoir à le passer en argument à l&#8217;exécutable <em>python</em>):</p>
 <p>Pour cela, la première ligne du fichier doit être:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
 </pre></div>
 </div>
 <p>Le droits sur le fichiers devront être positionnés en conséquence, par exemple, pour un droit d&#8217;exécution réservé au propriétaire du fichier:</p>
@@ -401,7 +401,7 @@ $
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -433,7 +433,7 @@ $
   <h4>Next topic</h4>
   <p class="topless"><a href="liens.html"
                         title="next chapter">Quelques liens utiles</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -450,7 +450,7 @@ $
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -462,7 +462,7 @@ $
         <li class="right" >
           <a href="license.html" title="Licence"
              >previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
 <div class="footer" style="max-height: 10px">

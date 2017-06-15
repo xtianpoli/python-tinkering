@@ -8,7 +8,7 @@
     
     <title>Les fonctions &mdash; Introduction à la programmation en Python</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
     <link rel="next" title="Concepts avancés" href="avances.html" />
     <link rel="prev" title="Modules et paquets" href="modules.html" /> 
   </head>
-  <body>
+  <body role="document">
    <!--  add javascript -->
    
    <script src="clipboard.min.js"></script>
@@ -39,7 +39,7 @@
      })();
    </script>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -51,14 +51,14 @@
         <li class="right" >
           <a href="modules.html" title="Modules et paquets"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="les-fonctions">
 <h1>Les fonctions<a class="headerlink" href="#les-fonctions" title="Permalink to this headline">¶</a></h1>
@@ -69,7 +69,8 @@
 <div class="section" id="une-fonction-tres-simple">
 <h3>Une fonction très simple<a class="headerlink" href="#une-fonction-tres-simple" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
 </pre></div>
 </div>
 <p>Premières remarques:</p>
@@ -79,11 +80,11 @@
 <li>Le nom introduit avec <em>def</em>, le mot <em>say_hi</em>, est une <em>variable</em> comme une autre, référençant un objet de type <em>function</em>.</li>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">say_hi</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hi {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
 <span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span><span class="p">(</span><span class="s">&#39;Mom&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span><span class="p">(</span><span class="s1">&#39;Mom&#39;</span><span class="p">)</span>
 <span class="go">Hi Mom!</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span> <span class="c"># est une variable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">say_hi</span> <span class="c1"># est une variable</span>
 <span class="go">&lt;function say_hi at 0x7f23515985f0&gt;</span>
 </pre></div>
 </div>
@@ -115,9 +116,9 @@ True
 </div>
 <p><strong>Astuce:</strong> Si la valeur de retour est une séquence (tuple, liste etc.), le résultat retourné peut être récupéré directement dans plusieurs variables (par <strong>unpacking</strong>) :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="c"># ...</span>
-<span class="gp">... </span>    <span class="c"># ...</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="c1"># ...</span>
+<span class="gp">... </span>    <span class="c1"># ...</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">f</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
@@ -186,6 +187,7 @@ print(polar_res)
     <span class="n">l_rect</span> <span class="o">=</span> <span class="p">[</span><span class="nb">complex</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lr</span><span class="p">,</span> <span class="n">lj</span><span class="p">)]</span>
     <span class="n">l_polar</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmath</span><span class="o">.</span><span class="n">polar</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">l_rect</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">l_rect</span><span class="p">,</span> <span class="n">l_polar</span>
+
 </pre></div>
 </div>
 </div>
@@ -242,8 +244,8 @@ L&#8217;exemple suivant illustre ce comportement avec une boucle <em>for</em> da
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">i</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
-    <span class="c"># end for</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;values in the context of f(): x={}, y={}, i={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+    <span class="c1"># end for</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;values in the context of f(): x={}, y={}, i={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
@@ -277,7 +279,7 @@ L&#8217;exemple suivant illustre ce comportement avec une boucle <em>for</em> da
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
 <span class="go">x=2</span>
@@ -309,7 +311,7 @@ UnboundLocalError: local variable &#39;x&#39; referenced before assignment
 <div class="section" id="l-instruction-global">
 <h3>L&#8217;instruction <strong>global</strong><a class="headerlink" href="#l-instruction-global" title="Permalink to this headline">¶</a></h3>
 <p>La sémantique de cette instruction rappelle les déclarations de variables des autres langages.</p>
-<p>Appelée à l&#8217;intérieur d&#8217;une fonction, elle prends la forme <tt class="docutils literal"><span class="pre">global</span> <span class="pre">var1[,var2][,...]</span></tt> et elle indique à l&#8217;interpréteur que les variables var1, var2, ... font partie du contexte global:</p>
+<p>Appelée à l&#8217;intérieur d&#8217;une fonction, elle prends la forme <code class="docutils literal"><span class="pre">global</span> <span class="pre">var1[,var2][,...]</span></code> et elle indique à l&#8217;interpréteur que les variables var1, var2, ... font partie du contexte global:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">global</span> <span class="n">x</span>
@@ -349,20 +351,20 @@ UnboundLocalError: local variable &#39;x&#39; referenced before assignment
 <span class="n">z</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="k">def</span> <span class="nf">fun</span><span class="p">():</span>
-    <span class="c">#---------------------------</span>
+    <span class="c1">#---------------------------</span>
     <span class="n">y</span> <span class="o">=</span> <span class="mi">22</span>
     <span class="k">def</span> <span class="nf">fun2</span><span class="p">():</span>
-        <span class="c">#-----------------------</span>
+        <span class="c1">#-----------------------</span>
         <span class="n">z</span> <span class="o">=</span> <span class="mi">333</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;y={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;z={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;True={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
-        <span class="c">#-----------------------</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;x={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;y={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;z={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;True={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">True</span><span class="p">))</span>
+        <span class="c1">#-----------------------</span>
     <span class="n">fun2</span><span class="p">()</span>
-    <span class="c">#---------------------------</span>
+    <span class="c1">#---------------------------</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">fun</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -426,8 +428,8 @@ global: y=2
 <p>Cette instruction à été introduite avec la version 3 pour répondre au besoin illustré précédemment.</p>
 <p>La résolution des noms, aussi bien pour l&#8217;affectation que pour le référencement, se fait suivant l&#8217;étape 2 (seulement) du processus décrit précédemment pour le référencement des variables locales.</p>
 <p>Ainsi, si la variable n&#8217;est pas trouvée dans un des blocs <strong>def</strong> qui englobent la fonction contenant la déclaration <strong>nonlocal</strong>, une erreur de syntaxe se produit (même si la variable existe dans le contexte global!)</p>
-<div class="section" id="id1">
-<h4>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="experience">
+<h4>Expérience<a class="headerlink" href="#experience" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: varscope.py</span>
@@ -438,36 +440,36 @@ global: y=2
 <span class="sd">Faites la même chose pour f2()</span>
 <span class="sd">Expliquez les résultats.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="c">#</span>
-<span class="c"># Cas 1</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># Cas 1</span>
+<span class="c1">#</span>
 
-<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
 
 <span class="k">def</span> <span class="nf">f1</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">v</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;abc&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
 <span class="n">f1</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
     
 
-<span class="c">#</span>
-<span class="c"># Cas 2</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># Cas 2</span>
+<span class="c1">#</span>
 
-<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
 
 <span class="k">def</span> <span class="nf">f2</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">v</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
-    <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">v</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>    
 <span class="n">f2</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
@@ -479,36 +481,36 @@ global: y=2
 <span class="sd">référencé par la variable v :</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="c">#</span>
-<span class="c"># Cas 1</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># Cas 1</span>
+<span class="c1">#</span>
 
-<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
 
 <span class="k">def</span> <span class="nf">f1</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">v</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="s">&quot;abc&quot;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;abc&quot;</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v, id(v) avant l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
 <span class="n">f1</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v, id(v) après l&#39;appel de f1()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
     
 
-<span class="c">#</span>
-<span class="c"># Cas 2</span>
-<span class="c">#</span>
+<span class="c1">#</span>
+<span class="c1"># Cas 2</span>
+<span class="c1">#</span>
 
-<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="s1">&#39;x&#39;</span><span class="p">:(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
 
 <span class="k">def</span> <span class="nf">f2</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">v</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">v</span>
-    <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">v</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v, id(v) avant l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>    
 <span class="n">f2</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;v, id(v) après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;v, id(v) après l&#39;appel de f2()&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> 
 </pre></div>
 </div>
 </div>
@@ -622,7 +624,9 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">trunc</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">trunc</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">a</span> <span class="o">//</span> <span class="n">b</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c"># en V3, inutile de convertir a en float</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c1"># en V3, inutile de convertir a en float</span>
+
+
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">div</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
@@ -659,22 +663,22 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <li>Si l&#8217;argument is_admin est vrai, l&#8217;utilisateur sera associé en plus au groupe &#8216;admin&#8217; qui donne des privilèges élevés. Ce groupe sera ajouté à la liste des groupes, qu&#8217;elle soit implicite ou explicite.</li>
 </ul>
 <p>Avec l&#8217;implémentation suivante, les choses ne se passent pas comme prévu:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">surname</span><span class="p">,</span> <span class="n">given_name</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;lambda&#39;</span><span class="p">]):</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_user</span><span class="p">(</span><span class="n">surname</span><span class="p">,</span> <span class="n">given_name</span><span class="p">,</span> <span class="n">is_admin</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    - par défaut, tout le monde appartient au groupe &#39;&#39;lambda&#39;</span>
 <span class="sd">    - les admins sont aussi dans le groupe &#39;admin&#39; qui donne des</span>
 <span class="sd">    privilèges élevés</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">is_admin</span><span class="p">:</span> <span class="c"># c&#39;est un admin</span>
-        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;admin&#39;</span><span class="p">)</span> <span class="c"># ajout du groupe &#39;admin&#39;</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s">&#39;sn&#39;</span><span class="p">:</span> <span class="n">surname</span><span class="p">,</span> <span class="s">&#39;gn&#39;</span><span class="p">:</span> <span class="n">given_name</span><span class="p">,</span> <span class="s">&#39;groups&#39;</span><span class="p">:</span> <span class="n">groups</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">is_admin</span><span class="p">:</span> <span class="c1"># c&#39;est un admin</span>
+        <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">)</span> <span class="c1"># ajout du groupe &#39;admin&#39;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span> <span class="n">surname</span><span class="p">,</span> <span class="s1">&#39;gn&#39;</span><span class="p">:</span> <span class="n">given_name</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="n">groups</span><span class="p">}</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Poli&#39;</span><span class="p">,</span><span class="s">&#39;Christian&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c"># utilisateur sans privilèges</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;Poli&#39;</span><span class="p">,</span><span class="s1">&#39;Christian&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c1"># utilisateur sans privilèges</span>
 <span class="go">{&#39;gn&#39;: &#39;Christian&#39;, &#39;sn&#39;: &#39;Poli&#39;, &#39;groups&#39;: [&#39;lambda&#39;]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Grand&#39;</span><span class="p">,</span><span class="s">&#39;Gourou&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span> <span class="c"># création d&#39;un utilisateur admin</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;Grand&#39;</span><span class="p">,</span><span class="s1">&#39;Gourou&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># création d&#39;un utilisateur admin</span>
 <span class="go">{&#39;gn&#39;: &#39;Gourou&#39;, &#39;sn&#39;: &#39;Grand&#39;, &#39;groups&#39;: [&#39;lambda&#39;, &#39;admin&#39;]}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s">&#39;Lagaffe&#39;</span><span class="p">,</span><span class="s">&#39;Gaston&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c"># oups! lambda avec privileges admin!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;Lagaffe&#39;</span><span class="p">,</span><span class="s1">&#39;Gaston&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span> <span class="c1"># oups! lambda avec privileges admin!</span>
 <span class="go">{&#39;gn&#39;: &#39;Gaston&#39;, &#39;sn&#39;: &#39;Lagaffe&#39;, &#39;groups&#39;: [&#39;lambda&#39;, &#39;admin&#39;]}</span>
 </pre></div>
 </div>
@@ -708,10 +712,11 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <p><strong>NB :</strong> Dans une signature de fonction il existe (au plus) un seul paramètre &#8220;étoile&#8221;.</p>
 <p>Il permet d&#8217;inclure dans un appel, à la suite des arguments positionnels correspondants aux paramètres simples, un nombre arbitraire d&#8217;arguments (toujours positionnels) qui seront accessibles, dans le bon ordre, en tant que membres d&#8217;un tuple désigné par la variable dont le nom est précédée par &#8220;*&#8221;:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -743,7 +748,7 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <li>Fournir des valeurs explicites pour <strong>tous</strong> ces paramètres simples, qu&#8217;ils soient obligatoires ou facultatifs.</li>
 </ul>
 </div>
-<p><strong>NB:</strong> Ce paramètre est similaire au paramètre dit &#8220;elliptique&#8221; (...) présent dans la signature de la fonction <strong>printf</strong> et des autres fonctions dites &#8220;variadiques&#8221;, présentes dans certaines bibliothèques du langage <strong>C</strong>, du <strong>R</strong> etc.</p>
+<p><strong>NB:</strong> Ce paramètre joue le même rôle que la notation elliptique (...) utilisée dans la signature de la fonction <strong>printf</strong> et des autres fonctions dites &#8220;variadiques&#8221;, présentes dans certaines bibliothèques du langage <strong>C</strong>, du <strong>R</strong> etc.</p>
 </div>
 <div class="section" id="le-parametre-variadique-a-valeurs-nommees-double-etoile">
 <h3>Le paramètre variadique à valeurs nommées (double étoile)<a class="headerlink" href="#le-parametre-variadique-a-valeurs-nommees-double-etoile" title="Permalink to this headline">¶</a></h3>
@@ -752,11 +757,12 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <p>Il permet d&#8217;inclure dans un appel un nombre arbitraire d&#8217;arguments &#8220;nom=valeur&#8221; (keyword args).</p>
 <p>Les noms des variables correspondant aux paramètres simples qui le précèdent dans la signature ne peuvent pas servir de clé pour ses arguments pour des raisons évidentes.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;kwargs:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;b:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;c:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;args:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;kwargs:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,[],</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
@@ -774,7 +780,7 @@ var = func(val_1, val_2, ..., val_n, t1, t2, ..., t_m, k_1=v_1, k_2=v_2, ..., k_
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>Dans le dernier exemple on voit que les arguments &#8220;nom=valeur&#8221; correspondant au paramètres simples se mélangent sans restriction avec les arguments &#8220;nom=valeur&#8221; du paramètre <tt class="docutils literal"><span class="pre">kwargs</span></tt>.</p>
+<p>Dans le dernier exemple on voit que les arguments &#8220;nom=valeur&#8221; correspondant au paramètres simples se mélangent sans restriction avec les arguments &#8220;nom=valeur&#8221; du paramètre <code class="docutils literal"><span class="pre">kwargs</span></code>.</p>
 <p><strong>NB:</strong> La fonction dict(**kwargs), déjà utilisée précédemment pour définir des dictionnaires, est un exemple d&#8217;utilisation de ce paramètre.</p>
 </div>
 <div class="section" id="arguments-exclusivement-nommes-keyword-only-args-python3-x-seulement">
@@ -836,7 +842,7 @@ y:12
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    prend exactement 4 args</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;f({},{},{},{})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;f({},{},{},{})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
 
 
 <span class="k">def</span> <span class="nf">f_call</span><span class="p">():</span>
@@ -853,6 +859,7 @@ y:12
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <p>Sans surprise, l&#8217;appel suivant de <em>f_call()</em> va échouer:</p>
@@ -870,8 +877,8 @@ TypeError: f() takes exactly 4 arguments (1 given)
 </pre></div>
 </div>
 <p>Les expressions *nom **nom (appelées &#8220;varargs&#8221; en jargon Python) sont utiles pour construire des appels de fonctions dynamiquement, par programme.</p>
-<div class="section" id="id2">
-<h4>Exercice<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id1">
+<h4>Exercice<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre>&quot;&quot;&quot;
 fichier: stats.py
@@ -922,15 +929,15 @@ La valeur retournée est un dictionnaire :
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span>
 
 <span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
@@ -981,26 +988,26 @@ La valeur retournée est un dictionnaire :
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;population&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="s">&#39;median&#39;</span><span class="p">}</span>
+    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;population&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;variance&#39;</span><span class="p">,</span> <span class="s1">&#39;stdev&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">}</span>
     <span class="n">kwargs_kwset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">)))</span>
-    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
     
-    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span>
 
 <span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
@@ -1041,8 +1048,8 @@ get_stats([1.0, 2.0, 3.0])
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h4>Exercice (suite)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Exercice (suite)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="myexercice container">
 <div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">fichier: stats3.py</span>
@@ -1078,28 +1085,28 @@ get_stats([1.0, 2.0, 3.0])
 <span class="sd">    Solution compatible Python 2.7.x et 3.x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot read data argument&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot read data argument&quot;</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;population&#39;</span><span class="p">,</span> <span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="s">&#39;median&#39;</span><span class="p">}</span>
+    <span class="n">auth_kwset</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;population&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;variance&#39;</span><span class="p">,</span> <span class="s1">&#39;stdev&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">}</span>
     <span class="n">kwargs_kwset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unauthorized key(s): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">kwargs_kwset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">auth_kwset</span><span class="p">)))</span>
-    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;population&#39;</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">variance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;variance&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">stdev</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stdev&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
     
-    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;population&#39;</span><span class="p">:</span><span class="n">population</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">mean</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">variance</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pvariance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">stdev</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;stdev&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">pstdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">population</span> <span class="k">else</span> <span class="n">st</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">median</span><span class="p">:</span>
-        <span class="n">res</span><span class="p">[</span><span class="s">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span>
 
 <span class="n">get_stats</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
@@ -1188,26 +1195,26 @@ get_stats([1.0, 2.0, 3.0])
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Imprime un tableau de valeurs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">nb_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="c"># à cause du  first_hdr</span>
+    <span class="n">nb_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># à cause du  first_hdr</span>
     <span class="n">size_col</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">nb_pipes</span> <span class="o">=</span> <span class="n">nb_cols</span> <span class="o">-</span><span class="mi">1</span> <span class="c"># barres verticales entre cols (sans les extremités)</span>
+    <span class="n">nb_pipes</span> <span class="o">=</span> <span class="n">nb_cols</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># barres verticales entre cols (sans les extremités)</span>
     <span class="n">nb_minus</span> <span class="o">=</span> <span class="n">size_col</span><span class="o">*</span><span class="n">nb_cols</span> <span class="o">+</span> <span class="n">nb_pipes</span>
-    <span class="c"># ligne de &quot;-&quot;, sans les extremités:</span>
-    <span class="n">minus_line</span> <span class="o">=</span> <span class="n">nb_minus</span> <span class="o">*</span> <span class="s">&#39;-&#39;</span>
-    <span class="c"># avec des &quot;+&quot; aux extremités:</span>
-    <span class="n">horizontal_line</span> <span class="o">=</span> <span class="s">&#39;+{}+&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minus_line</span><span class="p">)</span>
-    <span class="c"># i.e. horizontal_line: +-------------------------------+</span>
-    <span class="n">row_template</span> <span class="o">=</span> <span class="s">&#39;|{:&lt;10}&#39;</span><span class="o">*</span><span class="n">nb_cols</span> <span class="c"># i.e. |{:10}|{:10}|{:10}....</span>
-    <span class="n">row_template</span> <span class="o">+=</span><span class="s">&#39;|&#39;</span> <span class="c"># i.e. |{:10}|{:10}...|</span>
+    <span class="c1"># ligne de &quot;-&quot;, sans les extremités:</span>
+    <span class="n">minus_line</span> <span class="o">=</span> <span class="n">nb_minus</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span>
+    <span class="c1"># avec des &quot;+&quot; aux extremités:</span>
+    <span class="n">horizontal_line</span> <span class="o">=</span> <span class="s1">&#39;+{}+&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">minus_line</span><span class="p">)</span>
+    <span class="c1"># i.e. horizontal_line: +-------------------------------+</span>
+    <span class="n">row_template</span> <span class="o">=</span> <span class="s1">&#39;|{:&lt;10}&#39;</span><span class="o">*</span><span class="n">nb_cols</span> <span class="c1"># i.e. |{:10}|{:10}|{:10}....</span>
+    <span class="n">row_template</span> <span class="o">+=</span><span class="s1">&#39;|&#39;</span> <span class="c1"># i.e. |{:10}|{:10}...|</span>
     <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">row_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_hdr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span> <span class="c">#print headers</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">row_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">first_hdr</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span> <span class="c1">#print headers</span>
     <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">print</span><span class="p">(</span><span class="n">row_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">row</span><span class="p">))</span>
     <span class="k">print</span><span class="p">(</span><span class="n">horizontal_line</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">print_table</span><span class="p">(</span><span class="s">&#39;Col1&#39;</span><span class="p">,</span> <span class="s">&#39;Col2&#39;</span><span class="p">,</span> <span class="s">&#39;Col3&#39;</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="p">[</span><span class="mi">123</span><span class="p">,</span><span class="mi">456</span><span class="p">],</span> <span class="n">yy</span><span class="o">=</span><span class="p">[</span><span class="mi">789</span><span class="p">,</span><span class="mi">234</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">print_table</span><span class="p">(</span><span class="s1">&#39;Col1&#39;</span><span class="p">,</span> <span class="s1">&#39;Col2&#39;</span><span class="p">,</span> <span class="s1">&#39;Col3&#39;</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="p">[</span><span class="mi">123</span><span class="p">,</span><span class="mi">456</span><span class="p">],</span> <span class="n">yy</span><span class="o">=</span><span class="p">[</span><span class="mi">789</span><span class="p">,</span><span class="mi">234</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1223,7 +1230,7 @@ get_stats([1.0, 2.0, 3.0])
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">trunc</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">a</span> <span class="o">//</span> <span class="n">b</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c"># en V3, inutile de convertir a en float</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="n">b</span> <span class="c1"># en V3, inutile de convertir a en float</span>
 </pre></div>
 </div>
 <p>Tous le formats string sont acceptés, le plus courant étant le format multi-ligne (triple guillemet).</p>
@@ -1250,7 +1257,7 @@ get_stats([1.0, 2.0, 3.0])
 <span class="go">&lt;type &#39;function&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">moyenne</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
 <span class="go">5.5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c"># même chose avec évaluation directe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="c1"># même chose avec évaluation directe</span>
 <span class="go">5.5</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">module</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span>
@@ -1258,7 +1265,7 @@ get_stats([1.0, 2.0, 3.0])
 <span class="go">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
 <span class="go">7</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span><span class="p">)(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="c"># même chose avec évaluation directe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span><span class="p">)(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># même chose avec évaluation directe</span>
 <span class="go">5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="n">x</span><span class="p">)(</span><span class="mi">7</span><span class="p">)</span>
 <span class="go">7</span>
@@ -1268,8 +1275,8 @@ get_stats([1.0, 2.0, 3.0])
 <div class="note admonition">
 <p class="first admonition-title">Important</p>
 <blockquote class="last">
-<div><p>L&#8217;écriture <tt class="docutils literal"><span class="pre">moyenne</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">a,b:</span> <span class="pre">(a+b)/2.0</span></tt> a été utilisée dans l&#8217;illustration précédente seulement pour montrer que <em>moyenne</em> est bien une fonction.</p>
-<p>Dans le développement, les écritures de la forme <tt class="docutils literal"><span class="pre">foo</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">x,y:...</span></tt> sont bannies par la <strong>PEP8</strong> et sans intérêt pratique. Si on a besoin  d&#8217;une &#8220;fonction-expression&#8221;, non-anonyme, l&#8217;écriture préconisée (pour l&#8217;illustration précédente) est <tt class="docutils literal"><span class="pre">def</span> <span class="pre">moyenne(a,</span> <span class="pre">b):</span>&nbsp; <span class="pre">return</span> <span class="pre">(a+b)/2.0</span></tt>.</p>
+<div><p>L&#8217;écriture <code class="docutils literal"><span class="pre">moyenne</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">a,b:</span> <span class="pre">(a+b)/2.0</span></code> a été utilisée dans l&#8217;illustration précédente seulement pour montrer que <em>moyenne</em> est bien une fonction.</p>
+<p>Dans le développement, les écritures de la forme <code class="docutils literal"><span class="pre">foo</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">x,y:...</span></code> sont bannies par la <strong>PEP8</strong> et sans intérêt pratique. Si on a besoin  d&#8217;une &#8220;fonction-expression&#8221;, non-anonyme, l&#8217;écriture préconisée (pour l&#8217;illustration précédente) est <code class="docutils literal"><span class="pre">def</span> <span class="pre">moyenne(a,</span> <span class="pre">b):</span>&nbsp; <span class="pre">return</span> <span class="pre">(a+b)/2.0</span></code>.</p>
 </div></blockquote>
 </div>
 <p>Différences entre les structures <strong>lambda</strong> et <strong>def</strong>:</p>
@@ -1300,7 +1307,7 @@ get_stats([1.0, 2.0, 3.0])
 <span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">L</span>
 <span class="go">[0, 1, 2, 5, 8]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span> <span class="c"># ceci n&#39;est pas une séquence...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">set_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># ceci n&#39;est pas une séquence...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">set_</span><span class="p">)</span>
 <span class="go">[0, 1, 2, 5, 8]</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -1330,29 +1337,30 @@ sequence.sort([cmp[, key[, reverse]]])
 <div class="section" id="illustration">
 <h3>Illustration:<a class="headerlink" href="#illustration" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">us_presidents</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}]</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;George&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Washington&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Adams&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;Thomas&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Jefferson&#39;</span><span class="p">}]</span>
 
 <span class="k">def</span> <span class="nf">cmp_sn</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">elif</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]:</span>
+    <span class="k">elif</span> <span class="n">p1</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="mi">0</span>
+
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># tri avec cmp=cmp_sn</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c1"># tri avec cmp=cmp_sn</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="nb">cmp</span><span class="o">=</span><span class="n">cmp_sn</span><span class="p">)</span>
 <span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même chose avec une fonction lambda (assez illisible...)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="nb">cmp</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span>  <span class="n">p1</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># même chose avec une fonction lambda (assez illisible...)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="nb">cmp</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">p1</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">p2</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span>  <span class="n">p1</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">p2</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># key + lambda (bien adaptée car très simple)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># key + lambda (bien adaptée car très simple)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">])</span>
 <span class="go">[{&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même chose avec reverse</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;sn&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># même chose avec reverse</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">us_presidents</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s1">&#39;sn&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="go">[{&#39;gn&#39;: &#39;George&#39;, &#39;sn&#39;: &#39;Washington&#39;}, {&#39;gn&#39;: &#39;Thomas&#39;, &#39;sn&#39;: &#39;Jefferson&#39;}, {&#39;gn&#39;: &#39;John&#39;, &#39;sn&#39;: &#39;Adams&#39;}]</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -1389,7 +1397,7 @@ sequence.sorted([key][, reverse])
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -1408,7 +1416,7 @@ sequence.sorted([key][, reverse])
 <li><a class="reference internal" href="#l-instruction-global">L&#8217;instruction <strong>global</strong></a></li>
 <li><a class="reference internal" href="#la-resolution-des-noms">La résolution des noms</a></li>
 <li><a class="reference internal" href="#l-instruction-nonlocal">L&#8217;instruction <strong>nonlocal</strong></a><ul>
-<li><a class="reference internal" href="#id1">Exercice</a></li>
+<li><a class="reference internal" href="#experience">Expérience</a></li>
 </ul>
 </li>
 </ul>
@@ -1422,9 +1430,9 @@ sequence.sorted([key][, reverse])
 <li><a class="reference internal" href="#le-parametre-variadique-a-valeurs-nommees-double-etoile">Le paramètre variadique à valeurs nommées (double étoile)</a></li>
 <li><a class="reference internal" href="#arguments-exclusivement-nommes-keyword-only-args-python3-x-seulement">Arguments exclusivement nommés (keyword-only args, Python3.x seulement)</a></li>
 <li><a class="reference internal" href="#les-var-et-var-dans-les-appels-de-fonctions">Les *var et **var dans les appels de fonctions</a><ul>
-<li><a class="reference internal" href="#id2">Exercice</a></li>
+<li><a class="reference internal" href="#id1">Exercice</a></li>
 <li><a class="reference internal" href="#exercice-suite">Exercice (suite)</a></li>
-<li><a class="reference internal" href="#id3">Exercice (suite)</a></li>
+<li><a class="reference internal" href="#id2">Exercice (suite)</a></li>
 <li><a class="reference internal" href="#exercice-2">Exercice [2]</a></li>
 </ul>
 </li>
@@ -1453,7 +1461,7 @@ sequence.sorted([key][, reverse])
   <h4>Next topic</h4>
   <p class="topless"><a href="avances.html"
                         title="next chapter">Concepts avancés</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1470,7 +1478,7 @@ sequence.sorted([key][, reverse])
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1482,7 +1490,7 @@ sequence.sorted([key][, reverse])
         <li class="right" >
           <a href="modules.html" title="Modules et paquets"
              >previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
 <div class="footer" style="max-height: 10px">

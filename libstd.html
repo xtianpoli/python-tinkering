@@ -8,7 +8,7 @@
     
     <title>La bibliothèque standard en bref &mdash; Introduction à la programmation en Python</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/custom_style.css" type="text/css" />
     
@@ -24,12 +24,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Introduction à la programmation en Python" href="index.html" />
     <link rel="next" title="Les tests" href="tests.html" />
     <link rel="prev" title="L’approche objet" href="objet.html" /> 
   </head>
-  <body>
+  <body role="document">
    <!--  add javascript -->
    
    <script src="clipboard.min.js"></script>
@@ -39,7 +39,7 @@
      })();
    </script>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -51,14 +51,14 @@
         <li class="right" >
           <a href="objet.html" title="L’approche objet"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="la-bibliotheque-standard-en-bref">
 <h1>La bibliothèque standard en bref<a class="headerlink" href="#la-bibliotheque-standard-en-bref" title="Permalink to this headline">¶</a></h1>
@@ -119,8 +119,8 @@
 </li>
 <li><strong>filter(f, iterable_in)</strong> : applique la fonction <em>f</em> à tous les éléments de <em>iterable_in</em> et renvoie un nouvel itérable construit à partir des éléments du premier pour lesquels <em>f</em> renvoie <em>True</em></li>
 <li><strong>reduce(f, iterable_in[,init])</strong> : applique la fonction <em>f</em> (à deux arguments) à tous les items de <em>iterable_in</em> de manière cumulative, de gauche à droite:<ul>
-<li>pour [1,2,3,4] le résultat sera équivalent à  <tt class="docutils literal"><span class="pre">f(f(f(1,2),3),4)</span></tt></li>
-<li>Si init est fourni, il sera utilisé dans le processus comme l&#8217;élément le plus à gauche. pour init=99 l&#8217;équivalent en terme de résultat sera <tt class="docutils literal"><span class="pre">f(f(f(f(99,1),2),3),4)</span></tt></li>
+<li>pour [1,2,3,4] le résultat sera équivalent à  <code class="docutils literal"><span class="pre">f(f(f(1,2),3),4)</span></code></li>
+<li>Si init est fourni, il sera utilisé dans le processus comme l&#8217;élément le plus à gauche. pour init=99 l&#8217;équivalent en terme de résultat sera <code class="docutils literal"><span class="pre">f(f(f(f(99,1),2),3),4)</span></code></li>
 <li><strong>NB:</strong> En version 3, la fonction <em>reduce</em> a été déplacée dans le module <em>functools</em> (cf. <a class="reference external" href="http://docs.python.org/3.0/whatsnew/3.0.html">http://docs.python.org/3.0/whatsnew/3.0.html</a>)</li>
 </ul>
 </li>
@@ -135,21 +135,21 @@
 <h4>La fonction <em>map</em><a class="headerlink" href="#la-fonction-map" title="Permalink to this headline">¶</a></h4>
 <p>Illustrée via un exemple simple et mise en perspective avec une écriture équivalente avec des itérables en intension :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">lst</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;George&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Washington&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;John&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Adams&#39;</span><span class="p">},</span>
-    <span class="p">{</span><span class="s">&#39;gn&#39;</span><span class="p">:</span><span class="s">&#39;Thomas&#39;</span><span class="p">,</span><span class="s">&#39;sn&#39;</span><span class="p">:</span><span class="s">&#39;Jefferson&#39;</span><span class="p">}</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;George&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Washington&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Adams&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;gn&#39;</span><span class="p">:</span><span class="s1">&#39;Thomas&#39;</span><span class="p">,</span><span class="s1">&#39;sn&#39;</span><span class="p">:</span><span class="s1">&#39;Jefferson&#39;</span><span class="p">}</span>
     <span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">entry</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    nom prénom</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span><span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension et générateurs-expression:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># même traitement avec des listes en intension et générateurs-expression:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
 <span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">full_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
@@ -158,39 +158,42 @@
 </pre></div>
 </div>
 <p>Les fonctions anonymes sont souvent employées pour définir des transformations à appliquer sur tous les items d&#8217;un itérable, via une fonction d&#8217;ordre supérieur comme <em>map()</em> :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># même traitement avec des listes en intension (pas besoin de lambda):</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># même traitement avec des listes en intension (pas besoin de lambda):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
 <span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;{0[gn]} {0[sn]}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[&#39;George Washington&#39;, &#39;John Adams&#39;, &#39;Thomas Jefferson&#39;]</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p><strong>Important :</strong> Nous remarquerons dans l&#8217;exemple précédent que la fonction anonyme devient inutile dans l&#8217;écriture &#8220;en intension&#8221; !</p>
 <p><strong>Remarque:</strong> <em>map()</em> permet de travailler en parallèle sur plusieurs itérables. Pour faire la même chose avec les itérables en intension on va utiliser la fonction <strong>zip()</strong>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre>
+
+<span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
 
 <span class="n">lst1</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">lst2</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">prod</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># grace au module &quot;operator&quot; on évite d&#39;écrire des fonctions superflues (comme &quot;prod&quot;) :</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># grace au module &quot;operator&quot; on évite d&#39;écrire des fonctions superflues (comme &quot;prod&quot;) :</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">operator</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># avec des listes en intension:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
 <span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ou encore:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ou encore:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">)]</span>
 <span class="go">[7, 16, 27, 40, 55]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># générateur-expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># générateur-expression</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">prod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span>  <span class="nb">zip</span><span class="p">(</span><span class="n">lst1</span><span class="p">,</span> <span class="n">lst2</span><span class="p">));</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[7, 16, 27, 40, 55]</span>
 </pre></div>
@@ -203,7 +206,7 @@
 <span class="go">[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="n">lst</span><span class="p">);</span> <span class="nb">list</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 <span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># avec des listes en intension:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># avec des listes en intension:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
 <span class="go">[1, 2, 3, 4, 5, 6, 7]</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -215,7 +218,7 @@
 <p><strong>Rappel :</strong> cette fonction à été déplacée dans le module <strong>functools</strong> dans <strong>Python 3.x</strong></p>
 <dl class="docutils">
 <dt>::</dt>
-<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span> <span class="c"># en Python 3.x</span>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span> <span class="c1"># en Python 3.x</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="go">[1, 2, 3, 4]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
@@ -223,7 +226,7 @@
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="nb">sum</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># factorielle de 5:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># factorielle de 5:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 <span class="go">120</span>
@@ -271,24 +274,24 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 
 <span class="nd">@singledispatch</span>
 <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;What is this? &quot;</span><span class="p">,</span><span class="n">arg</span> <span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;What is this? &quot;</span><span class="p">,</span><span class="n">arg</span> <span class="p">)</span>
 
 <span class="nd">@fun.register</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;i: &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot; elt: &quot;</span><span class="p">,</span> <span class="n">elt</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;i: &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot; elt: &quot;</span><span class="p">,</span> <span class="n">elt</span><span class="p">)</span>
 
 <span class="nd">@fun.register</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;key: &quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s">&quot; value: &quot;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;key: &quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot; value: &quot;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
 
-<span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">))</span>
+<span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">))</span>
 
 <span class="n">fun</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s">&quot;Python&quot;</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">))</span>
 <span class="go">i:  0  elt:  P</span>
 <span class="go">i:  1  elt:  y</span>
 <span class="go">i:  2  elt:  t</span>
@@ -299,7 +302,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <span class="go">key:  b  value:  5</span>
 <span class="go">key:  a  value:  1</span>
 <span class="go">key:  c  value:  6</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
 <span class="go">What is this?  abc</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -371,7 +374,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 </li>
 </ul>
 <p>En Python 3.x:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">closefd</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">opener</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">closefd</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">opener</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -381,7 +384,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <li><strong>x</strong> création uniquement, erreur si le fichier existe déjà.  <em>(nouveauté Python 3.3)</em></li>
 <li><strong>b</strong> : signification nouvelle car il implique que le résultat rendu sera de type <strong>bytes</strong> alors que par défaut (mode &#8220;texte&#8221;) le résultat est de type <strong>str</strong> ce qui signifie <strong>unicode</strong> en Python 3.x. En mode &#8220;texte&#8221;, l&#8217;encodage sera:<ul>
 <li>celui prévu par <em>encoding</em> s&#8217;il est défini</li>
-<li>celui fourni par <tt class="docutils literal"><span class="pre">locale.getpreferredencoding(False)</span></tt> dans le cas contraire</li>
+<li>celui fourni par <code class="docutils literal"><span class="pre">locale.getpreferredencoding(False)</span></code> dans le cas contraire</li>
 </ul>
 </li>
 <li><strong>t</strong> mode &#8220;texte&#8221; (par défaut)</li>
@@ -402,14 +405,14 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <li>opener : fonction utilisateur destiné à l&#8217;ouverture du fichier <em>(nouveauté Python 3.3)</em></li>
 </ul>
 <p><strong>Rappel:</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/tmp/fich.txt&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;some text&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/tmp/fich.txt&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;some text&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Est l&#8217;équivalent de:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/tmp/fich.txt&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/tmp/fich.txt&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;some text&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;some text&quot;</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">finally</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -427,7 +430,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <li>tell() fournit la position courante dans le fichier</li>
 </ul>
 <p>Exemple:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;/tmp/testfile.txt&quot;</span><span class="p">,</span><span class="s">&quot;r+&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/tmp/testfile.txt&quot;</span><span class="p">,</span><span class="s2">&quot;r+&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;01234567890123456789\n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -441,9 +444,9 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;xy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;xy&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;ab&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ab&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;01234ab78901234567xy\n&#39;</span>
@@ -460,11 +463,11 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <li>il donne au programme l&#8217;accès aux paramètres de l&#8217;interpréteur</li>
 </ul>
 <p>Le script suivant affiche les arguments de la ligne de commande:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="ch">#!/usr/bin/env python</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">arg</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{}: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">arg</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre>$ ./print_argv.py 66 abc
@@ -483,16 +486,16 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <span class="go">&#39;2.7.3 (default, Sep 26 2013, 20:03:06) \n[GCC 4.6.3]&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getdefaultencoding</span><span class="p">()</span>
 <span class="go">&#39;ascii&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span> <span class="c"># les modules chargés par l&#39;interpréteur</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span> <span class="c1"># les modules chargés par l&#39;interpréteur</span>
 <span class="go">{&#39;copy_reg&#39;: &lt;module &#39;copy_reg&#39; from &#39;/usr/lib/python2.7/copy_reg.pyc&#39;&gt;, ....}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
 <span class="go">[&#39;&#39;, &#39;/usr/lib/python2.7&#39;, &#39;/usr/lib/python2.7/plat-linux2&#39;, &#39;/usr/lib/python2.7/lib-tk&#39;, &#39;/usr/lib/python2.7/lib-old&#39;, &#39;/usr/lib/python2.7/lib-dynload&#39;, &#39;/usr/local/lib/python2.7/dist-packages&#39;, &#39;/usr/lib/python2.7/dist-packages&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Un message&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Un message&quot;</span><span class="p">)</span>
 <span class="go">Un message&gt;&gt;&gt; sys.stdout.write(&quot;Un autre message \n&quot;)</span>
 <span class="go">Un autre message</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Une erreur</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Une erreur</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="go">Une erreur</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># fin de l&#39;exécution</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># fin de l&#39;exécution</span>
 </pre></div>
 </div>
 </div>
@@ -504,7 +507,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 <p>Ce module contient un grand nombre de fonctions permettant l&#8217;interaction avec le système d&#8217;exploitation.</p>
 <div class="warning admonition">
 <p class="first admonition-title">Avertissement</p>
-<p class="last">Il est vivement déconseillé d&#8217;importer ce module par <tt class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></tt> car la fonction <em>os.open()</em> va se substituer à la primitive <em>open()</em>, avec un comportement différent. L&#8217;utilisation de l&#8217;importation simple <tt class="docutils literal"><span class="pre">import</span> <span class="pre">os</span></tt> évite ce problème.</p>
+<p class="last">Il est vivement déconseillé d&#8217;importer ce module par <code class="docutils literal"><span class="pre">from</span> <span class="pre">os</span> <span class="pre">import</span> <span class="pre">*</span></code> car la fonction <em>os.open()</em> va se substituer à la primitive <em>open()</em>, avec un comportement différent. L&#8217;utilisation de l&#8217;importation simple <code class="docutils literal"><span class="pre">import</span> <span class="pre">os</span></code> évite ce problème.</p>
 </div>
 <p>Pour illustrer quelques unes des fonctionnalités de ce module, une mise en perspective  d&#8217;opérations équivalentes réalisés en <em>shell</em> (bash) et en Python:</p>
 <p>Accès à l&#8217;environnement (variable <em>PATH</em>) en <em>bash</em>:</p>
@@ -513,7 +516,7 @@ On les a choisi pour les présenter brièvement car elles sont un peu &#8220;emb
 </pre></div>
 </div>
 <p>En Python:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PATH&#39;</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span>
 <span class="go">&#39;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games&#39;</span>
 </pre></div>
 </div>
@@ -532,15 +535,15 @@ poli@host:/tmp$
 </div>
 <p>L&#8217;équivalent en Python:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;/tmp/&#39;</span><span class="p">)</span> <span class="c"># &#39;cd /tmp&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;mkdir testpy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;cd testpy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c"># &#39;pwd&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span> <span class="c1"># &#39;cd /tmp&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;testpy&#39;</span><span class="p">)</span> <span class="c1"># &#39;mkdir testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;testpy&#39;</span><span class="p">)</span> <span class="c1"># &#39;cd testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c1"># &#39;pwd&#39;</span>
 <span class="go">&#39;/tmp/testpy&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">)</span>     <span class="c"># &#39;cd ..&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c"># &#39;pwd&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>     <span class="c1"># &#39;cd ..&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>        <span class="c1"># &#39;pwd&#39;</span>
 <span class="go">&#39;/tmp&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s">&#39;testpy&#39;</span><span class="p">)</span> <span class="c"># &#39;rmdir testpy&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="s1">&#39;testpy&#39;</span><span class="p">)</span> <span class="c1"># &#39;rmdir testpy&#39;</span>
 </pre></div>
 </div>
 <p>Autres manipulations simples sur des fichiers en <em>bash</em> :</p>
@@ -554,31 +557,31 @@ $ ls /tmp/test/
 </pre></div>
 </div>
 <p>Et leur équivalent en Python:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39; (&#39;ls&#39; -A plus précisément)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/tmp/test&quot;</span><span class="p">)</span> <span class="c1"># &#39;ls /tmp/test/&#39; (&#39;ls&#39; -A plus précisément)</span>
 <span class="go">[&#39;testpy.txt&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy.txt&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;mv /tmp/test/testpy.txt /tmp/test/testpy2.txt&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span> <span class="c"># &#39;ls /tmp/test/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;/tmp/test/testpy.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c1"># &#39;mv /tmp/test/testpy.txt /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/tmp/test/&quot;</span><span class="p">)</span> <span class="c1"># &#39;ls /tmp/test/&#39;</span>
 <span class="go">[&#39;testpy2.txt&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c"># &#39;rm /tmp/test/testpy2.txt&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/tmp/test/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;/tmp/test/testpy2.txt&quot;</span><span class="p">)</span> <span class="c1"># &#39;rm /tmp/test/testpy2.txt&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/tmp/test/&quot;</span><span class="p">)</span>
 <span class="go">[]</span>
 </pre></div>
 </div>
 <p>Autres fonctions utiles:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">&quot;dir1/dir2/.../cible&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;dir1/dir2/.../cible&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>L&#8217;effet de cette fonction est équivalent à celui de la commande (Linux/Unix) <tt class="docutils literal"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">...</span></tt> : elle crée le répertoire cible ainsi que tous les répertoires intermédiaires s&#8217;ils n&#8217;existent pas:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span><span class="p">)</span>
+<p>L&#8217;effet de cette fonction est équivalent à celui de la commande (Linux/Unix) <code class="docutils literal"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">...</span></code> : elle crée le répertoire cible ainsi que tous les répertoires intermédiaires s&#8217;ils n&#8217;existent pas:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/tmp/&quot;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/tmp/dir1&quot;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/tmp/dir1/dir2&quot;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/tmp/dir1/dir2/cible&quot;</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -606,7 +609,7 @@ $ ls /tmp/test/
 <ul>
 <li><p class="first">top-down :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">&lt;type &#39;generator&#39;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
@@ -615,12 +618,12 @@ $ ls /tmp/test/
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg&#39;, [&#39;EGG-INFO&#39;, &#39;httpproxy&#39;], [])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># etc...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># etc...</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">bottom-up :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">,</span><span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s2">&quot;/usr/local/lib/python2.7/dist-packages/&quot;</span><span class="p">,</span><span class="n">topdown</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 <span class="go">(&#39;/usr/local/lib/python2.7/dist-packages/django_http_proxy-0.3.2-py2.7.egg/EGG-INFO&#39;, [], [&#39;zip-safe&#39;, &#39;SOURCES.txt&#39;, &#39;PKG-INFO&#39;, &#39;dependency_links.txt&#39;, &#39;top_level.txt&#39;])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
@@ -647,34 +650,34 @@ $ ls /tmp/test/
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 <span class="go">&#39;/usr/lib/python2.7&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os.path</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&quot;code.py&quot;</span><span class="p">)</span> <span class="c"># construit le chemin absolue en fonction de l&#39;emplacement courant</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;code.py&quot;</span><span class="p">)</span> <span class="c1"># construit le chemin absolue en fonction de l&#39;emplacement courant</span>
 <span class="go">&#39;/usr/lib/python2.7/code.py&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># ~ basename cmd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c1"># ~ basename cmd</span>
 <span class="go">&#39;code.py&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># ~ dirname cmd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c1"># ~ dirname cmd</span>
 <span class="go">&#39;/usr/lib/python2.7&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c"># (dirname, basename)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span> <span class="c1"># (dirname, basename)</span>
 <span class="go">(&#39;/usr/lib/python2.7&#39;, &#39;code.py&#39;)</span>
 </pre></div>
 </div>
 <p>Les fonction suivantes permettent de tester le type d&#8217;objet (répertoire, fichier, lien etc.) désigné par un chemin:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/foobar.py&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/foobar.py&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
 <span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7&#39;</span><span class="p">)</span>
 <span class="go">True</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="s">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="s1">&#39;/usr/lib/python2.7/code.py&#39;</span><span class="p">)</span>
 <span class="go">False</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
 <p>Pour la portabilité, il est préférable d&#8217;utiliser <em>os.path.join(...)</em> pour construire des chemins:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">,</span><span class="s">&#39;foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">,</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="go">&#39;/tmp/foo/bar&#39;</span>
 </pre></div>
 </div>
@@ -682,15 +685,15 @@ $ ls /tmp/test/
 <p class="first admonition-title">Attention</p>
 <p class="last">Si un chemin absolu est fourni, tous les éléments qui le précédent sont ignorés silencieusement:</p>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;tmp&#39;</span><span class="p">,</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">,</span><span class="s1">&#39;/foo&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="go">&#39;/foo/bar&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&#39;/tmp&#39;</span><span class="p">,</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">,</span><span class="s1">&#39;/foo&#39;</span><span class="p">,</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="go">&#39;/foo/bar&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
 </div>
-<p>La fonction <tt class="docutils literal"><span class="pre">os.path.normpath()</span></tt> élimine les redondances pour ramener le chemin au format &#8220;canonique&#8221;:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s">&#39;/usr/../usr/lib//python2.7/./code.py&#39;</span><span class="p">)</span>
+<p>La fonction <code class="docutils literal"><span class="pre">os.path.normpath()</span></code> élimine les redondances pour ramener le chemin au format &#8220;canonique&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="s1">&#39;/usr/../usr/lib//python2.7/./code.py&#39;</span><span class="p">)</span>
 <span class="go">&#39;/usr/lib/python2.7/code.py&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -701,7 +704,7 @@ $ ls /tmp/test/
 <h3>Utilisation du caractère &#8220;joker&#8221;<a class="headerlink" href="#utilisation-du-caractere-joker" title="Permalink to this headline">¶</a></h3>
 <p>La fonction <em>glob.glob()</em> permet de lister le contenu d&#8217;un répertoire avec un filtre:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">glob</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;/usr/lib/python2.7/b*py&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;/usr/lib/python2.7/b*py&quot;</span><span class="p">)</span>
 <span class="go">[&#39;/usr/lib/python2.7/binhex.py&#39;, &#39;/usr/lib/python2.7/bdb.py&#39;, &#39;/usr/lib/python2.7/base64.py&#39;, &#39;/usr/lib/python2.7/bisect.py&#39;]</span>
 </pre></div>
 </div>
@@ -743,11 +746,11 @@ $ ls /tmp/test/
 <div class="highlight-python"><div class="highlight"><pre>subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None) # timeout existe seulement en version 3.x
 </pre></div>
 </div>
-<p>C&#8217;est une signature abrégée, le deuxième paramètre <tt class="docutils literal"><span class="pre">*</span></tt> symbolise des paramètres moins utilisés qui ne seront pas discutés ici.</p>
+<p>C&#8217;est une signature abrégée, le deuxième paramètre <code class="docutils literal"><span class="pre">*</span></code> symbolise des paramètres moins utilisés qui ne seront pas discutés ici.</p>
 <ul class="simple">
 <li>args : représente la commande à exécuter. Peut être une liste ou une chaîne de caractères</li>
 <li>stdin, stdout, stderr : redirection possible des entrées/sorties standard</li>
-<li>shell : si <tt class="docutils literal"><span class="pre">shell=True</span></tt> la commande sera exécutée par le <em>shell</em></li>
+<li>shell : si <code class="docutils literal"><span class="pre">shell=True</span></code> la commande sera exécutée par le <em>shell</em></li>
 </ul>
 <div class="warning admonition">
 <p class="first admonition-title">Avertissement</p>
@@ -759,17 +762,17 @@ $ ls /tmp/test/
 <li>attend la fin de l&#8217;exécution</li>
 <li>renvoie le code de retour système</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;ls&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;ls&quot;</span><span class="p">)</span>
 <span class="go">controller  __init__.py  __init__.pyc  model  view</span>
 <span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&quot;ls&quot;</span><span class="p">,</span> <span class="s">&quot;view&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span> <span class="s2">&quot;view&quot;</span><span class="p">])</span>
 <span class="go">admviews.py   appviews1.py   appviews1.pyc  appviews2.pyc  __init__.pyc</span>
 <span class="go">admviews.pyc  appviews1.py~  appviews2.py   __init__.py</span>
 <span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&quot;ls&quot;</span><span class="p">,</span><span class="s">&quot;-l&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/locked.txt&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;ls&quot;</span><span class="p">,</span><span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/locked.txt&quot;</span><span class="p">])</span>
 <span class="go">---------- 1 poli poli 0 mars  11 15:44 /tmp/locked.txt</span>
 <span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s">&quot;cat&quot;</span><span class="p">,</span> <span class="s">&quot;/tmp/locked.txt&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/locked.txt&quot;</span><span class="p">])</span>
 <span class="go">cat: /tmp/locked.txt: Permission non accordée</span>
 <span class="go">1</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -792,8 +795,8 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 <div class="highlight-python"><div class="highlight"><pre>subprocess.check_output(args, *, stdin=None, stdout=None, stderr=None, shell=False, timeout=None) # timeout existe seulement en version 3.x
 </pre></div>
 </div>
-<p>Effectue le même traitement que <tt class="docutils literal"><span class="pre">subprocess.check_call()</span></tt> mais retourne la sortie standard:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&quot;echo&quot;</span><span class="p">,</span> <span class="s">&quot;Hello&quot;</span><span class="p">])</span>
+<p>Effectue le même traitement que <code class="docutils literal"><span class="pre">subprocess.check_call()</span></code> mais retourne la sortie standard:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s2">&quot;echo&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
 <span class="go">&#39;Hello\n&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -820,20 +823,20 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 <div class="section" id="l-acces-a-internet-en-http">
 <h2>L&#8217;accès à Internet en http<a class="headerlink" href="#l-acces-a-internet-en-http" title="Permalink to this headline">¶</a></h2>
 <p>Un module simple permettant de faire des requêtes <em>http</em> est <em>urllib.request</em> (<em>urllib2</em> en <em>Python 2.7.x</em>). Pour une utilisation basique il suffit de passer une <em>url</em> en argument à la fonction <em>urlopen()</em> qui retournera un itérateur qui permet de récupérer le résultat, ligne par ligne:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span> <span class="c"># for Python 3.x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c">#from import urllib2 import urlopen # for Python 2.7.x</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span> <span class="c1"># for Python 3.x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#from import urllib2 import urlopen # for Python 2.7.x</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://example.org&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="go">&#39;&lt;!doctype html&gt;\n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="go">&#39;&lt;html&gt;\n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="go">&#39;&lt;head&gt;\n&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 <p>On peut également récupérer le résultat d&#8217;un coup:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://example.org&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://example.org&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="go">&#39;&lt;!doctype html&gt;\n&lt;html&gt;\n&lt;head&gt;\n ...</span>
 </pre></div>
 </div>
@@ -850,7 +853,7 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 </ul>
 <p>Illustration  :</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">zlib</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">citation</span> <span class="o">=</span> <span class="n">b</span><span class="s">&quot;Davantage d&#39;avantages avantagent davantage.&quot;</span> <span class="c"># Boby Lapointe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">citation</span> <span class="o">=</span> <span class="n">b</span><span class="s2">&quot;Davantage d&#39;avantages avantagent davantage.&quot;</span> <span class="c1"># Boby Lapointe</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span>
 <span class="go">43</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">zipped</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">citation</span><span class="p">)</span>
@@ -868,13 +871,13 @@ subprocess.CalledProcessError: Command &#39;[&#39;cat&#39;, &#39;/tmp/locked.txt
 <p>Création d&#8217;un fichier de configuration (pour un logiciel imaginaire):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ConfigParser</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">RawConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&quot;ClientSide&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s">&quot;buffer&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s">&quot;timeout&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s">&quot;ServerSide&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s">&quot;db&quot;</span><span class="p">,</span><span class="s">&quot;mysql&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s">&quot;logs&quot;</span><span class="p">,</span><span class="s">&quot;/var/log/mysrv&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;myconf.cfg&quot;</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;ClientSide&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s2">&quot;buffer&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="s2">&quot;ServerSide&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s2">&quot;db&quot;</span><span class="p">,</span><span class="s2">&quot;mysql&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s2">&quot;logs&quot;</span><span class="p">,</span><span class="s2">&quot;/var/log/mysrv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;myconf.cfg&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">conf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -891,17 +894,17 @@ logs = /var/log/mysrv
 </div>
 <p>Pour parser le fichier de configuration précédent:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">RawConfigParser</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;myconf.cfg&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;myconf.cfg&quot;</span><span class="p">)</span>
 <span class="go">[&#39;myconf.cfg&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s">&quot;buffer&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;ClientSide&quot;</span><span class="p">,</span><span class="s2">&quot;buffer&quot;</span><span class="p">)</span>
 <span class="go">1000</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s">&quot;db&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ServerSide&quot;</span><span class="p">,</span><span class="s2">&quot;db&quot;</span><span class="p">)</span>
 <span class="go">&#39;mysql&#39;</span>
 </pre></div>
 </div>
 <p><em>JSON</em>, acronyme de <em>JavaScript Object Notation</em>, est un format d&#8217;échange très utilisé. Les structures de données <em>JavaScript</em> étant assez proches de celles de Python (listes, dictionnaires), l&#8217;utilisation de <em>JSON</em> est très intuitive;</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">some_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:[</span><span class="mi">5</span><span class="p">,</span><span class="s">&#39;xyz&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">some_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:[</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;xyz&#39;</span><span class="p">]}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span>
 <span class="go">&#39;{&quot;a&quot;: 3, &quot;b&quot;: [5, &quot;xyz&quot;]}&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">txt</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">some_data</span><span class="p">)</span>
@@ -919,14 +922,14 @@ logs = /var/log/mysrv
 <p>Le module <em>timeit</em> offre un moyen simple pour comparer des performances entre plusieurs implémentations d&#8217;une fonctionnalités, plusieurs approches d&#8217;un même problème etc.</p>
 <p>Par exemple, on peut comparer le temps nécessaire pour la construction d&#8217;une liste de 100 éléments avec le temps pour construire un générateur équivalent:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">Timer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s">&#39;[e**2 for e in xrange(1,100)]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s1">&#39;[e**2 for e in xrange(1,100)]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
 <span class="go">9.104944229125977</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s">&#39;(e**2 for e in xrange(1,100))&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s1">&#39;(e**2 for e in xrange(1,100))&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
 <span class="go">0.6118359565734863</span>
 </pre></div>
 </div>
 <p>...et le temps pour fabriquer la liste indirectement, en passant par la fabrication du dit générateur:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s">&#39;list((e**2 for e in xrange(1,100)))&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Timer</span><span class="p">(</span><span class="s1">&#39;list((e**2 for e in xrange(1,100)))&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">timeit</span><span class="p">()</span>
 <span class="go">10.48848009109497</span>
 </pre></div>
 </div>
@@ -941,17 +944,17 @@ logs = /var/log/mysrv
 <span class="go">3.141592653589793</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">e</span>
 <span class="go">2.718281828459045</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="c"># logarithme naturel (appel à 1 seul argument)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># logarithme naturel (appel à 1 seul argument)</span>
 <span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="c"># 2 args, équivalent  log(x)/log(10)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># 2 args, équivalent  log(x)/log(10)</span>
 <span class="go">2.9999999999999996</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c"># log décimal, plus précis que log(x,10)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c1"># log décimal, plus précis que log(x,10)</span>
 <span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span> <span class="c"># pi/2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span> <span class="c1"># pi/2</span>
 <span class="go">1.5707963267948966</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">90.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># etc.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># etc.</span>
 <span class="gp">...</span>
 </pre></div>
 </div>
@@ -966,9 +969,9 @@ logs = /var/log/mysrv
 <span class="go">15</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
 <span class="go">10</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
 <span class="go">&#39;c&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s">&quot;abc&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
 <span class="go">&#39;a&#39;</span>
 <span class="go">&gt;&gt;&gt;</span>
 </pre></div>
@@ -976,10 +979,10 @@ logs = /var/log/mysrv
 </div>
 <div class="section" id="les-expressions-rationnelles-ou-regulieres">
 <h2>Les expressions rationnelles (ou régulières)<a class="headerlink" href="#les-expressions-rationnelles-ou-regulieres" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&#39;\bon[a-z]*&#39;</span><span class="p">,</span> <span class="s">&#39;There should be one-- and preferably only one --obvious way to do it.&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">r&#39;\bon[a-z]*&#39;</span><span class="p">,</span> <span class="s1">&#39;There should be one-- and preferably only one --obvious way to do it.&#39;</span><span class="p">)</span>
 <span class="go">[&#39;one&#39;, &#39;only&#39;, &#39;one&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">prog</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\bon[a-z]*&#39;</span><span class="p">)</span> <span class="c"># avec un motif compilé</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">prog</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;There should be one-- and preferably only one --obvious way to do it. (Tim Peters)&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prog</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">r&#39;\bon[a-z]*&#39;</span><span class="p">)</span> <span class="c1"># avec un motif compilé</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prog</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;There should be one-- and preferably only one --obvious way to do it. (Tim Peters)&#39;</span><span class="p">)</span>
 <span class="go">[&#39;one&#39;, &#39;only&#39;, &#39;one&#39;]</span>
 </pre></div>
 </div>
@@ -990,7 +993,7 @@ logs = /var/log/mysrv
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -1045,7 +1048,7 @@ logs = /var/log/mysrv
   <h4>Next topic</h4>
   <p class="topless"><a href="tests.html"
                         title="next chapter">Les tests</a></p>
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1062,7 +1065,7 @@ logs = /var/log/mysrv
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1074,7 +1077,7 @@ logs = /var/log/mysrv
         <li class="right" >
           <a href="objet.html" title="L’approche objet"
              >previous</a> |</li>
-        <li><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Introduction à la programmation en Python</a> &raquo;</li> 
       </ul>
     </div>
 <div class="footer" style="max-height: 10px">
